@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <style type='text/css'>
+        h1 {
+            text-align: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+        .grid-item {}
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial Narrow,Arial,sans-serif; 
+            font-size: 12px;
+        }
+
+        table,
+        th,
+        td {
+            border: solid 1px black;
+             text-align: center;
+        }
+
+        th,
+        td {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f2ed98;
+        }
+        
+        thead tr{
+            background: #f79307;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        {{examName}} SINAV SONUÇ LİSTESİ
+    </h1>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Adı :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examName}}
+        </div>
+        <div class='grid-item'>
+            <strong>Sınıf :</strong>
+        </div>
+        <div class='grid-item'>
+            {{classroom}}
+        </div>
+    </div>
+    </br>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Tarihi :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examDate}}
+        </div>
+        <div class='grid-item'>
+        </div>
+        <div class='grid-item'>
+        </div>
+    </div>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan='2'>Sıra</th>
+                <th rowspan='2'>Öğr. No </th>
+                <th rowspan='2'>Adı Soyadı</th>
+                <th rowspan='2'>Sınıf</th>
+                <th rowspan='2'>Kit. T.</th>
+                {{#each lessons}}
+                <th colspan='4'>{{this}}</th>
+                {{/each}}
+                <th colspan='4'>Toplam</th>
+                <th rowspan='2'>Puan</th>
+                <th rowspan='2'>Başarı</th>
+                <th rowspan='2'>Sınıf Sıra</th>
+                <th rowspan='2'>Okul Sıra</th>
+            </tr>
+            <tr>
+                {{#each lessons}}
+                <th>D</th>
+                <th>Y</th>
+                <th>B</th>
+                <th>N</th>
+                {{/each}}
+                <th>D</th>
+                <th>Y</th>
+                <th>B</th>
+                <th>N</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each list}}
+            <tr>
+                <td>
+                    {{rowOrder}}
+                </td>
+                <td>
+                    {{studentNumber}}
+                </td>
+                <td>
+                    {{studentFirstName}} {{studentLastName}}
+                </td>
+                <td>
+                    {{classroom}}
+                </td>
+                <td>
+                    {{booklet}}
+                </td>
+                {{#each sections}}
+                <td>{{correctCount}}</td>
+                <td>{{wrongCount}}</td>
+                <td>{{emptyCount}}</td>
+                <td>{{net}}</td>
+                {{/each}}
+                <td>{{correctCount}}</td>
+                <td>{{wrongCount}}</td>
+                <td>{{emptyCount}}</td>
+                <td>{{net}}</td>
+                <td>{{score}}</td>
+                <td>%{{successPercent}}</td>
+                <td>{{classroomOrder}}</td>
+                <td>{{schoolOrder}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+
+</html>

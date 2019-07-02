@@ -1,0 +1,131 @@
+version: '3.6'
+
+services:
+  redis:
+    image: redis:alpine
+  rabbitmq:
+    image: rabbitmq:alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  postgres:
+    image: nazmialtun/postgres-tr
+    environment:
+      - POSTGRES_PASSWORD=testadmin@123
+      - POSTGRES_USER=testokur
+      - POSTGRES_DB=testokur
+  mockserver:
+    image: nazmialtun/mockizen:latest
+    volumes:
+      - ./mockserver/mocks:/opt/app/mocks
+    expose:
+      - '8080'
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - '27017:27017'
+  notification-unit-test:
+    image: testokur-notification-unit-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.Notification/Dockerfile
+      target: unittest
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/testokur-notification-unit-test-results.xml
+  webapi-unit-test:
+    image: testokur-webapi-unit-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.WebApi/Dockerfile
+      target: unittest
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/testokur-webapi-unit-test-results.xml
+  domain-unit-test:
+    image: testokur-domain-unit-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.WebApi/Dockerfile
+      target: domaintest
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/testokur-domain-unit-test-results.xml
+  webapi-integration-test:
+    image: testokur-webapi-integration-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.WebApi/Dockerfile
+      target: integrationtest
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/testokur-webapi-integration-test-results.xml
+    volumes:
+      - test_output:/tests
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgres
+      - mockserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
+      - ConnectionStrings__Redis=redis,allowAdmin=true,defaultDatabase=1
+      - ApplicationConfiguration__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
+      - RabbitMqConfiguration__Uri=rabbitmq
+      - OAuthConfiguration__Authority=http://mockserver:8080/
+  report-integration-test:
+    image: testokur-report-integration-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.Report/Dockerfile
+      target: integrationtest
+    entrypoint:
+      - dotnet
+      - test
+      - --logger
+      - trx;LogFileName=/tests/testokur-report-integration-test-results.xml
+    depends_on:
+      - mongo
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMqConfiguration__Uri=rabbitmq
+      - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
+      - OAuthConfiguration__Authority=http://mockserver:8080/
+    volumes:
+      - test_output:/tests
+  notification-integration-test:
+    image: testokur-notification-integration-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.Notification/Dockerfile
+      target: integrationtest
+    command: sh -c "/wait && dotnet test --logger trx;LogFileName=/tests/testokur-notification-integration-test-results.xml"
+    depends_on:
+      - rabbitmq
+      - mockserver
+      - mongo
+    environment:
+      - WAIT_HOSTS= rabbitmq:5672, mockserver:8080, mongo:27017
+      - WAIT_HOSTS_TIMEOUT=300
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMqConfiguration__Uri=rabbitmq
+      - OAuthConfiguration__Authority=http://mockserver:8080/
+      - WebApiUrl=http://mockserver:8080/
+      - SmsConfiguration__ServiceUrl=http://mockserver:8080/
+      - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
+volumes:
+  test_output:

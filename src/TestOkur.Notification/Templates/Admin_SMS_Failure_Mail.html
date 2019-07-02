@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Basarisiz SMS Gonderimi</title>
+
+    <style type="text/css">
+        table tr td {
+            padding:10px;
+            padding-left:30px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Sayın Yonetici,
+    </p>
+    <p>
+        Asagidaki SMS gonderilememistir ;
+    </p>
+    <br />
+    <br />
+    <table border="1" style="font-size:20px;">
+        <tr>
+            <td colspan="2">
+                <h4>SMS BİLGİLERİ</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Lisans Sahibi</strong>
+            </td>
+            <td>
+                @Model.EMailAddress
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Alici Tel. No. </strong>
+            </td>
+            <td>
+                @Model.Receiver
+            </td>
+        </tr>       
+        <tr>
+            <td>
+                <strong>SMS Icerik </strong>
+            </td>
+            <td>
+                @Model.Body
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Servis Yaniti </strong>
+            </td>
+            <td>
+                @Model.ServiceResponse
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Uygulama Hata Mesaji</strong>
+            </td>
+            <td>
+                @Model.ErrorMessage
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Tarih/Zaman</strong>
+            </td>
+			<td>
+				@Model.CreatedOnUTC
+			</td>
+        </tr>       
+    </table>
+</body>
+</html>

@@ -1,0 +1,89 @@
+version: '3.6'
+
+services:
+  webapi:
+    image: testokur-webapi:latest
+    build:
+      context: .
+      dockerfile: src/TestOkur.WebApi/Dockerfile
+      target: final
+    ports:
+      - '9150:80'
+    depends_on:
+      - redis
+      - postgres
+      - rabbitmq
+      - mockserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
+      - ConnectionStrings__Redis=redis,allowAdmin=true,defaultDatabase=1
+      - ApplicationConfiguration__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
+      - RabbitMqConfiguration__Uri=rabbitmq
+      - OAuthConfiguration__Authority=http://mockserver:8080/
+      - OAuthConfiguration__RequireHttpsMetadata=false
+  notification:
+    image: testokur-notification:latest
+    build:
+      context: .
+      dockerfile: src/TestOkur.Notification/Dockerfile
+      target: final
+    ports:
+      - '9160:80'
+    depends_on:
+      - rabbitmq
+      - mockserver
+      - webapi
+      - mongo
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMqConfiguration__Uri=rabbitmq
+      - OAuthConfiguration__Authority=https://identity-qa.testokur.com/
+      - WebApiUrl=http://webapi/
+      - SmsConfiguration__ServiceUrl=http://mockserver:8080/
+  report:
+    image: testokur-report:latest
+    build:
+      context: .
+      dockerfile: src/TestOkur.Report/Dockerfile
+      target: final
+    ports:
+      - '9170:80'
+  mockserver:
+    image: nazmialtun/mockizen:latest
+    volumes:
+      - ./mockserver/mocks:/opt/app/mocks
+    expose:
+      - '8080'
+    ports:
+      - '8095:8080'
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - '16119:6379'
+  postgres:
+    restart: always
+    image: nazmialtun/postgres-tr
+    ports:
+      - '6432:5432'
+    environment:
+      - POSTGRES_PASSWORD=testadmin@123
+      - POSTGRES_USER=testokur
+      - POSTGRES_DB=testokur
+  rabbitmq:
+    image: rabbitmq:alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - '6672:5672'
+      - '14672:15672'
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - '27017:27017'

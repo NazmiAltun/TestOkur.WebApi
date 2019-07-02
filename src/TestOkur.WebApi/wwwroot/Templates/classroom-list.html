@@ -1,0 +1,76 @@
+<html>
+<head>
+	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+	<style type='text/css'>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h2>{{classroom}} SINIF LİSTESİ</h2>
+<hr/>
+<table>
+	<thead>
+	<tr>
+		<th>Sıra</th>
+		<th>
+			Öğr No
+		</th>
+		<th>
+			Adı
+		</th>
+		<th>
+			Soyadı
+		</th>
+		<th>
+			Telefon-1
+		</th>
+		<th>
+			Telefon-2
+		</th>
+		<th>
+			Açıklama
+		</th>
+	</tr>
+	</thead>
+	<tbody>
+	{{#each students}}
+	<tr>
+		<td>{{rowOrder}}</td>
+		<td>{{studentNumber}}</td>
+		<td>{{firstName}}</td>
+		<td>{{lastName}}</td>
+		<td>{{phone1}}</td>
+		<td>{{phone2}}</td>
+		<td>{{notes}}</td>
+	</tr>
+	{{/each}}
+	</tbody>
+</table>
+</body>
+
+</html>

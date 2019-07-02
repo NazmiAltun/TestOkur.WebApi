@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Lisans Bilgileriniz</title>
+
+    <style type="text/css">
+        table tr td {
+            padding: 10px;
+            padding-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Sayın <strong>@Model.Name  @Model.Surname</strong> TestOkur üyeliğiniz onaylanmıştır.
+    </p>
+    <p>
+        TestOkur lisansınızı sadece kullanmak istediğiniz bilgisayarda aktifleştiriniz.
+    </p>
+    <p>
+        Lisansınızı aktifleştirmek için TestOkur’u kullanmak istediğiniz bilgisayardan aşağıdaki bilgileriniz ile giriş yapmanız yeterlidir.
+    </p>
+    <p>
+        Lisans süreniz, kullanıcı bilgileriniz ile ilk giriş yaptığınız tarihte başlayacak ve 1 yıl sonra sona erecektir.
+    </p>
+    <p>
+        Kullanım süreniz dolmadan dilediğiniz zaman lisansınızı yenileyebilirsiniz. Kalan gün sayısı yeni lisans sürenize eklenecektir.
+    </p>
+    <p>
+        Üyelik bilgilerinizi TestOkur üzerinden güncelleyebilirsiniz.
+    </p>
+    <br />
+    <br />
+    <table border="1" style="font-size:20px;">
+        <tr>
+            <td colspan="2">
+                <h4>Giriş Bilgileriniz</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>E-Posta Adresiniz </strong>
+            </td>
+            <td>
+                @Model.EMailAddress
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Parolanız </strong>
+            </td>
+            <td>
+                @Model.Password
+            </td>
+        </tr>
+    </table>
+    <br />
+    <p>
+        İlginize teşekkür ederiz.
+    </p>
+</body>
+</html>

@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Yeni Lisans Kaydı</title>
+
+    <style type="text/css">
+        table tr td {
+            padding:10px;
+            padding-left:30px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Sayın Yetkili,
+    </p>
+	<p>
+		@Model.CreatedOnUTC.ToString("dd.MM.yyyy") tarihinde @Model.UserFirstName @Model.UserLastName  isimli müşteri tarafından yeni lisans kaydı başvurusu alınmıştır. Detaylı bilgileri aşağıdaki gibidir.
+	</p>
+    <br />
+    <br />
+    <table border="1" style="font-size:20px;">
+        <tr>
+            <td colspan="2">
+                <h4>SİPARİŞ BİLGİLERİ</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Adı Soyadı </strong>
+            </td>
+			<td>
+				@Model.RegistrarFullName
+			</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Cep Telefonu </strong>
+            </td>
+			<td>
+				@Model.RegistrarPhone
+			</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>LİSANS KAYIT BİLGİLERİ</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Ad </strong>
+            </td>
+			<td>
+				@Model.UserFirstName
+			</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Soyad </strong>
+            </td>
+			<td>
+				@Model.UserLastName
+			</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Kurum Adı </strong>
+            </td>
+			<td>
+				@Model.SchoolName
+			</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>E-Posta </strong>
+            </td>
+			<td>
+				@Model.Email
+			</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Cep Telefonu </strong>
+            </td>
+			<td>
+				@Model.UserPhone
+			</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>İl </strong>
+            </td>
+            <td>
+                @Model.City
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>İlçe </strong>
+            </td>
+			<td>
+				@Model.District
+			</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>PAKET SEÇİMİ</h4>
+            </td>
+        </tr>
+        <tr>
+			<td colspan="2">
+				@Model.LicenseType
+			</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>OTURUM AÇMA BİLGİSİ</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>E-Posta </strong>
+            </td>
+			<td>
+				@Model.Email
+			</td>
+        </tr>
+    </table>
+</body>
+</html>
