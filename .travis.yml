@@ -1,0 +1,36 @@
+    
+sudo: required
+services:
+  - docker
+
+env:
+  COMPOSE_VERSION: 1.24.1
+
+before_install:
+ - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+ - chmod +x docker-compose
+ - sudo mv docker-compose /usr/local/bin
+
+script:
+  # Domain Unit Tests
+  - docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
+  # Notification Unit Tests
+  - docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
+  # WebApi Unit Tests
+  - docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
+  # Notification Integration Tests
+  - docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
+  # WebApi Integration Tests
+  - docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
+  # Report Integration Tests
+  - docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
+  # Clean-up after tests
+  - docker-compose -f docker-compose.tests.yml down
+  # Build
+  - docker-compose build webapi notification report
+  - docker save -o webapi.tar testokur-webapi:latest
+  - docker save -o report.tar testokur-report:latest
+  - docker save -o notification.tar testokur-notification:latest
+notifications:
+  email:
+    - nazmialtun@windowslive.com
