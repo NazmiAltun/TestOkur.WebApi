@@ -16,6 +16,7 @@ FROM build as integrationtest
 WORKDIR /src/tests/TestOkur.Report.Integration.Tests
 
 FROM build AS publish
+WORKDIR /src
 RUN dotnet publish "./src/TestOkur.Report/TestOkur.Report.csproj" --no-restore -c Release -o /app
 
 FROM base as final
