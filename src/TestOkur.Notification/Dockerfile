@@ -21,6 +21,7 @@ RUN chmod +x /wait
 WORKDIR /src/tests/TestOkur.Notification.Integration.Tests
 
 FROM build AS publish
+WORKDIR /src
 RUN dotnet publish "./src/TestOkur.Notification/TestOkur.Notification.csproj" --no-restore -c Release -o /app
 
 FROM base as final

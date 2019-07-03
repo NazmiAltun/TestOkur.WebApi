@@ -27,6 +27,7 @@ RUN apk add libgdiplus bash ttf-ubuntu-font-family --repository http://dl-3.alpi
 WORKDIR /src/tests/TestOkur.WebApi.Integration.Tests
 
 FROM build AS publish
+WORKDIR /src
 RUN dotnet publish "./src/TestOkur.WebApi/TestOkur.WebApi.csproj" --no-restore -c Release -o /app
 
 FROM base as final
