@@ -14,35 +14,35 @@ jobs:
       - run:
         name: Run Tests
         command: |
-          docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
-          docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
-          docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
-          docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
-          docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
-          docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
-          docker-compose -f docker-compose.tests.yml down
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
+            docker-compose -f docker-compose.tests.yml down
       - run:
         name: Build images
         command: |
-          docker-compose build webapi notification report
+            docker-compose build webapi notification report
       - run:
         name: Compress images
         command: |
-          docker save -o webapi.tar testokur-webapi:latest
-          docker save -o report.tar testokur-report:latest
-          docker save -o notification.tar testokur-notification:latest
+            docker save -o webapi.tar testokur-webapi:latest
+            docker save -o report.tar testokur-report:latest
+            docker save -o notification.tar testokur-notification:latest
       - run:
         name: Deploy WebApi App
         command: |
-          scp webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-          ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-webapi-qa.sh
+            scp webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-webapi-qa.sh
       - run:
         name: Deploy Report App
         command: |
-          scp report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-          ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-report-qa.sh
+            scp report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-report-qa.sh
       - run:
         name: Deploy Notification App
         command: |
-          scp notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-          ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-notification-qa.sh
+            scp notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-notification-qa.sh
