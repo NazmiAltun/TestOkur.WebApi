@@ -3,10 +3,10 @@ jobs:
   build:
     machine: true
     steps:
-      - setup_remote_docker:
-        docker_layer_caching: true
-        version: 18.09.3
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+          version: 18.09.3
       - run:
           name: Install Docker Compose
           command: |
