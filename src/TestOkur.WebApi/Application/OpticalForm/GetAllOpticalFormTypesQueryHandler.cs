@@ -63,21 +63,25 @@
 			{
 				var definitions = await GetDefinitionsAsync(connection);
 				var formTypes = await GetFormTypesAsync(connection);
-
-				foreach (var formType in formTypes)
-				{
-					var path = Path.Combine(
-						_hostingEnvironment.WebRootPath,
-						"yap",
-						formType.ConfigurationFile);
-					formType.Configuration = File.ReadAllText(path);
-					formType.OpticalFormDefinitions =
-						definitions.Where(d => d.OpticalFormTypeId == formType.Id)
-							.ToList();
-				}
-
-				return formTypes;
+				return PopulateFormTypes(formTypes, definitions);
 			}
+		}
+
+		private IReadOnlyCollection<OpticalFormTypeReadModel> PopulateFormTypes(List<OpticalFormTypeReadModel> formTypes, List<OpticalFormDefinitionReadModel> definitions)
+		{
+			foreach (var formType in formTypes)
+			{
+				var path = Path.Combine(
+					_hostingEnvironment.WebRootPath,
+					"yap",
+					formType.ConfigurationFile);
+				formType.Configuration = File.ReadAllText(path);
+				formType.OpticalFormDefinitions =
+					definitions.Where(d => d.OpticalFormTypeId == formType.Id)
+						.ToList();
+			}
+
+			return formTypes;
 		}
 
 		private async Task<List<OpticalFormTypeReadModel>> GetFormTypesAsync(NpgsqlConnection connection)

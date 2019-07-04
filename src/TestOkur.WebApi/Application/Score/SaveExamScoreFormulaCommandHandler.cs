@@ -36,7 +36,6 @@
 				.Select(fcoef =>
 					new LessonCoefficient(fcoef.ExamLessonSection, command.Coefficients[(int)fcoef.Id]))
 				.ToList();
-
 			var examScoreFormula = new ExamScoreFormula(
 				exam,
 				formula.Name.Value,

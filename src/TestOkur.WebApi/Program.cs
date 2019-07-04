@@ -17,7 +17,6 @@
 			var host = BuildWebHost(args);
 			await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
 			{
-				await DbInitializer.CreateLogTableAsync(services);
 				await DbInitializer.SeedAsync(context);
 			});
 

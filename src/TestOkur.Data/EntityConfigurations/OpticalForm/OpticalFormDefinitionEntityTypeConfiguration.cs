@@ -19,11 +19,9 @@
                 .WithOne()
                 .HasForeignKey("optical_form_definition_id")
                 .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasOne(o => o.SchoolType)
                 .WithMany()
                 .HasForeignKey("school_type_id");
-
             builder.Metadata.FindNavigation(nameof(OpticalFormDefinition.TextLocations))
                             .SetPropertyAccessMode(PropertyAccessMode.Field);
         }

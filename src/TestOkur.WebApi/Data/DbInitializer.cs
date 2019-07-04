@@ -1,12 +1,9 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.DependencyInjection;
-	using Npgsql;
 	using TestOkur.Common;
 	using TestOkur.Data;
 	using TestOkur.Domain.Model.ExamModel;
@@ -17,36 +14,14 @@
 	using TestOkur.Domain.Model.StudentModel;
 	using TestOkur.Domain.Model.UserModel;
 	using TestOkur.Domain.SeedWork;
-	using TestOkur.WebApi.Configuration;
 
 	public static class DbInitializer
 	{
-		public static async Task CreateLogTableAsync(IServiceProvider services)
-		{
-			const string sql = @"CREATE TABLE IF NOT EXISTS request_response_logs(
-								Id BIGSERIAL PRIMARY KEY,								
-								request TEXT NULL,
-								request_datetime_utc  timestamp without time zone NOT NULL,
-								response TEXT NULL,
-								response_datetime_utc  timestamp without time zone NOT NULL);";
-			var connectionString = services.GetService<ApplicationConfiguration>()
-				.Postgres;
-			using (var connection = new NpgsqlConnection(connectionString))
-			{
-				await connection.OpenAsync();
-				using (var command = connection.CreateCommand())
-				{
-					command.CommandText = sql;
-					await command.ExecuteNonQueryAsync();
-				}
-			}
-		}
-
 		public static async Task SeedAsync(ApplicationDbContext context)
 		{
 			using (context)
 			{
-				await SeedSettingsAsync(context);
+				await new SettingsSeeder(context).SeedAsync();
 				await new CitySeeder(context).SeedAsync();
 				await SeedLicenseTypesAsync(context);
 				await new LessonSeeder(context).SeedAsync();
@@ -262,42 +237,6 @@
 
 			context.ScoreFormulas.AddRange(formulas);
 			await context.SaveChangesAsync();
-		}
-
-		private static async Task SeedSettingsAsync(ApplicationDbContext context)
-		{
-			if (!await context.AppSettings.AnyAsync())
-			{
-				var appSettings = new List<AppSetting>
-				{
-					new AppSetting(
-					AppSettings.AdminEmails,
-					"nazmialtun@windowslive.com;nazmialtun88@gmail.com",
-					"Yönetici e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor"),
-					new AppSetting(
-					AppSettings.AdminPhones,
-					"5074011191;5052647544",
-					"Yönetici telefon numaraları.Her bir numaradan sonra ';' eklemek gerekiyor."),
-					new AppSetting(
-					AppSettings.DailyJobRunTime,
-					"23:55",
-					"Sistem yoneticilerine 'TestOkur Gunluk Veriler' baslikli e-postayi gonderen isin calisma zamani."),
-					new AppSetting(
-					AppSettings.AccountExpirationNotificationTime,
-					"20:00",
-					"Kullanicilara 'TestOkur Lisans Süreniz Dolmak Üzere' baslikli e-posta ve smsi gonderen isin calisma zamani."),
-					new AppSetting(
-					AppSettings.AccountExpirationNotificationDayInterval,
-					"7",
-					"Kullanicilara gonderilen 'TestOkur Lisans Süreniz Dolmak Üzere' e-posta ve smsi lisans bitiminden kac gun once gonderilecek degerine karsilik gelir."),
-					new AppSetting(
-					AppSettings.SystemAdminEmails,
-					"nazmialtun@windowslive.com;nazmialtun88@gmail.com",
-					"Sistem yoneticisi e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor"),
-				};
-				context.AppSettings.AddRange(appSettings);
-				await context.SaveChangesAsync();
-			}
 		}
 
 		private static async Task SeedExamTypesAsync(ApplicationDbContext context)

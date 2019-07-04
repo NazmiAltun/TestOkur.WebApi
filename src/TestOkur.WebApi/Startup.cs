@@ -45,7 +45,6 @@
 	using TestOkur.WebApi.Application.User.Services;
 	using TestOkur.WebApi.Configuration;
 	using TestOkur.WebApi.Extensions;
-	using TestOkur.WebApi.Logging;
 	using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
 	public class Startup : IStartup
@@ -110,7 +109,6 @@
 
 			UseHealthChecks(app);
 			app.UseCors(CorsPolicyName);
-			app.UseMiddleware<RequestResponseLoggingMiddleware>();
 			app.UseAuthentication();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
 			app.UseMvc();
@@ -205,7 +203,6 @@
 			services.AddSingleton<ICaptchaService, CaptchaService>();
 			services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
 			services.AddTransient<IUserIdProvider, UserIdProvider>();
-			services.AddSingleton<IRequestResponseLogger, RequestResponsePostgresLogger>();
 			services.AddHttpContextAccessor();
 		}
 

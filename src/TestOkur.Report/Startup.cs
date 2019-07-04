@@ -1,5 +1,10 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
+using TestOkur.Domain.SeedWork;
+using TestOkur.Report.Extensions;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
@@ -183,16 +188,7 @@ namespace TestOkur.Report
 				 {
 					 e.PrefetchCount = 16;
 					 e.UseMessageRetry(x => x.Interval(2, 100));
-					 e.Consumer<ExamDeletedConsumer>(provider);
-					 e.Consumer<ExamCreatedConsumer>(provider);
-					 e.Consumer<ExamUpdatedConsumer>(provider);
-					 e.Consumer<LessonNameChangedConsumer>(provider);
-					 e.Consumer<SubjectChangedConsumer>(provider);
-					 e.Consumer<ClassroomDeletedConsumer>(provider);
-					 e.Consumer<ClassroomUpdatedConsumer>(provider);
-					 e.Consumer<StudentDeletedConsumer>(provider);
-					 e.Consumer<StudentUpdatedConsumer>(provider);
-					 e.Consumer<EvaluateExamConsumer>(provider);
+					 e.RegisterConsumers(provider);
 				 });
 				 cfg.UseExtensionsLogging(new LoggerFactory());
 			 }));
@@ -203,17 +199,17 @@ namespace TestOkur.Report
 		{
 			services.AddMassTransit(x =>
 			{
-				x.AddConsumer<ExamDeletedConsumer>();
-				x.AddConsumer<ExamCreatedConsumer>();
-				x.AddConsumer<ExamUpdatedConsumer>();
-				x.AddConsumer<LessonNameChangedConsumer>();
-				x.AddConsumer<SubjectChangedConsumer>();
-				x.AddConsumer<ClassroomDeletedConsumer>();
-				x.AddConsumer<ClassroomUpdatedConsumer>();
-				x.AddConsumer<StudentDeletedConsumer>();
-				x.AddConsumer<StudentUpdatedConsumer>();
-				x.AddConsumer<EvaluateExamConsumer>();
+				x.AddConsumers(GetConsumerTypes());
 			});
+		}
+
+		private Type[] GetConsumerTypes()
+		{
+			return Assembly.GetExecutingAssembly()
+				.GetTypes()
+				.Where(t => t.IsClass &&
+				            typeof(IConsumer).IsAssignableFrom(t))
+				.ToArray();
 		}
 	}
 }

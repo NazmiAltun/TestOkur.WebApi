@@ -16,7 +16,6 @@
 			var testServer = Create(configureServices);
 			await testServer.Host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
 			{
-				await DbInitializer.CreateLogTableAsync(services);
 				await DbInitializer.SeedAsync(context);
 			});
 			return testServer;

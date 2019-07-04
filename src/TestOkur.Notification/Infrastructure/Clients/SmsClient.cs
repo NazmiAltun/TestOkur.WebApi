@@ -22,6 +22,15 @@
 		{
 			var smsFriendlyBody = sms.Body.ToSmsFriendly();
 
+			var request = CreateRequest(sms, smsFriendlyBody);
+			var response = await _httpClient.SendAsync(request);
+			await EnsureSuccess(response);
+
+			return smsFriendlyBody;
+		}
+
+		private HttpRequestMessage CreateRequest(Sms sms, string smsFriendlyBody)
+		{
 			var values = new Dictionary<string, string>
 			{
 				{ "kullanici", _smsConfiguration.User },
@@ -36,10 +45,7 @@
 				Content = new FormUrlEncodedContent(values),
 			};
 			request.Properties.Add("sms", sms);
-			var response = await _httpClient.SendAsync(request);
-			await EnsureSuccess(response);
-
-			return smsFriendlyBody;
+			return request;
 		}
 
 		private async Task EnsureSuccess(HttpResponseMessage response)
