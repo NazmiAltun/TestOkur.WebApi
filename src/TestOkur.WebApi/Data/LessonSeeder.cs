@@ -10,22 +10,15 @@
 
 	internal class LessonSeeder : ISeeder
 	{
-		private readonly ApplicationDbContext _dbContext;
-
-		public LessonSeeder(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext)
 		{
-			_dbContext = dbContext;
-		}
-
-		public async Task SeedAsync()
-		{
-			if (await _dbContext.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
+			if (await dbContext.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
 			{
 				return;
 			}
 
-			_dbContext.Lessons.AddRange(GetLessons());
-			await _dbContext.SaveChangesAsync();
+			dbContext.Lessons.AddRange(GetLessons());
+			await dbContext.SaveChangesAsync();
 		}
 
 		private static IEnumerable<Lesson> GetLessons()

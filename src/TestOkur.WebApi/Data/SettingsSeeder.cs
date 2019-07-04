@@ -9,13 +9,6 @@
 
 	internal class SettingsSeeder : ISeeder
     {
-	    private readonly ApplicationDbContext _dbContext;
-
-	    public SettingsSeeder(ApplicationDbContext dbContext)
-	    {
-		    _dbContext = dbContext;
-	    }
-
 	    private AppSetting AdminPhones =>
 		    new AppSetting(
 			    AppSettings.AdminPhones,
@@ -52,9 +45,9 @@
 			    "nazmialtun@windowslive.com;nazmialtun88@gmail.com",
 			    "Yönetici e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor");
 
-	    public async Task SeedAsync()
+	    public async Task SeedAsync(ApplicationDbContext dbContext)
 	    {
-		    if (!await _dbContext.AppSettings.AnyAsync())
+		    if (!await dbContext.AppSettings.AnyAsync())
 		    {
 			    var appSettings = new List<AppSetting>
 			    {
@@ -65,8 +58,8 @@
 				    AccountExpirationNotificationDayInterval,
 				    SystemAdminEmails,
 			    };
-			    _dbContext.AppSettings.AddRange(appSettings);
-			    await _dbContext.SaveChangesAsync();
+			    dbContext.AppSettings.AddRange(appSettings);
+			    await dbContext.SaveChangesAsync();
 		    }
 	    }
 	}

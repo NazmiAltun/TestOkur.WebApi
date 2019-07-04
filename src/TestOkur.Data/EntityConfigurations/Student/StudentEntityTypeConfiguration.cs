@@ -13,17 +13,14 @@
 			builder.OwnsName(_ => _.LastName, 50);
 			builder.OwnsOne(u => u.StudentNumber);
 			builder.Property(_ => _.Notes).HasMaxLength(500);
-
 			builder.HasMany(_ => _.Contacts)
 				.WithOne()
 				.HasForeignKey("student_id")
 				.OnDelete(DeleteBehavior.Cascade);
-
 			builder.HasOne(_ => _.Classroom)
 				.WithMany()
 				.HasForeignKey("classroom_id")
 				.OnDelete(DeleteBehavior.Cascade);
-
 			builder.Metadata.FindNavigation(nameof(Student.Contacts))
 				.SetPropertyAccessMode(PropertyAccessMode.Field);
 		}

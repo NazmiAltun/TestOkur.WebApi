@@ -15,16 +15,9 @@
 	{
 		private const string UsersFilePath = "Users.xlsx";
 
-		private readonly ApplicationDbContext _dbContext;
-
-		public UserSeeder(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext)
 		{
-			_dbContext = dbContext;
-		}
-
-		public async Task SeedAsync()
-		{
-			if (await _dbContext.Users.AnyAsync())
+			if (await dbContext.Users.AnyAsync())
 			{
 				return;
 			}
@@ -35,7 +28,7 @@
 			using (var package = new ExcelPackage(file))
 			{
 				var workSheet = package.Workbook.Worksheets.First();
-				var cities = _dbContext.Cities
+				var cities = dbContext.Cities
 					.Include(c => c.Districts)
 					.ToList();
 				for (var i = 2; i < workSheet.Dimension.Rows + 1; i++)
@@ -53,8 +46,8 @@
 				}
 			}
 
-			_dbContext.Users.AddRange(list);
-			await _dbContext.SaveChangesAsync();
+			dbContext.Users.AddRange(list);
+			await dbContext.SaveChangesAsync();
 		}
 
 		private User ParseFromRow(ExcelWorksheet workSheet, int rowIndex, City city, District district)

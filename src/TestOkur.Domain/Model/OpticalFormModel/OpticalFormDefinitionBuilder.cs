@@ -24,20 +24,21 @@
             _textLocations = new List<OpticalFormTextLocation>();
         }
 
+        private string SubFolder =>
+	        _schoolType == SchoolType.PrimaryAndSecondary
+		        ? "PrimarySchool"
+		        : "HighSchool";
+
         public OpticalFormDefinition Build()
         {
-            var subFolder = _schoolType == SchoolType.PrimaryAndSecondary
-                ? "PrimarySchool"
-                : "HighSchool";
-
-            return new OpticalFormDefinition(
+	        return new OpticalFormDefinition(
                 _name,
                 _studentNoFillWidth,
                 _studentNoXInterval,
                 _studentNoYInterval,
                 _hasBoxForStudentNumber,
                 _description,
-                $@"OpticalForms\{subFolder}\{_fileName}",
+                $@"OpticalForms\{SubFolder}\{_fileName}",
                 _textDirection,
                 _studentNumberFillDirection,
                 _schoolType,

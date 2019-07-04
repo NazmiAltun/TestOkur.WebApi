@@ -13,16 +13,10 @@
 	internal class CitySeeder : ISeeder
 	{
 		private const string CityExcelFilePath = "cities-districts.xlsx";
-		private readonly ApplicationDbContext _dbContext;
 
-		public CitySeeder(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext)
 		{
-			_dbContext = dbContext;
-		}
-
-		public async Task SeedAsync()
-		{
-			if (await _dbContext.Cities.AnyAsync())
+			if (await dbContext.Cities.AnyAsync())
 			{
 				return;
 			}
@@ -41,7 +35,7 @@
 				}
 			}
 
-			await AddAsync(cityDict.Values);
+			await AddAsync(cityDict.Values, dbContext);
 		}
 
 		private void AddDistrict(ExcelWorksheet workSheet, int i, Dictionary<long, City> cityDict, City city)
@@ -65,10 +59,10 @@
 			return new City(cityId, cityName);
 		}
 
-		private async Task AddAsync(IEnumerable<City> cities)
+		private async Task AddAsync(IEnumerable<City> cities, ApplicationDbContext dbContext)
 		{
-			_dbContext.Cities.AddRange(cities.ToList());
-			await _dbContext.SaveChangesAsync();
+			dbContext.Cities.AddRange(cities.ToList());
+			await dbContext.SaveChangesAsync();
 		}
 	}
 }
