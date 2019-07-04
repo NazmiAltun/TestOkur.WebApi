@@ -28,30 +28,16 @@
 			SaveExamScoreFormulaCommand command,
 			CancellationToken cancellationToken = default)
 		{
-			var examScoreFormula = await GetExamScoreFormulaAsync(
-				command.ExamId,
-				command.UserId,
-				cancellationToken);
+			await RemoveExamScoreFormulaIfExistsAsync(command, cancellationToken);
 
-			if (examScoreFormula != null)
-			{
-				_dbContext.Remove(examScoreFormula);
-			}
-
-			var exam = await GetExamAsync(
-				command.ExamId,
-				command.UserId,
-				cancellationToken);
-			var formula = await GetScoreFormulaAsync(
-				command.OriginalFormulaId,
-				command.UserId,
-				cancellationToken);
+			var exam = await GetExamAsync(command, cancellationToken);
+			var formula = await GetScoreFormulaAsync(command, cancellationToken);
 			var coefficients = formula.Coefficients
 				.Select(fcoef =>
 					new LessonCoefficient(fcoef.ExamLessonSection, command.Coefficients[(int)fcoef.Id]))
 				.ToList();
 
-			examScoreFormula = new ExamScoreFormula(
+			var examScoreFormula = new ExamScoreFormula(
 				exam,
 				formula.Name.Value,
 				formula.Grade.Value,
@@ -63,31 +49,36 @@
 			return await base.HandleAsync(command, cancellationToken);
 		}
 
-		private async Task<ExamScoreFormula> GetExamScoreFormulaAsync(
-			int examId,
-			int userId,
+		private async Task RemoveExamScoreFormulaIfExistsAsync(
+			SaveExamScoreFormulaCommand command,
 			CancellationToken cancellationToken)
 		{
-			return await _dbContext.ExamScoreFormulas
+			var formula = await _dbContext.ExamScoreFormulas
 				.FirstOrDefaultAsync(
-					e => e.Exam.Id == examId &&
-					     EF.Property<int>(e, "CreatedBy") == userId,
+					e => e.Exam.Id == command.ExamId &&
+					     EF.Property<int>(e, "CreatedBy") == command.UserId,
 					cancellationToken);
+
+			if (formula != null)
+			{
+				_dbContext.Remove(formula);
+			}
 		}
 
-		private async Task<Exam> GetExamAsync(int examId, int userId, CancellationToken cancellationToken)
+		private async Task<Exam> GetExamAsync(
+			SaveExamScoreFormulaCommand command,
+			CancellationToken cancellationToken)
 		{
 			return await _dbContext.Exams
 				.Include(e => e.ExamType)
 				.FirstAsync(
-					e => e.Id == examId &&
-					     EF.Property<int>(e, "CreatedBy") == userId,
+					e => e.Id == command.ExamId &&
+					     EF.Property<int>(e, "CreatedBy") == command.UserId,
 					cancellationToken);
 		}
 
 		private async Task<ScoreFormula> GetScoreFormulaAsync(
-			int id,
-			int userId,
+			SaveExamScoreFormulaCommand command,
 			CancellationToken cancellationToken)
 		{
 			return await _dbContext.ScoreFormulas
@@ -96,7 +87,8 @@
 				.ThenInclude(c => c.ExamLessonSection)
 				.ThenInclude(e => e.Lesson)
 				.FirstAsync(
-					s => EF.Property<int>(s, "CreatedBy") == userId && s.Id == id,
+					s => EF.Property<int>(s, "CreatedBy") == command.UserId &&
+					     s.Id == command.OriginalFormulaId,
 					cancellationToken);
 		}
 	}

@@ -15,21 +15,7 @@
 	public class GetUserScoreFormulasQueryHandler
 		: QueryHandlerAsync<GetUserScoreFormulasQuery, IReadOnlyCollection<ScoreFormulaReadModel>>
 	{
-		private readonly string _connectionString;
-
-		public GetUserScoreFormulasQueryHandler(ApplicationConfiguration configurationOptions)
-		{
-			_connectionString = configurationOptions.Postgres;
-		}
-
-		[PopulateQuery(1)]
-		[QueryLogging(2)]
-		[ResultCaching(3)]
-		public override async Task<IReadOnlyCollection<ScoreFormulaReadModel>> ExecuteAsync(
-			GetUserScoreFormulasQuery query,
-			CancellationToken cancellationToken = default)
-		{
-			const string sql = @"SELECT 
+		private const string Sql = @"SELECT 
 								sf.id,
 								sf.grade_value as grade,
 								sf.name_value as score_name,
@@ -54,13 +40,27 @@
 								WHERE sf.created_by=@userId
 								ORDER BY score_name,els.list_order";
 
+		private readonly string _connectionString;
+
+		public GetUserScoreFormulasQueryHandler(ApplicationConfiguration configurationOptions)
+		{
+			_connectionString = configurationOptions.Postgres;
+		}
+
+		[PopulateQuery(1)]
+		[QueryLogging(2)]
+		[ResultCaching(3)]
+		public override async Task<IReadOnlyCollection<ScoreFormulaReadModel>> ExecuteAsync(
+			GetUserScoreFormulasQuery query,
+			CancellationToken cancellationToken = default)
+		{
 			using (var connection = new NpgsqlConnection(_connectionString))
 			{
 				var dict = new Dictionary<int, ScoreFormulaReadModel>();
 
 				return (await connection
 						.QueryAsync<ScoreFormulaReadModel, LessonCoefficientReadModel, ScoreFormulaReadModel>(
-							sql,
+							Sql,
 							(scoreFormula, coefficient) =>
 							{
 								if (!dict.TryGetValue(scoreFormula.Id, out var scoreFormulaEntry))
@@ -73,7 +73,7 @@
 
 								return scoreFormulaEntry;
 							},
-							new { userId = query.UserId },
+							new { query.UserId },
 							splitOn: "lesson_coefficient_id"))
 					.Distinct()
 					.ToList();

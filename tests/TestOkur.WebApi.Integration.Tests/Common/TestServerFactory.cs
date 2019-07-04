@@ -7,6 +7,7 @@
 	using TestOkur.Data;
 	using TestOkur.Infrastructure.Extensions;
 	using TestOkur.TestHelper;
+	using TestOkur.WebApi.Data;
 
 	public class TestServerFactory : TestServerFactory<TestStartup>
 	{

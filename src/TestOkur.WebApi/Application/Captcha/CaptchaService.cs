@@ -12,6 +12,7 @@
 		private const string Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private const string FontFamily = "Ubuntu";
 		private const int Length = 4;
+		private const int Distortion = 10;
 		private readonly ICacheManager<Captcha> _captchaCache;
 		private readonly Random _random = new Random();
 
@@ -30,7 +31,7 @@
 				ExpirationMode.Absolute,
 				TimeSpan.FromHours(1)));
 
-			return BuildImage(code, 50, 100, 20, 5);
+			return BuildImage(code, 50, 100, 20);
 		}
 
 		public bool Validate(Guid id, string code)
@@ -45,7 +46,7 @@
 			return captcha?.Code == code;
 		}
 
-		private MemoryStream BuildImage(string captchaCode, int imageHeight, int imageWidth, int fontSize, int distortion = 18)
+		private MemoryStream BuildImage(string captchaCode, int imageHeight, int imageWidth, int fontSize)
 		{
 			var memoryStream = new MemoryStream();
 
@@ -66,17 +67,8 @@
 						{
 							for (var x = 0; x < imageWidth; x++)
 							{
-								var newX = (int)(x + (distortion * Math.Sin(Math.PI * y / 64.0)));
-								var newY = (int)(y + (distortion * Math.Cos(Math.PI * x / 64.0)));
-								if (newX < 0 || newX >= imageWidth)
-								{
-									newX = 0;
-								}
-
-								if (newY < 0 || newY >= imageHeight)
-								{
-									newY = 0;
-								}
+								var newX = Distort(x, y, imageWidth);
+								var newY = Distort(y, x, imageHeight);
 
 								cache.SetPixel(x, y, captchaImage.GetPixel(newX, newY));
 							}
@@ -88,6 +80,17 @@
 					}
 				}
 			}
+		}
+
+		private int Distort(int d1, int d2, int limit)
+		{
+			var newD = (int)(d1 + (Distortion * Math.Sin(Math.PI * d2 / 64.0)));
+			if (newD < 0 || newD >= limit)
+			{
+				newD = 0;
+			}
+
+			return newD;
 		}
 
 		private string GenerateCode(int length)

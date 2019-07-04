@@ -8,6 +8,7 @@
 	using Microsoft.Extensions.Logging;
 	using TestOkur.Data;
 	using TestOkur.Infrastructure.Extensions;
+	using TestOkur.WebApi.Data;
 
 	public static class Program
 	{

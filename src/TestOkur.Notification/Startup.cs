@@ -107,15 +107,7 @@
 
 		private void AddMessageBus(IServiceCollection services)
 		{
-			services.AddMassTransit(x =>
-			{
-				x.AddConsumer<NewUserRegisteredConsumer>();
-				x.AddConsumer<SendSmsRequestReceivedConsumer>();
-				x.AddConsumer<SendSmsRequestFailedConsumer>();
-				x.AddConsumer<UserActivatedConsumer>();
-				x.AddConsumer<AccountExtendedConsumer>();
-				x.AddConsumer<ResetPasswordTokenGeneratedConsumer>();
-			});
+			AddMassTransit(services);
 			services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
 			{
 				var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
@@ -138,6 +130,19 @@
 				});
 				cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
 			}));
+		}
+
+		private void AddMassTransit(IServiceCollection services)
+		{
+			services.AddMassTransit(x =>
+			{
+				x.AddConsumer<NewUserRegisteredConsumer>();
+				x.AddConsumer<SendSmsRequestReceivedConsumer>();
+				x.AddConsumer<SendSmsRequestFailedConsumer>();
+				x.AddConsumer<UserActivatedConsumer>();
+				x.AddConsumer<AccountExtendedConsumer>();
+				x.AddConsumer<ResetPasswordTokenGeneratedConsumer>();
+			});
 		}
 
 		private void AddHttpClients(IServiceCollection services)

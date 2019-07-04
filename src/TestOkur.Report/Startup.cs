@@ -169,19 +169,7 @@ namespace TestOkur.Report
 
 		private void AddMessageBus(IServiceCollection services)
 		{
-			services.AddMassTransit(x =>
-			{
-				x.AddConsumer<ExamDeletedConsumer>();
-				x.AddConsumer<ExamCreatedConsumer>();
-				x.AddConsumer<ExamUpdatedConsumer>();
-				x.AddConsumer<LessonNameChangedConsumer>();
-				x.AddConsumer<SubjectChangedConsumer>();
-				x.AddConsumer<ClassroomDeletedConsumer>();
-				x.AddConsumer<ClassroomUpdatedConsumer>();
-				x.AddConsumer<StudentDeletedConsumer>();
-				x.AddConsumer<StudentUpdatedConsumer>();
-				x.AddConsumer<EvaluateExamConsumer>();
-			});
+			AddMassTransit(services);
 			services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
 			 {
 				 var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
@@ -209,6 +197,23 @@ namespace TestOkur.Report
 				 cfg.UseExtensionsLogging(new LoggerFactory());
 			 }));
 			services.AddSingleton<IPublishEndpoint>(x => x.GetService<IBusControl>());
+		}
+
+		private void AddMassTransit(IServiceCollection services)
+		{
+			services.AddMassTransit(x =>
+			{
+				x.AddConsumer<ExamDeletedConsumer>();
+				x.AddConsumer<ExamCreatedConsumer>();
+				x.AddConsumer<ExamUpdatedConsumer>();
+				x.AddConsumer<LessonNameChangedConsumer>();
+				x.AddConsumer<SubjectChangedConsumer>();
+				x.AddConsumer<ClassroomDeletedConsumer>();
+				x.AddConsumer<ClassroomUpdatedConsumer>();
+				x.AddConsumer<StudentDeletedConsumer>();
+				x.AddConsumer<StudentUpdatedConsumer>();
+				x.AddConsumer<EvaluateExamConsumer>();
+			});
 		}
 	}
 }

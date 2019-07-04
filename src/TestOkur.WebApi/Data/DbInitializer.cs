@@ -1,34 +1,28 @@
-﻿namespace TestOkur.WebApi
+﻿namespace TestOkur.WebApi.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Npgsql;
-    using OfficeOpenXml;
-    using TestOkur.Common;
-    using TestOkur.Data;
-    using TestOkur.Domain.Model;
-    using TestOkur.Domain.Model.CityModel;
-    using TestOkur.Domain.Model.ExamModel;
-    using TestOkur.Domain.Model.LessonModel;
-    using TestOkur.Domain.Model.OpticalFormModel;
-    using TestOkur.Domain.Model.ScoreModel;
-    using TestOkur.Domain.Model.SettingModel;
-    using TestOkur.Domain.Model.StudentModel;
-    using TestOkur.Domain.Model.UserModel;
-    using TestOkur.Domain.SeedWork;
-    using TestOkur.WebApi.Configuration;
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics.CodeAnalysis;
+	using System.Linq;
+	using System.Threading.Tasks;
+	using Microsoft.EntityFrameworkCore;
+	using Microsoft.Extensions.DependencyInjection;
+	using Npgsql;
+	using TestOkur.Common;
+	using TestOkur.Data;
+	using TestOkur.Domain.Model;
+	using TestOkur.Domain.Model.ExamModel;
+	using TestOkur.Domain.Model.LessonModel;
+	using TestOkur.Domain.Model.OpticalFormModel;
+	using TestOkur.Domain.Model.ScoreModel;
+	using TestOkur.Domain.Model.SettingModel;
+	using TestOkur.Domain.Model.StudentModel;
+	using TestOkur.Domain.Model.UserModel;
+	using TestOkur.Domain.SeedWork;
+	using TestOkur.WebApi.Configuration;
 
-    public static class DbInitializer
+	public static class DbInitializer
 	{
-		private const string CityExcelFilePath = "cities-districts.xlsx";
-		private const string UsersFilePath = "Users.xlsx";
-
 		public static async Task CreateLogTableAsync(IServiceProvider services)
 		{
 			const string sql = @"CREATE TABLE IF NOT EXISTS request_response_logs(
@@ -55,12 +49,12 @@
 			using (context)
 			{
 				await SeedSettingsAsync(context);
-				await SeedCitiesAsync(context);
+				await new CitySeeder(context).SeedAsync();
 				await SeedLicenseTypesAsync(context);
-				await SeedLessonsAsync(context);
+				await new LessonSeeder(context).SeedAsync();
 				await SeedOpticalFormsAsync(context);
 				await SeedExamTypesAsync(context);
-				await SeedUsersAsync(context);
+				await new UserSeeder(context).SeedAsync();
 				await SeedScoreFormulas(context);
 				await SeedEnumerationAsync(context);
 			}
@@ -400,36 +394,6 @@
 			context.Add(trialExam);
 			context.Add(scholarshipExam);
 
-			await context.SaveChangesAsync();
-		}
-
-		private static async Task SeedLessonsAsync(ApplicationDbContext context)
-		{
-			if (await context.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
-			{
-				return;
-			}
-
-			var lessons = new[]
-			{
-				new Lesson(Lessons.Turkish),
-				new Lesson(Lessons.Mathematics),
-				new Lesson(Lessons.Hb),
-				new Lesson(Lessons.SocialScience),
-				new Lesson(Lessons.Science),
-				new Lesson(Lessons.Geometry),
-				new Lesson(Lessons.Physics),
-				new Lesson(Lessons.Chemistry),
-				new Lesson(Lessons.Biology),
-				new Lesson(Lessons.Literature),
-				new Lesson(Lessons.Geography),
-				new Lesson(Lessons.History),
-				new Lesson(Lessons.Philosophy),
-				new Lesson(Lessons.Religion),
-				new Lesson(Lessons.Language),
-				new Lesson(Lessons.ReformHistory),
-			};
-			context.Lessons.AddRange(lessons);
 			await context.SaveChangesAsync();
 		}
 
@@ -1408,85 +1372,6 @@
 			};
 
 			context.LicenseTypes.AddRange(licenseTypes);
-			await context.SaveChangesAsync();
-		}
-
-		private static async Task SeedUsersAsync(ApplicationDbContext context)
-		{
-			if (await context.Users.AnyAsync())
-			{
-				return;
-			}
-
-			var list = new List<User>();
-			var file = new FileInfo(Path.Combine("Data", UsersFilePath));
-
-			using (var package = new ExcelPackage(file))
-			{
-				var workSheet = package.Workbook.Worksheets.First();
-				var cities = context.Cities
-					.Include(c => c.Districts)
-					.ToList();
-				for (var i = 2; i < workSheet.Dimension.Rows + 1; i++)
-				{
-					var city = cities.First(c => c.Id == Convert.ToInt32(workSheet.Cells[i, 20].Value));
-					var district = city.Districts.First(d => d.Id == Convert.ToInt32(workSheet.Cells[i, 18].Value));
-					var smsBalance = Convert.ToInt32(workSheet.Cells[i, 17].Value);
-
-					list.Add(new User(
-						workSheet.Cells[i, 29].Value.ToString(),
-						city,
-						district,
-						workSheet.Cells[i, 6].Value.ToString(),
-						workSheet.Cells[i, 7].Value.ToString(),
-						workSheet.Cells[i, 3].Value.ToString(),
-						workSheet.Cells[i, 4].Value.ToString(),
-						workSheet.Cells[i, 5].Value.ToString(),
-						workSheet.Cells[i, 1].Value.ToString(),
-						workSheet.Cells[i, 2].Value.ToString()));
-
-					if (smsBalance > 0)
-					{
-						list.Last().AddSmsBalance(smsBalance);
-					}
-				}
-			}
-
-			context.Users.AddRange(list);
-			await context.SaveChangesAsync();
-		}
-
-		private static async Task SeedCitiesAsync(ApplicationDbContext context)
-		{
-			if (await context.Cities.AnyAsync())
-			{
-				return;
-			}
-
-			var cityDict = new Dictionary<int, City>();
-			var file = new FileInfo(Path.Combine("Data", CityExcelFilePath));
-
-			using (var package = new ExcelPackage(file))
-			{
-				var workSheet = package.Workbook.Worksheets.First();
-
-				for (var i = 2; i < workSheet.Dimension.Rows + 1; i++)
-				{
-					var cityId = Convert.ToInt32(workSheet.Cells[i, 1].Value);
-					var cityName = workSheet.Cells[i, 2].Value.ToString();
-					var districtId = Convert.ToInt32(workSheet.Cells[i, 3].Value);
-					var districtName = workSheet.Cells[i, 4].Value.ToString();
-
-					if (!cityDict.ContainsKey(cityId))
-					{
-						cityDict.Add(cityId, new City(cityId, cityName));
-					}
-
-					cityDict[cityId].AddDistrict(districtId, districtName);
-				}
-			}
-
-			context.Cities.AddRange(cityDict.Values.ToList());
 			await context.SaveChangesAsync();
 		}
 	}

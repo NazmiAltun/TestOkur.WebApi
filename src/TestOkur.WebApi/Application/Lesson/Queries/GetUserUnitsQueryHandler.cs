@@ -62,7 +62,7 @@
 
 							return unitEntry;
 						},
-						new { userId = query.UserId },
+						new { query.UserId },
 						splitOn: "subject_id"))
 					.Distinct()
 					.ToList();

@@ -15,6 +15,14 @@
 	public sealed class GetUserStudentsQueryHandler
 		: QueryHandlerAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>
 	{
+		private const string Sql = @"SELECT s.*,cr.name_value, cr.grade_value, c.phone_value as phone,
+								s.classroom_id, c.contact_type_id as contact_type  FROM students s
+								INNER JOIN classrooms cr on cr.Id=s.classroom_id
+								LEFT JOIN contacts c ON c.student_id=s.Id
+								WHERE s.created_by=@userId
+								ORDER BY s.student_number_value
+                                ";
+
 		private readonly string _connectionString;
 
 		public GetUserStudentsQueryHandler(ApplicationConfiguration configurationOptions)
@@ -29,20 +37,12 @@
 			GetUserStudentsQuery query,
 			CancellationToken cancellationToken = default)
 		{
-			const string sql = @"SELECT s.*,cr.name_value, cr.grade_value, c.phone_value as phone,
-								s.classroom_id, c.contact_type_id as contact_type  FROM students s
-								INNER JOIN classrooms cr on cr.Id=s.classroom_id
-								LEFT JOIN contacts c ON c.student_id=s.Id
-								WHERE s.created_by=@userId
-								ORDER BY s.student_number_value
-                                ";
-
 			using (var connection = new NpgsqlConnection(_connectionString))
 			{
 				var dictionary = new Dictionary<int, StudentReadModel>();
 
 				return (await connection.QueryAsync<StudentReadModel, ContactReadModel, StudentReadModel>(
-						sql,
+						Sql,
 						(student, contact) =>
 						{
 							if (!dictionary.TryGetValue(student.Id, out var studentEntry))
@@ -51,17 +51,21 @@
 								dictionary.Add(studentEntry.Id, studentEntry);
 							}
 
-							if (!string.IsNullOrEmpty(contact?.Phone))
-							{
-								studentEntry.Contacts.Add(contact);
-							}
-
+							AddContact(contact, studentEntry);
 							return studentEntry;
 						},
-						new { userId = query.UserId },
+						new { query.UserId },
 						splitOn: "phone"))
 					.Distinct()
 					.ToList();
+			}
+		}
+
+		private void AddContact(ContactReadModel contact, StudentReadModel studentEntry)
+		{
+			if (!string.IsNullOrEmpty(contact?.Phone))
+			{
+				studentEntry.Contacts.Add(contact);
 			}
 		}
 	}

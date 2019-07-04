@@ -108,28 +108,15 @@
 				app.UseDeveloperExceptionPage();
 			}
 
-			var hcOptions = new HealthCheckOptions()
-			{
-				Predicate = _ => true,
-				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-			};
+			UseHealthChecks(app);
 			app.UseCors(CorsPolicyName);
 			app.UseMiddleware<RequestResponseLoggingMiddleware>();
-			app.UseHealthChecks("/hc", hcOptions);
 			app.UseAuthentication();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
 			app.UseMvc();
 			app.UseStaticFiles();
 			InitializeFluentMappings();
-
-			if (Configuration.GetValue<bool>("SwaggerEnabled"))
-			{
-				app.UseSwagger();
-				app.UseSwaggerUI(c =>
-				{
-					c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestOkur Web Api");
-				});
-			}
+			UseSwagger(app);
 		}
 
 		protected virtual void AddMessageBus(
@@ -177,6 +164,27 @@
 					options.RequireHttpsMetadata = OAuthConfiguration.RequireHttpsMetadata;
 					options.ApiName = OAuthConfiguration.ApiName;
 				});
+		}
+
+		private static void UseHealthChecks(IApplicationBuilder app)
+		{
+			var hcOptions = new HealthCheckOptions()
+			{
+				Predicate = _ => true,
+				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+			};
+			app.UseHealthChecks("/hc", hcOptions);
+		}
+
+		private void UseSwagger(IApplicationBuilder app)
+		{
+			if (!Configuration.GetValue<bool>("SwaggerEnabled"))
+			{
+				return;
+			}
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestOkur Web Api"); });
 		}
 
 		private void AddOptions(IServiceCollection services)
