@@ -14,6 +14,19 @@
 	public sealed class GetUserUnitsQueryHandler
 		: QueryHandlerAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>
 	{
+		private const string Sql = @"SELECT u.Id,
+								u.name_value as name,
+								u.lesson_id,
+								l.name_value as lesson,
+								u.grade_value as grade,
+								s.id as subject_id,
+								s.name_value as subject_name
+								FROM units u
+								INNER JOIN lessons l on l.id=u.lesson_id
+								LEFT JOIN subjects s on s.unit_id=u.id
+								WHERE u.created_by=@userId
+								ORDER BY u.name_value,s.name_value";
+
 		private readonly string _connectionString;
 
 		public GetUserUnitsQueryHandler(ApplicationConfiguration configurationOptions)
@@ -28,25 +41,12 @@
 			GetUserUnitsQuery query,
 			CancellationToken cancellationToken = default)
 		{
-			const string sql = @"SELECT u.Id,
-								u.name_value as name,
-								u.lesson_id,
-								l.name_value as lesson,
-								u.grade_value as grade,
-								s.id as subject_id,
-								s.name_value as subject_name
-								FROM units u
-								INNER JOIN lessons l on l.id=u.lesson_id
-								LEFT JOIN subjects s on s.unit_id=u.id
-								WHERE u.created_by=@userId
-								ORDER BY u.name_value,s.name_value";
-
 			using (var connection = new NpgsqlConnection(_connectionString))
 			{
 				var dictionary = new Dictionary<int, UnitReadModel>();
 
 				return (await connection.QueryAsync<UnitReadModel, SubjectReadModel, UnitReadModel>(
-						sql,
+						Sql,
 						(unit, subject) =>
 						{
 							if (!dictionary.TryGetValue(unit.Id, out var unitEntry))

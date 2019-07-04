@@ -68,14 +68,19 @@
 						Scope = _oAuthConfiguration.ApiName,
 					});
 				token = tokenResponse.AccessToken;
-				_tokenCache.Add(new CacheItem<string>(
-					CacheKey,
-					token,
-					ExpirationMode.Absolute,
-					TimeSpan.FromMinutes(59)));
+				StoreAccessTokenInCache(token);
 			}
 
 			_httpClient.SetBearerToken(token);
+		}
+
+		private void StoreAccessTokenInCache(string token)
+		{
+			_tokenCache.Add(new CacheItem<string>(
+				CacheKey,
+				token,
+				ExpirationMode.Absolute,
+				TimeSpan.FromMinutes(59)));
 		}
 	}
 }

@@ -32,14 +32,7 @@
 
         public async Task Consume(ConsumeContext<ISendSmsRequestReceived> context)
         {
-	        var smsList = context.Message.SmsMessages
-		        .Select(s => new Sms(s)
-		        {
-			        CreatedOnDateTimeUtc = context.Message.CreatedOnUTC,
-			        UserId = context.Message.UserId,
-			        UserSubjectId = context.Message.UserSubjectId,
-		        }).ToList();
-
+	        var smsList = ToSmsList(context);
 	        await StoreAsync(smsList);
 
 	        foreach (var message in smsList)
@@ -54,6 +47,17 @@
                     await PublishSmsRequestFailedEventAsync(context, message, ex);
                 }
             }
+        }
+
+        private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)
+        {
+	        return context.Message.SmsMessages
+		        .Select(s => new Sms(s)
+		        {
+			        CreatedOnDateTimeUtc = context.Message.CreatedOnUTC,
+			        UserId = context.Message.UserId,
+			        UserSubjectId = context.Message.UserSubjectId,
+		        }).ToList();
         }
 
         private async Task StoreAsync(IEnumerable<Sms> list)

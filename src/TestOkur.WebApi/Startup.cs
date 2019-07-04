@@ -285,7 +285,6 @@
 					context.User.Identity.IsAuthenticated ||
 					context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
 											   c.Value == Clients.Public))));
-
 			services.AddAuthorization(options => options.AddPolicy(
 				AuthorizationPolicies.Private,
 				policy => policy.RequireAssertion(context =>

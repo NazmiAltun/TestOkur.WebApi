@@ -14,6 +14,16 @@
 
 	public sealed class ExamTypeQueryHandler : QueryHandlerAsync<ExamTypeQuery, IReadOnlyCollection<ExamTypeReadModel>>
 	{
+		private const string ExamTypesSelectSql = @"
+                                SELECT 
+                                ET.id,
+                                ET.name_value AS exam_type_name,
+                                ET.default_incorrect_elimination_rate_value,
+								OFT.optical_form_type_id
+                                FROM exam_types ET
+								INNER JOIN exam_type_optical_form_types OFT ON ET.id=OFT.exam_type_id
+                                ORDER BY ET.order";
+
 		private readonly string _connectionString;
 		private readonly IQueryProcessor _queryProcessor;
 
@@ -27,22 +37,13 @@
 		[ResultCaching(2)]
 		public override async Task<IReadOnlyCollection<ExamTypeReadModel>> ExecuteAsync(ExamTypeQuery query, CancellationToken cancellationToken = default)
 		{
-			const string examTypesSql = @"
-                                SELECT 
-                                ET.id,
-                                ET.name_value AS exam_type_name,
-                                ET.default_incorrect_elimination_rate_value,
-								OFT.optical_form_type_id
-                                FROM exam_types ET
-								INNER JOIN exam_type_optical_form_types OFT ON ET.id=OFT.exam_type_id
-                                ORDER BY ET.order";
-			var formTypes = await _queryProcessor
-				.ExecuteAsync(new GetAllOpticalFormTypesQuery(), cancellationToken);
+			var formTypes = await GetOpticalFormTypesAsync(cancellationToken);
 			var dictionary = new Dictionary<int, ExamTypeReadModel>();
+
 			using (var connection = new NpgsqlConnection(_connectionString))
 			{
 				var examTypes = (await connection.QueryAsync<ExamTypeReadModel, dynamic, ExamTypeReadModel>(
-					examTypesSql,
+					ExamTypesSelectSql,
 					(type, _) =>
 					{
 						if (!dictionary.TryGetValue(type.Id, out var examTypeEntry))
@@ -65,6 +66,12 @@
 
 				return examTypes;
 			}
+		}
+
+		private async Task<IReadOnlyCollection<OpticalFormTypeReadModel>> GetOpticalFormTypesAsync(CancellationToken cancellationToken)
+		{
+			return await _queryProcessor
+				.ExecuteAsync(new GetAllOpticalFormTypesQuery(), cancellationToken);
 		}
 	}
 }

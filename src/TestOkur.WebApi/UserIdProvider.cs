@@ -48,22 +48,31 @@
 
 			if (idDictionary == null)
 			{
-				const string sql = "SELECT id,subject_id FROM users";
-
-				using (var connection = new NpgsqlConnection(_connectionString))
-				{
-					idDictionary = (await connection.QueryAsync<UserReadModel>(sql))
-						  .ToDictionary(u => u.SubjectId, u => u.Id);
-				}
-
-				_cacheManager.Add(new CacheItem<Dictionary<string, int>>(
-					CacheKey,
-					idDictionary,
-					ExpirationMode.Absolute,
-					CacheDuration));
+				idDictionary = await ReadIdsFromDbAsync();
+				StoreToCache(idDictionary);
 			}
 
 			return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
+		}
+
+		private async Task<Dictionary<string, int>> ReadIdsFromDbAsync()
+		{
+			const string sql = "SELECT id,subject_id FROM users";
+
+			using (var connection = new NpgsqlConnection(_connectionString))
+			{
+				return (await connection.QueryAsync<UserReadModel>(sql))
+					.ToDictionary(u => u.SubjectId, u => u.Id);
+			}
+		}
+
+		private void StoreToCache(Dictionary<string, int> idDictionary)
+		{
+			_cacheManager.Add(new CacheItem<Dictionary<string, int>>(
+				CacheKey,
+				idDictionary,
+				ExpirationMode.Absolute,
+				CacheDuration));
 		}
 	}
 }

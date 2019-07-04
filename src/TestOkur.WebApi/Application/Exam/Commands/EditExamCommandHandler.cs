@@ -42,17 +42,7 @@
 
 			if (exam != null)
 			{
-				exam.Update(
-					command.NewName,
-					await _dbContext.ExamTypes.FirstAsync(e => e.Id == command.NewExamTypeId, cancellationToken),
-					command.NewIncorrectEliminationRate,
-					command.NewExamDate,
-					command.NewApplicableFormTypeCode,
-					Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.NewAnswerFormFormat),
-					await GetLessonAsync(command.NewLessonId),
-					Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.NewExamBookletTypeId),
-					command.NewNotes);
-
+				await UpdateExamAsync(command, cancellationToken, exam);
 				_dbContext.Attach(exam.ExamBookletType);
 				_dbContext.Attach(exam.AnswerFormFormat);
 				await _dbContext.SaveChangesAsync(cancellationToken);
@@ -60,6 +50,20 @@
 			}
 
 			return await base.HandleAsync(command, cancellationToken);
+		}
+
+		private async Task UpdateExamAsync(EditExamCommand command, CancellationToken cancellationToken, Exam exam)
+		{
+			exam.Update(
+				command.NewName,
+				await _dbContext.ExamTypes.FirstAsync(e => e.Id == command.NewExamTypeId, cancellationToken),
+				command.NewIncorrectEliminationRate,
+				command.NewExamDate,
+				command.NewApplicableFormTypeCode,
+				Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.NewAnswerFormFormat),
+				await GetLessonAsync(command.NewLessonId),
+				Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.NewExamBookletTypeId),
+				command.NewNotes);
 		}
 
 		private async Task PublishEventAsync(

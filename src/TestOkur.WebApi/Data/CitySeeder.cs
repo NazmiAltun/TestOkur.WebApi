@@ -28,23 +28,33 @@
 			}
 
 			var cityDict = new Dictionary<long, City>();
-			var file = new FileInfo(Path.Combine("Data", CityExcelFilePath));
 
-			using (var package = new ExcelPackage(file))
+			using (var package = GetExcelPackage())
 			{
 				var workSheet = package.Workbook.Worksheets.First();
 
 				for (var i = 2; i < workSheet.Dimension.Rows + 1; i++)
 				{
 					var city = ParseCity(workSheet, i);
-					var districtId = Convert.ToInt32(workSheet.Cells[i, 3].Value);
-					var districtName = workSheet.Cells[i, 4].Value.ToString();
 					cityDict.TryAdd(city.Id, city);
-					cityDict[city.Id].AddDistrict(districtId, districtName);
+					AddDistrict(workSheet, i, cityDict, city);
 				}
 			}
 
 			await AddAsync(cityDict.Values);
+		}
+
+		private void AddDistrict(ExcelWorksheet workSheet, int i, Dictionary<long, City> cityDict, City city)
+		{
+			var districtId = Convert.ToInt32(workSheet.Cells[i, 3].Value);
+			var districtName = workSheet.Cells[i, 4].Value.ToString();
+			cityDict[city.Id].AddDistrict(districtId, districtName);
+		}
+
+		private ExcelPackage GetExcelPackage()
+		{
+			var file = new FileInfo(Path.Combine("Data", CityExcelFilePath));
+			return new ExcelPackage(file);
 		}
 
 		private City ParseCity(ExcelWorksheet workSheet, int rowIndex)
