@@ -1,0 +1,3 @@
+exclude:
+- /src/TestOkur.WebApi/Migrations/.*
+- .*/deploy-prod\.sh

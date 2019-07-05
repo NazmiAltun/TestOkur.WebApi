@@ -8,14 +8,14 @@
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="2.2.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="2.2.3" />
     <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="2.2.2" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="2.2.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="2.2.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="2.2.4" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
-    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.5.1" />
-    <PackageReference Include="MassTransit.Extensions.Logging" Version="5.5.1" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="5.5.1" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.5.2" />
+    <PackageReference Include="MassTransit.Extensions.Logging" Version="5.5.2" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="5.5.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
     <PackageReference Include="Sentry.AspNetCore" Version="1.2.0" />
