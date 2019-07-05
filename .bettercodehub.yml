@@ -1,3 +1,6 @@
 exclude:
 - /src/TestOkur.WebApi/Migrations/.*
 - .*/deploy-prod\.sh
+languages:
+- csharp
+component_depth: 6
