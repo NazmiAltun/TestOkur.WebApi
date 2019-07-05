@@ -37,8 +37,6 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --settings
-      - test.runsettings
       - --logger
       - trx;LogFileName=/tests/testokur-notification-unit-test-results.xml
   webapi-unit-test:
@@ -50,8 +48,6 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --settings
-      - test.runsettings
       - --logger
       - trx;LogFileName=/tests/testokur-webapi-unit-test-results.xml
   domain-unit-test:
@@ -62,9 +58,7 @@ services:
       target: domaintest
     entrypoint:
       - dotnet
-      - test
-      - --settings
-      - test.runsettings
+      - test  
       - --logger
       - trx;LogFileName=/tests/testokur-domain-unit-test-results.xml
   webapi-integration-test:
@@ -76,8 +70,6 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --settings
-      - test.runsettings
       - --logger
       - trx;LogFileName=/tests/testokur-webapi-integration-test-results.xml
     volumes:
@@ -103,8 +95,6 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --settings
-      - test.runsettings
       - --logger
       - trx;LogFileName=/tests/testokur-report-integration-test-results.xml
     depends_on:
@@ -123,7 +113,7 @@ services:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
       target: integrationtest
-    command: sh -c "/wait && dotnet test --settings test.runsettings --logger trx;LogFileName=/tests/testokur-notification-integration-test-results.xml"
+    command: sh -c "/wait && dotnet test --logger trx;LogFileName=/tests/testokur-notification-integration-test-results.xml"
     depends_on:
       - rabbitmq
       - mockserver
