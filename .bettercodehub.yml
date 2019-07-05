@@ -3,4 +3,3 @@ exclude:
 - .*/deploy-prod\.sh
 languages:
 - csharp
-component_depth: 6
