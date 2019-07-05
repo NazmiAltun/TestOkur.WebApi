@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Notification
 {
 	using System;
+	using System.Diagnostics.CodeAnalysis;
 	using System.Net.Http;
 	using GreenPipes;
 	using HealthChecks.UI.Client;
@@ -24,6 +25,7 @@
 	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
 
+	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
 	{
 		public Startup(IConfiguration configuration)

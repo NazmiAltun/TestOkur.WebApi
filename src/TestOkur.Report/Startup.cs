@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
-using TestOkur.Domain.SeedWork;
 using TestOkur.Report.Extensions;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
-
 namespace TestOkur.Report
 {
 	using System;
@@ -32,10 +30,10 @@ namespace TestOkur.Report
 	using TestOkur.Infrastructure.Mvc;
 	using TestOkur.Optic.Form;
 	using TestOkur.Report.Configuration;
-	using TestOkur.Report.Consumers;
 	using TestOkur.Report.Infrastructure;
 	using TestOkur.Report.Repositories;
 
+	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
 	{
 		public Startup(IConfiguration configuration)

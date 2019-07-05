@@ -3,6 +3,7 @@
 	extern alias signed;
 
 	using System;
+	using System.Diagnostics.CodeAnalysis;
 	using System.Net.Http;
 	using System.Reflection;
 	using CacheManager.Core;
@@ -47,6 +48,7 @@
 	using TestOkur.WebApi.Extensions;
 	using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
+	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
 	{
 		private const string CorsPolicyName = "EnableCorsToAll";

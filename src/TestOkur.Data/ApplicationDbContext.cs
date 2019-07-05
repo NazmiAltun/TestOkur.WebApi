@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Data
 {
 	using System;
+	using System.Diagnostics.CodeAnalysis;
 	using System.Reflection;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -19,6 +20,7 @@
 	using TestOkur.Infrastructure;
 	using TestOkur.Infrastructure.Extensions;
 
+	[ExcludeFromCodeCoverage]
 	public class ApplicationDbContext : DbContext
 	{
 		private readonly IUserIdProvider _userIdProvider;
