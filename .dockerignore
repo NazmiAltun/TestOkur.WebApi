@@ -18,4 +18,4 @@ Jenkinsfile
 README.md
 deploy.sh
 test.Dockerfile
-test_output/
+coverage/
