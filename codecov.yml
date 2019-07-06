@@ -1,0 +1,17 @@
+coverage:
+  status:
+    project:
+      default: false
+    patch:
+      default: false
+
+comment:
+  layout: "diff"
+
+flags:
+  production:
+    paths:
+      - src/
+  test:
+    paths:
+      - tests/
