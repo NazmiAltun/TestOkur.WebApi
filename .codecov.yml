@@ -1,17 +1,13 @@
 coverage:
   status:
     project:
-      default: false
+      default: off
     patch:
-      default: false
-
-comment:
-  layout: "diff"
-
+      default: off
 flags:
-  production:
+  app:
     paths:
       - src/
-  test:
+  tests:
     paths:
       - tests/
