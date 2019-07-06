@@ -244,5 +244,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 tools/
-
+test_output/
 !stylecop.json

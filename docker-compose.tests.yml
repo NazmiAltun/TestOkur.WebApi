@@ -37,8 +37,11 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --logger
-      - trx;LogFileName=/tests/testokur-notification-unit-test-results.xml
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=output/notification-unit-test.xml
+      - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - ./test_output/:/src/tests/TestOkur.Notification.Unit.Tests/output/
   webapi-unit-test:
     image: testokur-webapi-unit-test
     build:
@@ -48,8 +51,11 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --logger
-      - trx;LogFileName=/tests/testokur-webapi-unit-test-results.xml
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=output/webapi-unit-test.xml
+      - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - ./test_output/:/src/tests/TestOkur.WebApi.Unit.Tests/output/
   domain-unit-test:
     image: testokur-domain-unit-test
     build:
@@ -58,9 +64,12 @@ services:
       target: domaintest
     entrypoint:
       - dotnet
-      - test  
-      - --logger
-      - trx;LogFileName=/tests/testokur-domain-unit-test-results.xml
+      - test
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=output/domain-unit-test.xml
+      - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - ./test_output/:/src/tests/TestOkur.Domain.Unit.Tests/output/
   webapi-integration-test:
     image: testokur-webapi-integration-test
     build:
@@ -70,10 +79,11 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --logger
-      - trx;LogFileName=/tests/testokur-webapi-integration-test-results.xml
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=output/webapi-integration-test.xml
+      - /p:CoverletOutputFormat="opencover"
     volumes:
-      - test_output:/tests
+      - ./test_output/:/src/tests/TestOkur.WebApi.Integration.Tests/output/
     depends_on:
       - rabbitmq
       - redis
@@ -95,8 +105,11 @@ services:
     entrypoint:
       - dotnet
       - test
-      - --logger
-      - trx;LogFileName=/tests/testokur-report-integration-test-results.xml
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=output/report-integration-test.xml
+      - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - ./test_output/:/src/tests/TestOkur.Report.Integration.Tests/output/
     depends_on:
       - mongo
       - rabbitmq
@@ -105,15 +118,15 @@ services:
       - RabbitMqConfiguration__Uri=rabbitmq
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
       - OAuthConfiguration__Authority=http://mockserver:8080/
-    volumes:
-      - test_output:/tests
   notification-integration-test:
     image: testokur-notification-integration-test
     build:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
       target: integrationtest
-    command: sh -c "/wait && dotnet test --logger trx;LogFileName=/tests/testokur-notification-integration-test-results.xml"
+    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=output/notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
+    volumes:
+      - ./test_output/:/src/tests/TestOkur.Notification.Integration.Tests/output/
     depends_on:
       - rabbitmq
       - mockserver
@@ -127,5 +140,3 @@ services:
       - WebApiUrl=http://mockserver:8080/
       - SmsConfiguration__ServiceUrl=http://mockserver:8080/
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
-volumes:
-  test_output:
