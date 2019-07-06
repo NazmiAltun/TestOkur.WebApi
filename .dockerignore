@@ -20,3 +20,4 @@ deploy.sh
 test.Dockerfile
 coverage/
 deploy-*.sh
+tmp/

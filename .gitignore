@@ -245,4 +245,5 @@ ModelManifest.xml
 .fake/
 tools/
 coverage/
+tmp/
 !stylecop.json
