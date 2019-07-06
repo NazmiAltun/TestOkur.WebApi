@@ -19,3 +19,4 @@ README.md
 deploy.sh
 test.Dockerfile
 coverage/
+deploy-*.sh
