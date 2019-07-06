@@ -16,6 +16,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
+            chown -R $USER:$USER /coverage
             mkdir -p /coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
