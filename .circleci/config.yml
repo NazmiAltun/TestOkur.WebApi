@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            mkdir -p /coverage
+            mkdir -p /tmp/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
