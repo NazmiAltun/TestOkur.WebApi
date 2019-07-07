@@ -24,10 +24,8 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
             docker-compose -f docker-compose.tests.yml down
-      - store_artifacts:
-          path: /tmp/coverage
       - codecov/upload:
-          file: /coverage/*.xml
+          file: /tmp/coverage/*.xml
       - run:
           name: Build images
           command: |
