@@ -23,5 +23,5 @@ jobs:
       - store_artifacts:
           path: /tmp/coverage
       - codecov/upload:
-          file: /tmp/coverage/*.xml
+          file: /tmp/coverage/domain-unit-test.xml
     
