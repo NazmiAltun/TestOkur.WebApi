@@ -17,6 +17,7 @@ jobs:
           name: Run Tests
           command: |
             mkdir -p /tmp/coverage
+            chmod -R 777 /tmp/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
@@ -24,11 +25,6 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
             docker-compose -f docker-compose.tests.yml down
-      - persist_to_workspace:
-          root: tmp
-          paths: 
-            - coverage/notification-unit-test.xml
-            - coverage/domain-unit-test.xml
       - codecov/upload:
           file: /tmp/coverage/*.xml
       - run:
