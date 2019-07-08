@@ -30,6 +30,7 @@ services:
       - '27017:27017'
   notification-unit-test:
     image: testokur-notification-unit-test
+    container_name: notification-unit-test
     build:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
@@ -38,12 +39,11 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=output/notification-unit-test.xml
+      - /p:CoverletOutput=../../../notification-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
-    volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Notification.Unit.Tests/output/
   webapi-unit-test:
     image: testokur-webapi-unit-test
+    container_name: webapi-unit-test
     build:
       context: .
       dockerfile: src/TestOkur.WebApi/Dockerfile
@@ -52,12 +52,11 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=output/webapi-unit-test.xml
+      - /p:CoverletOutput=../../../webapi-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
-    volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.WebApi.Unit.Tests/output/
   domain-unit-test:
     image: testokur-domain-unit-test
+    container_name: domain-unit-test
     build:
       context: .
       dockerfile: src/TestOkur.WebApi/Dockerfile
@@ -66,12 +65,11 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=output/domain-unit-test.xml
+      - /p:CoverletOutput=../../../domain-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
-    volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Domain.Unit.Tests/output/
   webapi-integration-test:
     image: testokur-webapi-integration-test
+    container_name: webapi-integration-test
     build:
       context: .
       dockerfile: src/TestOkur.WebApi/Dockerfile
@@ -80,10 +78,8 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=output/webapi-integration-test.xml
+      - /p:CoverletOutput=../../../webapi-integration-test.xml
       - /p:CoverletOutputFormat="opencover"
-    volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.WebApi.Integration.Tests/output/
     depends_on:
       - rabbitmq
       - redis
@@ -98,6 +94,7 @@ services:
       - OAuthConfiguration__Authority=http://mockserver:8080/
   report-integration-test:
     image: testokur-report-integration-test
+    container_name: report-integration-test
     build:
       context: .
       dockerfile: src/TestOkur.Report/Dockerfile
@@ -106,10 +103,8 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=output/report-integration-test.xml
+      - /p:CoverletOutput=../../../report-integration-test.xml
       - /p:CoverletOutputFormat="opencover"
-    volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Report.Integration.Tests/output/
     depends_on:
       - mongo
       - rabbitmq
@@ -120,13 +115,12 @@ services:
       - OAuthConfiguration__Authority=http://mockserver:8080/
   notification-integration-test:
     image: testokur-notification-integration-test
+    container_name: notification-integration-test
     build:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
       target: integrationtest
-    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=output/notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
-    volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Notification.Integration.Tests/output/
+    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
     depends_on:
       - rabbitmq
       - mockserver
