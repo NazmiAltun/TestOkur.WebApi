@@ -21,29 +21,5 @@ jobs:
             docker cp domain-unit-test:/coverage.xml /tmp/coverage/domain-unit-test.xml
             docker-compose -f docker-compose.tests.yml down
       - codecov/upload:
-          file: ./tmp/coverage/*.xml
-      - run:
-          name: Build images
-          command: |
-            docker-compose build webapi notification report
-      - run:
-          name: Compress images
-          command: |
-            docker save -o webapi.tar testokur-webapi:latest
-            docker save -o report.tar testokur-report:latest
-            docker save -o notification.tar testokur-notification:latest
-      - run:
-          name: Deploy WebApi App
-          command: |
-            scp webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-webapi-qa.sh
-      - run:
-          name: Deploy Report App
-          command: |
-            scp report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-report-qa.sh
-      - run:
-          name: Deploy Notification App
-          command: |
-            scp notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-notification-qa.sh
+          file: /tmp/coverage/*.xml
+    
