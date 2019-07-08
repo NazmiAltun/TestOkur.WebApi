@@ -24,6 +24,10 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
             docker-compose -f docker-compose.tests.yml down
+      - run:
+          name: Merge Coverage Reports
+          command: |
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
       - codecov/upload:
           file: /tmp/coverage/Cobertura.xml
       - run:
