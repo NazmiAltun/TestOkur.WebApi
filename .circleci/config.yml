@@ -20,6 +20,8 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker cp domain-unit-test:/coverage.xml /tmp/coverage/domain-unit-test.xml
             docker-compose -f docker-compose.tests.yml down
+      - store_artifacts:
+          path: /tmp/coverage
       - codecov/upload:
           file: /tmp/coverage/*.xml
     
