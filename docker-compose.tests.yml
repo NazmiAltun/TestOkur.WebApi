@@ -39,7 +39,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../notification-unit-test.xml
+      - /p:CoverletOutput=../../../coverage.xml
       - /p:CoverletOutputFormat="opencover"
   webapi-unit-test:
     image: testokur-webapi-unit-test
@@ -52,7 +52,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../webapi-unit-test.xml
+      - /p:CoverletOutput=../../../coverage.xml
       - /p:CoverletOutputFormat="opencover"
   domain-unit-test:
     image: testokur-domain-unit-test
@@ -65,7 +65,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../domain-unit-test.xml
+      - /p:CoverletOutput=../../../coverage.xml
       - /p:CoverletOutputFormat="opencover"
   webapi-integration-test:
     image: testokur-webapi-integration-test
@@ -78,7 +78,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../webapi-integration-test.xml
+      - /p:CoverletOutput=../../../coverage.xml
       - /p:CoverletOutputFormat="opencover"
     depends_on:
       - rabbitmq
@@ -103,7 +103,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../report-integration-test.xml
+      - /p:CoverletOutput=../../../coverage.xml
       - /p:CoverletOutputFormat="opencover"
     depends_on:
       - mongo
@@ -120,7 +120,7 @@ services:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
       target: integrationtest
-    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
+    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage.xml /p:CoverletOutputFormat='opencover'"
     depends_on:
       - rabbitmq
       - mockserver
