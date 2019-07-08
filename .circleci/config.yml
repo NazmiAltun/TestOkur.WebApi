@@ -25,6 +25,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
             docker-compose -f docker-compose.tests.yml down
+            ls -l /tmp/coverage
       - codecov/upload:
           file: /tmp/coverage/*.xml
       - run:

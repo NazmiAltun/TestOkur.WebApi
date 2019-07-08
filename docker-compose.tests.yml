@@ -70,6 +70,7 @@ services:
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - ./tmp/coverage/:/src/tests/TestOkur.Domain.Unit.Tests/output/
+    user: root
   webapi-integration-test:
     image: testokur-webapi-integration-test
     build:
