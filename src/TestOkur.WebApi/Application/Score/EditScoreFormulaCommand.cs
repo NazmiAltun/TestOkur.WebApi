@@ -17,6 +17,11 @@
 			Coefficients = coefficients;
 		}
 
+		public EditScoreFormulaCommand()
+		{
+			Coefficients = new Dictionary<int, float>();
+		}
+
 		[DataMember]
 		public int ScoreFormulaId { get; private set; }
 
@@ -25,6 +30,5 @@
 
 		[DataMember]
 		public Dictionary<int, float> Coefficients { get; private set; }
-			= new Dictionary<int, float>();
 	}
 }

@@ -3,7 +3,6 @@
 	using TestOkur.Contracts;
 	using TestOkur.Contracts.Sms;
 
-	//TODO: Handle this in a better way
 	internal class SendSmsRequestFailed : IntegrationEvent, ISendSmsRequestFailed
 	{
 		public SendSmsRequestFailed(

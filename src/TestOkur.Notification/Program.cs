@@ -10,7 +10,7 @@ namespace TestOkur.Notification
 	using System;
 	using System.Net;
 
-	public class Program
+	public static class Program
     {
         public static void Main(string[] args)
         {

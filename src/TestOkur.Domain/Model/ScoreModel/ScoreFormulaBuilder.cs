@@ -9,7 +9,7 @@
 		private readonly List<LessonCoefficient> _lessonCoefficients;
 		private float _basePoint;
 		private string _name;
-		private List<Grade> _grades;
+		private readonly List<Grade> _grades;
 		private FormulaType _formulaType;
 
 		public ScoreFormulaBuilder()
