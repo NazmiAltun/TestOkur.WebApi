@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            mkdir -p /tmp/coverage
+            mkdir -p ./tmp/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
@@ -25,7 +25,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
             docker-compose -f docker-compose.tests.yml down
       - codecov/upload:
-          file: /tmp/coverage/*.xml
+          file: ./tmp/coverage/*.xml
       - run:
           name: Build images
           command: |
