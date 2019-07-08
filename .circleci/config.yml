@@ -18,7 +18,10 @@ jobs:
           command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
- 
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
             docker-compose -f docker-compose.tests.yml down
       - run:

@@ -39,7 +39,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage/notification-unit-test.xml
+      - /p:CoverletOutput=../../../coverage/notification-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - /tmp/coverage/:/coverage
@@ -54,7 +54,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage/webapi-unit-test.xml
+      - /p:CoverletOutput=../../../coverage/webapi-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - /tmp/coverage/:/coverage
@@ -69,7 +69,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage/domain-unit-test.xml
+      - /p:CoverletOutput=../../../coverage/domain-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - /tmp/coverage/:/coverage
@@ -84,7 +84,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage/webapi-integration-test.xml
+      - /p:CoverletOutput=../../../coverage/webapi-integration-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - /tmp/coverage/:/coverage
@@ -111,7 +111,7 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage/report-integration-test.xml
+      - /p:CoverletOutput=../../../coverage/report-integration-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - /tmp/coverage/:/coverage
@@ -130,7 +130,7 @@ services:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
       target: integrationtest
-    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage/notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
+    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage/notification-integration-test /p:CoverletOutputFormat='opencover'"
     volumes:
       - /tmp/coverage/:/coverage
     depends_on:
