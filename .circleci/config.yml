@@ -16,32 +16,16 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            mkdir -p /tmp/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
-            docker cp domain-unit-test:/coverage.xml /tmp/coverage/domain-unit-test.xml
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
-            docker cp notification-unit-test:/coverage.xml /tmp/coverage/notification-unit-test.xml
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
-            docker cp webapi-unit-test:/coverage.xml /tmp/coverage/webapi-unit-test.xml
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
-            docker cp notification-integration-test:/coverage.xml /tmp/coverage/notification-integration-test.xml
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
-            docker cp webapi-integration-test:/coverage.xml /tmp/coverage/webapi-integration-test.xml
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
-            docker cp report-integration-test:/coverage.xml /tmp/coverage/report-integration-test.xml
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
             docker-compose -f docker-compose.tests.yml down
       - codecov/upload:
-          file: /tmp/coverage/domain-unit-test.xml
-      - codecov/upload:
-          file: /tmp/coverage/notification-unit-test.xml
-      - codecov/upload:
-          file: /tmp/coverage/webapi-unit-test.xml
-      - codecov/upload:
-          file: /tmp/coverage/notification-integration-test.xml
-      - codecov/upload:
-          file: /tmp/coverage/webapi-integration-test.xml
-      - codecov/upload:
-          file: /tmp/coverage/report-integration-test.xml
+          file: /tmp/coverage/Cobertura.xml
       - run:
           name: Build images
           command: |

@@ -39,8 +39,10 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage.xml
+      - /p:CoverletOutput=../../../coverage/notification-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - /tmp/coverage/:/coverage
   webapi-unit-test:
     image: testokur-webapi-unit-test
     container_name: webapi-unit-test
@@ -52,8 +54,10 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage.xml
+      - /p:CoverletOutput=../../../coverage/webapi-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - /tmp/coverage/:/coverage
   domain-unit-test:
     image: testokur-domain-unit-test
     container_name: domain-unit-test
@@ -65,8 +69,10 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage.xml
+      - /p:CoverletOutput=../../../coverage/domain-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - /tmp/coverage/:/coverage
   webapi-integration-test:
     image: testokur-webapi-integration-test
     container_name: webapi-integration-test
@@ -78,8 +84,10 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage.xml
+      - /p:CoverletOutput=../../../coverage/webapi-integration-test.xml
       - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - /tmp/coverage/:/coverage
     depends_on:
       - rabbitmq
       - redis
@@ -103,8 +111,10 @@ services:
       - dotnet
       - test
       - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage.xml
+      - /p:CoverletOutput=../../../coverage/report-integration-test.xml
       - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - /tmp/coverage/:/coverage
     depends_on:
       - mongo
       - rabbitmq
@@ -120,7 +130,9 @@ services:
       context: .
       dockerfile: src/TestOkur.Notification/Dockerfile
       target: integrationtest
-    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage.xml /p:CoverletOutputFormat='opencover'"
+    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage/notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
+    volumes:
+      - /tmp/coverage/:/coverage
     depends_on:
       - rabbitmq
       - mockserver
@@ -134,3 +146,10 @@ services:
       - WebApiUrl=http://mockserver:8080/
       - SmsConfiguration__ServiceUrl=http://mockserver:8080/
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
+  coverage-merger:
+    image: report-merger
+    build:
+      context: .
+      dockerfile: coverageMerger.Dockerfile
+    volumes:
+      - /tmp/coverage/:/reports
