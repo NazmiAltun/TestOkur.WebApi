@@ -18,7 +18,7 @@ jobs:
           command: |
             mkdir -p /tmp/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
-            docker-compose cp domain-unit-test:/domain-unit-test.xml /tmp/coverage
+            docker cp domain-unit-test:/domain-unit-test.xml /tmp/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
