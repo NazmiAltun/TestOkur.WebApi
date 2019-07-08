@@ -41,7 +41,7 @@ services:
       - /p:CoverletOutput=output/notification-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Notification.Unit.Tests/output/
+      - /tmp/coverage/:/src/tests/TestOkur.Notification.Unit.Tests/output/
   webapi-unit-test:
     image: testokur-webapi-unit-test
     build:
@@ -55,7 +55,7 @@ services:
       - /p:CoverletOutput=output/webapi-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.WebApi.Unit.Tests/output/
+      - /tmp/coverage/:/src/tests/TestOkur.WebApi.Unit.Tests/output/
   domain-unit-test:
     image: testokur-domain-unit-test
     build:
@@ -69,8 +69,7 @@ services:
       - /p:CoverletOutput=output/domain-unit-test.xml
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Domain.Unit.Tests/output/
-    user: root
+      - /tmp/coverage/:/src/tests/TestOkur.Domain.Unit.Tests/output/
   webapi-integration-test:
     image: testokur-webapi-integration-test
     build:
@@ -84,7 +83,7 @@ services:
       - /p:CoverletOutput=output/webapi-integration-test.xml
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.WebApi.Integration.Tests/output/
+      - /tmp/coverage/:/src/tests/TestOkur.WebApi.Integration.Tests/output/
     depends_on:
       - rabbitmq
       - redis
@@ -110,7 +109,7 @@ services:
       - /p:CoverletOutput=output/report-integration-test.xml
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Report.Integration.Tests/output/
+      - /tmp/coverage/:/src/tests/TestOkur.Report.Integration.Tests/output/
     depends_on:
       - mongo
       - rabbitmq
@@ -127,7 +126,7 @@ services:
       target: integrationtest
     command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=output/notification-integration-test.xml /p:CoverletOutputFormat='opencover'"
     volumes:
-      - ./tmp/coverage/:/src/tests/TestOkur.Notification.Integration.Tests/output/
+      - /tmp/coverage/:/src/tests/TestOkur.Notification.Integration.Tests/output/
     depends_on:
       - rabbitmq
       - mockserver
