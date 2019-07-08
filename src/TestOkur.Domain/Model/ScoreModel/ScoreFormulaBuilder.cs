@@ -7,9 +7,10 @@
 	public class ScoreFormulaBuilder
 	{
 		private readonly List<LessonCoefficient> _lessonCoefficients;
+		private readonly List<Grade> _grades;
+
 		private float _basePoint;
 		private string _name;
-		private readonly List<Grade> _grades;
 		private FormulaType _formulaType;
 
 		public ScoreFormulaBuilder()
