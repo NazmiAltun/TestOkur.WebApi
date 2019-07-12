@@ -40,7 +40,10 @@
                 try
                 {
                     var smsBody = await _smsClient.SendAsync(message);
-                    await _webApiClient.DeductSmsCreditsAsync(context.Message.UserId, smsBody);
+                    if (context.Message.UserId != default)
+                    {
+	                    await _webApiClient.DeductSmsCreditsAsync(context.Message.UserId, smsBody);
+                    }
                 }
                 catch (Exception ex)
                 {

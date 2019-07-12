@@ -32,6 +32,15 @@
             return Ok();
         }
 
+        [HttpPost("send-admin")]
+        [Authorize(AuthorizationPolicies.Admin)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SendSmsAsync([FromBody, Required]SendSmsAdminCommand command)
+        {
+	        await _commandProcessor.SendAsync(command);
+	        return Ok();
+        }
+
         [HttpPost("deduct-credits")]
         [Authorize(AuthorizationPolicies.Private)]
         [ProducesResponseType(StatusCodes.Status200OK)]

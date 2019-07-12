@@ -41,6 +41,28 @@
 		}
 
 		[Fact]
+		public async Task AdminShouldBeAbleToSendSms()
+		{
+			using (var testServer = await CreateWithUserAsync())
+			{
+				var command = new SendSmsAdminCommand(
+					Guid.NewGuid(),
+					"5544205163",
+					"This is a test message");
+				var response = await testServer.CreateClient().PostAsync(
+					$"{ApiPath}/send-admin", command.ToJsonContent());
+				response.EnsureSuccessStatusCode();
+				var @event = Consumer.Instance.GetFirst<ISendSmsRequestReceived>();
+				@event.UserId.Should().Be(default);
+				@event.SmsMessages.Should().HaveCount(1)
+					.And
+					.Contain(m => m.Receiver == command.Receiver)
+					.And
+					.Contain(m => m.Body == command.Body);
+			}
+		}
+
+		[Fact]
 		public async Task When_UserHasEnoughSmsLimit_SmsEventIsPushed()
 		{
 			using (var testServer = await CreateWithUserAsync())
