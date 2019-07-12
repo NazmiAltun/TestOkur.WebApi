@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi.Integration.Tests.Sms
+﻿using System.Linq;
+
+namespace TestOkur.WebApi.Integration.Tests.Sms
 {
 	using System;
 	using System.Collections.Generic;
@@ -52,8 +54,9 @@
 				var response = await testServer.CreateClient().PostAsync(
 					$"{ApiPath}/send-admin", command.ToJsonContent());
 				response.EnsureSuccessStatusCode();
-				var @event = Consumer.Instance.GetFirst<ISendSmsRequestReceived>();
-				@event.UserId.Should().Be(default);
+				var @events = Consumer.Instance.GetAll<ISendSmsRequestReceived>();
+				var @event = @events.FirstOrDefault(e => e.UserId == default);
+				@event.Should().NotBeNull();
 				@event.SmsMessages.Should().HaveCount(1)
 					.And
 					.Contain(m => m.Receiver == command.Receiver)
