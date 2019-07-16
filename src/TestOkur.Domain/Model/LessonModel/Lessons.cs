@@ -17,6 +17,5 @@
         public const string Chemistry = "Kimya";
         public const string History = "Tarih";
         public const string Philosophy = "Felsefe";
-        public const string ReformHistory = "T.C İnkılâp Tarihi Ve Atatürkçülük";
 	}
 }
