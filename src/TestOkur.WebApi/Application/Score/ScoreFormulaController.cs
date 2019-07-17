@@ -59,5 +59,13 @@
 			await _commandProcessor.SendAsync(command);
 			return Ok();
 		}
+
+		[HttpDelete]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<IActionResult> DeleteAsync(int id)
+		{
+			await _commandProcessor.SendAsync(new DeleteUserScoreFormulasCommand());
+			return Ok();
+		}
 	}
 }

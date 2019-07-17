@@ -13,8 +13,8 @@
 
 	public class EditTests : ScoreTest
 	{
-		private const float BasePoint = 50;
-		private const float Coefficient = 0.5f;
+		protected const float BasePoint = 50;
+		protected const float Coefficient = 0.5f;
 
 		[Fact]
 		public async Task Should_CreateExamScoreFormula_When_NotExists()
@@ -65,7 +65,7 @@
 			}
 		}
 
-		private async Task EditScoreFormulaAsync(HttpClient client, IEnumerable<ScoreFormulaReadModel> formulas)
+		protected async Task EditScoreFormulaAsync(HttpClient client, IEnumerable<ScoreFormulaReadModel> formulas)
 		{
 			var commandList = new List<EditScoreFormulaCommand>();
 
