@@ -1,9 +1,8 @@
-﻿using System.Linq;
-
-namespace TestOkur.WebApi.Integration.Tests.Sms
+﻿namespace TestOkur.WebApi.Integration.Tests.Sms
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Security.Claims;
 	using System.Threading.Tasks;
 	using FluentAssertions;
@@ -18,7 +17,6 @@ namespace TestOkur.WebApi.Integration.Tests.Sms
 	using TestOkur.WebApi.Integration.Tests.Common;
 	using TestOkur.WebApi.Integration.Tests.User;
 	using Xunit;
-
 	public class SendSmsTests : UserTest
 	{
 		private new const string ApiPath = "api/v1/sms";
