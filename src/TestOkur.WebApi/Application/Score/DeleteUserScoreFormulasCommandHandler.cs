@@ -26,7 +26,8 @@
 			CancellationToken cancellationToken = default)
 		{
 			var formulas = _dbContext.ScoreFormulas
-				.Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId)
+				.Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId &&
+				            EF.Property<int>(s, "CreatedBy") != default)
 				.ToList();
 
 			if (formulas.Any())

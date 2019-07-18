@@ -17,6 +17,7 @@
 	using TestOkur.WebApi.Integration.Tests.Common;
 	using TestOkur.WebApi.Integration.Tests.User;
 	using Xunit;
+
 	public class SendSmsTests : UserTest
 	{
 		private new const string ApiPath = "api/v1/sms";
