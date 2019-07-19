@@ -4,7 +4,6 @@
 namespace TestOkur.Report
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Diagnostics.CodeAnalysis;
 	using System.Linq;
 	using System.Reflection;
@@ -23,7 +22,6 @@ namespace TestOkur.Report
 	using MongoDB.Bson;
 	using MongoDB.Bson.Serialization;
 	using MongoDB.Bson.Serialization.IdGenerators;
-	using MongoDB.Bson.Serialization.Options;
 	using MongoDB.Bson.Serialization.Serializers;
 	using TestOkur.Common;
 	using TestOkur.Common.Configuration;
@@ -123,8 +121,8 @@ namespace TestOkur.Report
 						.SetSerializer(new StringSerializer(BsonType.ObjectId));
 				});
 
-				BsonClassMap.RegisterClassMap<StudentOpticalForm>();
-				BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>();
+				BsonClassMap.RegisterClassMap<StudentOpticalForm>(cm => { cm.AutoMap(); });
+				BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>(cm => { cm.AutoMap(); });
 			}
 		}
 

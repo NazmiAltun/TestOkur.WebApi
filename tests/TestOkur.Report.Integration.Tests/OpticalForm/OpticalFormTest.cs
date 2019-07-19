@@ -54,6 +54,7 @@
 				SchoolId = userId,
 				Booklet = Booklets.Random(),
 				ExamId = examId,
+				ClassroomId = userId,
 				StudentId = RandomGen.Next(),
 				StudentNumber = RandomGen.Next(),
 				Sections = new List<StudentOpticalFormSection>()

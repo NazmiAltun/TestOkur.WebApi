@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using FluentAssertions;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Threading.Tasks;
+	using FluentAssertions;
 	using TestOkur.Optic.Answer;
 	using TestOkur.Optic.Form;
 	using TestOkur.Optic.Score;
 	using TestOkur.TestHelper;
-    using Xunit;
+	using Xunit;
 
-    public class AddTests : OpticalFormTest
+	public class AddTests : OpticalFormTest
 	{
 		[Fact]
 		public async Task FormWithScoreShouldBeAdded()
@@ -26,19 +26,19 @@
 				new List<ScoreFormula> { scoreFormula });
 			answerKeyForm.AddSection(new AnswerKeyOpticalFormSection(1, "Turkish", 40, 1, 1)
 			{
-				Answers = ParseAnswers("CECBEEBADEEBACBDBBEDDAEDDACEABDEDCBDBABD")
+				Answers = ParseAnswers("CECBEEBADEEBACBDBBEDDAEDDACEABDEDCBDBABD"),
 			});
 			answerKeyForm.AddSection(new AnswerKeyOpticalFormSection(6, "Social Science", 20, 1, 2)
 			{
-				Answers = ParseAnswers("EAEADADECEEDCDEAEDBA")
+				Answers = ParseAnswers("EAEADADECEEDCDEAEDBA"),
 			});
 			answerKeyForm.AddSection(new AnswerKeyOpticalFormSection(5, "Basic Mathematics", 40, 2, 3)
 			{
-				Answers = ParseAnswers("DDBECACAACBCBECAEAADCDCDEDABAACCBDBAEDCB")
+				Answers = ParseAnswers("DDBECACAACBCBECAEAADCDCDEDABAACCBDBAEDCB"),
 			});
 			answerKeyForm.AddSection(new AnswerKeyOpticalFormSection(2, "Science", 20, 2, 4)
 			{
-				Answers = ParseAnswers("DBCCEEBAEECAACBBDECE")
+				Answers = ParseAnswers("DBCCEEBAEECAACBBDECE"),
 			});
 			var studentForm = new StudentOpticalForm('A');
 			studentForm.SetFromScanOutput(new ScanOutput("CE EEE       C   EA DAE  ADEBEDEDCADEBAEDBE     D  B DEAEAAA", 1), answerKeyForm);
@@ -55,7 +55,7 @@
 
 				var forms = new List<StudentOpticalForm>
 				{
-					studentForm
+					studentForm,
 				};
 				var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
 				response.EnsureSuccessStatusCode();
