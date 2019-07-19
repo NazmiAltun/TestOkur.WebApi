@@ -123,13 +123,7 @@ namespace TestOkur.Report
 						.SetSerializer(new StringSerializer(BsonType.ObjectId));
 				});
 
-				BsonClassMap.RegisterClassMap<StudentOpticalForm>(cm =>
-				{
-					cm.MapMember(c => c.Scores)
-						.SetSerializer(
-							new DictionaryInterfaceImplementerSerializer<Dictionary<string, int>>(
-								DictionaryRepresentation.ArrayOfDocuments));
-				});
+				BsonClassMap.RegisterClassMap<StudentOpticalForm>();
 				BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>();
 			}
 		}
