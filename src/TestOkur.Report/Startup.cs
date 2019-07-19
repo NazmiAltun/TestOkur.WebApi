@@ -1,14 +1,13 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging;
-using TestOkur.Report.Extensions;
+﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 namespace TestOkur.Report
 {
 	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics.CodeAnalysis;
+	using System.Linq;
+	using System.Reflection;
 	using GreenPipes;
 	using HealthChecks.UI.Client;
 	using MassTransit;
@@ -19,10 +18,12 @@ namespace TestOkur.Report
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.Logging;
 	using Microsoft.Extensions.Options;
 	using MongoDB.Bson;
 	using MongoDB.Bson.Serialization;
 	using MongoDB.Bson.Serialization.IdGenerators;
+	using MongoDB.Bson.Serialization.Options;
 	using MongoDB.Bson.Serialization.Serializers;
 	using TestOkur.Common;
 	using TestOkur.Common.Configuration;
@@ -30,6 +31,7 @@ namespace TestOkur.Report
 	using TestOkur.Infrastructure.Mvc;
 	using TestOkur.Optic.Form;
 	using TestOkur.Report.Configuration;
+	using TestOkur.Report.Extensions;
 	using TestOkur.Report.Infrastructure;
 	using TestOkur.Report.Repositories;
 
@@ -121,7 +123,13 @@ namespace TestOkur.Report
 						.SetSerializer(new StringSerializer(BsonType.ObjectId));
 				});
 
-				BsonClassMap.RegisterClassMap<StudentOpticalForm>();
+				BsonClassMap.RegisterClassMap<StudentOpticalForm>(cm =>
+				{
+					cm.MapMember(c => c.Scores)
+						.SetSerializer(
+							new DictionaryInterfaceImplementerSerializer<Dictionary<string, int>>(
+								DictionaryRepresentation.ArrayOfDocuments));
+				});
 				BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>();
 			}
 		}
