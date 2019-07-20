@@ -10,11 +10,13 @@
 			string receiver,
 			string smsBody,
 			string errorMessage,
-			string userFriendlyMessage)
+			string userFriendlyMessage,
+			string userEmail)
 		{
 			UserId = userId;
 			ErrorMessage = errorMessage;
 			UserFriendlyMessage = userFriendlyMessage;
+			UserEmail = userEmail;
 			Receiver = receiver;
 			SmsBody = smsBody;
 		}
@@ -28,5 +30,7 @@
 		public string ErrorMessage { get; }
 
 		public string UserFriendlyMessage { get; }
+
+		public string UserEmail { get; }
 	}
 }

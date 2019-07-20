@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 
 namespace TestOkur.Notification.Unit.Tests.Consumers
 {
@@ -45,7 +46,8 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
 
             var publishEndPoint = Substitute.For<IPublishEndpoint>();
             var smsRepository = Substitute.For<ISmsRepository>();
-            var smsMessages = new List<ISmsMessage>
+            var logger = Substitute.For<ILogger<SendSmsRequestReceivedConsumer>>();
+			var smsMessages = new List<ISmsMessage>
                 {
                     new SmsMessage("TEST", messageBody, "42342")
                 };
@@ -58,7 +60,8 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
                 _webApiClient,
                 publishEndPoint,
                 CreateSmsClient("text/plain", "123123"),
-                smsRepository);
+                smsRepository,
+                logger);
 
             await consumer.Consume(consumerContext);
             smsDeducted.Should().BeTrue();
@@ -73,6 +76,7 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
                 .Returns(Task.FromResult((object)null))
                 .AndDoes(x => eventList.Add(x.Arg<ISendSmsRequestFailed>()));
             var smsRepository = Substitute.For<ISmsRepository>();
+            var logger = Substitute.For<ILogger<SendSmsRequestReceivedConsumer>>();
             var smsMessages = new List<ISmsMessage>
                 {
                     new SmsMessage("TEST", "TEST", "42342"),
@@ -86,7 +90,8 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
                 _webApiClient,
                 publishEndPoint,
                 CreateSmsClient("text/plain", "HATA|310|Uzun mesaj metni"),
-                smsRepository);
+                smsRepository,
+                logger);
 
             await consumer.Consume(consumerContext);
             eventList.First().UserFriendlyMessage.Should().Be("Uzun mesaj metni");

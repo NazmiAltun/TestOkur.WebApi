@@ -29,7 +29,8 @@
 			var @event = new SendSmsRequestReceived(
 				default,
 				default,
-				new[] { new SmsMessage(command.Receiver, Subject, command.Body) });
+				new[] { new SmsMessage(command.Receiver, Subject, command.Body) },
+				"nazmialtun@windowslive.com");
 			await _publishEndpoint.Publish<ISendSmsRequestReceived>(
 				@event,
 				cancellationToken);

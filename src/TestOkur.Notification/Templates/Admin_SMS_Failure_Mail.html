@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿ <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -31,9 +31,9 @@
             <td>
                 <strong>Lisans Sahibi</strong>
             </td>
-            <td>
-                @Model.EMailAddress
-            </td>
+			<td>
+				@Model.UserEmail
+			</td>
         </tr>
         <tr>
             <td>
@@ -47,17 +47,9 @@
             <td>
                 <strong>SMS Icerik </strong>
             </td>
-            <td>
-                @Model.Body
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Servis Yaniti </strong>
-            </td>
-            <td>
-                @Model.ServiceResponse
-            </td>
+			<td>
+				@Model.SmsBody
+			</td>
         </tr>
         <tr>
             <td>

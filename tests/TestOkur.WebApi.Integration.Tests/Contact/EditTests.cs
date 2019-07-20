@@ -23,6 +23,7 @@
 				await CreateContactAsync(client);
 				var list = await GetListAsync(client);
 
+#pragma warning disable SA1118 // ParameterMustNotSpanMultipleLines
 				var editCommand = new BulkEditContactsCommand(
 					Guid.NewGuid(),
 					new[]

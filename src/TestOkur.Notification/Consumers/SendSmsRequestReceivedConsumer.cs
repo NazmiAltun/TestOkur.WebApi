@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Threading.Tasks;
 	using MassTransit;
+	using Microsoft.Extensions.Logging;
 	using TestOkur.Common;
 	using TestOkur.Contracts.Sms;
 	using TestOkur.Notification.Events;
@@ -12,25 +13,28 @@
 	using TestOkur.Notification.Models;
 
 	public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>
-    {
-        private readonly ISmsClient _smsClient;
-        private readonly IWebApiClient _webApiClient;
-        private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ISmsRepository _smsRepository;
+	{
+		private readonly ILogger<SendSmsRequestReceivedConsumer> _logger;
+		private readonly ISmsClient _smsClient;
+		private readonly IWebApiClient _webApiClient;
+		private readonly IPublishEndpoint _publishEndpoint;
+		private readonly ISmsRepository _smsRepository;
 
-        public SendSmsRequestReceivedConsumer(
+		public SendSmsRequestReceivedConsumer(
             IWebApiClient webApiClient,
             IPublishEndpoint publishEndpoint,
             ISmsClient smsClient,
-            ISmsRepository smsRepository)
+            ISmsRepository smsRepository,
+            ILogger<SendSmsRequestReceivedConsumer> logger)
         {
             _webApiClient = webApiClient;
             _publishEndpoint = publishEndpoint;
             _smsClient = smsClient;
             _smsRepository = smsRepository;
+            _logger = logger;
         }
 
-        public async Task Consume(ConsumeContext<ISendSmsRequestReceived> context)
+		public async Task Consume(ConsumeContext<ISendSmsRequestReceived> context)
         {
 	        var smsList = ToSmsList(context);
 	        await StoreAsync(smsList);
@@ -47,12 +51,13 @@
                 }
                 catch (Exception ex)
                 {
-                    await PublishSmsRequestFailedEventAsync(context, message, ex);
+	                _logger.LogError(ex, "Error while sending sms");
+	                await PublishSmsRequestFailedEventAsync(context, message, ex);
                 }
             }
         }
 
-        private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)
+		private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)
         {
 	        return context.Message.SmsMessages
 		        .Select(s => new Sms(s)
@@ -63,12 +68,12 @@
 		        }).ToList();
         }
 
-        private async Task StoreAsync(IEnumerable<Sms> list)
+		private async Task StoreAsync(IEnumerable<Sms> list)
         {
 	        await _smsRepository.AddManyAsync(list);
         }
 
-        private async Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
+		private async Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
         {
             var userFriendlyMessage = ErrorCodes.SmsSystemFailure;
 
@@ -82,7 +87,8 @@
                 sms.Phone,
                 sms.Body,
                 ex.Message,
-                userFriendlyMessage);
+                userFriendlyMessage,
+                context.Message.UserEmail);
 
             await _publishEndpoint.Publish(@event);
         }

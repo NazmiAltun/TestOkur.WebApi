@@ -11,5 +11,7 @@
 		string ErrorMessage { get; }
 
 		string UserFriendlyMessage { get; }
+
+		string UserEmail { get; }
 	}
 }
