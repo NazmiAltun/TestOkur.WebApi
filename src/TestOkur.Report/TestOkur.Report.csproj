@@ -20,7 +20,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
     <PackageReference Include="Sentry.AspNetCore" Version="1.2.0" />
     <PackageReference Include="TestOkur.Infrastructure" Version="1.0.35" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.36" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.37" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json" Link="stylecop.json" />
