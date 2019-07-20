@@ -94,7 +94,7 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
                 logger);
 
             await consumer.Consume(consumerContext);
-            eventList.First().UserFriendlyMessage.Should().Be("Uzun mesaj metni");
+            eventList.First().UserFriendlyMessage.Should().Contain("Uzun mesaj metni");
             eventList.Should().HaveCount(smsMessages.Count);
         }
 

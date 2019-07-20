@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi.Application.Sms.Commands
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace TestOkur.WebApi.Application.Sms.Commands
 {
 	using System.Linq;
 	using System.Threading;
@@ -22,14 +24,13 @@
         }
 
         [Idempotent(1)]
-        [Populate(2)]
-        [ClearCache(3)]
+        [ClearCache(2)]
         public override async Task<DeductSmsCreditsCommand> HandleAsync(
             DeductSmsCreditsCommand command,
             CancellationToken cancellationToken = default)
         {
-            var user = _applicationDbContext.Users
-                .First(u => u.Id == command.UserId);
+            var user = await _applicationDbContext.Users
+                .FirstAsync(u => u.Id == command.UserId,cancellationToken);
             user.DeductSmsBalance(_smsCreditCalculator.Calculate(command.SmsBody));
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 

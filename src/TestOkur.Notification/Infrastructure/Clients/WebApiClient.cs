@@ -26,7 +26,7 @@
 			var model = new DeductSmsCreditsModel
 			{
 				Id = Guid.NewGuid(),
-				LicenseId = userId,
+				UserId = userId,
 				SmsBody = smsBody,
 			};
 			await SetBearerToken();
