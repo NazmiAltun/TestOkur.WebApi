@@ -79,7 +79,7 @@
 
             if (ex is SmsException exception)
             {
-                userFriendlyMessage = exception.Message;
+                userFriendlyMessage = exception.ToString();
             }
 
             var @event = new SendSmsRequestFailed(
