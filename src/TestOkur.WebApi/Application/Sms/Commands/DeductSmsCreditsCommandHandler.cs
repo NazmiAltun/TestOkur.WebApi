@@ -22,7 +22,8 @@
         }
 
         [Idempotent(1)]
-        [ClearCache(2)]
+        [Populate(2)]
+        [ClearCache(3)]
         public override async Task<DeductSmsCreditsCommand> HandleAsync(
             DeductSmsCreditsCommand command,
             CancellationToken cancellationToken = default)
