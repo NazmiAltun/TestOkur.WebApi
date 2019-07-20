@@ -90,6 +90,7 @@ namespace TestOkur.Report
 			app.UseMiddleware<ErrorHandlingMiddleware>();
 			app.UseMiddleware<RequestResponseLoggingMiddleware>();
 			app.UseMvc();
+			app.UseStaticFiles();
 		}
 
 		protected virtual void AddHostedServices(IServiceCollection services)
