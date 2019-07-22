@@ -27,13 +27,17 @@
 			UpdateUserCommand command,
 			CancellationToken cancellationToken = default)
 		{
-			var user = await GetUserAsync(command.UserId, cancellationToken);
+			await UpdateAsync(command, command.UserId, cancellationToken);
+			return await base.HandleAsync(command, cancellationToken);
+		}
+
+		public async Task UpdateAsync(UpdateUserCommand command, int userId, CancellationToken cancellationToken)
+		{
+			var user = await GetUserAsync(userId, cancellationToken);
 			var city = await GetCityAsync(command.CityId, cancellationToken);
 			var district = city.Districts.First(d => d.Id == command.DistrictId);
 			user.Update(city, district, command.SchoolName, command.MobilePhone);
 			await _dbContext.SaveChangesAsync(cancellationToken);
-
-			return await base.HandleAsync(command, cancellationToken);
 		}
 
 		private async Task<User> GetUserAsync(int userId, CancellationToken cancellationToken)

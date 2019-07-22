@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace TestOkur.WebApi.Application.Sms.Commands
+﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System.Linq;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using Microsoft.EntityFrameworkCore;
 	using Paramore.Brighter;
 	using TestOkur.Data;
 	using TestOkur.Domain.Model.SmsModel;
@@ -30,7 +28,7 @@ namespace TestOkur.WebApi.Application.Sms.Commands
             CancellationToken cancellationToken = default)
         {
             var user = await _applicationDbContext.Users
-                .FirstAsync(u => u.Id == command.UserId,cancellationToken);
+                .FirstAsync(u => u.Id == command.UserId, cancellationToken);
             user.DeductSmsBalance(_smsCreditCalculator.Calculate(command.SmsBody));
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
 

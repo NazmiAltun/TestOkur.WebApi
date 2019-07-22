@@ -41,6 +41,13 @@
 			response.EnsureSuccessStatusCode();
 		}
 
+		public async Task UpdateUserAsync(UpdateUserModel model, CancellationToken cancellationToken = default)
+		{
+			await SetBearerToken();
+			var response = await _httpClient.PostAsync("/account/update", model.ToJsonContent(), cancellationToken);
+			response.EnsureSuccessStatusCode();
+		}
+
 		public async Task<string> GeneratePasswordResetTokenAsync(Email email, CancellationToken cancellationToken = default)
 		{
 			await SetBearerToken();

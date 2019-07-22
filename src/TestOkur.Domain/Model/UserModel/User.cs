@@ -96,6 +96,21 @@
 			SchoolName = schoolName;
 		}
 
+		public void Update(
+			Email email,
+			Name firstName,
+			Name lastName,
+			City city,
+			District district,
+			Name schoolName,
+			Phone phone)
+		{
+			Email = email;
+			FirstName = firstName;
+			LastName = lastName;
+			Update(city, district, schoolName, phone);
+		}
+
 		protected override IEnumerable<object> GetEqualityComponents()
 		{
 			yield return Id;

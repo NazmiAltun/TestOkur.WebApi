@@ -109,5 +109,15 @@
 
 			return Ok(records);
 		}
+
+		[HttpPost("update-by-admin")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(AuthorizationPolicies.Admin)]
+		public async Task<IActionResult> UpdateUserByAdminAsync([FromBody, Required]UpdateUserByAdminCommand command)
+		{
+			await _commandProcessor.SendAsync(command);
+			return Ok();
+		}
 	}
 }

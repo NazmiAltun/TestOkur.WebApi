@@ -10,6 +10,8 @@
 
 		Task RegisterUserAsync(CreateCustomerUserModel model, CancellationToken cancellationToken = default);
 
+		Task UpdateUserAsync(UpdateUserModel model, CancellationToken cancellationToken = default);
+
 		Task<string> GeneratePasswordResetTokenAsync(Email email, CancellationToken cancellationToken = default);
 	}
 }
