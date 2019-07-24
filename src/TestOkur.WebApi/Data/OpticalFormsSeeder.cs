@@ -619,6 +619,25 @@
 					.Build())
 				.Build();
 
+		private OpticalFormDefinition Src =>
+			new OpticalFormDefinitionBuilder(OpticalFormDefinitions.SRC)
+				.HasBoxForStudentNumber()
+				.SetStudentNoXInterval(62)
+				.SetStudentNoYInterval(53)
+				.SetStudentNoFillWidth(45)
+				.SetDescription("SRC & Is Makinalari Optik Form")
+				.PrimarySchool()
+				.SetFilename(@"src.jpg")
+				.SetStudentNumberFillDirection(Direction.ToBottom)
+				.SetTextDirection(Direction.ToRight)
+				.AddTextLocation(new OpticalFormTextLocationBuilder()
+					.SetNameLocation(620, 2140)
+					.SetSurnameLocation(620, 2220)
+					.SetStudentNoFillingPartLocation(500, 623)
+					.SetExamNameLocation(620, 2295)
+					.Build())
+				.Build();
+
 		private OpticalFormDefinition Abcd30 =>
 			new OpticalFormDefinitionBuilder(OpticalFormDefinitions.Abcd30)
 				.HasBoxForStudentNumber()
@@ -725,6 +744,7 @@
 				Ayt2,
 				Aytlang,
 				ScholarshipHigh,
+				Src,
 			};
 			dbContext.OpticalFormDefinitions.AddRange(formDefinitions);
 			await dbContext.SaveChangesAsync();
@@ -1025,6 +1045,16 @@
 				80));
 			formTypes.Last().AddOpticalFormDefinition(
 				formDefinitions.First(f => f.Name == OpticalFormDefinitions.Aytlang));
+
+			formTypes.Add(new OpticalFormType(
+				OpticalFormTypes.Names.FrmSrc,
+				OpticalFormTypes.Codes.FrmSrc,
+				"src.yap",
+				SchoolType.PrimaryAndSecondary,
+				null,
+				60));
+			formTypes.Last().AddOpticalFormDefinition(
+				formDefinitions.First(f => f.Name == OpticalFormDefinitions.SRC));
 
 			dbContext.FormTypes.AddRange(formTypes);
 

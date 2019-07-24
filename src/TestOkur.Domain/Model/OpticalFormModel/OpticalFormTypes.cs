@@ -17,6 +17,7 @@
 			public const string FrmTeog = "TEOG Deneme Sınavı";
 			public const string FrmLgs = "LGS Deneme Sınavi- Tek Oturum";
 			public const string FrmLgsTwoPiece = "LGS Deneme Sınavı- 2 Oturum(Sözel-Sayısal)";
+			public const string FrmSrc = "SRC & Is Makinalari Optik Form";
 
 			//HighSchool
 			public const string Frm20ABCDE = "20 Soruluk ABCDE Seçenekli";
@@ -54,6 +55,7 @@
 			public const string FrmAyt = "FrmAyt";
 			public const string FrmAytLang = "FrmAytLang";
 			public const string FrmScholarshipHigh = "FrmScholarshipHigh";
+			public const string FrmSrc = "FrmSrc";
 		}
 	}
 }

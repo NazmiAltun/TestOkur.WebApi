@@ -8,7 +8,7 @@
 
         string UserSubjectId { get; }
 
-		string UserEmail { get; }
+        string UserEmail { get; }
 
         IEnumerable<ISmsMessage> SmsMessages { get; }
     }
