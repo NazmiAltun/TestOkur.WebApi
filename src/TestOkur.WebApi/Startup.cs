@@ -163,6 +163,7 @@
 					options.Authority = OAuthConfiguration.Authority;
 					options.RequireHttpsMetadata = OAuthConfiguration.RequireHttpsMetadata;
 					options.ApiName = OAuthConfiguration.ApiName;
+					options.JwtValidationClockSkew = TimeSpan.FromHours(24);
 				});
 		}
 
