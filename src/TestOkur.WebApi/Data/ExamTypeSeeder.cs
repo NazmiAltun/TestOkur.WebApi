@@ -29,6 +29,7 @@
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmLgs))
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmLgsTwoPiece))
 					.WithOrder(40)
+					.WithDefaultIncorrectCorrectEliminationValue(3)
 					.Build();
 
 		private ExamType TytExam => new ExamTypeBuilder(ExamTypes.Tyt)
