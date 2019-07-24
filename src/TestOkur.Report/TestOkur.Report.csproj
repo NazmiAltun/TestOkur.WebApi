@@ -30,7 +30,4 @@
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
     <ProjectReference Include="..\TestOkur.Domain\TestOkur.Domain.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 </Project>

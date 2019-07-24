@@ -4,33 +4,33 @@
 	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
 	<title>SINIF LİSTESİ</title>
 	<style type='text/css'>
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
-            border: 1px solid #ddd;
-        }
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			width: 100%;
+			border: 1px solid #ddd;
+		}
 
-        th,
-        td {
-            text-align: left;
-            padding: 16px;
-        }
+		th,
+		td {
+			text-align: left;
+			padding: 16px;
+		}
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2
-        }
+		tr:nth-child(even) {
+			background-color: #f2f2f2
+		}
 
-        h2 {
-            text-align: center;
-        }
+		h2 {
+			text-align: center;
+		}
 
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-    </style>
+		table,
+		th,
+		td {
+			border: 1px solid black;
+		}
+	</style>
 </head>
 <body>
 <h2>{{classroom}} SINIF LİSTESİ</h2>
@@ -49,10 +49,10 @@
 			Soyadı
 		</th>
 		<th>
-			Telefon-1
+			Anne Tel
 		</th>
 		<th>
-			Telefon-2
+			Baba Tel
 		</th>
 		<th>
 			Açıklama
@@ -66,8 +66,8 @@
 		<td>{{studentNumber}}</td>
 		<td>{{firstName}}</td>
 		<td>{{lastName}}</td>
-		<td>{{phone1}}</td>
-		<td>{{phone2}}</td>
+		<td>{{motherPhone}}</td>
+		<td>{{fatherPhone}}</td>
 		<td>{{notes}}</td>
 	</tr>
 	{{/each}}
