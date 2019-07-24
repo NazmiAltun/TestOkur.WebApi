@@ -28,11 +28,11 @@
 			BulkCreateStudentCommand command,
 			CancellationToken cancellationToken = default)
 		{
-			var classroom = await GetClassroomAsync(command, cancellationToken);
 			var contactTypes = new List<ContactType>();
 
 			foreach (var subCommand in command.Commands)
 			{
+				var classroom = await GetClassroomAsync(subCommand.ClassroomId, cancellationToken);
 				_dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
 				contactTypes.AddRange(subCommand
 					.ToDomainModel(classroom, command.UserId)
@@ -46,12 +46,12 @@
 		}
 
 		private async Task<Classroom> GetClassroomAsync(
-			BulkCreateStudentCommand command,
+			int classroomId,
 			CancellationToken cancellationToken)
 		{
 			return await _dbContext.Classrooms
 				.FirstAsync(
-					c => c.Id == command.Commands.First().ClassroomId,
+					c => c.Id == classroomId,
 					cancellationToken);
 		}
 	}
