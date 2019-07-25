@@ -40,7 +40,7 @@
 			background: #f2ed98;
 		}
 
-		thead tr {
+		thead tr, tfoot tr {
 			background: #f79307;
 		}
 	</style>
@@ -142,7 +142,62 @@
 				<td>{{schoolOrder}}</td>
 			</tr>
 			{{/each}}
+			<tr height="40">
+				<td colspan="5">
+					Ortalama
+				</td>
+				{{#each averageList.sections}}
+				<td>{{formatTwoDecimalPlaces correct}}</td>
+				<td>{{formatTwoDecimalPlaces wrong}}</td>
+				<td>{{formatTwoDecimalPlaces empty}}</td>
+				<td>{{formatTwoDecimalPlaces net}}</td>
+				{{/each}}
+				<td>{{formatTwoDecimalPlaces averageList.correct}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.wrong}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.empty}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.net}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.averageScore}}</td>
+				<td>{{formatOneDecimalPlace averageList.averageSuccessPercent}}</td>
+			</tr>
+			<tr height="40">
+				<td colspan="5">
+					Basari(%)
+				</td>
+				{{#each averageList.sections}}
+				<td>{{formatTwoDecimalPlaces correctPercent}}</td>
+				<td>{{formatTwoDecimalPlaces wrongPercent}}</td>
+				<td>{{formatTwoDecimalPlaces emptyPercent}}</td>
+				<td>{{formatTwoDecimalPlaces netPercent}}</td>
+				{{/each}}
+				<td>{{formatTwoDecimalPlaces averageList.correctPercent}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.wrongPercent}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.emptyPercent}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.netPercent}}</td>
+				<td>{{formatTwoDecimalPlaces averageList.averageScorePercent}}</td>
+			</tr>
 		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5"></td>
+				{{#each averageList.sections}}
+				<td>D</td>
+				<td>Y</td>
+				<td>B</td>
+				<td>N</td>
+				{{/each}}
+				<td>D</td>
+				<td>Y</td>
+				<td>B</td>
+				<td>N</td>
+			</tr>
+			<tr>
+				<th colspan='5'></th>
+				{{#each lessons}}
+				<th colspan='4'>{{this}}</th>
+				{{/each}}
+				<th colspan='4'>Toplam</th>
+			</tr>
+		</tfoot>
 	</table>
 </body>
 
