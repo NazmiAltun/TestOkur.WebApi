@@ -7,3 +7,9 @@ function getQuestionClass(result) {
 	}
 	return 'correct';
 }
+function formatTwoDecimalPlaces(number) {
+    return number.toFixed(2);
+}
+function formatOneDecimalPlace(number) {
+    return number.toFixed(1);
+}

@@ -130,14 +130,14 @@
 				<td>{{correctCount}}</td>
 				<td>{{wrongCount}}</td>
 				<td>{{emptyCount}}</td>
-				<td>{{net}}</td>
+				<td>{{formatTwoDecimalPlaces net}}</td>
 				{{/each}}
 				<td>{{correctCount}}</td>
 				<td>{{wrongCount}}</td>
 				<td>{{emptyCount}}</td>
-				<td>{{net}}</td>
-				<td>{{score}}</td>
-				<td>%{{successPercent}}</td>
+				<td>{{formatTwoDecimalPlaces net}}</td>
+				<td>{{formatTwoDecimalPlaces score}}</td>
+				<td>%{{formatOneDecimalPlace successPercent}}</td>
 				<td>{{classroomOrder}}</td>
 				<td>{{schoolOrder}}</td>
 			</tr>
