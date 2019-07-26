@@ -29,6 +29,12 @@
 			border: solid 1px black;
 			text-align: center;
 		}
+		
+		th.rotate90{
+		    transform: rotate(-90deg);
+		    padding-top:10px;
+		    padding-bottom:10px;
+		}
 
 		th,
 		td {
@@ -40,7 +46,7 @@
 			background: #f2ed98;
 		}
 
-		thead tr, tfoot tr {
+		thead tr,tfoot tr {
 			background: #f79307;
 		}
 	</style>
@@ -81,11 +87,11 @@
 	<table>
 		<thead>
 			<tr>
-				<th rowspan='2'>Sıra</th>
-				<th rowspan='2'>Öğr. No </th>
-				<th rowspan='2'>Adı Soyadı</th>
-				<th rowspan='2'>Sınıf</th>
-				<th rowspan='2'>Kit. T.</th>
+				<th class='rotate90' rowspan='2'>Sıra</th>
+				<th class='rotate90' rowspan='2'>Öğrenci No </th>
+				<th class='rotate90' rowspan='2'>Adı Soyadı</th>
+				<th class='rotate90' rowspan='2'>Sınıf</th>
+				<th class='rotate90' rowspan='2'>Kitapcik</th>
 				{{#each lessons}}
 				<th colspan='4'>{{this}}</th>
 				{{/each}}
@@ -143,54 +149,55 @@
 			</tr>
 			{{/each}}
 			<tr height="40">
-				<td colspan="5">
-					Ortalama
-				</td>
-				{{#each averageList.sections}}
-				<td>{{formatTwoDecimalPlaces correct}}</td>
-				<td>{{formatTwoDecimalPlaces wrong}}</td>
-				<td>{{formatTwoDecimalPlaces empty}}</td>
-				<td>{{formatTwoDecimalPlaces net}}</td>
-				{{/each}}
-				<td>{{formatTwoDecimalPlaces averageList.correct}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.wrong}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.empty}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.net}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.averageScore}}</td>
-				<td>%{{formatOneDecimalPlace averageList.averageSuccessPercent}}</td>
+			    <td colspan="5">
+			        Ortalama
+			    </td>
+			    {{#each averageList.sections}}
+			    <td>{{formatTwoDecimalPlaces correct}}</td>
+			    <td>{{formatTwoDecimalPlaces wrong}}</td>
+			    <td>{{formatTwoDecimalPlaces empty}}</td>
+			    <td>{{formatTwoDecimalPlaces net}}</td>
+			    {{/each}}
+			    <td>{{formatTwoDecimalPlaces averageList.correct}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.wrong}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.empty}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.net}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.averageScore}}</td>
+			    <td>%{{formatOneDecimalPlace averageList.averageSuccessPercent}}</td>
 			</tr>
-			<tr height="40">
-				<td colspan="5">
-					Basari(%)
-				</td>
-				{{#each averageList.sections}}
-				<td>{{formatTwoDecimalPlaces correctPercent}}</td>
-				<td>{{formatTwoDecimalPlaces wrongPercent}}</td>
-				<td>{{formatTwoDecimalPlaces emptyPercent}}</td>
-				<td>{{formatTwoDecimalPlaces netPercent}}</td>
-				{{/each}}
-				<td>{{formatTwoDecimalPlaces averageList.correctPercent}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.wrongPercent}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.emptyPercent}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.netPercent}}</td>
-				<td>{{formatTwoDecimalPlaces averageList.averageScorePercent}}</td>
+				<tr height="40">
+			    <td colspan="5">
+			        Basari(%)
+			    </td>
+			    {{#each averageList.sections}}
+			    <td>{{formatTwoDecimalPlaces correctPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces wrongPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces emptyPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces netPercent}}</td>
+			    {{/each}}
+			    <td>{{formatTwoDecimalPlaces averageList.correctPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.wrongPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.emptyPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.netPercent}}</td>
+			    <td>{{formatTwoDecimalPlaces averageList.averageScorePercent}}</td>
 			</tr>
 		</tbody>
 		<tfoot>
-			<tr>
-				<td colspan="5"></td>
-				{{#each averageList.sections}}
-				<td>D</td>
-				<td>Y</td>
-				<td>B</td>
-				<td>N</td>
-				{{/each}}
-				<td>D</td>
-				<td>Y</td>
-				<td>B</td>
-				<td>N</td>
-			</tr>
-			<tr>
+		    <tr>
+		         <td colspan="5">
+			    </td>
+			     {{#each averageList.sections}}
+			    <td>D</td>
+			    <td>Y</td>
+			    <td>B</td>
+			    <td>N</td>
+			    {{/each}}
+			    <td>D</td>
+			    <td>Y</td>
+			    <td>B</td>
+			    <td>N</td>
+		    </tr>
+		    <tr>
 				<th colspan='5'></th>
 				{{#each lessons}}
 				<th colspan='4'>{{this}}</th>
