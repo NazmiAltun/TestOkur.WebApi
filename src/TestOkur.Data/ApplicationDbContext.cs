@@ -78,6 +78,7 @@
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.AddAuditableProperties();
             modelBuilder.Entity<FormLessonSection>().Property<int>("ListOrder");
+            modelBuilder.Entity<OpticalFormDefinition>().Property<int>("ListOrder");
             base.OnModelCreating(modelBuilder);
             modelBuilder.ToSnakeCase();
         }

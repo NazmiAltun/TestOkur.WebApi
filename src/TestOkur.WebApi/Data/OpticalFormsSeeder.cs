@@ -724,16 +724,17 @@
 				Abcd30,
 				Abcd60,
 				Abcd100,
-				ScholarshipPrimary,
 				Abc30,
 				Quiz2Grade,
 				Quiz3Grade,
 				Quiz4Grade,
-				Lgs,
+				TEOG1,
+				TEOG2,
 				Lgs2Sayisal,
 				Lgs2Sozel,
-				TEOG2,
-				TEOG1,
+				Lgs,
+				ScholarshipPrimary,
+				Src,
 				High20,
 				High30,
 				High60,
@@ -744,8 +745,13 @@
 				Ayt2,
 				Aytlang,
 				ScholarshipHigh,
-				Src,
 			};
+			foreach (var formDef in formDefinitions)
+			{
+				dbContext.Entry(formDef).Property("ListOrder").CurrentValue =
+					formDefinitions.IndexOf(formDef) + 1;
+			}
+
 			dbContext.OpticalFormDefinitions.AddRange(formDefinitions);
 			await dbContext.SaveChangesAsync();
 			return formDefinitions;

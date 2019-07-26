@@ -42,7 +42,7 @@
                                 FROM optical_form_definitions opt
 								INNER JOIN optical_form_types oft ON oft.id=opt.optical_form_type_id
                                 INNER JOIN optical_form_text_locations tl on tl.optical_form_definition_id = opt.Id
-								ORDER BY opt.description
+								ORDER BY opt.list_order
                                ";
 
 		private readonly IHostingEnvironment _hostingEnvironment;
@@ -81,7 +81,9 @@
 						.ToList();
 			}
 
-			return formTypes;
+			return formTypes
+				.OrderBy(f => definitions.IndexOf(f.OpticalFormDefinitions.First()))
+				.ToList();
 		}
 
 		private async Task<List<OpticalFormTypeReadModel>> GetFormTypesAsync(NpgsqlConnection connection)
