@@ -153,13 +153,13 @@
 						<td>{{correctCount}}</td>
 						<td>{{wrongCount}}</td>
 						<td>{{emptyCount}}</td>
-						<td>{{net}}</td>
-						<td>% {{successPercent}}</td>
-						<td>{{classroomAverageNet}}</td>
-						<td>{{schoolAverageNet}}</td>
-						<td>{{districtAverageNet}}</td>
-						<td>{{cityAverageNet}}</td>
-						<td>{{generalAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces net}}</td>
+						<td>% {{formatOneDecimalPlace successPercent}}</td>
+						<td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
 					</tr>
 					{{/each}}
 					<tr>
@@ -170,13 +170,13 @@
 						<td>{{correctCount}}</td>
 						<td>{{wrongCount}}</td>
 						<td>{{emptyCount}}</td>
-						<td>{{net}}</td>
-						<td>% {{successPercent}}</td>
-						<td>{{classroomAverageNet}}</td>
-						<td>{{schoolAverageNet}}</td>
-						<td>{{districtAverageNet}}</td>
-						<td>{{cityAverageNet}}</td>
-						<td>{{generalAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces net}}</td>
+						<td>% {{formatOneDecimalPlace successPercent}}</td>
+						<td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
+						<td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -187,13 +187,13 @@
 					<td>
 						<strong>PUAN</strong>
 					</td>
-					<td>{{score}}</td>
+					<td>{{formatTwoDecimalPlaces score}}</td>
 				</tr>
 				<tr>
 					<td>
 						<strong>BAŞARI (%)</strong>
 					</td>
-					<td>{{successPercent}}%</td>
+					<td>{{formatOneDecimalPlace successPercent}}%</td>
 				</tr>
 			</table>
 			<table>
@@ -216,19 +216,19 @@
 							<strong>Puan Ort.</strong>
 						</td>
 						<td>
-							{{classScoreAverage}}
+							{{formatTwoDecimalPlaces classScoreAverage}}
 						</td>
 						<td>
-							{{schoolScoreAverage}}
+							{{formatTwoDecimalPlaces schoolScoreAverage}}
 						</td>
 						<td>
-							{{districtScoreAverage}}
+							{{formatTwoDecimalPlaces districtScoreAverage}}
 						</td>
 						<td>
-							{{cityScoreAverage}}
+							{{formatTwoDecimalPlaces cityScoreAverage}}
 						</td>
 						<td>
-							{{generalScoreAverage}}
+							{{formatTwoDecimalPlaces generalScoreAverage}}
 						</td>
 					</tr>
 					<tr>
