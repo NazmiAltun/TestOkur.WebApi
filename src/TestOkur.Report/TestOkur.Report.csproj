@@ -19,6 +19,10 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
     <PackageReference Include="Sentry.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="TestOkur.Infrastructure" Version="1.0.35" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.39" />
   </ItemGroup>

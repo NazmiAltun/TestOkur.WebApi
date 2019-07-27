@@ -1,6 +1,4 @@
-﻿using TestOkur.Notification.Models;
-
-namespace TestOkur.Notification.Unit.Tests.Infrastructure
+﻿namespace TestOkur.Notification.Unit.Tests.Infrastructure
 {
 	using System;
 	using System.Net;
@@ -10,6 +8,7 @@ namespace TestOkur.Notification.Unit.Tests.Infrastructure
 	using RichardSzalay.MockHttp;
 	using TestOkur.Notification.Configuration;
 	using TestOkur.Notification.Infrastructure;
+	using TestOkur.Notification.Models;
 	using Xunit;
 
 	public class SmsClientShould
@@ -22,7 +21,7 @@ namespace TestOkur.Notification.Unit.Tests.Infrastructure
 			{
 				Password = "Test",
 				ServiceUrl = "http://localhost/send-sms",
-				User = "Test"
+				User = "Test",
 			};
 		}
 
@@ -71,7 +70,7 @@ namespace TestOkur.Notification.Unit.Tests.Infrastructure
 				Id = Guid.NewGuid(),
 				Subject = subject,
 				Body = body,
-				Phone = phone
+				Phone = phone,
 			};
 
 			return await smsClient.SendAsync(sms);

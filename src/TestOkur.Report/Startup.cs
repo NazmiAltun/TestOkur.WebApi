@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
+
 namespace TestOkur.Report
 {
 	using System;
@@ -83,7 +84,7 @@ namespace TestOkur.Report
 			var hcOptions = new HealthCheckOptions()
 			{
 				Predicate = _ => true,
-				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
 			};
 			app.UseHealthChecks("/hc", hcOptions);
 			app.UseAuthentication();

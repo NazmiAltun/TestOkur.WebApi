@@ -1,20 +1,19 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
-
-namespace TestOkur.Notification.Unit.Tests.Consumers
+﻿namespace TestOkur.Notification.Unit.Tests.Consumers
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Net.Http;
 	using System.Threading.Tasks;
 	using FluentAssertions;
 	using MassTransit;
+	using Microsoft.Extensions.Logging;
 	using NSubstitute;
 	using RichardSzalay.MockHttp;
+	using TestOkur.Contracts.Sms;
 	using TestOkur.Notification.Configuration;
 	using TestOkur.Notification.Consumers;
 	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Contracts.Sms;
 	using Xunit;
 
 	public class SendSmsRequestReceivedConsumerShould
@@ -28,7 +27,7 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
             {
                 Password = "Test",
                 ServiceUrl = "http://localhost/send-sms",
-                User = "Test"
+                User = "Test",
             };
             _webApiClient = Substitute.For<IWebApiClient>();
         }
@@ -47,9 +46,9 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
             var publishEndPoint = Substitute.For<IPublishEndpoint>();
             var smsRepository = Substitute.For<ISmsRepository>();
             var logger = Substitute.For<ILogger<SendSmsRequestReceivedConsumer>>();
-			var smsMessages = new List<ISmsMessage>
+            var smsMessages = new List<ISmsMessage>
                 {
-                    new SmsMessage("TEST", messageBody, "42342")
+                    new SmsMessage("TEST", messageBody, "42342"),
                 };
 
             var consumerContext = Substitute.For<ConsumeContext<ISendSmsRequestReceived>>();
@@ -81,7 +80,7 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
                 {
                     new SmsMessage("TEST", "TEST", "42342"),
                     new SmsMessage("TEST", "TEST", "42342"),
-                    new SmsMessage("TEST", "TEST", "42342")
+                    new SmsMessage("TEST", "TEST", "42342"),
                 };
             var consumerContext = Substitute.For<ConsumeContext<ISendSmsRequestReceived>>();
             consumerContext.Message.SmsMessages.Returns(smsMessages);
@@ -117,13 +116,13 @@ namespace TestOkur.Notification.Unit.Tests.Consumers
                 Subject = subject;
                 Body = body;
                 Receiver = receiver;
-				Id = Guid.NewGuid();
-				Credit = 1;
+                Id = Guid.NewGuid();
+                Credit = 1;
             }
 
-			public Guid Id { get; private set; }
+            public Guid Id { get; private set; }
 
-			public int Credit { get; private set; }
+            public int Credit { get; private set; }
 
             public string Subject { get; private set; }
 

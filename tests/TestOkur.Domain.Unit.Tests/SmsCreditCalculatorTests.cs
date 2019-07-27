@@ -41,7 +41,7 @@
 				string.Concat(Enumerable.Repeat("A", 159)),
 				string.Concat(Enumerable.Repeat("A", 160)),
 				string.Concat(Enumerable.Repeat("A", 479)),
-				string.Concat(Enumerable.Repeat("A", 480))
+				string.Concat(Enumerable.Repeat("A", 480)),
 			};
 
 			var credits = _smsCreditCalculator.Calculate(list);

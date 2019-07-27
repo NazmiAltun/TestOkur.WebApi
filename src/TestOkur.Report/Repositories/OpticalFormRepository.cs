@@ -31,7 +31,7 @@
 					Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, form.StudentId),
 					form)
 				{
-					IsUpsert = true
+					IsUpsert = true,
 				};
 
 				writeModels.Add(model);

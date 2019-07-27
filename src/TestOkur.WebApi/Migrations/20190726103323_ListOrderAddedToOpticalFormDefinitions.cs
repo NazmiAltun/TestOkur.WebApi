@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TestOkur.WebApi.Migrations
+﻿namespace TestOkur.WebApi.Migrations
 {
-    public partial class ListOrderAddedToOpticalFormDefinitions : Migration
+	using Microsoft.EntityFrameworkCore.Migrations;
+
+	public partial class ListOrderAddedToOpticalFormDefinitions : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
