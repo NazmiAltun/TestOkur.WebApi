@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi.Application.User
+﻿using System.Collections.Generic;
+
+namespace TestOkur.WebApi.Application.User
 {
 	using System;
 	using System.ComponentModel.DataAnnotations;
@@ -39,7 +41,7 @@
 		}
 
 		[HttpPut]
-		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[Authorize(AuthorizationPolicies.Customer)]
 		public async Task<IActionResult> UpdateUserAsync([FromBody, Required]UpdateUserCommand command)
@@ -50,7 +52,7 @@
 		}
 
 		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[Authorize(AuthorizationPolicies.Public)]
 		public async Task<IActionResult> CreateUserAsync([FromBody, Required]CreateUserCommand command)
@@ -72,7 +74,7 @@
 		}
 
 		[HttpGet]
-		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(IEnumerable<UserReadModel>), StatusCodes.Status200OK)]
 		[Authorize(AuthorizationPolicies.Admin)]
 		public async Task<IActionResult> GetUsersAsync()
 		{
@@ -82,7 +84,7 @@
 		}
 
 		[HttpGet("{email}")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
 		[Authorize(AuthorizationPolicies.Admin)]
 		public async Task<IActionResult> GetUserAsync(string email)
 		{
@@ -92,7 +94,7 @@
 		}
 
 		[HttpGet("me")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetUserAsync()
 		{
 			var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery());
