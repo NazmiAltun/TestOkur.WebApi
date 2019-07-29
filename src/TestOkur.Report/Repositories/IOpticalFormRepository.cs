@@ -33,6 +33,8 @@
 
 		Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms);
 
+		Task<StudentOpticalForm> DeleteOneAsync(string id);
+
 		Task UpdateStudentAsync(IStudentUpdated studentUpdatedEvent);
 
 		Task UpdateClassroomAsync(int classroomId, int grade, string name);

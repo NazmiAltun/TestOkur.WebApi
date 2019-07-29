@@ -3,6 +3,8 @@
 	using System;
 	using System.Security.Claims;
 	using IdentityModel;
+	using MassTransit;
+	using MassTransit.RabbitMqTransport;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using TestOkur.Common;
@@ -17,6 +19,17 @@
 
 		protected override void AddHostedServices(IServiceCollection services)
 		{
+		}
+
+		protected override void AddMessageBus(IServiceCollection services, Action<IRabbitMqReceiveEndpointConfigurator> configure = null)
+		{
+			base.AddMessageBus(services, cfg =>
+			{
+				Consumer.Instance.Configure(cfg);
+			});
+			services.BuildServiceProvider()
+				.GetService<IBusControl>()
+				.Start();
 		}
 
 		protected override void AddAuthentication(IServiceCollection services)

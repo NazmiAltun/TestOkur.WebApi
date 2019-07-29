@@ -11,6 +11,7 @@ namespace TestOkur.Report
 	using GreenPipes;
 	using HealthChecks.UI.Client;
 	using MassTransit;
+	using MassTransit.RabbitMqTransport;
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -111,6 +112,35 @@ namespace TestOkur.Report
 				});
 		}
 
+		protected virtual void AddMessageBus(
+			IServiceCollection services,
+			Action<IRabbitMqReceiveEndpointConfigurator> configure = null)
+		{
+			AddMassTransit(services);
+			services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+			 {
+				 var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+				 var host = cfg.Host(new Uri(uriStr), hc =>
+				 {
+					 hc.Username(RabbitMqConfiguration.Username);
+					 hc.Password(RabbitMqConfiguration.Password);
+				 });
+				 if (configure != null)
+				 {
+					 cfg.ReceiveEndpoint(host, configure);
+				 }
+
+				 cfg.ReceiveEndpoint(host, e =>
+				 {
+					 e.PrefetchCount = 16;
+					 e.UseMessageRetry(x => x.Interval(2, 100));
+					 e.RegisterConsumers(provider);
+				 });
+				 cfg.UseExtensionsLogging(new LoggerFactory());
+			 }));
+			services.AddSingleton<IPublishEndpoint>(x => x.GetService<IBusControl>());
+		}
+
 		private void RegisterMappings()
 		{
 			if (!BsonClassMap.IsClassMapRegistered(typeof(OpticalForm)))
@@ -171,29 +201,6 @@ namespace TestOkur.Report
 
 			services.AddSingleton(resolver =>
 				resolver.GetRequiredService<IOptions<OAuthConfiguration>>().Value);
-		}
-
-		private void AddMessageBus(IServiceCollection services)
-		{
-			AddMassTransit(services);
-			services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-			 {
-				 var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-				 var host = cfg.Host(new Uri(uriStr), hc =>
-				 {
-					 hc.Username(RabbitMqConfiguration.Username);
-					 hc.Password(RabbitMqConfiguration.Password);
-				 });
-
-				 cfg.ReceiveEndpoint(host, e =>
-				 {
-					 e.PrefetchCount = 16;
-					 e.UseMessageRetry(x => x.Interval(2, 100));
-					 e.RegisterConsumers(provider);
-				 });
-				 cfg.UseExtensionsLogging(new LoggerFactory());
-			 }));
-			services.AddSingleton<IPublishEndpoint>(x => x.GetService<IBusControl>());
 		}
 
 		private void AddMassTransit(IServiceCollection services)

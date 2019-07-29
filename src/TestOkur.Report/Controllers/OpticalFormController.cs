@@ -57,5 +57,18 @@
 			await _publishEndpoint.Publish(new EvaluateExam(forms.First().ExamId));
 			return Ok();
 		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteAsync(string id)
+		{
+			var deletedForm = await _opticalFormRepository.DeleteOneAsync(id);
+
+			if (deletedForm != null)
+			{
+				await _publishEndpoint.Publish(new EvaluateExam(deletedForm.ExamId));
+			}
+
+			return Ok();
+		}
 	}
 }
