@@ -6,6 +6,7 @@
 	using FluentAssertions;
 	using TestOkur.Contracts.Student;
 	using TestOkur.Domain.Model;
+	using TestOkur.TestHelper;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Contact;
 	using TestOkur.WebApi.Application.Student;
@@ -37,7 +38,7 @@
 							Guid.NewGuid(),
 							Random.RandomString(10),
 							Random.RandomString(10),
-							Random.RandomString(10, "123456789"),
+							RandomGen.Phone(),
 							1),
 					}.ToList());
 				await client.PutAsync(ApiPath, editCommand.ToJsonContent());

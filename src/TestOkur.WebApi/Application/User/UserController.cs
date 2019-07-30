@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TestOkur.WebApi.Application.User
+﻿namespace TestOkur.WebApi.Application.User
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.Threading.Tasks;
 	using Microsoft.AspNetCore.Authorization;

@@ -9,6 +9,7 @@
 	using IdentityModel;
 	using Microsoft.AspNetCore.TestHost;
 	using Microsoft.Extensions.DependencyInjection;
+	using TestOkur.TestHelper;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Captcha;
 	using TestOkur.WebApi.Application.City;
@@ -105,12 +106,12 @@
 			return new CreateUserCommand(
 				Guid.NewGuid(),
 				"Jack",
-				Random.Next(int.MaxValue / 2, int.MaxValue).ToString(),
+				RandomGen.Phone(),
 				"Jack",
 				"Black",
 				"AS",
 				$"{Random.RandomString(120)}@hotmail.com",
-				phone ?? Random.Next(int.MaxValue / 2, int.MaxValue).ToString(),
+				phone ?? RandomGen.Phone(),
 				Random.Next(99999, int.MaxValue).ToString(),
 				licenseType?.Id ?? 1,
 				city?.Id ?? 0,

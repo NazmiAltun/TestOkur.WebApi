@@ -5,6 +5,7 @@
 	using System.Net.Http;
 	using System.Threading.Tasks;
 	using TestOkur.Domain.Model.StudentModel;
+	using TestOkur.TestHelper;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Contact;
 	using TestOkur.WebApi.Integration.Tests.Student;
@@ -18,7 +19,7 @@
 				Guid.NewGuid(),
 				Random.RandomString(10),
 				Random.RandomString(10),
-				Random.RandomString(10, "123456789"),
+				RandomGen.Phone(),
 				(int)ContactType.Directory.Id);
 
 			var response = await client.PostAsync(ApiPath, command.ToJsonContent());

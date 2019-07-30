@@ -8,6 +8,7 @@
 	using Microsoft.EntityFrameworkCore;
 	using TestOkur.Data;
 	using TestOkur.Domain.Model;
+	using TestOkur.TestHelper;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Classroom;
 	using TestOkur.WebApi.Application.Contact;
@@ -119,13 +120,13 @@
 					Guid.NewGuid(),
 					Random.RandomString(10),
 					Random.RandomString(10),
-					Random.RandomString(10, "123456789"),
+					RandomGen.Phone(),
 					1),
 				new CreateContactCommand(
 					Guid.NewGuid(),
 					Random.RandomString(10),
 					Random.RandomString(10),
-					Random.RandomString(10, "123456789"),
+					RandomGen.Phone(),
 					2),
 			};
 
