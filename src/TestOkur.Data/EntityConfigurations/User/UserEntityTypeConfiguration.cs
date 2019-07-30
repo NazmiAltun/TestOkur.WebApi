@@ -19,10 +19,10 @@
 				.OnDelete(DeleteBehavior.SetNull);
 			builder.Property(_ => _.SubjectId).IsRequired();
 			builder.OwnsEmail(_ => _.Email);
-			builder.OwnsName(_ => _.FirstName, 50);
-			builder.OwnsName(_ => _.LastName, 50);
-			builder.OwnsName(_ => _.RegistrarFullName, 100);
-			builder.OwnsName(_ => _.SchoolName, 100);
+			builder.OwnsName(_ => _.FirstName, 100);
+			builder.OwnsName(_ => _.LastName, 100);
+			builder.OwnsName(_ => _.RegistrarFullName, 200);
+			builder.OwnsName(_ => _.SchoolName, 150);
 			builder.OwnsPhone(_ => _.Phone);
 			builder.OwnsPhone(_ => _.RegistrarPhone);
 			builder.Property(_ => _.Notes).HasMaxLength(500);
