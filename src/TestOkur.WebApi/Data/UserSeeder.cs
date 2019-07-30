@@ -17,11 +17,6 @@
 
 		public async Task SeedAsync(ApplicationDbContext dbContext)
 		{
-			if (await dbContext.Users.AnyAsync())
-			{
-				return;
-			}
-
 			var list = new List<User>();
 			var file = new FileInfo(Path.Combine("Data", UsersFilePath));
 
@@ -46,7 +41,16 @@
 				}
 			}
 
-			dbContext.Users.AddRange(list);
+			foreach (var user in list)
+			{
+				if (await dbContext.Users.AnyAsync(u => u.Email == user.Email))
+				{
+					continue;
+				}
+
+				dbContext.Users.Add(user);
+			}
+
 			await dbContext.SaveChangesAsync();
 		}
 
