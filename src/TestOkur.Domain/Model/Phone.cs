@@ -35,9 +35,9 @@
 			    throw new ArgumentNullException(value);
 		    }
 
-		    if (value.Length != 10 || !value.All(char.IsDigit))
+		    if (value.Length != 10 || !value.All(char.IsDigit) || !value.StartsWith("5"))
 		    {
-			    throw new ArgumentException("Invalid phone number.", nameof(value));
+			    throw new ArgumentException($"Invalid phone number: {value}", nameof(value));
 		    }
 	    }
 	}
