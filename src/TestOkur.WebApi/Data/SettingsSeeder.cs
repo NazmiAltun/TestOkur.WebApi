@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.WebApi.Data
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@
 			    "nazmialtun@windowslive.com;nazmialtun88@gmail.com",
 			    "Yönetici e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor");
 
-	    public async Task SeedAsync(ApplicationDbContext dbContext)
+	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 	    {
 		    if (!await dbContext.AppSettings.AnyAsync())
 		    {

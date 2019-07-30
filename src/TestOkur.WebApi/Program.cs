@@ -17,7 +17,7 @@
 			var host = BuildWebHost(args);
 			await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
 			{
-				await DbInitializer.SeedAsync(context);
+				await DbInitializer.SeedAsync(context, services);
 			});
 
 			host.Run();

@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.WebApi.Data
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Reflection;
@@ -10,7 +11,7 @@
 
 	internal class LessonSeeder : ISeeder
 	{
-		public async Task SeedAsync(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{
 			if (await dbContext.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
 			{

@@ -14,7 +14,7 @@
 	{
 		private const string CityExcelFilePath = "cities-districts.xlsx";
 
-		public async Task SeedAsync(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{
 			if (await dbContext.Cities.AnyAsync())
 			{

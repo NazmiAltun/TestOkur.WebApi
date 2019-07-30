@@ -16,7 +16,7 @@
 			var testServer = Create(configureServices);
 			await testServer.Host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
 			{
-				await DbInitializer.SeedAsync(context);
+				await DbInitializer.SeedAsync(context, services);
 			});
 			return testServer;
 		}

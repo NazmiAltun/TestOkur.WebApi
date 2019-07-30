@@ -1,9 +1,10 @@
 ﻿namespace TestOkur.WebApi.Data
 {
+	using Microsoft.EntityFrameworkCore;
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
 	using TestOkur.Data;
 	using TestOkur.Domain.Model.ExamModel;
 	using TestOkur.Domain.Model.OpticalFormModel;
@@ -78,7 +79,7 @@
 					.WithOrder(10)
 					.Build();
 
-		public async Task SeedAsync(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{
 			if (await dbContext.ExamTypes.AnyAsync())
 			{

@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.WebApi.Data
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
@@ -705,7 +706,7 @@
 					.Build())
 				.Build();
 
-		public async Task SeedAsync(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{
 			if (await dbContext.FormTypes.AnyAsync())
 			{

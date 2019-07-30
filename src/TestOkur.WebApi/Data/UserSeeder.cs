@@ -6,6 +6,8 @@
 	using System.Linq;
 	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
+	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.Logging;
 	using OfficeOpenXml;
 	using TestOkur.Data;
 	using TestOkur.Domain.Model.CityModel;
@@ -15,7 +17,7 @@
 	{
 		private const string UsersFilePath = "Users.xlsx";
 
-		public async Task SeedAsync(ApplicationDbContext dbContext)
+		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{
 			var list = new List<User>();
 			var file = new FileInfo(Path.Combine("Data", UsersFilePath));
@@ -28,15 +30,23 @@
 					.ToList();
 				for (var i = 2; i < workSheet.Dimension.Rows + 1; i++)
 				{
-					var city = cities.First(c => c.Id == Convert.ToInt32(workSheet.Cells[i, 2].Value));
-					var district = city.Districts.First(d => d.Id == Convert.ToInt32(workSheet.Cells[i, 3].Value));
-					var smsBalance = Convert.ToInt32(workSheet.Cells[i, 11].Value);
-
-					list.Add(ParseFromRow(workSheet, i, city, district));
-
-					if (smsBalance > 0)
+					try
 					{
-						list.Last().AddSmsBalance(smsBalance);
+						var city = cities.First(c => c.Id == Convert.ToInt32(workSheet.Cells[i, 2].Value));
+						var district = city.Districts.First(d => d.Id == Convert.ToInt32(workSheet.Cells[i, 3].Value));
+						var smsBalance = Convert.ToInt32(workSheet.Cells[i, 11].Value);
+
+						list.Add(ParseFromRow(workSheet, i, city, district));
+
+						if (smsBalance > 0)
+						{
+							list.Last().AddSmsBalance(smsBalance);
+						}
+					}
+					catch (Exception ex)
+					{
+						services.GetService<ILogger<UserSeeder>>()
+							.LogError(ex, $"Unable to parse user at row {i}");
 					}
 				}
 			}

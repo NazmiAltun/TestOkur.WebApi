@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.WebApi.Data
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
@@ -11,7 +12,7 @@
 
 	internal class ScoreFormulaSeeder : ISeeder
 	{
-	    public async Task SeedAsync(ApplicationDbContext dbContext)
+	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 	    {
 			if (await dbContext.ScoreFormulas.AnyAsync())
 			{

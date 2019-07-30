@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.WebApi.Data
 {
+	using System;
 	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
 	using TestOkur.Data;
@@ -9,7 +10,7 @@
 
 	internal class EnumerationSeeder : ISeeder
     {
-	    public async Task SeedAsync(ApplicationDbContext dbContext)
+	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 	    {
 		    if (!await dbContext.Set<AnswerFormFormat>().AnyAsync())
 		    {
