@@ -53,7 +53,7 @@
 
 			foreach (var user in list)
 			{
-				if (await dbContext.Users.AnyAsync(u => u.Email == user.Email))
+				if (await dbContext.Users.AnyAsync(u => u.Email.Value == user.Email.Value))
 				{
 					continue;
 				}
