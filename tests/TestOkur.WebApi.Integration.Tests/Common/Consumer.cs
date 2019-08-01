@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using MassTransit.Testing;
+	using TestOkur.Contracts.Alert;
 	using TestOkur.Contracts.Classroom;
 	using TestOkur.Contracts.Exam;
 	using TestOkur.Contracts.Lesson;
@@ -29,6 +30,7 @@
 			Consume<IClassroomUpdated>();
 			Consume<IStudentDeleted>();
 			Consume<IStudentUpdated>();
+			Consume<IUserErrorReceived>();
 		}
 
 		public static Consumer Instance { get; } = new Consumer();

@@ -37,4 +37,9 @@
     <ProjectReference Include="..\..\src\TestOkur.Domain\TestOkur.Domain.csproj" />
     <ProjectReference Include="..\..\src\TestOkur.WebApi\TestOkur.WebApi.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Error\ErrorSS.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

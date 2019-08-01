@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Yeni Hata Mesaji Iletildi</title>
+
+    <style type="text/css">
+        table tr td {
+            padding:10px;
+            padding-left:30px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        @Model.ReporterEmail e-posta adresine sahip kullanici hata mesaji iletti. Detaylar asagidadir;
+    </p>
+    <br />
+    <br />
+    <table border="1" style="font-size:20px;">
+        <tr>
+            <td>
+                <strong>Kullanici ID</strong>
+            </td>
+            <td>
+                @Model.ReporterUserId
+            </td>
+        </tr> 
+        <tr>
+            <td>
+                <strong>Kullanici E-Posta</strong>
+            </td>
+            <td>
+                @Model.ReporterEmail
+            </td>
+        </tr> 
+        <tr>
+            <td>
+                <strong>Sinav</strong>
+            </td>
+            <td>
+                @Model.ExamName ( @Model.ExamId )
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Mesaj</strong>
+            </td>
+            <td>
+                @Model.Description
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Gorsel</strong>
+            </td>
+			<td>
+				@Model.ImageFilePath
+			</td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -129,6 +129,7 @@
 					e.Consumer<UserActivatedConsumer>(provider);
 					e.Consumer<AccountExtendedConsumer>(provider);
 					e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
+					e.Consumer<UserErrorReceivedConsumer>(provider);
 				});
 				cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
 			}));
@@ -144,6 +145,7 @@
 				x.AddConsumer<UserActivatedConsumer>();
 				x.AddConsumer<AccountExtendedConsumer>();
 				x.AddConsumer<ResetPasswordTokenGeneratedConsumer>();
+				x.AddConsumer<UserErrorReceivedConsumer>();
 			});
 		}
 

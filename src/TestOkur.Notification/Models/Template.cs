@@ -8,6 +8,12 @@
 				"TestOkur Gunluk Veriler",
 				"Admin_Daily_Notification.html");
 
+		public static readonly Template UserErrorAlertEmail =
+			new Template(
+				"UserErrorAlertEmail",
+				"Yeni Kullanici Hata Mesaji Iletildi",
+				"NewErrorMessageReceived.html");
+
 		public static readonly Template AccountRegistrationEmailAdmin =
 			new Template(
 				"YeniLisansKaydi_Yonetici_Email",
