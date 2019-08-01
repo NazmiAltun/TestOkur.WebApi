@@ -27,7 +27,7 @@
 				var client = testServer.CreateClient();
 				var imagePath = string.Empty;
 
-				using (var stream = File.OpenRead(Path.Combine("Error", "ErrorSS.PNG")))
+				using (var stream = File.OpenRead(Path.Combine("Error", "ss.png")))
 				{
 					var response = await client.PostAsync($"{ApiPath}/upload", new MultipartFormDataContent()
 					{
