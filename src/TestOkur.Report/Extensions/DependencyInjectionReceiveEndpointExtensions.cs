@@ -8,6 +8,7 @@
 	{
 		public static void RegisterConsumers(this IReceiveEndpointConfigurator configurator, IServiceProvider provider)
 		{
+			configurator.Consumer<EvaluateExamFaultConsumer>(provider);
 			configurator.Consumer<ExamDeletedConsumer>(provider);
 			configurator.Consumer<ExamCreatedConsumer>(provider);
 			configurator.Consumer<ExamUpdatedConsumer>(provider);

@@ -1,8 +1,9 @@
 ﻿namespace TestOkur.Notification
 {
 	using System;
-	using System.Diagnostics.CodeAnalysis;
+	using System.Linq;
 	using System.Net.Http;
+	using System.Reflection;
 	using GreenPipes;
 	using HealthChecks.UI.Client;
 	using MassTransit;
@@ -25,7 +26,6 @@
 	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
 
-	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
 	{
 		public Startup(IConfiguration configuration)
@@ -139,13 +139,7 @@
 		{
 			services.AddMassTransit(x =>
 			{
-				x.AddConsumer<NewUserRegisteredConsumer>();
-				x.AddConsumer<SendSmsRequestReceivedConsumer>();
-				x.AddConsumer<SendSmsRequestFailedConsumer>();
-				x.AddConsumer<UserActivatedConsumer>();
-				x.AddConsumer<AccountExtendedConsumer>();
-				x.AddConsumer<ResetPasswordTokenGeneratedConsumer>();
-				x.AddConsumer<UserErrorReceivedConsumer>();
+				x.AddConsumers(GetConsumerTypes());
 			});
 		}
 
@@ -180,6 +174,15 @@
 			return HttpPolicyExtensions
 				.HandleTransientHttpError()
 				.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+		}
+
+		private Type[] GetConsumerTypes()
+		{
+			return Assembly.GetExecutingAssembly()
+				.GetTypes()
+				.Where(t => t.IsClass &&
+				            typeof(IConsumer).IsAssignableFrom(t))
+				.ToArray();
 		}
 	}
 }
