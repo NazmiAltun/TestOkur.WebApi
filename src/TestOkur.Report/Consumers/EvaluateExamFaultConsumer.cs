@@ -17,7 +17,11 @@
 
 		public Task Consume(ConsumeContext<Fault<IEvaluateExam>> context)
 		{
-			_logger.LogError(JsonConvert.SerializeObject(context.Message.Exceptions));
+			foreach (var exception in context.Message.Exceptions)
+			{
+				_logger.LogError($"{exception.ExceptionType} : {exception.Source} ==>" +
+				                 $" {exception.Message} : {exception.StackTrace}");
+			}
 
 			return Task.CompletedTask;
 		}

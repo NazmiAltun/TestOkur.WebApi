@@ -13,6 +13,8 @@ COPY . .
 RUN dotnet build "./src/TestOkur.Report/TestOkur.Report.csproj" -c Release --no-restore -o /app
 
 FROM build as integrationtest
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait /wait
+RUN chmod +x /wait
 WORKDIR /src/tests/TestOkur.Report.Integration.Tests
 
 FROM build AS publish

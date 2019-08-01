@@ -107,12 +107,7 @@ services:
       context: .
       dockerfile: src/TestOkur.Report/Dockerfile
       target: integrationtest
-    entrypoint:
-      - dotnet
-      - test
-      - /p:CollectCoverage=true 
-      - /p:CoverletOutput=../../../coverage/report-integration-test
-      - /p:CoverletOutputFormat="opencover"
+    command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage/report-integration-test /p:CoverletOutputFormat='opencover'"
     volumes:
       - /tmp/coverage/:/coverage
     depends_on:
@@ -120,6 +115,8 @@ services:
       - rabbitmq
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - WAIT_HOSTS= rabbitmq:5672, mongo:27017
+      - WAIT_HOSTS_TIMEOUT=300
       - RabbitMqConfiguration__Uri=rabbitmq
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
       - OAuthConfiguration__Authority=http://mockserver:8080/
