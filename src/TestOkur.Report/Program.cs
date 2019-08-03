@@ -20,6 +20,7 @@
 				.OutputMetrics.AsPrometheusPlainText()
 				.Build();
 
+			BuildWebHost(args).Run();
 		}
 
 		public static IWebHost BuildWebHost(string[] args) =>
