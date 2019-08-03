@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Net;
+	using App.Metrics.AspNetCore;
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.Extensions.Logging;
@@ -16,6 +17,8 @@
 		public static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
 				.UseStartup<Startup>()
+				.UseMetrics()
+				.UseMetricsWebTracking()
 				.UseSentry(options =>
 				{
 					options.Release = "qa";
