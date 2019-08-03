@@ -22,7 +22,6 @@
 		{
 			Metrics = AppMetrics.CreateDefaultBuilder()
 				.OutputMetrics.AsPrometheusPlainText()
-				.OutputMetrics.AsPrometheusProtobuf()
 				.Build();
 			var host = BuildWebHost(args);
 			await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
@@ -42,7 +41,7 @@
 						options.EndpointOptions = endpointsOptions =>
 						{
 							endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusTextOutputFormatter>().First();
-							endpointsOptions.MetricsEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusProtobufOutputFormatter>().First();
+							endpointsOptions.MetricsEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusTextOutputFormatter>().First();
 						};
 					})
 				.UseMetricsWebTracking()

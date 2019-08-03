@@ -18,10 +18,8 @@
 		{
 			Metrics = AppMetrics.CreateDefaultBuilder()
 				.OutputMetrics.AsPrometheusPlainText()
-				.OutputMetrics.AsPrometheusProtobuf()
 				.Build();
 
-			BuildWebHost(args).Run();
 		}
 
 		public static IWebHost BuildWebHost(string[] args) =>
@@ -33,7 +31,7 @@
 						options.EndpointOptions = endpointsOptions =>
 						{
 							endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusTextOutputFormatter>().First();
-							endpointsOptions.MetricsEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusProtobufOutputFormatter>().First();
+							endpointsOptions.MetricsEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusTextOutputFormatter>().First();
 						};
 					})
 				.UseMetricsWebTracking()
