@@ -1,12 +1,8 @@
 ﻿namespace TestOkur.WebApi
 {
 	using System;
-	using System.Linq;
 	using System.Net;
 	using System.Threading.Tasks;
-	using App.Metrics;
-	using App.Metrics.AspNetCore;
-	using App.Metrics.Formatters.Prometheus;
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.Extensions.Logging;
@@ -16,13 +12,8 @@
 
 	public static class Program
 	{
-		private static IMetricsRoot Metrics { get; set; }
-
 		public static async Task Main(string[] args)
 		{
-			Metrics = AppMetrics.CreateDefaultBuilder()
-				.OutputMetrics.AsPrometheusPlainText()
-				.Build();
 			var host = BuildWebHost(args);
 			await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
 			{
@@ -35,16 +26,6 @@
 		public static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
 				.UseStartup<Startup>()
-				.UseMetrics(
-					options =>
-					{
-						options.EndpointOptions = endpointsOptions =>
-						{
-							endpointsOptions.MetricsTextEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusTextOutputFormatter>().First();
-							endpointsOptions.MetricsEndpointOutputFormatter = Metrics.OutputMetricsFormatters.OfType<MetricsPrometheusTextOutputFormatter>().First();
-						};
-					})
-				.UseMetricsWebTracking()
 				.UseSentry(options =>
 				{
 					options.Release = "qa";
