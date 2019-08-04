@@ -7,7 +7,8 @@ docker run -d \
 	-e VIRTUAL_PORT=80 \
 	-e LETSENCRYPT_HOST=webapi-qa.testokur.com \
 	-e LETSENCRYPT_EMAIL=bilgi@testokur.com \
-	-v /home/data:/app/Data \
+	-v /home/data-qa:/app/Data \
+	-v /home/uploads-qa:/app/wwwroot/uploads \
 	--name testokur-webapi-qa \
 	--restart=always  \
 	--network=testokur \
