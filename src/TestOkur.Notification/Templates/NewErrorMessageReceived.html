@@ -21,18 +21,10 @@
     <table border="1" style="font-size:20px;">
         <tr>
             <td>
-                <strong>Kullanici ID</strong>
+                <strong>Kullanici</strong>
             </td>
             <td>
-                @Model.ReporterUserId
-            </td>
-        </tr> 
-        <tr>
-            <td>
-                <strong>Kullanici E-Posta</strong>
-            </td>
-            <td>
-                @Model.ReporterEmail
+	            @Model.ReporterEmail (@Model.ReporterUserId)
             </td>
         </tr> 
         <tr>
@@ -51,17 +43,9 @@
                 @Model.Description
             </td>
         </tr>
-        <tr>
-            <td>
-                <strong>Gorsel URL</strong>
-            </td>
-			<td>
-				@Model.ImageFilePath
-			</td>
-        </tr>
 		 <tr>
             <td>
-                <strong>Gorsel</strong>
+                <strong>Ekran Goruntusu</strong>
             </td>
 			<td>
 				<img src="@Model.ImageFilePath" alt="@Model.Description" />
