@@ -1,7 +1,5 @@
 ﻿namespace TestOkur.WebApi.Application.Error
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
 	using System.IO;
 	using System.Threading.Tasks;
 	using MassTransit;

@@ -1,11 +1,6 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Score
 {
-	using System.Collections.Generic;
-	using System.Linq;
 	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.Model.ScoreModel;
 	using Xunit;
 
 	public class GetTests : ScoreTest

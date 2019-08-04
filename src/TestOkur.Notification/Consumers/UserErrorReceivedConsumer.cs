@@ -2,7 +2,6 @@
 {
 	using MassTransit;
 	using System.Threading.Tasks;
-	using TestOkur.Contracts.Account;
 	using TestOkur.Contracts.Alert;
 	using TestOkur.Notification.Models;
 

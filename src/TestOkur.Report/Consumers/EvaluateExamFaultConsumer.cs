@@ -3,7 +3,6 @@
 	using System.Threading.Tasks;
 	using MassTransit;
 	using Microsoft.Extensions.Logging;
-	using Newtonsoft.Json;
 	using TestOkur.Report.Events;
 
 	internal class EvaluateExamFaultConsumer : IConsumer<Fault<IEvaluateExam>>

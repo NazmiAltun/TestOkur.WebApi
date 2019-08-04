@@ -5,7 +5,6 @@
 	using System.Threading.Tasks;
 	using FluentAssertions;
 	using TestOkur.TestHelper;
-	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Contact;
 	using Xunit;
 
