@@ -15,18 +15,21 @@
 	public sealed class GetUserStudentsQueryHandler
 		: QueryHandlerAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>
 	{
-		private const string Sql = @"SELECT s.*,cr.name_value, cr.grade_value, c.phone_value as phone,
-								s.classroom_id, c.contact_type_id as contact_type  FROM students s
-								INNER JOIN classrooms cr on cr.Id=s.classroom_id
-								LEFT JOIN contacts c ON c.student_id=s.Id
+		private const string Sql = @"SELECT s.*,cr.name_value, cr.grade_value,s.classroom_id
+								FROM students s
+								INNER JOIN classrooms cr on cr.Id=s.classroom_id	
 								WHERE s.created_by=@userId
 								ORDER BY s.student_number_value
                                 ";
 
 		private readonly string _connectionString;
+		private readonly IQueryProcessor _queryProcessor;
 
-		public GetUserStudentsQueryHandler(ApplicationConfiguration configurationOptions)
+		public GetUserStudentsQueryHandler(
+			ApplicationConfiguration configurationOptions,
+			IQueryProcessor queryProcessor)
 		{
+			_queryProcessor = queryProcessor;
 			_connectionString = configurationOptions.Postgres;
 		}
 
@@ -37,36 +40,25 @@
 			GetUserStudentsQuery query,
 			CancellationToken cancellationToken = default)
 		{
+			List<StudentReadModel> students;
+
 			using (var connection = new NpgsqlConnection(_connectionString))
 			{
-				var dictionary = new Dictionary<int, StudentReadModel>();
+				students = (await connection.QueryAsync<StudentReadModel>(
+					Sql,
+					new { userId = query.UserId })).ToList();
+			}
 
-				return (await connection.QueryAsync<StudentReadModel, ContactReadModel, StudentReadModel>(
-						Sql,
-						(student, contact) =>
-						{
-							if (!dictionary.TryGetValue(student.Id, out var studentEntry))
-							{
-								studentEntry = student;
-								dictionary.Add(studentEntry.Id, studentEntry);
-							}
+			var contacts = await _queryProcessor.ExecuteAsync(
+				new GetUserContactsQuery(), cancellationToken);
 
-							AddContact(contact, studentEntry);
-							return studentEntry;
-						},
-						new { query.UserId },
-						splitOn: "phone"))
-					.Distinct()
+			foreach (var student in students)
+			{
+				student.Contacts = contacts.Where(c => c.StudentId == student.Id)
 					.ToList();
 			}
-		}
 
-		private void AddContact(ContactReadModel contact, StudentReadModel studentEntry)
-		{
-			if (!string.IsNullOrEmpty(contact?.Phone))
-			{
-				studentEntry.Contacts.Add(contact);
-			}
+			return students;
 		}
 	}
 }

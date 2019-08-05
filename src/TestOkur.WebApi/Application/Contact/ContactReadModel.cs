@@ -4,6 +4,8 @@
 	{
 		public int Id { get; set; }
 
+		public int StudentId { get; set; }
+
 		public string Phone { get; set; }
 
 		public int ContactType { get; set; }
