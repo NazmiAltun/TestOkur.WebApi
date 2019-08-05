@@ -88,7 +88,7 @@
 				Lessons.Science,
 				Lessons.SocialScience,
 				Lessons.Religion,
-				Lessons.Language,
+				Lessons.English,
 			};
 
 			lgs.FormLessonSections.Select(s => s.Lesson)

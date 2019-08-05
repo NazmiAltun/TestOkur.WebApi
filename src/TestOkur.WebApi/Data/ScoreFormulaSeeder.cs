@@ -41,7 +41,7 @@
 				.AddLessonCoefficient(secondGradeFormType, Lessons.Turkish, 6)
 				.AddLessonCoefficient(secondGradeFormType, Lessons.Mathematics, 6)
 				.AddLessonCoefficient(secondGradeFormType, Lessons.Hb, 6)
-				.AddLessonCoefficient(secondGradeFormType, Lessons.Language, 6)
+				.AddLessonCoefficient(secondGradeFormType, Lessons.English, 6)
 				.Build());
 			formulas.AddRange(new ScoreFormulaBuilder()
 				.WithGrade(3)
@@ -50,7 +50,7 @@
 				.AddLessonCoefficient(thirdGradeFormType, Lessons.Turkish, 5)
 				.AddLessonCoefficient(thirdGradeFormType, Lessons.Mathematics, 5)
 				.AddLessonCoefficient(thirdGradeFormType, Lessons.Hb, 5)
-				.AddLessonCoefficient(thirdGradeFormType, Lessons.Language, 5)
+				.AddLessonCoefficient(thirdGradeFormType, Lessons.English, 5)
 				.AddLessonCoefficient(thirdGradeFormType, Lessons.Science, 5)
 				.Build());
 			formulas.AddRange(new ScoreFormulaBuilder()
@@ -59,7 +59,7 @@
 				.WithFormulaType(FormulaType.Trial)
 				.AddLessonCoefficient(fourthGradeFormType, Lessons.Turkish, 5)
 				.AddLessonCoefficient(fourthGradeFormType, Lessons.Mathematics, 5)
-				.AddLessonCoefficient(fourthGradeFormType, Lessons.Language, 2)
+				.AddLessonCoefficient(fourthGradeFormType, Lessons.English, 2)
 				.AddLessonCoefficient(fourthGradeFormType, Lessons.Science, 4)
 				.AddLessonCoefficient(fourthGradeFormType, Lessons.SocialScience, 4)
 				.Build());
@@ -69,7 +69,7 @@
 				.WithFormulaType(FormulaType.Trial)
 				.AddLessonCoefficient(lgsFormType, Lessons.Turkish, 4)
 				.AddLessonCoefficient(lgsFormType, Lessons.Mathematics, 4)
-				.AddLessonCoefficient(lgsFormType, Lessons.Language, 2)
+				.AddLessonCoefficient(lgsFormType, Lessons.English, 2)
 				.AddLessonCoefficient(lgsFormType, Lessons.Science, 4)
 				.AddLessonCoefficient(lgsFormType, Lessons.SocialScience, 2)
 				.AddLessonCoefficient(lgsFormType, Lessons.Religion, 2)
@@ -132,7 +132,7 @@
 				.AddLessonCoefficient(tytFormType, Lessons.SocialScience, 1.333f)
 				.AddLessonCoefficient(tytFormType, Lessons.Mathematics, 1.334f)
 				.AddLessonCoefficient(tytFormType, Lessons.Science, 1.334f)
-				.AddLessonCoefficient(aytLangFormType, Lessons.Language, 3)
+				.AddLessonCoefficient(aytLangFormType, Lessons.English, 3)
 				.Build());
 
 			// Scholarship

@@ -767,7 +767,7 @@
 			var scienceLesson = lessons.Single(l => l.Name.Value == Lessons.Science);
 			var socLesson = lessons.Single(l => l.Name.Value == Lessons.SocialScience);
 			var relLesson = lessons.Single(l => l.Name.Value == Lessons.Religion);
-			var langLesson = lessons.Single(l => l.Name.Value == Lessons.Language);
+			var langLesson = lessons.Single(l => l.Name.Value == Lessons.English);
 			var litLesson = lessons.Single(l => l.Name.Value == Lessons.Literature);
 
 			var formTypes = new List<OpticalFormType>

@@ -8,7 +8,7 @@
         public const string Science = "Fen Bilimleri";
         public const string SocialScience = "Sosyal Bilgiler";
         public const string Religion = "Din Kültürü ve Ahlak Bilgisi";
-        public const string Language = "Yabancı Dil";
+        public const string English = "İngilizce";
         public const string Literature = "Türk Dili";
         public const string Geometry = "Geometri";
         public const string Geography = "Coğrafya";
