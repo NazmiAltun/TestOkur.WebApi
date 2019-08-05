@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestOkur.Optic.Answer;
-    using TestOkur.Optic.Form;
-    using TestOkur.Report.Integration.Tests.Common;
-    using TestOkur.TestHelper;
-    using TestOkur.TestHelper.Extensions;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Net.Http;
+	using System.Threading.Tasks;
+	using TestOkur.Optic.Answer;
+	using TestOkur.Optic.Form;
+	using TestOkur.Report.Integration.Tests.Common;
+	using TestOkur.TestHelper;
+	using TestOkur.TestHelper.Extensions;
 
-    public abstract class OpticalFormTest : Test
+	public abstract class OpticalFormTest : Test
 	{
 		protected const string ApiPath = "api/v1/forms";
 		private const string Booklets = "ABCD";
@@ -23,6 +23,13 @@
 
 			var response = await client.GetAsync(path);
 			return await response.ReadAsync<IEnumerable<TOpticalForm>>();
+		}
+
+		protected async Task<IEnumerable<StudentOpticalForm>> GetStudentFormsByStudentIdAsync(
+			HttpClient client, int studentId)
+		{
+			var response = await client.GetAsync($"{ApiPath}/student/{studentId}");
+			return await response.ReadAsync<IEnumerable<StudentOpticalForm>>();
 		}
 
 		protected IEnumerable<AnswerKeyOpticalForm> GenerateAnswerKeyOpticalForms(int count, int lessonId = 1, string lessonName = "Test")

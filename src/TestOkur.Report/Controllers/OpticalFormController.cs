@@ -41,9 +41,18 @@
 
 		[HttpGet("exam/student/{examId}")]
 		[ProducesResponseType(typeof(IReadOnlyCollection<StudentOpticalForm>), StatusCodes.Status200OK)]
-		public async Task<IActionResult> GetStudentFormsAsync(int examId)
+		public async Task<IActionResult> GetStudentFormsByExamIdAsync(int examId)
 		{
-			var forms = await _opticalFormRepository.GetStudentOpticalFormAsync(examId);
+			var forms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId);
+
+			return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId()));
+		}
+
+		[HttpGet("student/{studentId}")]
+		[ProducesResponseType(typeof(IReadOnlyCollection<StudentOpticalForm>), StatusCodes.Status200OK)]
+		public async Task<IActionResult> GetStudentFormsAsync(int studentId)
+		{
+			var forms = await _opticalFormRepository.GetStudentOpticalByStudentIdAsync(studentId);
 
 			return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId()));
 		}

@@ -111,7 +111,16 @@
 			await _context.AnswerKeyOpticalForms.InsertManyAsync(forms);
 		}
 
-		public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormAsync(int examId)
+		public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId)
+		{
+			var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId);
+
+			return await _context.StudentOpticalForms
+				.Find(filter)
+				.ToListAsync();
+		}
+
+		public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId)
 		{
 			var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId);
 

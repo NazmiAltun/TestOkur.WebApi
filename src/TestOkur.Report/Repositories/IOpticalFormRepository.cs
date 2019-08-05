@@ -15,7 +15,9 @@
 
 		Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
 
-		Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormAsync(int examId);
+		Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
+
+		Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId);
 
 		Task<IEnumerable<AnswerKeyOpticalForm>> GetAnswerKeyOpticalForms(int examId);
 

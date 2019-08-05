@@ -32,7 +32,7 @@
 				.ToList();
 			_logger.LogInformation($"Answerkey forms count {answerKeyForms.Count}");
 			var studentForms = (await _opticalFormRepository
-					.GetStudentOpticalFormAsync(examId))
+					.GetStudentOpticalFormsByExamIdAsync(examId))
 				.ToList();
 			_logger.LogInformation($"Student forms count {studentForms.Count}");
 			var evaluator = new Evaluator(answerKeyForms);
