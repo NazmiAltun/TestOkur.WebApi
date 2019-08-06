@@ -137,12 +137,12 @@
 			<canvas id='canvas'></canvas>
 			<script>
 			    var horizontalBarChartData = {
-        			labels: [{{#each chartLabels}}'{{this}}', {{/each}}],
+        			labels: [{{#each results}}'{{examName}}', {{/each}}],
         			datasets: [{
         			    label: 'Sinav',
         				backgroundColor: '#00BFFF',
         				borderColor: ['#3d78f0'],
-        				data: [{{chartData}}]
+        				data: [{{#each results}}'{{successPercent}}', {{/each}}]
     			}]};
 				var ctx = document.getElementById('canvas').getContext('2d');
                 new Chart(ctx, {
