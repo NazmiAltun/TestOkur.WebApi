@@ -9,25 +9,31 @@
 	using MassTransit;
 	using Microsoft.EntityFrameworkCore;
 	using Paramore.Brighter;
+	using Paramore.Darker;
 	using TestOkur.Common;
 	using TestOkur.Data;
 	using TestOkur.Domain.Model.ExamModel;
 	using TestOkur.Domain.SeedWork;
 	using TestOkur.Infrastructure.Cqrs;
 	using TestOkur.Optic.Form;
+	using TestOkur.WebApi.Application.Exam.Queries;
+
 	using Exam = TestOkur.Domain.Model.ExamModel.Exam;
 	using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
 	public sealed class CreateExamCommandHandler : RequestHandlerAsync<CreateExamCommand>
 	{
+		private readonly IQueryProcessor _queryProcessor;
 		private readonly IPublishEndpoint _publishEndpoint;
 		private readonly ApplicationDbContext _dbContext;
 
 		public CreateExamCommandHandler(
 			ApplicationDbContext dbContext,
+			IQueryProcessor queryProcessor,
 			IPublishEndpoint publishEndpoint)
 		{
 			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+			_queryProcessor = queryProcessor;
 			_publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
 		}
 
@@ -38,7 +44,7 @@
 			CreateExamCommand command,
 			CancellationToken cancellationToken = default)
 		{
-			await EnsureNotExistsAsync(command, cancellationToken);
+			await EnsureNotExistsAsync(command.Name, cancellationToken);
 
 			var exam = new Exam(
 				command.Name,
@@ -70,13 +76,12 @@
 		}
 
 		private async Task EnsureNotExistsAsync(
-			CreateExamCommand command,
-			CancellationToken cancellationToken)
+			string name, CancellationToken cancellationToken)
 		{
-			if (await _dbContext.Exams.AnyAsync(
-				c => c.Name == command.Name &&
-				     EF.Property<int>(c, "CreatedBy") == command.UserId,
-				cancellationToken))
+			var list = (await _queryProcessor.ExecuteAsync(
+				new GetUserExamsQuery(), cancellationToken)).ToList();
+
+			if (list.Any(c => c.Name == name))
 			{
 				throw new ValidationException(ErrorCodes.ExamExists);
 			}
