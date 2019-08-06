@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    	<title>ÖĞRENCİ SINAV GEÇMİŞİ</title>
+    	<style type='text/css'>
+		    body {
+			    font-family: Arial Narrow, Arial, sans-serif;
+			    font-size: 11px;
+		    }
+		    h1 {
+			    text-align: center;
+			    background: #1db1d6;
+			    border: 1px solid;
+		    }
+		   	.container {
+		    	display: flex;
+		    }
+
+		    .item {
+		    	flex-basis: auto;
+		    	flex-grow: 2;
+	    	}
+    		table {
+    			width: 100%;
+			    border-collapse: collapse;
+			    font-family: Arial Narrow,Arial,sans-serif;
+			    font-size: 12px;
+		    }
+
+	    	table,
+		    th,
+		    td {
+			    border: solid 1px black;
+			    text-align: center;
+		    }
+		    th.rotate90{
+		        transform: rotate(-90deg);
+		        padding-top:20px;
+		        padding-bottom:20px;
+		    }
+		    th,
+		    td {
+			    padding-right: 2px;
+			    padding-left: 2px;
+		    }
+		    tbody tr:nth-child(even) {
+			    background: #f2ed98;
+		    }
+		    thead tr {
+		        background: #a5eeff;
+		    }
+		    .ml10px {
+			    margin-left: 10px;
+		    }
+		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    </head>
+    <body>
+        <h1>ÖĞRENCİ SINAV GEÇMİŞİ</h1>
+        <div class='container'>
+    		<div class='item'>
+    			<strong>Adı - Soyadı</strong>
+    		</div>
+    		<div class='item'>{{studentFirstName}} {{studentLastName}}</div>
+    		<div class='item'>
+    			<strong>Ögrenci No</strong>
+    		</div>
+    		<div class='item'>{{studentNumber}}</div>
+    		<div class='item'>
+    			<strong>Sınıf/Şube</strong>
+    		</div>
+    		<div class='item'>{{classroom}}</div>
+	    </div>
+	    <br>
+	    <br>
+	    <table>
+	        <thead>
+	            <tr>
+	                <th colspan="4"></th>
+	                <th colspan="2">Sınav Bilgileri</th>
+	                <th colspan="8">Öğrenci Bilgileri</th>
+	            </tr>
+	            <tr>
+	                <th>Sıra</th>
+	                <th>Sınav Turu</th>
+	                <th>Sınav Adı</th>
+	                <th>Tarih</th>
+	                <th>Soru Sayısı</th>
+	                <th>Ortalama Puan</th>
+	                <th>Doğru</th>
+	                <th>Yanlış</th>
+	                <th>Boş</th>
+	                <th>Net</th>
+	                <th>Puan</th>
+	                <th>Başarı</th>
+	                <th>Sınıf Sıra</th>
+	                <th>Okul Sıra</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        {{#each results}}
+	            <tr>
+	                <td>{{rowOrder}}</td>
+	                <td>{{examType}}</td>
+	                <td>{{examName}}</td>
+	                <td>{{examDate}}</td>
+	                <td>{{questionCount}}</td>
+	                <td>{{formatTwoDecimalPlaces averageScore}}</td>
+	                <td>{{correctCount}}</td>
+	                <td>{{wrongCount}}</td>
+	                <td>{{emptyCount}}</td>
+	                <td>{{formatTwoDecimalPlaces net}}</td>
+	                <td>{{formatTwoDecimalPlaces score}}</td>
+	                <td>{{formatOneDecimalPlace successPercent}}</td>
+	                <td>{{classOrder}}</td>
+	                <td>{{schoolOrder}}</td>
+	            </tr>
+	        {{/each}}
+	        </tbody>
+	        <tfoot>
+	            <tr>
+	                <td colspan="4">Ortalama</td>
+	                <td>{{formatTwoDecimalPlaces averageQuestionCount}}</td>
+	                <td></td>
+	                <td>{{formatTwoDecimalPlaces averageCorrectCount}}</td>
+	                <td>{{formatTwoDecimalPlaces averageWrongCount}}</td>
+	                <td>{{formatTwoDecimalPlaces averageEmptyCount}}</td>
+	                <td>{{formatTwoDecimalPlaces averageNet}}</td>
+	                <td></td>
+	                <td>{{formatTwoDecimalPlaces averageSuccessPercent}}</td>
+	            </tr>
+	        </tfoot>
+	    </table>
+	    <br>
+    	<div class='ml10px'>
+			<canvas id='canvas'></canvas>
+			<script>
+			    var horizontalBarChartData = {
+        			labels: [{{#each chartLabels}}'{{this}}', {{/each}}],
+        			datasets: [{
+        			    label: 'Sinav',
+        				backgroundColor: '#00BFFF',
+        				borderColor: ['#3d78f0'],
+        				data: [{{chartData}}]
+    			}]};
+				var ctx = document.getElementById('canvas').getContext('2d');
+                new Chart(ctx, {
+    				type: 'horizontalBar',
+    				data: horizontalBarChartData,
+			    	options: {
+			    	    scales: {
+                            xAxes: [{
+                            ticks: {
+                    		    min: 0,
+                    		    max:100
+                            }}]
+                        },
+    					elements: {
+    						rectangle: {
+    							borderWidth: 2,
+    						}
+    					},
+    					responsive: true,
+    					legend: {
+    						position: 'right',
+    					},
+    					title: {
+    						display: false
+    					}
+    				}
+                });
+			</script>
+		</div>
+    </body>
+</html>
