@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    	<title>SINIF KARSILASTIRMA RAPORU</title>
+    	<style type='text/css'>
+    		h1 {
+    			text-align: center;
+    		}
+    
+    		.grid-container {
+    			display: grid;
+    			grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    		}
+    
+    		.grid-item {
+    		}
+    
+    		table {
+    			width: 100%;
+    			border-collapse: collapse;
+    			font-family: Arial Narrow,Arial,sans-serif;
+    			font-size: 12px;
+    		}
+    
+    		table,
+    		th,
+    		td {
+    			border: solid 1px black;
+    			text-align: center;
+    		}
+    		
+    		th.rotate90{
+    		    transform: rotate(-90deg);
+    		    padding-top:20px;
+    		    padding-bottom:20px;
+    		}
+    
+    		th,
+    		td {
+    			padding-right: 2px;
+    			padding-left: 2px;
+    		}
+    
+    		tbody tr:nth-child(even) {
+    			background: #f2ed98;
+    		}
+    
+    		thead tr, tfoot tr {
+    			background: #f79307  !important;
+    		}
+    		tfoot tr{
+    		    height: 40px;
+    		}
+    	</style>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    </head>
+    <body>
+        <h1>
+		    SINIF KARSILASTIRMA RAPORU
+	    </h1>
+	    <div class='grid-container'>
+    		<div class='grid-item'>
+    			<strong>Sınav Adı :</strong>
+    		</div>
+    		<div class='grid-item'>
+    			{{examName}}
+    		</div>
+    		<div class='grid-item'>
+    			<strong>Sınıf :</strong>
+    		</div>
+    		<div class='grid-item'>
+    			{{grade}}
+    		</div>
+	    </div>
+	    </br>
+    	<div class='grid-container'>
+    	    <div class='grid-item'>
+    			<strong>Sınav Tarihi :</strong>
+    		</div>
+    		<div class='grid-item'>
+    			{{examDate}}
+    		</div>
+    		<div class='grid-item'>
+    			<strong>Soru Sayısı :</strong>
+    		</div>
+    		<div class='grid-item'>
+    			{{questionCount}}
+    		</div>
+    	</div>
+	    <br>
+	    <table>
+		    <thead>
+                <tr>
+                    <th>Sıra</th>
+                    <th>Sınıf</th>
+                    <th>Öğrenci Sayısı</th>
+                    <th>En Düşük Puan</th>
+                    <th>En Yüksek Puan</th>
+                    <th>Ortalama Net</th>
+                    <th>Ortalama Puan</th>
+                    <th>Başarı (%)</th>
+                </tr>
+		    </thead>
+		    <tbody>
+            {{#each list}}
+            <tr>
+                <td>{{rowOrder}}</td>
+                <td>{{classroom}}</td>
+                <td>{{studentCount}}</td>
+                <td>{{formatTwoDecimalPlaces lowestScore}}</td>
+                <td>{{formatTwoDecimalPlaces highestScore}}</td>
+                <td>{{formatTwoDecimalPlaces averageNet}}</td>
+                <td>{{formatTwoDecimalPlaces averageScore}}</td>
+                <td>{{formatOneDecimalPlace successPercent}}</td>
+            </tr>
+            {{/each}}
+		    </tbody>
+		    <tfoot>
+	            <tr>
+	                <td colspan="2">ORTALAMALAR</td>
+                    <td>{{formatTwoDecimalPlaces averageStudentCount}}</td>
+                    <td>{{formatTwoDecimalPlaces averageLowestScore}}</td>
+                    <td>{{formatTwoDecimalPlaces averageHighestScore}}</td>
+                    <td>{{formatTwoDecimalPlaces averageAverageNet}}</td>
+                    <td>{{formatTwoDecimalPlaces averageAverageScore}}</td>
+                    <td>{{formatOneDecimalPlace averageSuccessPercent}}</td>
+	           </tr>
+	       </tfoot>    
+        </table>
+        <br>
+        <br>
+        <canvas id='canvas'></canvas>
+		<script>
+		  var data = {
+        	   labels: [{{#each list}}'{{classroom}}', {{/each}}],
+                datasets: [{
+                    label: 'Sınıf',
+        			backgroundColor: '#FFDAB9',
+        			borderColor: 'orange',
+        			data: [{{#each list}}'{{successPercent}}', {{/each}}]
+    			}]};
+    		var ctx = document.getElementById('canvas').getContext('2d');
+    		new Chart(ctx, {
+    				type: 'bar',
+    				data: data,
+			    	options: {
+			    	    "animation": {
+                          "duration": 1,
+                          "onComplete": function() {
+                            var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                    
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+                    
+                            this.data.datasets.forEach(function(dataset, i) {
+                              var meta = chartInstance.controller.getDatasetMeta(i);
+                              meta.data.forEach(function(bar, index) {
+                                var data = parseFloat(dataset.data[index]).toFixed(1) + ' % ';
+                                ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                              });
+                            });
+                          }
+                        },
+			    	    scales: {
+                            yAxes: [{
+                            ticks: {
+                    		    min: 0,
+                    		    max:100,
+                    		    callback: function(value) {
+                                    return value + "%"
+                                }
+                            }}]
+                        },
+    					elements: {
+    						rectangle: {
+    							borderWidth: 2,
+    						}
+    					},
+    					responsive: true,
+    					legend: {
+    						position: 'right',
+    					},
+    					title: {
+    						display: false
+    					}
+    				}
+                });
+		</script>
+    </body>
+</html>
