@@ -20,7 +20,7 @@
 			{
 				Console.WriteLine(e.ToString());
 			}).StartCollecting();
-			var metricServer = new MetricServer(80, "metrics-core/");
+			var metricServer = new MetricServer(80, "runtime-metrics/");
 			metricServer.Start();
 
 			var host = BuildWebHost(args);
