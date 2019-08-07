@@ -30,6 +30,7 @@
 	using Paramore.Darker.QueryLogging;
 	using Polly;
 	using Polly.Extensions.Http;
+	using Prometheus;
 	using signed::StackExchange.Redis;
 	using Swashbuckle.AspNetCore.Swagger;
 	using TestOkur.Common;
@@ -109,6 +110,7 @@
 				app.UseDeveloperExceptionPage();
 			}
 
+			app.UseMetricServer("/metrics-core");
 			UseHealthChecks(app);
 			app.UseCors(CorsPolicyName);
 			app.UseAuthentication();
