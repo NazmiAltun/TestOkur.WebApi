@@ -6,6 +6,8 @@
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.Extensions.Logging;
+	using Prometheus;
+	using Prometheus.DotNetRuntime;
 	using TestOkur.Data;
 	using TestOkur.Infrastructure.Extensions;
 	using TestOkur.WebApi.Data;
@@ -14,6 +16,13 @@
 	{
 		public static async Task Main(string[] args)
 		{
+			DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
+			{
+				Console.WriteLine(e.ToString());
+			}).StartCollecting();
+			var metricServer = new MetricServer(80, "metrics-core/");
+			metricServer.Start();
+
 			var host = BuildWebHost(args);
 			await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
 			{
