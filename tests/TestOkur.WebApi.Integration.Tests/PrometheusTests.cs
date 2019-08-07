@@ -10,7 +10,7 @@
 	public class PrometheusTests : Test
 	{
 		[Fact]
-		public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()
+		public async Task PrometheusMetricEndpointShouldReturnResult()
 		{
 			using (var testServer = await CreateAsync())
 			{
