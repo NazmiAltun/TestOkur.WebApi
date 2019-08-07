@@ -25,6 +25,7 @@ namespace TestOkur.Report
 	using MongoDB.Bson.Serialization;
 	using MongoDB.Bson.Serialization.IdGenerators;
 	using MongoDB.Bson.Serialization.Serializers;
+	using Prometheus;
 	using TestOkur.Common;
 	using TestOkur.Common.Configuration;
 	using TestOkur.Infrastructure.Extensions;
@@ -87,6 +88,7 @@ namespace TestOkur.Report
 				Predicate = _ => true,
 				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
 			};
+			app.UseMetricServer("/metrics-core");
 			app.UseHealthChecks("/hc", hcOptions);
 			app.UseAuthentication();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
@@ -186,7 +188,6 @@ namespace TestOkur.Report
 					ReportConfiguration.ConnectionString,
 					ReportConfiguration.Database,
 					"mongodb",
-					null,
 					null);
 		}
 
