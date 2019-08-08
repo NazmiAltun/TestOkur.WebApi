@@ -105,6 +105,7 @@
 		{
 			var env = app.ApplicationServices.GetService<IHostingEnvironment>();
 
+			app.UseHttpMetrics();
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();

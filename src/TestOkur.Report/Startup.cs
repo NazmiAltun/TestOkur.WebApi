@@ -77,7 +77,7 @@ namespace TestOkur.Report
 		public void Configure(IApplicationBuilder app)
 		{
 			var env = app.ApplicationServices.GetService<IHostingEnvironment>();
-
+			app.UseHttpMetrics();
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
