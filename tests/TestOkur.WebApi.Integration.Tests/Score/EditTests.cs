@@ -17,34 +17,6 @@
 		protected const float Coefficient = 0.5f;
 
 		[Fact]
-		public async Task Should_CreateExamScoreFormula_When_NotExists()
-		{
-			using (var testServer = await CreateWithUserAsync())
-			{
-				var client = testServer.CreateClient();
-				var createExamCommand = await CreateExamAsync(client);
-				var examId = (await GetExamListAsync(client)).First().Id;
-				var scoreFormula = (await GetScoreFormulaList(client)).Random();
-				var coefficients = new Dictionary<int, float>();
-
-				foreach (var coef in scoreFormula.Coefficients)
-				{
-					coefficients.Add(coef.LessonCoefficientId, Coefficient);
-				}
-
-				var command = new SaveExamScoreFormulaCommand(examId, scoreFormula.Id, Random.Next(1000), coefficients);
-				var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-				response.EnsureSuccessStatusCode();
-				var list = await GetScoreFormulaList(client);
-				var examScore = list.FirstOrDefault(s => s.ExamId == examId);
-				examScore.Should().NotBeNull();
-				examScore.BasePoint.Should().Be(command.BasePoint);
-				examScore.Coefficients.Select(c => c.Coefficient)
-					.Should().AllBeEquivalentTo(Coefficient);
-			}
-		}
-
-		[Fact]
 		public async Task FormulaShouldBeUpdated()
 		{
 			using (var testServer = await CreateWithUserAsync())

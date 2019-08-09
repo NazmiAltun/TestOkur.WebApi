@@ -57,8 +57,6 @@
 
 		public DbSet<ScoreFormula> ScoreFormulas { get; set; }
 
-		public DbSet<ExamScoreFormula> ExamScoreFormulas { get; set; }
-
 		public DbSet<OpticalFormDefinition> OpticalFormDefinitions { get; set; }
 
 		public DbSet<OpticalFormType> FormTypes { get; set; }

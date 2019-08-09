@@ -52,14 +52,6 @@
 			return Ok();
 		}
 
-		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> SaveAsync([FromBody, Required] SaveExamScoreFormulaCommand command)
-		{
-			await _commandProcessor.SendAsync(command);
-			return Ok();
-		}
-
 		[HttpDelete]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteAsync(int id)

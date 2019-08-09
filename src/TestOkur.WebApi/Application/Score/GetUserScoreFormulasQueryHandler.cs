@@ -19,7 +19,6 @@
 								sf.id,
 								sf.grade_value as grade,
 								sf.name_value as score_name,
-								sf.exam_id,
 								base_point,
 								formula_type_id,
 								ft.name as formula_type,
