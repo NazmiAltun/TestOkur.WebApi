@@ -1,7 +1,8 @@
-﻿namespace TestOkur.Domain.Model.ScoreModel
+﻿namespace TestOkur.WebApi.Application.Score
 {
 	using System.Collections.Generic;
 	using System.Diagnostics;
+	using TestOkur.Domain.Model.ScoreModel;
 
 	[DebuggerDisplay("{FormulaType}-{ScoreName}")]
 	public class ScoreFormulaReadModel
@@ -22,8 +23,6 @@
 		public string FormulaType { get; set; }
 
 		public string ScoreName { get; set; }
-
-		public int ExamId { get; set; }
 
 		public List<LessonCoefficientReadModel> Coefficients { get; set; }
 	}

@@ -8,6 +8,7 @@
 	using TestOkur.Domain.Model.LessonModel;
 	using TestOkur.Domain.Model.ScoreModel;
 	using TestOkur.TestHelper.Extensions;
+	using TestOkur.WebApi.Application.Score;
 	using TestOkur.WebApi.Integration.Tests.Exam;
 
 	public abstract class ScoreTest : ExamTest

@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Domain.Model.ScoreModel
+﻿namespace TestOkur.WebApi.Application.Score
 {
 	public class LessonCoefficientReadModel
 	{
