@@ -45,7 +45,7 @@
 					await GetClassroomAsync(command, cancellationToken),
 					command.Contacts?.Select(c => c.ToDomainModel()),
 					command.NewNotes);
-
+				_dbContext.AttachRange(student.Contacts.Select(c => c.ContactType));
 				await _dbContext.SaveChangesAsync(cancellationToken);
 				await PublishEventAsync(command, cancellationToken);
 			}

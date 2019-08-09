@@ -40,6 +40,12 @@
 							Random.RandomString(10),
 							RandomGen.Phone(),
 							1),
+						new CreateContactCommand(
+							Guid.NewGuid(),
+							Random.RandomString(10),
+							Random.RandomString(10),
+							RandomGen.Phone(),
+							2),
 					}.ToList());
 				await client.PutAsync(ApiPath, editCommand.ToJsonContent());
 				list = await GetListAsync(client);
