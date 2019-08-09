@@ -2,7 +2,7 @@
 docker load -i /home/docker-images/notification.tar
 docker stop testokur-notification-qa && docker rm testokur-notification-qa
 docker run -d \
-	--env-file  /home/docker-images/qa.env \
+	--env-file  /home/docker-images/notification-qa.env \
 	--name testokur-notification-qa \
 	--restart=always  \
 	--network=testokur \
