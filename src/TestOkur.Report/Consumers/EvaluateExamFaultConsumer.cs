@@ -18,7 +18,8 @@
 		{
 			foreach (var exception in context.Message.Exceptions)
 			{
-				_logger.LogError($"{exception.ExceptionType} : {exception.Source} ==>" +
+				_logger.LogError($"Exam : {context.Message.Message.ExamId} : " +
+				                 $"{exception.ExceptionType} : {exception.Source} ==>" +
 				                 $" {exception.Message} : {exception.StackTrace}");
 			}
 
