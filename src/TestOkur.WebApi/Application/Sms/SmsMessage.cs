@@ -1,38 +1,29 @@
 ﻿namespace TestOkur.WebApi.Application.Sms
 {
 	using System;
-	using System.Runtime.Serialization;
 	using TestOkur.Contracts.Sms;
 
-	[DataContract]
-	public class SmsMessage : ISmsMessage
-    {
-        public SmsMessage(string receiver, string subject, string body)
-		 : this()
-        {
-            Subject = subject;
-            Receiver = receiver;
-            Body = body;
-        }
+	public class SmsMessage : SmsMessageModel, ISmsMessage
+	{
+		public SmsMessage(SmsMessageModel model, int credit)
+		: this(model.Receiver, model.Subject, model.Body, credit)
+		{
+		}
 
-        public SmsMessage()
-        {
-			Id = Guid.NewGuid();
-        }
+		public SmsMessage(string receiver, string subject, string body, int credit)
+		 : this(receiver, subject, body, credit, Guid.NewGuid())
+		{
+		}
 
-        [DataMember]
-        public string Subject { get; private set; }
+		public SmsMessage(string receiver, string subject, string body, int credit, Guid id)
+		 : base(receiver, subject, body)
+		{
+			Credit = credit;
+			Id = id;
+		}
 
-        [DataMember]
-        public string Body { get; private set; }
+		public int Credit { get; }
 
-        [DataMember]
-        public string Receiver { get; private set; }
-
-        [DataMember]
-        public int Credit { get; set; }
-
-        [DataMember]
-        public Guid Id { get; set; }
-    }
+		public Guid Id { get; }
+	}
 }

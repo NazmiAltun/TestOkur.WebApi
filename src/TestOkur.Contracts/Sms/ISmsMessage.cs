@@ -13,5 +13,9 @@
 		string Receiver { get; }
 
 		int Credit { get; }
+
+		string StudentOpticalFormId { get; }
+
+		int ExamId { get; }
     }
 }

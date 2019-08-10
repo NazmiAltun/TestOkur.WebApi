@@ -28,11 +28,11 @@
 			using (var testServer = await CreateWithUserAsync())
 			{
 				var client = testServer.CreateClient();
-				var messages = new List<SmsMessage>();
+				var messages = new List<SmsMessageModel>();
 
 				for (var i = 0; i < 100; i++)
 				{
-					messages.Add(new SmsMessage("5544567788", "TEST", "TEST"));
+					messages.Add(new SmsMessageModel("5544567788", "TEST", "TEST"));
 				}
 
 				var command = new SendSmsCommand(Guid.NewGuid(), messages);
@@ -79,11 +79,11 @@
 				user.AddSmsBalance(2);
 				await dbContext.SaveChangesAsync();
 
-				var messages = new List<SmsMessage>();
+				var messages = new List<SmsMessageModel>();
 
 				for (var i = 0; i < 2; i++)
 				{
-					messages.Add(new SmsMessage("5544567788", "TEST", "TEST"));
+					messages.Add(new SmsMessageModel("5544567788", "TEST", "TEST"));
 				}
 
 				var command = new SendSmsCommand(Guid.NewGuid(), messages);

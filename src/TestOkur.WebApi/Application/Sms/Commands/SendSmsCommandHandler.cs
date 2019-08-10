@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.Linq;
 	using System.Threading;
@@ -51,20 +52,22 @@
 			SendSmsCommand command,
 			CancellationToken cancellationToken = default)
 		{
-			SetSmsCredits(command);
-			await EnsureBalanceIsSufficient(command);
-			await PublishEventAsync(command, cancellationToken);
+			var messages = command.Messages
+				.Select(m => new SmsMessage(m, _smsCreditCalculator.Calculate(m.Body)));
+
+			await EnsureBalanceIsSufficient(messages, command.UserId);
+			await PublishEventAsync(command.UserId, messages, cancellationToken);
 
 			return await base.HandleAsync(command, cancellationToken);
 		}
 
-		private async Task PublishEventAsync(SendSmsCommand command, CancellationToken cancellationToken)
+		private async Task PublishEventAsync(int userId, IEnumerable<SmsMessage> messages, CancellationToken cancellationToken)
 		{
-			var user = await GetUserAsync(command, cancellationToken);
+			var user = await GetUserAsync(userId, cancellationToken);
 			var @event = new SendSmsRequestReceived(
-				command.UserId,
+				userId,
 				GetUserSubjectId(),
-				command.Messages,
+				messages,
 				user.Email);
 
 			await _publishEndpoint.Publish<ISendSmsRequestReceived>(
@@ -72,29 +75,19 @@
 				cancellationToken);
 		}
 
-		private async Task<UserReadModel> GetUserAsync(SendSmsCommand command, CancellationToken cancellationToken)
+		private async Task<UserReadModel> GetUserAsync(int userId, CancellationToken cancellationToken)
 		{
 			var users = await _queryProcessor.ExecuteAsync(new GetAllUsersQuery(), cancellationToken);
-			var user = users.First(u => u.Id == command.UserId);
+			var user = users.First(u => u.Id == userId);
 			return user;
 		}
 
-		private async Task EnsureBalanceIsSufficient(SendSmsCommand command)
+		private async Task EnsureBalanceIsSufficient(IEnumerable<SmsMessage> messages, int userId)
 		{
-			var totalCredit = command.Messages.Select(m => m.Credit)
-				.Sum();
-			if (totalCredit > await GetRemainingCredits(command.UserId))
+			var totalCredit = messages.Sum(m => m.Credit);
+			if (totalCredit > await GetRemainingCredits(userId))
 			{
 				throw new ValidationException(ErrorCodes.InsufficientFunds);
-			}
-		}
-
-		private void SetSmsCredits(SendSmsCommand command)
-		{
-			foreach (var message in command.Messages)
-			{
-				message.Credit = _smsCreditCalculator.Calculate(message.Body);
-				message.Id = Guid.NewGuid();
 			}
 		}
 

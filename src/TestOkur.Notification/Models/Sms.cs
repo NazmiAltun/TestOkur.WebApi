@@ -9,7 +9,7 @@
 		{
 		}
 
-		public Sms(ISmsMessage smsMessage)
+		public Sms(ISendSmsRequestReceived @event, ISmsMessage smsMessage)
 		{
 			Subject = smsMessage.Subject;
 			Body = smsMessage.Body;
@@ -17,6 +17,11 @@
 			Credit = smsMessage.Credit;
 			Status = SmsStatus.Pending;
 			Id = smsMessage.Id;
+			StudentOpticalFormId = smsMessage.StudentOpticalFormId;
+			ExamId = smsMessage.ExamId;
+			UserId = @event.UserId;
+			CreatedOnDateTimeUtc = @event.CreatedOnUTC;
+			UserSubjectId = @event.UserSubjectId;
 		}
 
 		public Guid Id { get; set; }
@@ -36,6 +41,10 @@
 		public string ServiceResponse { get; set; }
 
 		public int Credit { get; set; }
+
+		public string StudentOpticalFormId { get; set; }
+
+		public int ExamId { get; set; }
 
 		public DateTime CreatedOnDateTimeUtc { get; set; }
 

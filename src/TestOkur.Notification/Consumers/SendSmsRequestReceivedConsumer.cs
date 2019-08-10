@@ -21,76 +21,71 @@
 		private readonly ISmsRepository _smsRepository;
 
 		public SendSmsRequestReceivedConsumer(
-            IWebApiClient webApiClient,
-            IPublishEndpoint publishEndpoint,
-            ISmsClient smsClient,
-            ISmsRepository smsRepository,
-            ILogger<SendSmsRequestReceivedConsumer> logger)
-        {
-            _webApiClient = webApiClient;
-            _publishEndpoint = publishEndpoint;
-            _smsClient = smsClient;
-            _smsRepository = smsRepository;
-            _logger = logger;
-        }
+			IWebApiClient webApiClient,
+			IPublishEndpoint publishEndpoint,
+			ISmsClient smsClient,
+			ISmsRepository smsRepository,
+			ILogger<SendSmsRequestReceivedConsumer> logger)
+		{
+			_webApiClient = webApiClient;
+			_publishEndpoint = publishEndpoint;
+			_smsClient = smsClient;
+			_smsRepository = smsRepository;
+			_logger = logger;
+		}
 
 		public async Task Consume(ConsumeContext<ISendSmsRequestReceived> context)
-        {
-	        var smsList = ToSmsList(context);
-	        await StoreAsync(smsList);
+		{
+			var smsList = ToSmsList(context);
+			await StoreAsync(smsList);
 
-	        foreach (var message in smsList)
-            {
-                try
-                {
-                    var smsBody = await _smsClient.SendAsync(message);
-                    if (context.Message.UserId != default)
-                    {
-	                    await _webApiClient.DeductSmsCreditsAsync(context.Message.UserId, smsBody);
-                    }
-                }
-                catch (Exception ex)
-                {
-	                _logger.LogError(ex, "Error while sending sms");
-	                await PublishSmsRequestFailedEventAsync(context, message, ex);
-                }
-            }
-        }
+			foreach (var message in smsList)
+			{
+				try
+				{
+					var smsBody = await _smsClient.SendAsync(message);
+					if (context.Message.UserId != default)
+					{
+						await _webApiClient.DeductSmsCreditsAsync(context.Message.UserId, smsBody);
+					}
+				}
+				catch (Exception ex)
+				{
+					_logger.LogError(ex, "Error while sending sms");
+					await PublishSmsRequestFailedEventAsync(context, message, ex);
+				}
+			}
+		}
 
 		private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)
-        {
-	        return context.Message.SmsMessages
-		        .Select(s => new Sms(s)
-		        {
-			        CreatedOnDateTimeUtc = context.Message.CreatedOnUTC,
-			        UserId = context.Message.UserId,
-			        UserSubjectId = context.Message.UserSubjectId,
-		        }).ToList();
-        }
+		{
+			return context.Message.SmsMessages
+				.Select(s => new Sms(context.Message, s)).ToList();
+		}
 
 		private async Task StoreAsync(IEnumerable<Sms> list)
-        {
-	        await _smsRepository.AddManyAsync(list);
-        }
+		{
+			await _smsRepository.AddManyAsync(list);
+		}
 
 		private async Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
-        {
-            var userFriendlyMessage = ErrorCodes.SmsSystemFailure;
+		{
+			var userFriendlyMessage = ErrorCodes.SmsSystemFailure;
 
-            if (ex is SmsException exception)
-            {
-	            userFriendlyMessage = exception.Message;
-            }
+			if (ex is SmsException exception)
+			{
+				userFriendlyMessage = exception.Message;
+			}
 
-            var @event = new SendSmsRequestFailed(
-                context.Message.UserId,
-                sms.Phone,
-                sms.Body,
-                ex.ToString(),
-                userFriendlyMessage,
-                context.Message.UserEmail);
+			var @event = new SendSmsRequestFailed(
+				context.Message.UserId,
+				sms.Phone,
+				sms.Body,
+				ex.ToString(),
+				userFriendlyMessage,
+				context.Message.UserEmail);
 
-            await _publishEndpoint.Publish(@event);
-        }
-    }
+			await _publishEndpoint.Publish(@event);
+		}
+	}
 }

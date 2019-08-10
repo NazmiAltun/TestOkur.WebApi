@@ -120,15 +120,19 @@
                 Credit = 1;
             }
 
-            public Guid Id { get; private set; }
+            public Guid Id { get; }
 
-            public int Credit { get; private set; }
+            public int Credit { get; }
 
-            public string Subject { get; private set; }
+            public string StudentOpticalFormId { get; }
 
-            public string Body { get; private set; }
+            public int ExamId { get; }
 
-            public string Receiver { get; private set; }
+            public string Subject { get; }
+
+            public string Body { get; }
+
+            public string Receiver { get; }
         }
     }
 }

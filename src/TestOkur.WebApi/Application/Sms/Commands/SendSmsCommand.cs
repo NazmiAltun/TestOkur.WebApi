@@ -10,13 +10,13 @@
 	{
 		public SendSmsCommand(
 			Guid id,
-			IEnumerable<SmsMessage> messages)
+			IEnumerable<SmsMessageModel> messages)
 		 : base(id)
 		{
 			Messages = messages;
 		}
 
 		[DataMember]
-		public IEnumerable<SmsMessage> Messages { get; private set; }
+		public IEnumerable<SmsMessageModel> Messages { get; private set; }
 	}
 }
