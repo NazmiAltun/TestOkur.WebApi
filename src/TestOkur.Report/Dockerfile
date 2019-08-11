@@ -12,6 +12,9 @@ RUN dotnet restore
 COPY . .
 RUN dotnet build "./src/TestOkur.Report/TestOkur.Report.csproj" -c Release --no-restore -o /app
 
+FROM build as unittest
+WORKDIR /src/tests/TestOkur.Report.Unit.Tests
+
 FROM build as integrationtest
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait /wait
 RUN chmod +x /wait

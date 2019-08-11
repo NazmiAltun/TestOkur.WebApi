@@ -100,6 +100,21 @@ services:
       - ApplicationConfiguration__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
       - RabbitMqConfiguration__Uri=rabbitmq
       - OAuthConfiguration__Authority=http://mockserver:8080/
+  report-unit-test:
+    image: testokur-report-unit-test
+    container_name: report-unit-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.Report/Dockerfile
+      target: unittest
+    entrypoint:
+      - dotnet
+      - test
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=../../../coverage/report-unit-test
+      - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - /tmp/coverage/:/coverage
   report-integration-test:
     image: testokur-report-integration-test
     container_name: report-integration-test

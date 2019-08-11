@@ -35,7 +35,7 @@
 					.GetStudentOpticalFormsByExamIdAsync(examId))
 				.ToList();
 			_logger.LogWarning($"Student forms count {studentForms.Count}");
-			var evaluator = new Evaluator(answerKeyForms);
+			var evaluator = new Domain.Evaluator(answerKeyForms);
 			studentForms = evaluator.Evaluate(studentForms);
 
 			await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
