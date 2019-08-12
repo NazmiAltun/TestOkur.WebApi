@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
     <CodeAnalysisRuleSet>..\..\StyleCopRules.ruleset</CodeAnalysisRuleSet>
-    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
     <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
