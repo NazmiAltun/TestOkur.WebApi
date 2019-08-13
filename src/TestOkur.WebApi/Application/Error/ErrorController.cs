@@ -27,7 +27,7 @@
 		public async Task<IActionResult> PostAsync([FromBody]ErrorModel model)
 		{
 			await _publishEndpoint.Publish(model);
-			return Ok();
+			return Accepted();
 		}
 
 		[HttpPost("upload")]

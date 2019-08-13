@@ -29,7 +29,7 @@
         {
             await _commandProcessor.SendAsync(command);
 
-            return Ok();
+            return Accepted();
         }
 
         [HttpPost("send-admin")]
@@ -38,7 +38,7 @@
         public async Task<IActionResult> SendSmsAsync([FromBody, Required]SendSmsAdminCommand command)
         {
 	        await _commandProcessor.SendAsync(command);
-	        return Ok();
+	        return Accepted();
         }
 
         [HttpPost("deduct-credits")]
