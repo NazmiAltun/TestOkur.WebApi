@@ -12,14 +12,18 @@
 			int reporterUserId,
 			int examId,
 			string examName,
-			string imageFilePath,
+			string image1FilePath,
+			string image2FilePath,
+			string image3FilePath,
 			string description)
 		{
 			ReporterEmail = reporterEmail;
 			ReporterUserId = reporterUserId;
 			ExamId = examId;
 			ExamName = examName;
-			ImageFilePath = imageFilePath;
+			Image1FilePath = image1FilePath;
+			Image2FilePath = image2FilePath;
+			Image3FilePath = image3FilePath;
 			Description = description;
 		}
 
@@ -39,6 +43,12 @@
 		public string Description { get; private set; }
 
 		[DataMember]
-		public string ImageFilePath { get; private set; }
+		public string Image1FilePath { get; private set; }
+
+		[DataMember]
+		public string Image2FilePath { get; private set; }
+
+		[DataMember]
+		public string Image3FilePath { get; private set; }
 	}
 }

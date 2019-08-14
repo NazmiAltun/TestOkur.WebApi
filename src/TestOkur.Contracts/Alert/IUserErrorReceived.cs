@@ -10,7 +10,11 @@
 
 		string ExamName { get; }
 
-		string ImageFilePath { get; }
+		string Image1FilePath { get; }
+
+		string Image2FilePath { get; }
+
+		string Image3FilePath { get; }
 
 		string Description { get; }
 	}

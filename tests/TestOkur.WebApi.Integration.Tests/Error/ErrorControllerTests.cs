@@ -43,6 +43,8 @@
 					RandomGen.Next(),
 					RandomGen.String(20),
 					imagePath,
+					null,
+					null,
 					"Houston!We've a problem");
 				await client.PostAsync(ApiPath, model.ToJsonContent());
 				Consumer.Instance.GetAll<IUserErrorReceived>()
@@ -50,7 +52,7 @@
 						x.ReporterUserId == model.ReporterUserId &&
 						x.Description == model.Description &&
 						x.ExamId == model.ExamId &&
-						x.ImageFilePath == imagePath &&
+						x.Image1FilePath == imagePath &&
 						x.ExamName == model.ExamName);
 			}
 		}
