@@ -10,7 +10,7 @@
 
 	[Route("api/cache")]
 	[AllowAnonymous]
-	public class CacheController : Controller
+	public class CacheController : ControllerBase
 	{
 		private readonly IConnectionMultiplexer _connectionMultiplexer;
 		private readonly IConfiguration _configuration;

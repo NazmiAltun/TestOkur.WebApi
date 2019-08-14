@@ -43,7 +43,7 @@
 	    private AppSetting AdminEmails =>
 		    new AppSetting(
 			    AppSettings.AdminEmails,
-				"nazmialtun@windowslive.com;nazmialtun88@gmail.com;necatiyalcin@gmail.com",
+			    "nazmialtun@windowslive.com;nazmialtun88@gmail.com;necatiyalcin@gmail.com",
 			    "Yönetici e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor");
 
 	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)

@@ -13,7 +13,7 @@
 
 	[Route("api/v1/contacts")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class ContactController : Controller
+	public class ContactController : ControllerBase
 	{
 		private readonly IQueryProcessor _queryProcessor;
 		private readonly IAmACommandProcessor _commandProcessor;

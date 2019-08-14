@@ -12,7 +12,7 @@
 	using TestOkur.WebApi.Application.Sms.Commands;
 
 	[Route("api/v1/sms")]
-	public class SmsController : Controller
+	public class SmsController : ControllerBase
     {
         private readonly IAmACommandProcessor _commandProcessor;
 

@@ -13,7 +13,7 @@
 
 	[Route("api/v1/students")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class StudentController : Controller
+	public class StudentController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly IAmACommandProcessor _commandProcessor;

@@ -16,7 +16,7 @@
 
 	[Route("api/v1/forms")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class OpticalFormController : Controller
+	public class OpticalFormController : ControllerBase
 	{
 		private readonly IPublishEndpoint _publishEndpoint;
 		private readonly IHttpContextAccessor _httpContextAccessor;

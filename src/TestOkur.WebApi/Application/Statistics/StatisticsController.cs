@@ -10,7 +10,7 @@
 
 	[Route("api/v1/statistics")]
 	[Authorize(AuthorizationPolicies.Public)]
-	public class StatisticsController : Controller
+	public class StatisticsController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

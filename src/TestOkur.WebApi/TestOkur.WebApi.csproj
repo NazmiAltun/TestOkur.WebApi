@@ -52,8 +52,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
-    <PackageReference Include="TestOkur.Infrastructure" Version="1.0.35" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.50" />
+    <PackageReference Include="TestOkur.Infrastructure" Version="1.0.36" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.51" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json" Link="stylecop.json" />
@@ -72,6 +72,9 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
+    <None Update="Application\Localization\tr.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\cities-districts.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

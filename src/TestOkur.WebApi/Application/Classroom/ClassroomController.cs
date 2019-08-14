@@ -14,7 +14,7 @@
 
 	[Route("api/v1/classrooms")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class ClassroomController : Controller
+	public class ClassroomController : ControllerBase
 	{
 		private readonly IQueryProcessor _queryProcessor;
 		private readonly IAmACommandProcessor _commandProcessor;

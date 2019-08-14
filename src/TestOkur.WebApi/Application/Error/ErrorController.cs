@@ -11,7 +11,7 @@
 
 	[Route("api/v1/error")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class ErrorController : Controller
+	public class ErrorController : ControllerBase
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IPublishEndpoint _publishEndpoint;

@@ -15,7 +15,7 @@
 
 	[Route("api/v1/units")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class UnitController : Controller
+	public class UnitController : ControllerBase
 	{
 		private readonly IAmACommandProcessor _commandProcessor;
 		private readonly IQueryProcessor _queryProcessor;

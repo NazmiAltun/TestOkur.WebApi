@@ -11,7 +11,7 @@
 
 	[Route("api/v1/scan-sessions")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class ScanController : Controller
+	public class ScanController : ControllerBase
 	{
 		private readonly IAmACommandProcessor _commandProcessor;
 

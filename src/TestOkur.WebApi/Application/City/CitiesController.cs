@@ -11,7 +11,7 @@
 
 	[Route("api/v1/cities")]
 	[Authorize(AuthorizationPolicies.Public)]
-	public class CitiesController : Controller
+	public class CitiesController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

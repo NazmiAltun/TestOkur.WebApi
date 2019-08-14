@@ -7,7 +7,7 @@
 
 	[Route("api/v1/captcha")]
 	[Authorize(AuthorizationPolicies.Public)]
-	public class CaptchaController : Controller
+	public class CaptchaController : ControllerBase
     {
         private readonly ICaptchaService _captchaService;
 

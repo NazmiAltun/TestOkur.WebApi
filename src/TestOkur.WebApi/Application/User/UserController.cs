@@ -15,7 +15,7 @@
 	using TestOkur.WebApi.Application.User.Queries;
 
 	[Route("api/v1/users")]
-	public sealed class UserController : Controller
+	public sealed class UserController : ControllerBase
 	{
 		private readonly IAmACommandProcessor _commandProcessor;
 		private readonly IQueryProcessor _queryProcessor;

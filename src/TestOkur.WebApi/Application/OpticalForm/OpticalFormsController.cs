@@ -11,7 +11,7 @@
 
 	[Route("api/v1/optical-forms")]
 	[Authorize(AuthorizationPolicies.Public)]
-	public class OpticalFormsController : Controller
+	public class OpticalFormsController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

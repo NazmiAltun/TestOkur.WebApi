@@ -12,7 +12,7 @@
 
 	[Route("api/v1/exam-types")]
 	[Authorize(AuthorizationPolicies.Public)]
-	public class ExamTypeController : Controller
+	public class ExamTypeController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

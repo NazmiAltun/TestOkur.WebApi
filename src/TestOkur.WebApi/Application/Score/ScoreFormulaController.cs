@@ -15,7 +15,7 @@
 
 	[Route("api/v1/score-formulas")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class ScoreFormulaController : Controller
+	public class ScoreFormulaController : ControllerBase
 	{
 		private readonly IAmACommandProcessor _commandProcessor;
 		private readonly IQueryProcessor _queryProcessor;

@@ -11,7 +11,7 @@
 
 	[Route("api/v1/license-types")]
 	[Authorize(AuthorizationPolicies.Public)]
-	public class LicenseTypesController : Controller
+	public class LicenseTypesController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

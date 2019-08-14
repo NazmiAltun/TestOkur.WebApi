@@ -15,7 +15,7 @@
 
 	[Route("api/v1/exams")]
 	[Authorize(AuthorizationPolicies.Customer)]
-	public class ExamController : Controller
+	public class ExamController : ControllerBase
 	{
 		private readonly IQueryProcessor _queryProcessor;
 		private readonly IAmACommandProcessor _commandProcessor;

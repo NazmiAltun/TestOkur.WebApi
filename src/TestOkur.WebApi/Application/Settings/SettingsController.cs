@@ -11,7 +11,7 @@
 
 	[Route("api/v1/settings")]
 	[Authorize(AuthorizationPolicies.Private)]
-	public class SettingsController : Controller
+	public class SettingsController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 
