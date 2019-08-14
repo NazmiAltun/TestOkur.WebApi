@@ -31,7 +31,7 @@
 	    private AppSetting SystemAdminEmails =>
 		    new AppSetting(
 			    AppSettings.SystemAdminEmails,
-			    "nazmialtun@windowslive.com;nazmialtun88@gmail.com",
+			    "nazmialtun@windowslive.com;nazmialtun88@gmail.com;necatiyalcin@gmail.com",
 			    "Sistem yoneticisi e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor");
 
 	    private AppSetting DailyJobRunTime =>
@@ -43,7 +43,7 @@
 	    private AppSetting AdminEmails =>
 		    new AppSetting(
 			    AppSettings.AdminEmails,
-			    "nazmialtun@windowslive.com;nazmialtun88@gmail.com",
+				"nazmialtun@windowslive.com;nazmialtun88@gmail.com;necatiyalcin@gmail.com",
 			    "Yönetici e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor");
 
 	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)

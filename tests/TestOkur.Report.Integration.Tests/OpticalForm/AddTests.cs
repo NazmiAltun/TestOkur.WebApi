@@ -79,13 +79,13 @@
 				response.EnsureSuccessStatusCode();
 				forms.First().Sections.Clear();
 				forms.First().Sections.Add(new StudentOpticalFormSection(
-					2065, "TestLesson")
+				 new AnswerKeyOpticalFormSection(2065, "TestLesson"))
 					{
 						Answers = GenerateAnswers(10).ToList(),
 					});
 				forms.Last().Sections.Clear();
 				forms.Last().Sections.Add(new StudentOpticalFormSection(
-					2065, "TestLesson")
+					new AnswerKeyOpticalFormSection(2065, "TestLesson"))
 				{
 					Answers = GenerateAnswers(10).ToList(),
 				});

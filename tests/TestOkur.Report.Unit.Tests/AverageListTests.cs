@@ -56,11 +56,11 @@
 				CityId = cityId,
 				Sections = new List<StudentOpticalFormSection>()
 				{
-					new StudentOpticalFormSection(1, "Math")
+					new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(1, "Math"))
 					{
 						Net = net,
 					},
-					new StudentOpticalFormSection(2, _random.RandomString(10))
+					new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(2, _random.RandomString(10)))
 					{
 						Net = net,
 					},

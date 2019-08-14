@@ -66,7 +66,7 @@
 				StudentNumber = RandomGen.Next(),
 				Sections = new List<StudentOpticalFormSection>()
 				{
-					new StudentOpticalFormSection(lessonId, lessonName)
+					new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(lessonId, lessonName))
 					{
 						Answers = GenerateAnswers(160).ToList(),
 					},

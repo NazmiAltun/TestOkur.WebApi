@@ -31,7 +31,7 @@
 						UserId = userId.ToString(),
 						Sections = new List<StudentOpticalFormSection>
 						{
-							new StudentOpticalFormSection(1, "TEST"),
+							new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(1, "TEST")),
 						},
 					},
 				};

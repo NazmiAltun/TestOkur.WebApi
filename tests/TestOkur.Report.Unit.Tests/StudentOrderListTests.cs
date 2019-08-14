@@ -104,7 +104,7 @@
 				DistrictId = districtId,
 				Sections = new List<StudentOpticalFormSection>()
 				{
-					new StudentOpticalFormSection(1, "Math")
+					new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(1, "Math"))
 					{
 						Net = net,
 					},
