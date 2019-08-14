@@ -4,7 +4,7 @@
 	using System.Threading.Tasks;
 	using MassTransit;
 	using Microsoft.Extensions.Logging;
-	using TestOkur.Optic;
+	using TestOkur.Report.Domain;
 	using TestOkur.Report.Events;
 	using TestOkur.Report.Repositories;
 
@@ -35,7 +35,7 @@
 					.GetStudentOpticalFormsByExamIdAsync(examId))
 				.ToList();
 			_logger.LogWarning($"Student forms count {studentForms.Count}");
-			var evaluator = new Domain.Evaluator(answerKeyForms);
+			var evaluator = new Evaluator(answerKeyForms);
 			studentForms = evaluator.Evaluate(studentForms);
 
 			await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
