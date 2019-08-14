@@ -26,20 +26,20 @@
 
 		public async Task ConsumeAsync(int examId)
 		{
-			_logger.LogWarning($"Evaluation for exam {examId} started...");
+			_logger.LogInformation($"Evaluation for exam {examId} started...");
 			var answerKeyForms = (await _opticalFormRepository
 					.GetAnswerKeyOpticalForms(examId))
 				.ToList();
-			_logger.LogWarning($"Answerkey forms count {answerKeyForms.Count}");
+			_logger.LogInformation($"Answerkey forms count {answerKeyForms.Count}");
 			var studentForms = (await _opticalFormRepository
 					.GetStudentOpticalFormsByExamIdAsync(examId))
 				.ToList();
-			_logger.LogWarning($"Student forms count {studentForms.Count}");
+			_logger.LogInformation($"Student forms count {studentForms.Count}");
 			var evaluator = new Evaluator(answerKeyForms);
 			studentForms = evaluator.Evaluate(studentForms);
 
 			await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
-			_logger.LogWarning($"Evaluation for exam {examId} ended...");
+			_logger.LogInformation($"Evaluation for exam {examId} ended...");
 		}
 	}
 }

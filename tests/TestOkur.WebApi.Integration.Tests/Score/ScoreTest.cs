@@ -26,13 +26,13 @@
 		{
 			var expectedList = new[]
 			{
-				new { Grade =2, BasePoint=200 },
-				new { Grade =3, BasePoint=200 },
-				new { Grade =4, BasePoint=200 },
-				new { Grade =5, BasePoint=200 },
-				new { Grade =6, BasePoint=200 },
-				new { Grade =7, BasePoint=200 },
-				new { Grade =8, BasePoint=200 },
+				new { Grade =2, BasePoint=200f },
+				new { Grade =3, BasePoint=200f },
+				new { Grade =4, BasePoint=200f },
+				new { Grade =5, BasePoint=194.760f },
+				new { Grade =6, BasePoint=194.760f },
+				new { Grade =7, BasePoint=194.760f },
+				new { Grade =8, BasePoint=194.760f },
 			};
 			foreach (var expected in expectedList)
 			{
