@@ -24,6 +24,7 @@
 				form.IncorrectEliminationRate = context.Message.IncorrectEliminationRate;
 				form.ExamDate = context.Message.ExamDate;
 				form.ExamName = context.Message.ExamName;
+				form.ExamTypeName = context.Message.ExamTypeName;
 			}
 
 			await _opticalFormRepository.AddManyAsync(forms);

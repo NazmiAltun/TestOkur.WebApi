@@ -14,6 +14,8 @@
 
 		string ExamName { get; }
 
+		string ExamTypeName { get; }
+
 		IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
 	}
 }

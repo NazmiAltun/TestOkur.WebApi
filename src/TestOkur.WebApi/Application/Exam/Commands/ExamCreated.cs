@@ -14,6 +14,7 @@
 			ExamId = (int)exam.Id;
 			IncorrectEliminationRate = exam.IncorrectEliminationRate;
 			ExamDate = exam.ExamDate;
+			ExamTypeName = exam.ExamType.Name.Value;
 			ExamName = exam.Name.Value;
 			AnswerKeyOpticalForms = answerKeyOpticalForms;
 		}
@@ -25,6 +26,8 @@
 		public DateTime ExamDate { get; }
 
 		public string ExamName { get; }
+		
+		public string ExamTypeName { get; }
 
 		public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
 	}

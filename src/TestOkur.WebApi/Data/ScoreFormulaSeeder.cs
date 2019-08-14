@@ -64,15 +64,15 @@
 				.AddLessonCoefficient(fourthGradeFormType, Lessons.SocialScience, 4)
 				.Build());
 			formulas.AddRange(new ScoreFormulaBuilder()
-				.WithBasePoint(200)
+				.WithBasePoint(194.760f)
 				.SecondarySchool()
 				.WithFormulaType(FormulaType.Trial)
-				.AddLessonCoefficient(lgsFormType, Lessons.Turkish, 4)
-				.AddLessonCoefficient(lgsFormType, Lessons.Mathematics, 4)
-				.AddLessonCoefficient(lgsFormType, Lessons.English, 2)
-				.AddLessonCoefficient(lgsFormType, Lessons.Science, 4)
-				.AddLessonCoefficient(lgsFormType, Lessons.SocialScience, 2)
-				.AddLessonCoefficient(lgsFormType, Lessons.Religion, 2)
+				.AddLessonCoefficient(lgsFormType, Lessons.Turkish, 3.388f)
+				.AddLessonCoefficient(lgsFormType, Lessons.Mathematics, 5.005f)
+				.AddLessonCoefficient(lgsFormType, Lessons.English, 1.769f)
+				.AddLessonCoefficient(lgsFormType, Lessons.Science, 4.253f)
+				.AddLessonCoefficient(lgsFormType, Lessons.SocialScience, 1.694f)
+				.AddLessonCoefficient(lgsFormType, Lessons.Religion, 1.769f)
 				.Build());
 
 			// High School
@@ -81,10 +81,10 @@
 				.WithFormulaType(FormulaType.TytAyt)
 				.WithName(FormulaNames.Tyt)
 				.WithBasePoint(100)
-				.AddLessonCoefficient(tytFormType, Lessons.Turkish, 3.3f)
-				.AddLessonCoefficient(tytFormType, Lessons.SocialScience, 3.4f)
-				.AddLessonCoefficient(tytFormType, Lessons.Mathematics, 3.3f)
-				.AddLessonCoefficient(tytFormType, Lessons.Science, 3.4f)
+				.AddLessonCoefficient(tytFormType, Lessons.Turkish, 3.333f)
+				.AddLessonCoefficient(tytFormType, Lessons.SocialScience, 3.333f)
+				.AddLessonCoefficient(tytFormType, Lessons.Mathematics, 3.334f)
+				.AddLessonCoefficient(tytFormType, Lessons.Science, 3.334f)
 				.Build());
 			formulas.AddRange(new ScoreFormulaBuilder()
 				.HighSchool()
