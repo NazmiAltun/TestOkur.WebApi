@@ -112,7 +112,7 @@ namespace TestOkur.Report.Domain
 		{
 			return _answerKeyOpticalForms.First()
 				.ScoreFormulas
-				.Select(f => new StudentOrderList(f.ScoreName, forms, s => s.Scores[f.ScoreName]))
+				.Select(f => new StudentOrderList(f.ScoreName.ToUpper(), forms, s => s.Scores[f.ScoreName.ToUpper()]))
 				.Concat(new[] { new StudentOrderList("NET", forms, f => f.Net) })
 				.ToList();
 		}

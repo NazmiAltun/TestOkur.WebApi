@@ -53,7 +53,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
     <PackageReference Include="TestOkur.Infrastructure" Version="1.0.36" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.52" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.55" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json" Link="stylecop.json" />

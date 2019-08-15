@@ -92,7 +92,7 @@ namespace TestOkur.Report
 			app.UseHealthChecks("/hc", hcOptions);
 			app.UseAuthentication();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
-			app.UseMiddleware<RequestResponseLoggingMiddleware>();
+			//app.UseMiddleware<RequestResponseLoggingMiddleware>();
 			app.UseMvc();
 			app.UseStaticFiles();
 		}
