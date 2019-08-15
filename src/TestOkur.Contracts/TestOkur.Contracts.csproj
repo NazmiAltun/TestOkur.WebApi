@@ -13,7 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TestOkur.Optic" Version="1.0.51" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.52" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Domain\TestOkur.Domain.csproj" />

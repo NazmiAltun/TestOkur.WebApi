@@ -101,6 +101,7 @@ namespace TestOkur.Report.Domain
 			{
 				if (answerFormKeyDict.TryGetValue(form.Booklet, out var answerKeyForm))
 				{
+					form.UpdateCorrectAnswers(answerKeyForm);
 					form.Evaluate(answerKeyForm.IncorrectEliminationRate, answerKeyForm.ScoreFormulas);
 				}
 			}
