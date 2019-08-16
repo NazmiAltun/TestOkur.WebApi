@@ -14,7 +14,7 @@
 			public const string Frm60ABCD = "60 Soruluk ABCD Seçenekli";
 			public const string Frm100ABCD = "100 Soruluk ABCD Seçenekli";
 			public const string FrmScholarship = "Bursluluk Sınavı";
-			public const string FrmTeog = "TEOG Deneme Sınavı";
+			public const string FrmTeog = "5-6-7-8 Deneme Sınavı - 2 Oturumlu";
 			public const string FrmLgs = "LGS Deneme Sınavi- Tek Oturum";
 			public const string FrmLgsTwoPiece = "LGS Deneme Sınavı- 2 Oturum(Sözel-Sayısal)";
 			public const string FrmSrc = "SRC & Is Makinalari Optik Form";
