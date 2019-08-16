@@ -99,8 +99,14 @@ namespace TestOkur.Report.Domain
 
 			foreach (var form in forms)
 			{
-				if (answerFormKeyDict.TryGetValue(form.Booklet, out var answerKeyForm))
+				if (answerFormKeyDict.TryGetValue(form.Booklet, out var answerKeyForm) ||
+				    answerFormKeyDict.Count == 1)
 				{
+					if (answerFormKeyDict.Count == 1)
+					{
+						answerKeyForm = answerFormKeyDict.First().Value;
+					}
+
 					form.UpdateCorrectAnswers(answerKeyForm);
 					form.Evaluate(answerKeyForm.IncorrectEliminationRate, answerKeyForm.ScoreFormulas);
 				}
