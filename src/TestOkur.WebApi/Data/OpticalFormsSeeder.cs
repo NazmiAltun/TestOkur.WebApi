@@ -775,7 +775,7 @@
 				new OpticalFormType(
 					OpticalFormTypes.Names.Frm100ABCD,
 					OpticalFormTypes.Codes.Frm100ABCD,
-					"ilk-orta-4sinif.yap",
+					"ilk-orta-100luk.yap",
 					SchoolType.PrimaryAndSecondary,
 					null,
 					100),

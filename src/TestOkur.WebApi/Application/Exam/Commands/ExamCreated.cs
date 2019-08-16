@@ -26,7 +26,7 @@
 		public DateTime ExamDate { get; }
 
 		public string ExamName { get; }
-		
+
 		public string ExamTypeName { get; }
 
 		public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
