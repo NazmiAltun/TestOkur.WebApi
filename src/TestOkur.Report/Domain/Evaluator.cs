@@ -69,6 +69,7 @@ namespace TestOkur.Report.Domain
 		{
 			var orderLists = CreateOrderLists(forms);
 			var netAverageList = new AverageList("NET", forms, s => s.Net);
+			var successPercentAverageList = new AverageList("SuccessPercent", forms, s => s.SuccessPercent);
 
 			foreach (var form in forms)
 			{
@@ -80,9 +81,9 @@ namespace TestOkur.Report.Domain
 
 				foreach (var section in form.Sections)
 				{
-					netAverageList.GetClassroomAverage(section.LessonName, form.ClassroomId);
 					section.ClearLessonAverages();
 					section.AddLessonAverage(netAverageList.Get(form, section.LessonName));
+					section.AddLessonAverage(successPercentAverageList.Get(form, section.LessonName));
 				}
 			}
 
@@ -100,7 +101,7 @@ namespace TestOkur.Report.Domain
 			foreach (var form in forms)
 			{
 				if (answerFormKeyDict.TryGetValue(form.Booklet, out var answerKeyForm) ||
-				    answerFormKeyDict.Count == 1)
+					answerFormKeyDict.Count == 1)
 				{
 					if (answerFormKeyDict.Count == 1)
 					{
