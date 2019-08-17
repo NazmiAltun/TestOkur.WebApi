@@ -101,9 +101,10 @@
                 <th rowspan='2'>Sıra</th>
                 <th rowspan='2'>Sınıf</th>
                 <th rowspan='2'>Öğrenci Sayısı</th>
-                {{#if chartData.length}} {{#each chartData}}
+                {{#each chartData}}
                 <th colspan='2'>{{lessonName}}</th>
-                {{/each}} {{else}}
+                {{/each}}
+                {{#if singleLesson}}
                 <th rowspan='2'>En Düşük Puan</th>
                 <th rowspan='2'>En Yüksek Puan</th>
                 {{/if}}
@@ -126,10 +127,11 @@
                 <td>{{rowOrder}}</td>
                 <td>{{classroom}}</td>
                 <td>{{studentCount}}</td>
-                {{#if sections.length}} {{#each sections}}
+                {{#each sections}}
                 <td>{{formatTwoDecimalPlaces averageNet}}</td>
                 <td>{{formatOneDecimalPlace successPercent}}%</td>
-                {{/each}} {{else}}
+                {{/each}}
+                {{#if ../singleLesson}}
                 <td>{{formatTwoDecimalPlaces lowestScore}}</td>
                 <td>{{formatTwoDecimalPlaces highestScore}}</td>
                 {{/if}}
@@ -143,10 +145,11 @@
             <tr>
                 <td colspan="2">ORTALAMALAR</td>
                 <td>{{formatTwoDecimalPlaces averageStudentCount}}</td>
-                {{#if sections.length}} {{#each sections}}
+                {{#each sections}}
                 <td>{{formatTwoDecimalPlaces averageNet}}</td>
                 <td>{{formatOneDecimalPlace successPercent}}%</td>
-                {{/each}} {{else}}
+                {{/each}}
+                {{#if singleLesson}}
                 <td>{{formatTwoDecimalPlaces averageLowestScore}}</td>
                 <td>{{formatTwoDecimalPlaces averageHighestScore}}</td>
                 {{/if}}
