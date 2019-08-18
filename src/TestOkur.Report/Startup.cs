@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using TestOkur.Report.Domain;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
@@ -92,7 +93,6 @@ namespace TestOkur.Report
 			app.UseHealthChecks("/hc", hcOptions);
 			app.UseAuthentication();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
-			//app.UseMiddleware<RequestResponseLoggingMiddleware>();
 			app.UseMvc();
 			app.UseStaticFiles();
 		}
@@ -165,6 +165,7 @@ namespace TestOkur.Report
 		{
 			services.AddTransient<IOpticalFormRepository, OpticalFormRepository>();
 			services.AddSingleton<IRequestResponseLogger, RequestResponseMongodbLogger>();
+			services.AddSingleton<IEvaluator, Evaluator>();
 			services.AddHttpContextAccessor();
 		}
 
@@ -217,7 +218,7 @@ namespace TestOkur.Report
 			return Assembly.GetExecutingAssembly()
 				.GetTypes()
 				.Where(t => t.IsClass &&
-				            typeof(IConsumer).IsAssignableFrom(t))
+							typeof(IConsumer).IsAssignableFrom(t))
 				.ToArray();
 		}
 	}

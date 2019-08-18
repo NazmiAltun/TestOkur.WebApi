@@ -8,25 +8,35 @@ namespace TestOkur.Report.Domain
 	using System.Linq;
 	using TestOkur.Optic.Form;
 
-	public class Evaluator
+	public class Evaluator : IEvaluator
 	{
-		private readonly List<AnswerKeyOpticalForm> _answerKeyOpticalForms;
-
-		public Evaluator(List<AnswerKeyOpticalForm> answerKeyOpticalForms)
+		public List<StudentOpticalForm> JoinSets(List<StudentOpticalForm> firstSet, List<StudentOpticalForm> secondSet)
 		{
-			_answerKeyOpticalForms = answerKeyOpticalForms;
-
-			if (_answerKeyOpticalForms.Count == 1)
+			foreach (var form in firstSet)
 			{
-				_answerKeyOpticalForms = _answerKeyOpticalForms.First().Expand();
+				var matchedForm = secondSet.FirstOrDefault(x => x.StudentId == form.StudentId);
+
+				if (matchedForm != null)
+				{
+					form.AddSections(matchedForm.Sections);
+				}
 			}
+
+			return firstSet;
 		}
 
-		public List<StudentOpticalForm> Evaluate(List<StudentOpticalForm> forms)
+		public List<StudentOpticalForm> Evaluate(List<AnswerKeyOpticalForm> answerKeyOpticalForms, List<StudentOpticalForm> forms)
 		{
-			FillMissingSections(forms);
-			EvaluateForms(forms);
-			SetOrdersAndAverages(forms);
+			if (answerKeyOpticalForms.Count == 1)
+			{
+				answerKeyOpticalForms = answerKeyOpticalForms.First().Expand();
+			}
+
+			var scoreNames = answerKeyOpticalForms.First().ScoreFormulas
+				.Select(s => s.ScoreName).ToList();
+			FillMissingSections(answerKeyOpticalForms, forms);
+			EvaluateForms(answerKeyOpticalForms, forms);
+			SetOrdersAndAverages(scoreNames, forms);
 			SetAttendance(forms);
 
 			return forms;
@@ -43,9 +53,9 @@ namespace TestOkur.Report.Domain
 			}
 		}
 
-		private void FillMissingSections(List<StudentOpticalForm> forms)
+		private void FillMissingSections(List<AnswerKeyOpticalForm> answerKeyOpticalForms, List<StudentOpticalForm> forms)
 		{
-			var answerFormKeyDict = _answerKeyOpticalForms
+			var answerFormKeyDict = answerKeyOpticalForms
 				.ToDictionary(x => x.Booklet, x => x);
 
 			foreach (var form in forms)
@@ -65,9 +75,9 @@ namespace TestOkur.Report.Domain
 			}
 		}
 
-		private void SetOrdersAndAverages(IReadOnlyCollection<StudentOpticalForm> forms)
+		private void SetOrdersAndAverages(List<string> scoreNames, IReadOnlyCollection<StudentOpticalForm> forms)
 		{
-			var orderLists = CreateOrderLists(forms);
+			var orderLists = CreateOrderLists(scoreNames, forms);
 			var netAverageList = new AverageList("NET", forms, s => s.Net);
 			var successPercentAverageList = new AverageList("SuccessPercent", forms, s => s.SuccessPercent);
 
@@ -93,9 +103,9 @@ namespace TestOkur.Report.Domain
 			}
 		}
 
-		private void EvaluateForms(IEnumerable<StudentOpticalForm> forms)
+		private void EvaluateForms(List<AnswerKeyOpticalForm> answerKeyOpticalForms, IEnumerable<StudentOpticalForm> forms)
 		{
-			var answerFormKeyDict = _answerKeyOpticalForms
+			var answerFormKeyDict = answerKeyOpticalForms
 				.ToDictionary(x => x.Booklet, x => x);
 
 			foreach (var form in forms)
@@ -115,11 +125,11 @@ namespace TestOkur.Report.Domain
 		}
 
 		private List<StudentOrderList> CreateOrderLists(
+			List<string> scoreNames,
 			IReadOnlyCollection<StudentOpticalForm> forms)
 		{
-			return _answerKeyOpticalForms.First()
-				.ScoreFormulas
-				.Select(f => new StudentOrderList(f.ScoreName.ToUpper(), forms, s => s.Scores[f.ScoreName.ToUpper()]))
+			return scoreNames
+				.Select(sf => new StudentOrderList(sf.ToUpper(), forms, s => s.Scores[sf.ToUpper()]))
 				.Concat(new[] { new StudentOrderList("NET", forms, f => f.Net) })
 				.ToList();
 		}

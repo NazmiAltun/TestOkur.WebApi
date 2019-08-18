@@ -12,11 +12,13 @@
 	{
 		private readonly IOpticalFormRepository _opticalFormRepository;
 		private readonly ILogger<EvaluateExamConsumer> _logger;
+		private readonly IEvaluator _evaluator;
 
-		public EvaluateExamConsumer(IOpticalFormRepository opticalFormRepository, ILogger<EvaluateExamConsumer> logger)
+		public EvaluateExamConsumer(IOpticalFormRepository opticalFormRepository, ILogger<EvaluateExamConsumer> logger, IEvaluator evaluator)
 		{
 			_opticalFormRepository = opticalFormRepository;
 			_logger = logger;
+			_evaluator = evaluator;
 		}
 
 		public async Task Consume(ConsumeContext<IEvaluateExam> context)
@@ -35,8 +37,7 @@
 					.GetStudentOpticalFormsByExamIdAsync(examId))
 				.ToList();
 			_logger.LogInformation($"Student forms count {studentForms.Count}");
-			var evaluator = new Evaluator(answerKeyForms);
-			studentForms = evaluator.Evaluate(studentForms);
+			studentForms = _evaluator.Evaluate(answerKeyForms, studentForms);
 
 			await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
 			_logger.LogInformation($"Evaluation for exam {examId} ended...");

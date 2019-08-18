@@ -22,7 +22,7 @@
 				GenerateAnswerKeyFormA(),
 				GeneratedAnswerKeyFormB(),
 			};
-			var evaluator = new Evaluator(answerKeyForms);
+			var evaluator = new Evaluator();
 			var studentForm = new StudentOpticalForm('A')
 			{
 				StudentId = 6456,
@@ -60,7 +60,7 @@
 				GeneratedAnswerKeyFormB(),
 			};
 
-			var evaluator = new Evaluator(answerKeyForms);
+			var evaluator = new Evaluator();
 			var studentForms = new List<StudentOpticalForm>();
 			var studentForm = new StudentOpticalForm('A')
 			{
@@ -103,7 +103,7 @@
 			studentForm.SetFromScanOutput(new ScanOutput("AAECEDBECC BD A       AB                                    ", 2), answerKeyForms.Last());
 			studentForms.Add(studentForm);
 
-			studentForms = evaluator.Evaluate(studentForms);
+			studentForms = evaluator.Evaluate(answerKeyForms, studentForms);
 			studentForms.First().Should().Match<StudentOpticalForm>(
 				x => x.Net == 95 &&
 					 x.Score == 416.68f &&

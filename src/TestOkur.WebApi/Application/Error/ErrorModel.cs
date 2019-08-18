@@ -8,7 +8,8 @@
 	public class ErrorModel : IntegrationEvent, IUserErrorReceived
 	{
 		public ErrorModel(
-			string reporterEmail,
+			string userEmail,
+			string userPhone,
 			int reporterUserId,
 			int examId,
 			string examName,
@@ -17,7 +18,8 @@
 			string image3FilePath,
 			string description)
 		{
-			ReporterEmail = reporterEmail;
+			UserEmail = userEmail;
+			UserPhone = userPhone;
 			ReporterUserId = reporterUserId;
 			ExamId = examId;
 			ExamName = examName;
@@ -28,7 +30,10 @@
 		}
 
 		[DataMember]
-		public string ReporterEmail { get; private set; }
+		public string UserEmail { get; private set; }
+
+		[DataMember]
+		public string UserPhone { get; private set; }
 
 		[DataMember]
 		public int ReporterUserId { get; private set; }

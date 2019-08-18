@@ -2,13 +2,15 @@
 {
 	public interface IUserErrorReceived
 	{
-		string ReporterEmail { get; }
-
 		int ReporterUserId { get; }
 
 		int ExamId { get; }
 
 		string ExamName { get; }
+
+		string UserEmail { get; }
+
+		string UserPhone { get; }
 
 		string Image1FilePath { get; }
 

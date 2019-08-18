@@ -8,6 +8,7 @@
 	using Microsoft.Extensions.Logging;
 	using TestOkur.Optic.Form;
 	using TestOkur.Report.Consumers;
+	using TestOkur.Report.Domain;
 	using TestOkur.Report.Repositories;
 	using TestOkur.TestHelper;
 	using Xunit;
@@ -24,7 +25,6 @@
 		//		var client = testServer.CreateClient();
 		//		var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
 		//		var logger = testServer.Host.Services.GetService(typeof(ILogger<EvaluateExamConsumer>));
-				
 		//		var consumer = new EvaluateExamConsumer(
 		//			repository as IOpticalFormRepository,
 		//			logger as ILogger<EvaluateExamConsumer>);
@@ -54,7 +54,8 @@
 
 				var consumer = new EvaluateExamConsumer(
 					repository as IOpticalFormRepository,
-					logger as ILogger<EvaluateExamConsumer>);
+					logger as ILogger<EvaluateExamConsumer>,
+					new Evaluator());
 				await consumer.ConsumeAsync(examId);
 				var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
 				studentOpticalForms.Should().HaveCount(forms.Count);
