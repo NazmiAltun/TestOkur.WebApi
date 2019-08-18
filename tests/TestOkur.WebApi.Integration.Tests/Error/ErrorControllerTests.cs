@@ -39,6 +39,7 @@
 
 				var model = new ErrorModel(
 					$"{RandomGen.String(20)}@gmail.com",
+					RandomGen.Next().ToString(),
 					RandomGen.Next(),
 					RandomGen.Next(),
 					RandomGen.String(20),

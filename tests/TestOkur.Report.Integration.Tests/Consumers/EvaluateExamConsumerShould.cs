@@ -15,23 +15,6 @@
 
 	public class EvaluateExamConsumerShould : ConsumerTest
 	{
-		//[Fact]
-		//public async Task ShouldEvaluate2()
-		//{
-		//	var userId = RandomGen.Next(10000);
-
-		//	using (var testServer = Create(userId))
-		//	{
-		//		var client = testServer.CreateClient();
-		//		var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-		//		var logger = testServer.Host.Services.GetService(typeof(ILogger<EvaluateExamConsumer>));
-		//		var consumer = new EvaluateExamConsumer(
-		//			repository as IOpticalFormRepository,
-		//			logger as ILogger<EvaluateExamConsumer>);
-		//		await consumer.ConsumeAsync(62);
-		//	}
-		//}
-
 		[Fact]
 		public async Task ShouldEvaluateAndSaveResults()
 		{

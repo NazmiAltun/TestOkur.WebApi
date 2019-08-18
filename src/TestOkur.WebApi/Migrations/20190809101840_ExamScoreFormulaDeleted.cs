@@ -34,7 +34,7 @@
                 name: "discriminator",
                 table: "score_formulas",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.CreateIndex(
                 name: "ix_score_formulas_exam_id",

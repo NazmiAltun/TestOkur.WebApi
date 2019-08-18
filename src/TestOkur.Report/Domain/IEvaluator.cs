@@ -6,6 +6,7 @@
 	public interface IEvaluator
 	{
 		List<StudentOpticalForm> Evaluate(List<AnswerKeyOpticalForm> answerKeyOpticalForms, List<StudentOpticalForm> forms);
+
 		List<StudentOpticalForm> JoinSets(List<StudentOpticalForm> firstSet, List<StudentOpticalForm> secondSet);
 	}
 }
