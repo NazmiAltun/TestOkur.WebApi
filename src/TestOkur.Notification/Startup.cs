@@ -155,7 +155,12 @@
 		{
 			var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
 			services.AddHealthChecks()
-				.AddRabbitMQ(rabbitMqUri);
+				.AddRabbitMQ(rabbitMqUri)
+				.AddMongoDb(
+					ApplicationConfiguration.ConnectionString,
+					ApplicationConfiguration.Database,
+					"mongodb",
+					null);
 		}
 
 		private void AddMessageBus(IServiceCollection services)
