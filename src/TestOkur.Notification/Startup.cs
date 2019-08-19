@@ -93,6 +93,10 @@
 		{
 			app.UseHangfireDashboard("/hangfire", new DashboardOptions
 			{
+				Authorization = new[]
+				{
+					new BasicDashboardAuthorizationFilter(HangfireConfiguration),
+				},
 			});
 			app.UseHangfireServer(new BackgroundJobServerOptions
 			{

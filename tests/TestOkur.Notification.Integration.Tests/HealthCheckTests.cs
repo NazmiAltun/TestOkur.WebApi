@@ -19,7 +19,8 @@
 		[Fact]
 		public async Task EndPoint_For_HangfireDashboard_Should_Work()
 		{
-			var response = await TestServerFactory.TestServer.CreateClient().GetAsync("hangfire");
+			var response = await TestServerFactory.TestServer.CreateClient()
+				.GetAsync("hangfire?username=user&password=pass");
 			response.StatusCode.Should().Be(HttpStatusCode.OK);
 		}
 	}
