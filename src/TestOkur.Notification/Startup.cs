@@ -37,6 +37,7 @@
 			Configuration = configuration;
 			Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
 			Configuration.GetSection("ApplicationConfiguration").Bind(ApplicationConfiguration);
+			Configuration.GetSection("HangfireConfiguration").Bind(HangfireConfiguration);
 		}
 
 		private IConfiguration Configuration { get; }
@@ -44,6 +45,8 @@
 		private ApplicationConfiguration ApplicationConfiguration { get; } = new ApplicationConfiguration();
 
 		private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
+
+		private HangfireConfiguration HangfireConfiguration { get; } = new HangfireConfiguration();
 
 		public virtual IServiceProvider ConfigureServices(IServiceCollection services)
 		{
@@ -90,14 +93,13 @@
 		{
 			app.UseHangfireDashboard("/hangfire", new DashboardOptions
 			{
-				Authorization = new[] { new HangfireDashboardAuthorizationFilter(),  },
 			});
 			app.UseHangfireServer(new BackgroundJobServerOptions
 			{
 				WorkerCount = 1,
 			});
 			RecurringJob.AddOrUpdate<ISendLicenseExpirationNotice>(
-				notice => notice.NotifyUsersAsync(), Cron.Daily(23, 00));
+				notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
 		}
 
 		private void AddHangfire(IServiceCollection services)

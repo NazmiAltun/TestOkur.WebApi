@@ -36,11 +36,15 @@
 				{
 					Email = "nazmialtun@windowslive.com",
 					Phone = "5544205163",
+					LastName = "Altun",
+					FirstName = "Nazmi",
 				},
 				new UserModel()
 				{
 					Email = "necatiyalcin@gmail.com",
 					Phone = "5074011191",
+					LastName = "Yalcin",
+					FirstName = "Necati",
 				},
 			};
 		}
