@@ -25,6 +25,7 @@
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Logging;
 	using Microsoft.Extensions.Options;
+	using Newtonsoft.Json;
 	using Paramore.Brighter.Extensions.DependencyInjection;
 	using Paramore.Darker.AspNetCore;
 	using Paramore.Darker.QueryLogging;
@@ -83,11 +84,15 @@
 					   .AllowAnyHeader();
 			}));
 			services.AddMvc(options =>
-			{
-				options.Filters.Add(new ProducesAttribute("application/json"));
-				options.Filters.Add(new ValidateInputFilter());
-			})
-			.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+				{
+					options.Filters.Add(new ProducesAttribute("application/json"));
+					options.Filters.Add(new ValidateInputFilter());
+				})
+				.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+				.AddJsonOptions(options =>
+				{
+					options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+				});
 
 			AddCqrsFramework(services);
 			AddHealthChecks(services);

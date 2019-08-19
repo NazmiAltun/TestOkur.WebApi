@@ -20,7 +20,7 @@
 		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{
 			var defaultUser = await dbContext.Users.FirstOrDefaultAsync(
-				u => u.Email == DefaultUserEmail);
+				u => u.Email.Value == DefaultUserEmail);
 
 			if (defaultUser == null)
 			{
@@ -28,8 +28,8 @@
 			}
 
 			var defaultClassroom = await dbContext.Classrooms
-				.FirstOrDefaultAsync(c => c.Grade == DefaultGrade &&
-										  c.Name == DefaultClassroomName &&
+				.FirstOrDefaultAsync(c => c.Grade.Value == DefaultGrade &&
+										  c.Name.Value == DefaultClassroomName &&
 										  EF.Property<int>(c, "CreatedBy") == defaultUser.Id);
 
 			if (defaultClassroom != null)
