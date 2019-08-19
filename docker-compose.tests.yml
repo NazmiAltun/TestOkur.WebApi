@@ -157,7 +157,7 @@ services:
       - OAuthConfiguration__Authority=http://mockserver:8080/
       - WebApiUrl=http://mockserver:8080/
       - SmsConfiguration__ServiceUrl=http://mockserver:8080/
-      - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
+      - ApplicationConfiguration__ConnectionString=mongodb://root:root@mongo
   coverage-merger:
     image: report-merger
     build:

@@ -97,7 +97,7 @@
 				WorkerCount = 1,
 			});
 			RecurringJob.AddOrUpdate<ISendLicenseExpirationNotice>(
-				notice => notice.NotifyUsersAsync(), Cron.Daily(20, 00));
+				notice => notice.NotifyUsersAsync(), Cron.Daily(22, 00));
 		}
 
 		private void AddHangfire(IServiceCollection services)
