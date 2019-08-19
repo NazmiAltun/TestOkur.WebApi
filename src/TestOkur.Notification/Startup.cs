@@ -104,7 +104,7 @@
 		{
 			services.AddHangfire(config =>
 			{
-				config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Trace);
+				config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Debug);
 				var migrationOptions = new MongoStorageOptions
 				{
 					MigrationOptions = new MongoMigrationOptions
