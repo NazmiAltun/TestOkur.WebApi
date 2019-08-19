@@ -22,7 +22,7 @@
 				context.Message.Phone);
 			await _notificationManager.SendSmsAsync(
 				context.Message,
-				Template.AccountActivationSmsUser,
+				Template.LicenseExpirationNoticeSms,
 				context.Message.Email);
 		}
 	}

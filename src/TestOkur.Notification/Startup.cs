@@ -5,6 +5,8 @@
 	using System.Net.Http;
 	using System.Reflection;
 	using GreenPipes;
+	using Hangfire;
+	using Hangfire.Mongo;
 	using HealthChecks.UI.Client;
 	using MassTransit;
 	using Microsoft.AspNetCore.Builder;
@@ -17,6 +19,7 @@
 	using MongoDB.Bson.Serialization;
 	using Polly;
 	using Polly.Extensions.Http;
+	using Prometheus;
 	using RazorLight;
 	using TestOkur.Common.Configuration;
 	using TestOkur.Infrastructure.Extensions;
@@ -25,6 +28,7 @@
 	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
+	using TestOkur.Notification.ScheduledTasks;
 
 	public class Startup : IStartup
 	{
@@ -49,30 +53,71 @@
 			services.AddSingleton<IEmailClient, EmailClient>();
 			services.AddSingleton<ITemplateService, TemplateService>();
 			services.AddSingleton<NotificationManager>();
+			services.AddScoped<ISendLicenseExpirationNotice, SendLicenseExpirationNotice>();
+
 			AddHttpClients(services);
 			AddMessageBus(services);
 			AddHostedServices(services);
+			AddHangfire(services);
 			services.AddSingleton<IRazorLightEngine>(new RazorLightEngineBuilder()
 				.UseMemoryCachingProvider()
 				.Build());
 			services.AddTransient<ISmsRepository, SmsRepository>();
-
+			services.AddMvc();
 			return services.BuildServiceProvider();
 		}
 
 		public void Configure(IApplicationBuilder app)
 		{
-			var hcOptions = new HealthCheckOptions()
+			UseHangfire(app);
+			app.UseHttpMetrics();
+			app.UseHealthChecks("/hc", new HealthCheckOptions
 			{
 				Predicate = _ => true,
 				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-			};
-			app.UseHealthChecks("/hc", hcOptions);
+			});
+			app.UseMetricServer("/metrics-core");
+			app.UseMvc();
+			app.UseStaticFiles();
 		}
 
 		protected virtual void AddHostedServices(IServiceCollection services)
 		{
 			services.AddHostedService<BusService>();
+		}
+
+		private void UseHangfire(IApplicationBuilder app)
+		{
+			app.UseHangfireDashboard("/hangfire", new DashboardOptions
+			{
+				Authorization = new[] { new HangfireDashboardAuthorizationFilter(),  },
+			});
+			app.UseHangfireServer(new BackgroundJobServerOptions
+			{
+				WorkerCount = 1,
+			});
+			RecurringJob.AddOrUpdate<ISendLicenseExpirationNotice>(
+				notice => notice.NotifyUsersAsync(), Cron.Daily(20, 00));
+		}
+
+		private void AddHangfire(IServiceCollection services)
+		{
+			services.AddHangfire(config =>
+			{
+				config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Trace);
+				var migrationOptions = new MongoStorageOptions
+				{
+					MigrationOptions = new MongoMigrationOptions
+					{
+						Strategy = MongoMigrationStrategy.Migrate,
+						BackupStrategy = MongoBackupStrategy.None,
+					},
+				};
+				config.UseMongoStorage(
+					ApplicationConfiguration.ConnectionString,
+					$"{ApplicationConfiguration.Database}-Hangfire",
+					migrationOptions);
+			});
 		}
 
 		private void RegisterMappings()
@@ -181,7 +226,7 @@
 			return Assembly.GetExecutingAssembly()
 				.GetTypes()
 				.Where(t => t.IsClass &&
-				            typeof(IConsumer).IsAssignableFrom(t))
+							typeof(IConsumer).IsAssignableFrom(t))
 				.ToArray();
 		}
 	}

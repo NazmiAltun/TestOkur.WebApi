@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using TestOkur.Report.Domain;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
@@ -33,6 +32,7 @@ namespace TestOkur.Report
 	using TestOkur.Infrastructure.Mvc;
 	using TestOkur.Optic.Form;
 	using TestOkur.Report.Configuration;
+	using TestOkur.Report.Domain;
 	using TestOkur.Report.Extensions;
 	using TestOkur.Report.Infrastructure;
 	using TestOkur.Report.Repositories;

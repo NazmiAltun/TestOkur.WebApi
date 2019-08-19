@@ -164,7 +164,7 @@
     <div class='chart-container'>
     {{#each chartData}}
     <div class='chart'>
-    <canvas id='canvas{{@index}}'></canvas>
+	<canvas id='canvas{{@index}}'/>
     <script>
     		  var data = {
             	  labels: [{{#each classrooms}}'{{this}}', {{/each}}],

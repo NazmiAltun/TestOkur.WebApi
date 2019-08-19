@@ -9,11 +9,16 @@ namespace TestOkur.Notification
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.Extensions.Logging;
+	using Prometheus.DotNetRuntime;
 
 	public static class Program
 	{
 		public static void Main(string[] args)
 		{
+			DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
+			{
+				Console.WriteLine(e.ToString());
+			}).StartCollecting();
 			BuildWebHost(args).Run();
 		}
 

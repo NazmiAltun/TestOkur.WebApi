@@ -26,5 +26,6 @@ RUN dotnet publish "./src/TestOkur.Notification/TestOkur.Notification.csproj" --
 
 FROM base as final
 WORKDIR /app
+EXPOSE 80
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "TestOkur.Notification.dll"]

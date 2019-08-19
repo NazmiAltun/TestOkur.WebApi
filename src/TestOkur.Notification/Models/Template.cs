@@ -26,7 +26,7 @@
 				"SMS Hatasi",
 				"Admin_SMS_Failure_Mail.html");
 
-		public static readonly Template AccountExpiryNotificationEmailUser =
+		public static readonly Template LicenseExpirationNoticeEmailUser =
 			new Template(
 				"LisansSonaErmeBildirim_Kullanici_Email",
 				"TestOkur Lisans Süreniz Dolmak Üzere",
@@ -50,7 +50,7 @@
 				"TestOkur",
 				"User_LicenseExtension_SMS.html");
 
-		public static readonly Template AccountActivationSmsUser =
+		public static readonly Template LicenseExpirationNoticeSms =
 			new Template(
 				"LisansAktiflestirme_Kullanici_Sms",
 				"TestOkur",
@@ -67,12 +67,6 @@
 				"YeniLisansKaydi_Kullanici_Email",
 				"Lisans Kaydınız Alındı",
 				"User_New_User_Mail.html");
-
-		public static readonly Template PasswordReminderEmailUser =
-			new Template(
-				"ParolaHatirlatma_Kullanici_Email",
-				"TestOkur Parolaniz",
-				"User_RemindPassword_Mail.html");
 
 		public static readonly Template PasswordResetEmailUser =
 			new Template(

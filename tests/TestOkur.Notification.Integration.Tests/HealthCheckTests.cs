@@ -15,5 +15,12 @@
 			response.StatusCode.Should().Be(HttpStatusCode.OK);
 			response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
 		}
+
+		[Fact]
+		public async Task EndPoint_For_HangfireDashboard_Should_Work()
+		{
+			var response = await TestServerFactory.TestServer.CreateClient().GetAsync("hangfire");
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
+		}
 	}
 }
