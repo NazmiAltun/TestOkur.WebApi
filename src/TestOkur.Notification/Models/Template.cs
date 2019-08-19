@@ -54,7 +54,7 @@
 			new Template(
 				"LisansAktiflestirme_Kullanici_Sms",
 				"TestOkur",
-				"User_MembershipActivation_SMS.html");
+				"User_License_Expiration_Reminder_SMS.html");
 
 		public static readonly Template AccountActivationEmailUser =
 			new Template(
