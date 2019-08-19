@@ -28,7 +28,7 @@
 		public ApplicationDbContext(
 			DbContextOptions<ApplicationDbContext> options,
 			IUserIdProvider userIdProvider)
-           : base(options)
+		   : base(options)
 		{
 			_userIdProvider = userIdProvider;
 		}
@@ -66,26 +66,26 @@
 		public DbSet<Contact> Contacts { get; set; }
 
 		public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await AuditChanges();
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+		{
+			await AuditChanges();
+			return await base.SaveChangesAsync(cancellationToken);
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.AddAuditableProperties();
-            modelBuilder.Entity<FormLessonSection>().Property<int>("ListOrder");
-            modelBuilder.Entity<OpticalFormDefinition>().Property<int>("ListOrder");
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ToSnakeCase();
-        }
+		{
+			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+			modelBuilder.AddAuditableProperties();
+			modelBuilder.Entity<FormLessonSection>().Property<int>("ListOrder");
+			modelBuilder.Entity<OpticalFormDefinition>().Property<int>("ListOrder");
+			base.OnModelCreating(modelBuilder);
+			modelBuilder.ToSnakeCase();
+		}
 
 		private async Task AuditChanges()
-        {
-            ChangeTracker.DetectChanges();
+		{
+			ChangeTracker.DetectChanges();
 
-            foreach (var entry in ChangeTracker.Entries())
+			foreach (var entry in ChangeTracker.Entries())
 			{
 				if (!entry.IsAuditable())
 				{
@@ -100,7 +100,7 @@
 		private async Task SetUpdateAttributes(EntityEntry entry)
 		{
 			if (entry.State == EntityState.Modified ||
-			    entry.State == EntityState.Added)
+				entry.State == EntityState.Added)
 			{
 				entry.Property("UpdatedOnUTC").CurrentValue = DateTime.UtcNow;
 				entry.Property("UpdatedBy").CurrentValue = await _userIdProvider.GetAsync();
@@ -112,7 +112,10 @@
 			if (entry.State == EntityState.Added)
 			{
 				entry.Property("CreatedOnUTC").CurrentValue = DateTime.UtcNow;
-				entry.Property("CreatedBy").CurrentValue = await _userIdProvider.GetAsync();
+				if ((int)entry.Property("CreatedBy").CurrentValue == 0)
+				{
+					entry.Property("CreatedBy").CurrentValue = await _userIdProvider.GetAsync();
+				}
 			}
 		}
 	}
