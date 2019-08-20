@@ -112,10 +112,7 @@
 			if (entry.State == EntityState.Added)
 			{
 				entry.Property("CreatedOnUTC").CurrentValue = DateTime.UtcNow;
-				if ((int)entry.Property("CreatedBy").CurrentValue == 0)
-				{
-					entry.Property("CreatedBy").CurrentValue = await _userIdProvider.GetAsync();
-				}
+				entry.Property("CreatedBy").CurrentValue = await _userIdProvider.GetAsync();
 			}
 		}
 	}
