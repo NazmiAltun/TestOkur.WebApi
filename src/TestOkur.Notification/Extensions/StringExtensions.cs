@@ -1,5 +1,7 @@
 ﻿namespace TestOkur.Notification.Extensions
 {
+	using System;
+
 	internal static class StringExtensions
 	{
 		public static string ToSmsFriendly(this string message)
@@ -7,6 +9,7 @@
 			return string.IsNullOrEmpty(message)
 				? message
 				: message.Replace('ö', 'o')
+					.Replace(Environment.NewLine, string.Empty)
 					.Replace('ç', 'c')
 					.Replace('ş', 's')
 					.Replace('ğ', 'g')
