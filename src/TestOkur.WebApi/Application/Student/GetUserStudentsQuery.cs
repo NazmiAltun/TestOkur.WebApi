@@ -4,7 +4,9 @@
 	using System.Collections.Generic;
 	using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class GetUserStudentsQuery : QueryBase<IReadOnlyCollection<StudentReadModel>>
+	public sealed class GetUserStudentsQuery :
+		QueryBase<IReadOnlyCollection<StudentReadModel>>,
+		ICacheResult
     {
 	    public string CacheKey => $"Students_{UserId}";
 

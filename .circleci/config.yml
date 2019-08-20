@@ -64,4 +64,7 @@ jobs:
           command: |
             scp notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
             ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-notification-qa.sh
-    
+      - run:
+          name: Clear Cache
+          command: |
+            curl -X "DELETE" $WEBAPI_QA_URL/api/cache

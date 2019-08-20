@@ -5,7 +5,6 @@
 	using System.Threading.Tasks;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Extensions.Configuration;
 	using signed::StackExchange.Redis;
 
 	[Route("api/cache")]
@@ -13,14 +12,10 @@
 	public class CacheController : ControllerBase
 	{
 		private readonly IConnectionMultiplexer _connectionMultiplexer;
-		private readonly IConfiguration _configuration;
 
-		public CacheController(
-			IConnectionMultiplexer connectionMultiplexer,
-			IConfiguration configuration)
+		public CacheController(IConnectionMultiplexer connectionMultiplexer)
 		{
 			_connectionMultiplexer = connectionMultiplexer;
-			_configuration = configuration;
 		}
 
 		[HttpDelete]
@@ -32,7 +27,7 @@
 				await server.FlushAllDatabasesAsync();
 			}
 
-			return Ok();
+			return NoContent();
 		}
 	}
 }
