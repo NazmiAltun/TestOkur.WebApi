@@ -24,7 +24,8 @@
 			int maxAllowedStudentCount,
 			bool canScan,
 			int licenseTypeId,
-			DateTime? expiryDateUtc)
+			DateTime? expiryDateUtc,
+			string notes)
 			: base(id)
 		{
 			UpdatedUserId = updatedUserId;
@@ -41,6 +42,7 @@
 			CanScan = canScan;
 			LicenseTypeId = licenseTypeId;
 			ExpiryDateUtc = expiryDateUtc;
+			Notes = notes;
 		}
 
 		public IEnumerable<string> CacheKeys => new[] { "Users" };
@@ -87,6 +89,9 @@
 		[DataMember]
 		public DateTime? ExpiryDateUtc { get; private set; }
 
+		[DataMember]
+		public string Notes { get; private set; }
+
 		internal UpdateUserModel ToIdentityUpdateUserModel()
 		{
 			return new UpdateUserModel
@@ -99,16 +104,6 @@
 				MaxAllowedStudentCount = MaxAllowedStudentCount,
 				UserId = SubjectId,
 			};
-		}
-
-		internal UpdateUserCommand ToUpdateUserCommand()
-		{
-			return new UpdateUserCommand(
-				Guid.NewGuid(),
-				SchoolName,
-				MobilePhone,
-				CityId,
-				DistrictId);
 		}
 	}
 }

@@ -76,7 +76,8 @@
 				workSheet.Cells[rowIndex, 7].Value.ToString(),
 				workSheet.Cells[rowIndex, 8].Value.ToString(),
 				workSheet.Cells[rowIndex, 9].Value.ToString(),
-				workSheet.Cells[rowIndex, 10].Value.ToString());
+				workSheet.Cells[rowIndex, 10].Value.ToString(),
+				workSheet.Cells[rowIndex, 18].Value.ToString());
 		}
 	}
 }

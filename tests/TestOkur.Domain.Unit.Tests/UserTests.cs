@@ -22,8 +22,9 @@
 				"Nazmi",
 				"Altun",
 				"OnDokuz Mayis",
-				"Fatih Sultan Mustafa",
-				"5324987788");
+				"Nazmi Bora Altun",
+				"5324987788",
+				"RandomNotes");
 		}
 
 		[Theory]

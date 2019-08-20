@@ -112,7 +112,8 @@
 				UserLastName,
 				SchoolName,
 				RegistrarFullName,
-				RegistrarPhone);
+				RegistrarPhone,
+				null);
 		}
 	}
 }

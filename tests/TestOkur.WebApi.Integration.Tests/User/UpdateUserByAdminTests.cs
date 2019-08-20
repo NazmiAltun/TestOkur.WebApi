@@ -39,7 +39,8 @@
 					RandomGen.Next(300) + 100,
 					true,
 					RandomGen.Next(4) + 1,
-					DateTime.Now.AddDays(200));
+					DateTime.Now.AddDays(200),
+					RandomGen.String(100));
 				response = await client.PostAsync(
 					$"{ApiPath}/update-by-admin",
 					command.ToJsonContent());

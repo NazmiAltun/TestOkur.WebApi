@@ -46,7 +46,7 @@
 			var user = await GetUserAsync(command.UpdatedUserId, cancellationToken);
 			var city = await GetCityAsync(command.CityId, cancellationToken);
 			var district = city.Districts.First(d => d.Id == command.DistrictId);
-			user.Update(command.Email, command.FirstName, command.LastName, city, district, command.SchoolName, command.MobilePhone);
+			user.Update(command.Email, command.FirstName, command.LastName, city, district, command.SchoolName, command.MobilePhone, command.Notes);
 			await _dbContext.SaveChangesAsync(cancellationToken);
 		}
 

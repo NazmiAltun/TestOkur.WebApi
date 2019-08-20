@@ -16,7 +16,8 @@
 			Name lastName,
 			Name schoolName,
 			Name registrarFullName,
-			Phone registrarPhone)
+			Phone registrarPhone,
+			string notes)
 		: this()
 		{
 			SubjectId = subjectId;
@@ -29,6 +30,7 @@
 			SchoolName = schoolName;
 			RegistrarFullName = registrarFullName;
 			RegistrarPhone = registrarPhone;
+			Notes = notes;
 		}
 
 		protected User()
@@ -103,11 +105,13 @@
 			City city,
 			District district,
 			Name schoolName,
-			Phone phone)
+			Phone phone,
+			string notes)
 		{
 			Email = email;
 			FirstName = firstName;
 			LastName = lastName;
+			Notes = notes;
 			Update(city, district, schoolName, phone);
 		}
 
