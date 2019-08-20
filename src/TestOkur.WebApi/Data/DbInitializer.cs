@@ -18,7 +18,6 @@
 			new UserSeeder(),
 			new ScoreFormulaSeeder(),
 			new EnumerationSeeder(),
-			new StudentSeeder(),
 		};
 
 		public static async Task SeedAsync(ApplicationDbContext context, IServiceProvider services)
