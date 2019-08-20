@@ -6,7 +6,7 @@
 			new Template(
 				"GunlukRapor_Yonetici_Email",
 				"TestOkur Gunluk Veriler",
-				"Admin_Daily_Notification.html");
+				"Admin_Daily_Report.html");
 
 		public static readonly Template UserErrorAlertEmail =
 			new Template(
@@ -31,13 +31,7 @@
 				"LisansSonaErmeBildirim_Kullanici_Email",
 				"TestOkur Lisans Süreniz Dolmak Üzere",
 				"User_License_Expiration_Reminder_Mail.html");
-
-		public static readonly Template AccountExpiryNotificationSmsUser =
-			new Template(
-				"LisansSonaErmeBildirim_Kullanici_Sms",
-				"TestOkur",
-				"User_License_Expiration_Reminder_SMS.html");
-
+		
 		public static readonly Template AccountExtensionEmailUser =
 			new Template(
 				"LisanUzatma_Kullanici_Email",
@@ -54,7 +48,7 @@
 			new Template(
 				"LisansAktiflestirme_Kullanici_Sms",
 				"TestOkur",
-				"User_License_Expiration_Reminder_SMS.html");
+				"LicenseExpirationNoticeSms.html");
 
 		public static readonly Template AccountActivationEmailUser =
 			new Template(

@@ -10,6 +10,7 @@
 	using TestOkur.Contracts.Sms;
 	using TestOkur.Notification.Events;
 	using TestOkur.Notification.Infrastructure;
+	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
 
 	public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>

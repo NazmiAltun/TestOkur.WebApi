@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification.Infrastructure
+﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
 	using System.Net;
 	using System.Net.Mail;

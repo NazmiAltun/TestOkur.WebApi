@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification.Infrastructure
+﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,11 +11,11 @@
 	public class WebApiClient : IWebApiClient
 	{
 		private readonly HttpClient _httpClient;
-		private readonly OAuthClient _identityServerClient;
+		private readonly IOAuthClient _identityServerClient;
 
 		public WebApiClient(
 			HttpClient httpClient,
-			OAuthClient identityServerClient)
+			IOAuthClient identityServerClient)
 		{
 			_httpClient = httpClient;
 			_identityServerClient = identityServerClient;

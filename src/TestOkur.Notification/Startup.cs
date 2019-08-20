@@ -57,6 +57,7 @@
 			services.AddSingleton<ITemplateService, TemplateService>();
 			services.AddSingleton<NotificationManager>();
 			services.AddScoped<ISendLicenseExpirationNotice, SendLicenseExpirationNotice>();
+			services.AddScoped<IDailyReport, DailyReport>();
 
 			AddHttpClients(services);
 			AddMessageBus(services);
@@ -104,6 +105,8 @@
 			});
 			RecurringJob.AddOrUpdate<ISendLicenseExpirationNotice>(
 				notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
+			RecurringJob.AddOrUpdate<IDailyReport>(
+				x => x.SendAsync(), Cron.Daily(20, 30));
 		}
 
 		private void AddHangfire(IServiceCollection services)
@@ -202,7 +205,7 @@
 		private void AddHttpClients(IServiceCollection services)
 		{
 			services.AddTransient<SmsServiceLoggingHandler>();
-			services.AddHttpClient<OAuthClient>();
+			services.AddHttpClient<IOAuthClient, OAuthClient>();
 			services.AddHttpClient<IWebApiClient, WebApiClient>(client =>
 			{
 				client.BaseAddress = new Uri(Configuration.GetValue<string>("WebApiUrl"));

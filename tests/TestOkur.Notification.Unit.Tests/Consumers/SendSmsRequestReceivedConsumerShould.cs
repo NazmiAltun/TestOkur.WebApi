@@ -14,6 +14,7 @@
 	using TestOkur.Notification.Configuration;
 	using TestOkur.Notification.Consumers;
 	using TestOkur.Notification.Infrastructure;
+	using TestOkur.Notification.Infrastructure.Clients;
 	using Xunit;
 
 	public class SendSmsRequestReceivedConsumerShould

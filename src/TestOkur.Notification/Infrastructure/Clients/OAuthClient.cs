@@ -1,11 +1,11 @@
-﻿namespace TestOkur.Notification.Infrastructure
+﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
 	using System.Net.Http;
 	using System.Threading.Tasks;
 	using IdentityModel.Client;
 	using TestOkur.Common.Configuration;
 
-	public class OAuthClient
+	public class OAuthClient : IOAuthClient
 	{
 		private readonly HttpClient _httpClient;
 		private readonly OAuthConfiguration _oAuthConfiguration;

@@ -40,7 +40,7 @@
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Templates\Admin_Daily_Notification.html">
+    <None Update="Templates\Admin_Daily_Report.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Templates\Admin_New_User_Mail.html">
@@ -61,7 +61,7 @@
     <None Update="Templates\User_License_Expiration_Reminder_Mail.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\User_License_Expiration_Reminder_SMS.html">
+    <None Update="Templates\LicenseExpirationNoticeSms.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Templates\User_MembershipActivation_Mail.html">

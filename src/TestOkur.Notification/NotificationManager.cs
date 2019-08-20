@@ -4,6 +4,7 @@
 	using System.Threading.Tasks;
 	using TestOkur.Common;
 	using TestOkur.Notification.Infrastructure;
+	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
 
 	internal class NotificationManager
