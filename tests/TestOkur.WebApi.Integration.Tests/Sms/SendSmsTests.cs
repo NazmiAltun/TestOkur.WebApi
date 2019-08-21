@@ -3,18 +3,15 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
-	using System.Security.Claims;
 	using System.Threading.Tasks;
 	using FluentAssertions;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.DependencyInjection;
 	using TestOkur.Common;
 	using TestOkur.Contracts.Sms;
-	using TestOkur.Data;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Sms;
 	using TestOkur.WebApi.Application.Sms.Commands;
 	using TestOkur.WebApi.Integration.Tests.Common;
+	using TestOkur.WebApi.Integration.Tests.Extensions;
 	using TestOkur.WebApi.Integration.Tests.User;
 	using Xunit;
 
@@ -70,15 +67,10 @@
 			using (var testServer = await CreateWithUserAsync())
 			{
 				//Add Some SMS Credits
-				var dbContext = testServer.Host.Services.GetService(typeof(ApplicationDbContext))
-					as ApplicationDbContext;
-				var subjectId = (testServer.Host.Services
-					.GetRequiredService(typeof(Claim)) as Claim).Value;
-
-				var user = await dbContext.Users.FirstAsync(u => u.SubjectId == subjectId);
-				user.AddSmsBalance(2);
-				await dbContext.SaveChangesAsync();
-
+				var user = await testServer.GetCurrentUserInSession();
+				var client = testServer.CreateClient();
+				var addSmsCreditsCommand = new AddSmsCreditsCommand(Guid.NewGuid(), user.Id, 2);
+				await client.PostAsync($"{ApiPath}/add-credits", addSmsCreditsCommand.ToJsonContent());
 				var messages = new List<SmsMessageModel>();
 
 				for (var i = 0; i < 2; i++)
@@ -87,7 +79,7 @@
 				}
 
 				var command = new SendSmsCommand(Guid.NewGuid(), messages);
-				var response = await testServer.CreateClient().PostAsync(ApiPath, command.ToJsonContent());
+				var response = await client.PostAsync(ApiPath, command.ToJsonContent());
 				response.EnsureSuccessStatusCode();
 
 				var @event = Consumer.Instance.GetFirst<ISendSmsRequestReceived>();

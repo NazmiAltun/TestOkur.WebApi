@@ -16,6 +16,10 @@
 			"options": 204,
 			"post": 204
 		},
+		"/account/:id": {
+			"options": 204,
+			"delete": 204
+		},
 		"/account/update": {
 			"options": 204,
 			"post": 204

@@ -2,7 +2,6 @@
 {
 	using System.Collections.Generic;
 	using System.Diagnostics;
-	using TestOkur.Domain.Model.ScoreModel;
 
 	[DebuggerDisplay("{FormulaType}-{ScoreName}")]
 	public class ScoreFormulaReadModel

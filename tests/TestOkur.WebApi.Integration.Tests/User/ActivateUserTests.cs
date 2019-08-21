@@ -1,10 +1,9 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
+	using System.Linq;
 	using System.Threading.Tasks;
 	using FluentAssertions;
-	using Microsoft.EntityFrameworkCore;
 	using TestOkur.Contracts.User;
-	using TestOkur.Data;
 	using TestOkur.WebApi.Integration.Tests.Common;
 	using Xunit;
 
@@ -18,12 +17,8 @@
 			using (var testServer = await CreateAsync())
 			{
 				var client = testServer.CreateClient();
-				var response = await client.PostAsync($"{ApiPath}/activate?email={email}", null);
-				response.EnsureSuccessStatusCode();
-
-				var dbContext = testServer.Host.Services.GetService(typeof(ApplicationDbContext))
-					as ApplicationDbContext;
-				var user = await dbContext.Users.FirstAsync(u => u.Email == email);
+				await client.PostAsync($"{ApiPath}/activate?email={email}", null);
+				var user = (await GetUsersAsync(client)).First(u => u.Email == email);
 				var @event = Consumer.Instance.GetFirst<IUserActivated>();
 				@event.Email.Should().Be(user.Email);
 			}

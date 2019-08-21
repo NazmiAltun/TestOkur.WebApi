@@ -27,6 +27,13 @@
 			_tokenCache = tokenCache;
 		}
 
+		public async Task DeleteUserAsync(string id, CancellationToken cancellationToken)
+		{
+			await SetBearerToken();
+			var response = await _httpClient.DeleteAsync($"/account/{id}", cancellationToken);
+			response.EnsureSuccessStatusCode();
+		}
+
 		public async Task ActivateUserAsync(Email email, CancellationToken cancellationToken)
 		{
 			await SetBearerToken();

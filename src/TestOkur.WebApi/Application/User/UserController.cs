@@ -61,6 +61,15 @@
 			return Ok(SuccessCodes.UserCreated);
 		}
 
+		[HttpDelete("{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[Authorize(AuthorizationPolicies.Admin)]
+		public async Task<IActionResult> DeleteAsync(int id)
+		{
+			await _commandProcessor.SendAsync(new DeleteUserCommand(id));
+			return Ok();
+		}
+
 		[HttpPost("activate")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]

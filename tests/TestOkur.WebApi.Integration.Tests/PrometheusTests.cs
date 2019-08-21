@@ -3,7 +3,6 @@
 	using System.Net;
 	using System.Threading.Tasks;
 	using FluentAssertions;
-	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Integration.Tests.Common;
 	using Xunit;
 

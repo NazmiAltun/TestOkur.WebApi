@@ -11,7 +11,6 @@
 	using Paramore.Brighter;
 	using Paramore.Darker;
 	using TestOkur.Common;
-	using TestOkur.Domain.Model.ScoreModel;
 
 	[Route("api/v1/score-formulas")]
 	[Authorize(AuthorizationPolicies.Customer)]

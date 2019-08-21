@@ -8,7 +8,6 @@
 	using Npgsql;
 	using Paramore.Darker;
 	using Paramore.Darker.QueryLogging;
-	using TestOkur.Domain.Model.ScoreModel;
 	using TestOkur.Infrastructure.Cqrs;
 	using TestOkur.WebApi.Configuration;
 

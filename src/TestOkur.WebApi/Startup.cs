@@ -45,11 +45,9 @@
 	using TestOkur.Infrastructure.Threading;
 	using TestOkur.WebApi.Application.Captcha;
 	using TestOkur.WebApi.Application.City;
-	using TestOkur.WebApi.Application.Localization;
 	using TestOkur.WebApi.Application.User.Services;
 	using TestOkur.WebApi.Configuration;
 	using TestOkur.WebApi.Extensions;
-
 	using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
 	[ExcludeFromCodeCoverage]

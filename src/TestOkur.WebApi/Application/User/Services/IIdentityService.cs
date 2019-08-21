@@ -6,6 +6,8 @@
 
 	public interface IIdentityService
 	{
+		Task DeleteUserAsync(string id, CancellationToken cancellationToken);
+
 		Task ActivateUserAsync(Email email, CancellationToken cancellationToken);
 
 		Task RegisterUserAsync(CreateCustomerUserModel model, CancellationToken cancellationToken = default);

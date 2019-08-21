@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using TestOkur.Domain.Model.ScoreModel;
 	using TestOkur.Infrastructure.Cqrs;
 
 	public class GetUserScoreFormulasQuery

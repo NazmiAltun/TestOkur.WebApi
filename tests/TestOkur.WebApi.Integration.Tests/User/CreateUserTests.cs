@@ -3,10 +3,8 @@
 	using System;
 	using System.Threading.Tasks;
 	using FluentAssertions;
-	using Microsoft.EntityFrameworkCore;
 	using TestOkur.Common;
 	using TestOkur.Contracts.User;
-	using TestOkur.Data;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Integration.Tests.Common;
 	using Xunit;
@@ -45,12 +43,8 @@
 			{
 				var client = testServer.CreateClient();
 				var model = await CreateUserAsync(client, testServer.Host.Services);
-
-				var dbContext = testServer.Host.Services.GetService(typeof(ApplicationDbContext))
-					as ApplicationDbContext;
-				(await dbContext.Users
-					.FirstOrDefaultAsync(u => u.Email.Value == model.Email))
-					.Should().NotBeNull();
+				(await GetUsersAsync(client)).Should()
+					.Contain(u => u.Email == model.Email);
 				var events = Consumer.Instance.GetAll<INewUserRegistered>();
 				events.Should().Contain(e => e.Email == model.Email);
 			}

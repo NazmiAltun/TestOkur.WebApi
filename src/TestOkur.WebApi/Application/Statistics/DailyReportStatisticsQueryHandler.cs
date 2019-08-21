@@ -7,6 +7,7 @@
 	using Paramore.Darker.QueryLogging;
 	using TestOkur.WebApi.Configuration;
 
+	//TODO:IMplement
 	public sealed class DailyReportStatisticsQueryHandler
         : QueryHandlerAsync<DailyReportStatisticsQuery, DailyReportStatisticsReadModel>
     {

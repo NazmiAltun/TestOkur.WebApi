@@ -6,8 +6,6 @@
 	using System.Net.Http;
 	using System.Threading.Tasks;
 	using FluentAssertions;
-	using TestOkur.Domain.Model.ScoreModel;
-	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Score;
 	using Xunit;
 

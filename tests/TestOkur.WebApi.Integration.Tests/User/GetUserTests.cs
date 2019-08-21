@@ -5,8 +5,6 @@
 	using System.Net.Http;
 	using System.Threading.Tasks;
 	using FluentAssertions;
-	using Microsoft.EntityFrameworkCore;
-	using TestOkur.Data;
 	using TestOkur.Domain.Model;
 	using TestOkur.TestHelper;
 	using TestOkur.TestHelper.Extensions;
@@ -53,35 +51,6 @@
 				var response = await client.GetAsync(ApiPath);
 				var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
 				users.Should().NotBeEmpty();
-			}
-		}
-
-		[Fact]
-		public async Task WhenUserExists_Then_AllUserRelatedDataShouldReturn()
-		{
-			const string email = "nazmialtun@windowslive.com";
-
-			using (var testServer = await CreateAsync())
-			{
-				var client = testServer.CreateClient();
-				var response = await client.GetAsync($"{ApiPath}/{email}");
-				var user = await response.ReadAsync<UserReadModel>();
-				var dbContext = testServer.Host
-						.Services.GetService(typeof(ApplicationDbContext))
-					as ApplicationDbContext;
-				var userEntity = await dbContext.Users
-					.Include(u => u.City)
-					.Include(u => u.District)
-					.FirstAsync(u => u.Email.Value == email);
-				user.Phone.Should().Be(userEntity.Phone.Value);
-				user.CityId.Should().Be((int)userEntity.City.Id);
-				user.DistrictId.Should().Be((int)userEntity.District.Id);
-				user.CityName.Should().Be(userEntity.City.Name.Value);
-				user.DistrictName.Should().Be(userEntity.District.Name.Value);
-				user.Email.Should().Be(userEntity.Email.Value);
-				user.FirstName.Should().Be(userEntity.FirstName.Value);
-				user.LastName.Should().Be(userEntity.LastName.Value);
-				user.SchoolName.Should().Be(userEntity.SchoolName.Value);
 			}
 		}
 

@@ -19,6 +19,12 @@
 	public abstract class Test
 	{
 		protected static readonly Random Random = new Random();
+
+		private const string UserApiPath = "api/v1/users";
+		private const string CitiesApiPath = "api/v1/cities";
+		private const string CaptchaApiPath = "api/v1/captcha";
+		private const string LicenseTypesApiPath = "api/v1/license-types";
+
 		private static readonly TestServerFactory TestServerFactory = new TestServerFactory();
 		private TestServer _testServerWithUser;
 		private TestServer _testServerWithoutUser;
@@ -63,7 +69,7 @@
 				var licenseType = await GetRandomLicenseTypeAsync(client);
 				var model = GenerateCreateUserCommand(captcha, city, licenseType);
 
-				var response = await client.PostAsync("api/v1/users", model.ToJsonContent());
+				var response = await client.PostAsync(UserApiPath, model.ToJsonContent());
 				response.EnsureSuccessStatusCode();
 
 				return model.Id.ToString();
@@ -72,7 +78,7 @@
 
 		protected async Task<LicenseTypeReadModel> GetRandomLicenseTypeAsync(HttpClient client)
 		{
-			var response = await client.GetAsync("/api/v1/license-types");
+			var response = await client.GetAsync(LicenseTypesApiPath);
 			var licenseTypes = await response.ReadAsync<IEnumerable<LicenseTypeReadModel>>();
 
 			return licenseTypes.Random();
@@ -80,7 +86,7 @@
 
 		protected async Task<CityReadModel> GetRandomCityAsync(HttpClient client)
 		{
-			var response = await client.GetAsync("/api/v1/cities");
+			var response = await client.GetAsync(CitiesApiPath);
 			var cities = await response.ReadAsync<IEnumerable<CityReadModel>>();
 
 			return cities.Random();
@@ -89,7 +95,7 @@
 		protected async Task<Captcha> GetCaptchaAsync(HttpClient client, IServiceProvider serviceProvider)
 		{
 			var id = Guid.NewGuid();
-			await client.GetAsync($"/api/v1/captcha/{id}");
+			await client.GetAsync($"{CaptchaApiPath}/{id}");
 			var cache = serviceProvider.GetRequiredService<ICacheManager<Captcha>>();
 
 			return cache.Get($"Captcha_{id}");
