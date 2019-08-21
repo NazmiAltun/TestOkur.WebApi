@@ -6,6 +6,8 @@
 	{
 		public DateTime Today => DateTime.Today;
 
+		public int TotalSuccessfulSMSCountInDay { get; set; }
+
 		public int TotalUserSMSCountInDay { get; set; }
 
 		public int TotalSystemSMSCountInDay { get; set; }
