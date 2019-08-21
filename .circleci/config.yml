@@ -52,17 +52,17 @@ jobs:
       - run:
           name: Deploy WebApi App
           command: |
-            scp webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            scp -q webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
             ssh -q $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-webapi-qa.sh > /dev/null
       - run:
           name: Deploy Report App
           command: |
-            scp report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            scp -q report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
             ssh -q $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-report-qa.sh > /dev/null
       - run:
           name: Deploy Notification App
           command: |
-            scp notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            scp -q notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
             ssh -q $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-notification-qa.sh > /dev/null
       - run:
           name: Clear Cache
