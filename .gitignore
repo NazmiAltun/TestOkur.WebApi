@@ -247,3 +247,4 @@ tools/
 coverage/
 tmp/
 !stylecop.json
+*.DotSettings

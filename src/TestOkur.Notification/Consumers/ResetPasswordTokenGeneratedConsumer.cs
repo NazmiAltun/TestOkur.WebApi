@@ -3,21 +3,22 @@
 	using System.Threading.Tasks;
 	using MassTransit;
 	using TestOkur.Contracts.User;
+	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Models;
 
 	internal class ResetPasswordTokenGeneratedConsumer
 		: IConsumer<IResetPasswordTokenGenerated>
 	{
-		private readonly NotificationManager _notificationManager;
+		private readonly INotificationFacade _notificationFacade;
 
-		public ResetPasswordTokenGeneratedConsumer(NotificationManager notificationManager)
+		public ResetPasswordTokenGeneratedConsumer(INotificationFacade notificationFacade)
 		{
-			_notificationManager = notificationManager;
+			_notificationFacade = notificationFacade;
 		}
 
 		public async Task Consume(ConsumeContext<IResetPasswordTokenGenerated> context)
 		{
-			await _notificationManager.SendEmailAsync(
+			await _notificationFacade.SendEmailAsync(
 				context.Message,
 				Template.PasswordResetEmailUser,
 				context.Message.Email);

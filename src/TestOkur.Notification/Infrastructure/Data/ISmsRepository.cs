@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification.Infrastructure
+﻿namespace TestOkur.Notification.Infrastructure.Data
 {
 	using System.Collections.Generic;
 	using System.Threading.Tasks;

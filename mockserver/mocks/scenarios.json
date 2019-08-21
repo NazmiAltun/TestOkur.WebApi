@@ -8,6 +8,10 @@
 		"/connect/token": {
 			"post": "token.js"
 		},
+		"/account/api/users": {
+			"options": 204,
+			"get": "users.json"
+		},
 		"/account/create": {
 			"options": 204,
 			"post": 204

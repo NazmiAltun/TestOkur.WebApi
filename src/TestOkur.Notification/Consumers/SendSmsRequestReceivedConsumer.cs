@@ -11,6 +11,7 @@
 	using TestOkur.Notification.Events;
 	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
+	using TestOkur.Notification.Infrastructure.Data;
 	using TestOkur.Notification.Models;
 
 	public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>

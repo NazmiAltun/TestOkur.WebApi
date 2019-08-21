@@ -1,22 +1,23 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
-	using MassTransit;
 	using System.Threading.Tasks;
+	using MassTransit;
 	using TestOkur.Contracts.Alert;
+	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Models;
 
 	internal class UserErrorReceivedConsumer : IConsumer<IUserErrorReceived>
 	{
-		private readonly NotificationManager _notificationManager;
+		private readonly INotificationFacade _notificationFacade;
 
-		public UserErrorReceivedConsumer(NotificationManager notificationManager)
+		public UserErrorReceivedConsumer(INotificationFacade notificationFacade)
 		{
-			_notificationManager = notificationManager;
+			_notificationFacade = notificationFacade;
 		}
 
 		public async Task Consume(ConsumeContext<IUserErrorReceived> context)
 		{
-			await _notificationManager.SendEmailToAdminsAsync(
+			await _notificationFacade.SendEmailToAdminsAsync(
 				context.Message,
 				Template.UserErrorAlertEmail);
 		}

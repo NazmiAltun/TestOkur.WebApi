@@ -3,20 +3,21 @@
 	using System.Threading.Tasks;
 	using MassTransit;
 	using TestOkur.Contracts.Sms;
+	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Models;
 
 	internal class SendSmsRequestFailedConsumer : IConsumer<ISendSmsRequestFailed>
 	{
-        private readonly NotificationManager _notificationManager;
+        private readonly INotificationFacade _notificationFacade;
 
-        public SendSmsRequestFailedConsumer(NotificationManager notificationManager)
+        public SendSmsRequestFailedConsumer(INotificationFacade notificationFacade)
         {
-            _notificationManager = notificationManager;
+            _notificationFacade = notificationFacade;
         }
 
         public async Task Consume(ConsumeContext<ISendSmsRequestFailed> context)
 		{
-			await _notificationManager.SendEmailToSystemAdminsAsync(
+			await _notificationFacade.SendEmailToSystemAdminsAsync(
                 context.Message,
                 Template.SmsFailureEmailAdmin);
 		}

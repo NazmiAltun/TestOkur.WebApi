@@ -1,13 +1,13 @@
-﻿namespace TestOkur.Notification
+﻿namespace TestOkur.Notification.Infrastructure
 {
 	using System;
 	using System.Threading.Tasks;
 	using TestOkur.Common;
-	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
+	using TestOkur.Notification.Infrastructure.Data;
 	using TestOkur.Notification.Models;
 
-	internal class NotificationManager
+	internal class NotificationFacade : INotificationFacade
 	{
 		private readonly ISmsClient _smsClient;
 		private readonly IEmailClient _emailClient;
@@ -15,7 +15,7 @@
 		private readonly ITemplateService _templateEngine;
 		private readonly ISmsRepository _smsRepository;
 
-		public NotificationManager(
+		public NotificationFacade(
 			IEmailClient emailClient,
 			ITemplateService templateEngine,
 			IWebApiClient webApiClient,

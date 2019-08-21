@@ -27,6 +27,7 @@
 	using TestOkur.Notification.Consumers;
 	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
+	using TestOkur.Notification.Infrastructure.Data;
 	using TestOkur.Notification.Models;
 	using TestOkur.Notification.ScheduledTasks;
 
@@ -55,7 +56,7 @@
 			AddHealthCheck(services);
 			services.AddSingleton<IEmailClient, EmailClient>();
 			services.AddSingleton<ITemplateService, TemplateService>();
-			services.AddSingleton<NotificationManager>();
+			services.AddSingleton<INotificationFacade, NotificationFacade>();
 			services.AddScoped<ISendLicenseExpirationNotice, SendLicenseExpirationNotice>();
 			services.AddScoped<IDailyReport, DailyReport>();
 

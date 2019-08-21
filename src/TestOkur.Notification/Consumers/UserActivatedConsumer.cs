@@ -3,24 +3,25 @@
 	using System.Threading.Tasks;
 	using MassTransit;
 	using TestOkur.Contracts.User;
+	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Models;
 
 	internal class UserActivatedConsumer : IConsumer<IUserActivated>
 	{
-        private readonly NotificationManager _notificationManager;
+        private readonly INotificationFacade _notificationFacade;
 
-        public UserActivatedConsumer(NotificationManager notificationManager)
+        public UserActivatedConsumer(INotificationFacade notificationFacade)
 		{
-            _notificationManager = notificationManager;
+            _notificationFacade = notificationFacade;
         }
 
         public async Task Consume(ConsumeContext<IUserActivated> context)
 		{
-			await _notificationManager.SendEmailAsync(
+			await _notificationFacade.SendEmailAsync(
 				context.Message,
 				Template.AccountActivationEmailUser,
 				context.Message.Phone);
-			await _notificationManager.SendSmsAsync(
+			await _notificationFacade.SendSmsAsync(
 				context.Message,
 				Template.LicenseExpirationNoticeSms,
 				context.Message.Email);

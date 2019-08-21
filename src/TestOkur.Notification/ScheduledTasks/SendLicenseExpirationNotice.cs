@@ -1,52 +1,57 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks
 {
+	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Threading.Tasks;
+	using TestOkur.Notification.Configuration;
+	using TestOkur.Notification.Infrastructure;
+	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
 
 	internal class SendLicenseExpirationNotice : ISendLicenseExpirationNotice
 	{
-		private readonly NotificationManager _notificationManager;
+		private readonly IOAuthClient _oAuthClient;
+		private readonly IWebApiClient _webApiClient;
+		private readonly INotificationFacade _notificationFacade;
+		private readonly ApplicationConfiguration _applicationConfiguration;
 
-		public SendLicenseExpirationNotice(NotificationManager notificationManager)
+		public SendLicenseExpirationNotice(
+			INotificationFacade notificationFacade,
+			IOAuthClient oAuthClient,
+			IWebApiClient webApiClient,
+			ApplicationConfiguration applicationConfiguration)
 		{
-			_notificationManager = notificationManager;
+			_notificationFacade = notificationFacade;
+			_oAuthClient = oAuthClient;
+			_webApiClient = webApiClient;
+			_applicationConfiguration = applicationConfiguration;
 		}
 
 		public async Task NotifyUsersAsync()
 		{
-			foreach (var user in GetUsers())
+			foreach (var user in await GetUsersAsync())
 			{
-				await _notificationManager.SendEmailAsync(
+				await _notificationFacade.SendEmailAsync(
 					user,
 					Template.LicenseExpirationNoticeEmailUser,
 					user.Email);
-				await _notificationManager.SendSmsAsync(
+				await _notificationFacade.SendSmsAsync(
 					user,
 					Template.LicenseExpirationNoticeSms,
 					user.Phone);
 			}
 		}
 
-		private List<UserModel> GetUsers()
+		private async Task<IEnumerable<UserModel>> GetUsersAsync()
 		{
-			return new List<UserModel>
-			{
-				new UserModel()
-				{
-					Email = "nazmialtun@windowslive.com",
-					Phone = "5544205163",
-					LastName = "Altun",
-					FirstName = "Nazmi",
-				},
-				new UserModel()
-				{
-					Email = "necatiyalcin@gmail.com",
-					Phone = "5074011191",
-					LastName = "Yalcin",
-					FirstName = "Necati",
-				},
-			};
+			var identityUsers = await _oAuthClient.GetUsersAsync();
+			var apiUsers = await _webApiClient.GetUsersAsync();
+
+			return (from user in identityUsers
+                where user.Active && user.ExpiryDateUtc != null && DateTime.UtcNow.Subtract(user.ExpiryDateUtc.Value).Days == _applicationConfiguration.RemainderDays
+				select apiUsers.First(u => u.SubjectId == user.Id))
+				.ToList();
 		}
 	}
 }

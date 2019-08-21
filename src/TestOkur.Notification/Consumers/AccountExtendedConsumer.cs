@@ -3,24 +3,25 @@
 	using System.Threading.Tasks;
 	using MassTransit;
 	using TestOkur.Contracts.Account;
+	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Models;
 
 	internal class AccountExtendedConsumer : IConsumer<IAccountExtended>
 	{
-        private readonly NotificationManager _notificationManager;
+        private readonly INotificationFacade _notificationFacade;
 
-        public AccountExtendedConsumer(NotificationManager notificationManager)
+        public AccountExtendedConsumer(INotificationFacade notificationFacade)
         {
-            _notificationManager = notificationManager;
+            _notificationFacade = notificationFacade;
         }
 
         public async Task Consume(ConsumeContext<IAccountExtended> context)
 		{
-			await _notificationManager.SendEmailAsync(
+			await _notificationFacade.SendEmailAsync(
 				context.Message,
 				Template.AccountExtensionEmailUser,
 				context.Message.Email);
-			await _notificationManager.SendSmsAsync(
+			await _notificationFacade.SendSmsAsync(
 				context.Message,
 				Template.AccountExtensionSmsUser,
 				context.Message.Phone);

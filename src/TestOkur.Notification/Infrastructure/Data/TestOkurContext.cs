@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification.Infrastructure
+﻿namespace TestOkur.Notification.Infrastructure.Data
 {
 	using MongoDB.Driver;
 	using TestOkur.Notification.Configuration;

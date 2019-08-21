@@ -4,6 +4,7 @@
 	using System.Net.Http;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using TestOkur.Notification.Infrastructure.Data;
 	using TestOkur.Notification.Models;
 
 	public class SmsServiceLoggingHandler : DelegatingHandler

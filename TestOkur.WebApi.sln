@@ -40,6 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mocks", "mocks", "{492E59C2
 		mockserver\mocks\scenarios.json = mockserver\mocks\scenarios.json
 		mockserver\mocks\templates.json = mockserver\mocks\templates.json
 		mockserver\mocks\token.js = mockserver\mocks\token.js
+		mockserver\mocks\users.json = mockserver\mocks\users.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.WebApi.Unit.Tests", "tests\TestOkur.WebApi.Unit.Tests\TestOkur.WebApi.Unit.Tests.csproj", "{649BF200-4150-4BF9-86BD-4D68BC9E7CF9}"
@@ -56,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Notification.Unit.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Notification.Integration.Tests", "tests\TestOkur.Notification.Integration.Tests\TestOkur.Notification.Integration.Tests.csproj", "{7EBAF429-0759-4831-99C4-70AB9E3B4F48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Report.Unit.Tests", "tests\TestOkur.Report.Unit.Tests\TestOkur.Report.Unit.Tests.csproj", "{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Report.Unit.Tests", "tests\TestOkur.Report.Unit.Tests\TestOkur.Report.Unit.Tests.csproj", "{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,8 +13,8 @@
 	using TestOkur.Contracts.Sms;
 	using TestOkur.Notification.Configuration;
 	using TestOkur.Notification.Consumers;
-	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
+	using TestOkur.Notification.Infrastructure.Data;
 	using Xunit;
 
 	public class SendSmsRequestReceivedConsumerShould
