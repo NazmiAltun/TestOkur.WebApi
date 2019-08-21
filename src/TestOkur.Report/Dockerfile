@@ -1,7 +1,7 @@
-FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine as base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 as base
 LABEL "Maintainer"="Nazmi Altun <nazmialtun@windowslive.com>"
 
-FROM microsoft/dotnet:2.2-sdk-alpine AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /src
 COPY ./*.sln ./
 COPY src/*/*.csproj ./  
