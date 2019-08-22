@@ -11,6 +11,6 @@
     {
         public string CacheKey => "AppSettings";
 
-        public TimeSpan CacheDuration => TimeSpan.FromDays(1);
+        public TimeSpan CacheDuration => TimeSpan.FromDays(14);
     }
 }
