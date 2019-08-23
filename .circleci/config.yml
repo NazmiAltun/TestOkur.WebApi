@@ -220,10 +220,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - report-integration-tests:
-          filters:
-            tags:
-              only: /.*/
       - webapi-integration-tests:
           filters:
             tags:
