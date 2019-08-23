@@ -37,7 +37,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-unit-test
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: ~/repo
           paths:
             - coverage/*
   notification-report-integration-tests:
@@ -58,7 +58,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: ~/repo
           paths:
             - coverage/*
   webapi-integration-tests:
@@ -78,7 +78,7 @@ jobs:
             mkdir ~/repo/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: ~/repo
           paths:
             - coverage/*
   code-coverage:
