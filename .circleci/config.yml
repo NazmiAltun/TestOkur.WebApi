@@ -31,12 +31,11 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            mkdir coverage
+            mkdir ~/repo/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit domain-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-unit-test
-            ls coverage
       - persist_to_workspace:
           root: ~/repo/coverage
           paths:
@@ -55,10 +54,9 @@ jobs:
       - run:
           name: Run
           command: |
-            mkdir coverage
+            mkdir ~/repo/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
-            ls coverage
       - persist_to_workspace:
           root: ~/repo/coverage
           paths:
@@ -77,9 +75,8 @@ jobs:
       - run:
           name: Run
           command: |
-            mkdir coverage
+            mkdir ~/repo/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
-            ls coverage
       - persist_to_workspace:
           root: ~/repo/coverage
           paths:
