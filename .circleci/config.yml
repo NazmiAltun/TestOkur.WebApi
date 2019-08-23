@@ -35,7 +35,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-unit-test
-  notification-integration-tests:
+  notification-report-integration-tests:
     <<: *defaults
     steps:
       - checkout
@@ -50,20 +50,6 @@ jobs:
           name: Run
           command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
-  report-integration-tests:
-    <<: *defaults
-    steps:
-      - checkout
-      - run:
-          name: Install Docker Compose
-          command: |
-            set -x
-            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - run:
-          name: Run
-          command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
   webapi-integration-tests:
     <<: *defaults
@@ -246,8 +232,7 @@ workflows:
           requires:
             - static-code-analysis
             - unit-tests
-            - notification-integration-tests
-            - report-integration-tests
+            - notification-report-integration-tests
             - webapi-integration-tests
       - build-webapi:
           requires:
