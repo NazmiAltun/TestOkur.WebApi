@@ -36,7 +36,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-unit-test
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: .
           paths:
             - coverage/*
   notification-report-integration-tests:
@@ -56,7 +56,7 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: .
           paths:
             - coverage/*
   webapi-integration-tests:
@@ -75,7 +75,7 @@ jobs:
           command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: .
           paths:
             - coverage/*
   code-coverage:
@@ -117,7 +117,7 @@ jobs:
           command: |
             docker save -o webapi.tar testokur-webapi:latest
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: .
           paths:
             - webapi.tar
             - deploy/webapi-qa.sh 
@@ -142,7 +142,7 @@ jobs:
           command: |
             docker save -o report.tar testokur-report:latest
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: .
           paths:
             - report.tar
             - deploy/report-qa.sh 
@@ -167,7 +167,7 @@ jobs:
           command: |
             docker save -o notification.tar testokur-notification:latest
       - persist_to_workspace:
-          root: ~/repo/coverage
+          root: .
           paths:
             - notification.tar
             - deploy/notification-qa.sh 
