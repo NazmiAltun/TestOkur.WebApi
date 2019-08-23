@@ -213,7 +213,7 @@ jobs:
             curl -X "DELETE" $WEBAPI_QA_URL/api/cache
 workflows:
   version: 2
-  build-deploy:
+  webapi:
     jobs:
       - static-code-analysis:
           filters:
@@ -257,15 +257,15 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy-report-qa:
-          requires:
-            - build-report
-          filters:
-            branches:
-              only: master
       - deploy-notification-qa:
           requires:
             - build-notification
+          filters:
+            branches:
+              only: master
+      - deploy-report-qa:
+          requires:
+            - build-report
           filters:
             branches:
               only: master

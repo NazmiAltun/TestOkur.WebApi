@@ -163,7 +163,7 @@ namespace TestOkur.Report
 
 		private void RegisterServices(IServiceCollection services)
 		{
-			services.AddTransient<IOpticalFormRepository, OpticalFormRepository>();
+			services.AddScoped<IOpticalFormRepository, OpticalFormRepository>();
 			services.AddSingleton<IRequestResponseLogger, RequestResponseMongodbLogger>();
 			services.AddSingleton<IEvaluator, Evaluator>();
 			services.AddHttpContextAccessor();
