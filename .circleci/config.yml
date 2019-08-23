@@ -216,7 +216,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - notification-integration-tests:
+      - notification-report-integration-tests:
           filters:
             tags:
               only: /.*/
