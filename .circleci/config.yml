@@ -99,7 +99,7 @@ jobs:
           command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
       - codecov/upload:
-          file: /coverage/Cobertura.xml
+          file: ~/repo/coverage/Cobertura.xml
   build-webapi:
     <<: *defaults
     steps:
