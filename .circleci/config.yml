@@ -1,9 +1,12 @@
 version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
+defaults: &defaults
+  working_directory: ~/repo
+  machine: true
 jobs:
-  build:
-    machine: true
+  static-code-analysis:
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -14,6 +17,10 @@ jobs:
             && dotnet restore \
             && dotnet build -c Release \
             && dotnet /sonar-scanner/SonarScanner.MSBuild.dll end  /d:sonar.login='$SONAR_LOGIN'"
+  unit-tests:
+    <<: *defaults
+    steps:
+      - checkout
       - run:
           name: Install Docker Compose
           command: |
@@ -28,43 +35,240 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-unit-test
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-unit-test
+  notification-integration-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Run
+          command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit notification-integration-test
-            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
+  report-integration-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Run
+          command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit report-integration-test
-            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
-            docker-compose -f docker-compose.tests.yml down
+  webapi-integration-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Run
+          command: |
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit webapi-integration-test
+  code-coverage:
+    <<: *defaults
+    steps:
+      - checkout
       - run:
           name: Merge Coverage Reports
           command: |
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
       - codecov/upload:
           file: /tmp/coverage/Cobertura.xml
+  build-webapi:
+    <<: *defaults
+    steps:
+      - checkout
       - run:
-          name: Build Images
+          name: Install Docker Compose
           command: |
-            docker-compose build webapi notification report
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Build Image
+          command: |
+            docker-compose build webapi
       - run:
           name: Compress Images
           command: |
             docker save -o webapi.tar testokur-webapi:latest
-            docker save -o report.tar testokur-report:latest
-            docker save -o notification.tar testokur-notification:latest
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - webapi.tar
+            - deploy/webapi-qa.sh 
+            - deploy/webapi-prod.sh 
+  build-report:
+    <<: *defaults
+    steps:
+      - checkout
       - run:
-          name: Deploy WebApi App
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Build Image
+          command: |
+            docker-compose build report
+      - run:
+          name: Compress Images
+          command: |
+            docker save -o report.tar testokur-report:latest
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - report.tar
+            - deploy/report-qa.sh 
+            - deploy/report-prod.sh 
+  build-notification:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Build Image
+          command: |
+            docker-compose build notification
+      - run:
+          name: Compress Images
+          command: |
+            docker save -o notification.tar testokur-notification:latest
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - notification.tar
+            - deploy/notification-qa.sh 
+            - deploy/notification-prod.sh
+  deploy-webapi-qa:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Copy image to the app server
           command: |
             scp -q webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-            ssh -q $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-webapi-qa.sh > /dev/null
       - run:
-          name: Deploy Report App
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/webapi-qa.sh > /dev/null
+  deploy-report-qa:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Copy image to the app server
           command: |
             scp -q report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-            ssh -q $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-report-qa.sh > /dev/null
       - run:
-          name: Deploy Notification App
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/report-qa.sh > /dev/null
+  deploy-notification-qa:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Copy image to the app server
           command: |
             scp -q notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-            ssh -q $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy-notification-qa.sh > /dev/null
       - run:
-          name: Clear Cache
+          name: Run container
           command: |
-            curl -X "DELETE" $WEBAPI_QA_URL/api/cache
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/notification-qa.sh > /dev/null
+  clear-cache:
+    <<: *defaults
+    steps:
+      - run:
+        name: Clear Cache
+        command: |
+          curl -X "DELETE" $WEBAPI_QA_URL/api/cache
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - static-code-analysis:
+          filters:
+            tags:
+              only: /.*/
+      - unit-tests:
+          filters:
+            tags:
+              only: /.*/
+      - notification-integration-tests:
+          filters:
+            tags:
+              only: /.*/
+      - report-integration-tests:
+          filters:
+            tags:
+              only: /.*/
+      - webapi-integration-tests:
+          filters:
+            tags:
+              only: /.*/
+      - code-coverage:
+          requires:
+            - static-code-analysis
+            - unit-tests
+            - notification-integration-tests
+            - report-integration-tests
+            - webapi-integration-tests
+      - build-webapi:
+          requires:
+            - code-coverage
+      - build-notification:
+          requires:
+            - code-coverage
+      - build-report:
+          requires:
+            - code-coverage
+      - deploy-webapi-qa:
+          requires:
+            - build-webapi
+          filters:
+            branches:
+              only: master
+      - deploy-report-qa:
+          requires:
+            - build-report
+          filters:
+            branches:
+              only: master
+      - deploy-notification-qa:
+          requires:
+            - build-notification
+          filters:
+            branches:
+              only: master
+      - clear-cache:
+          requires:
+            - deploy-webapi-qa
