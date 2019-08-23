@@ -5,6 +5,7 @@
 	using IdentityModel;
 	using MassTransit;
 	using MassTransit.RabbitMqTransport;
+	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using TestOkur.Common;
@@ -12,8 +13,8 @@
 
 	public class TestStartup : Startup
 	{
-		public TestStartup(IConfiguration configuration)
-			: base(configuration)
+		public TestStartup(IConfiguration configuration, IHostingEnvironment environment)
+			: base(configuration, environment)
 		{
 		}
 

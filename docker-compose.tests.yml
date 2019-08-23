@@ -128,9 +128,10 @@ services:
     depends_on:
       - mongo
       - rabbitmq
+      - mockserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - WAIT_HOSTS= rabbitmq:5672, mongo:27017
+      - WAIT_HOSTS= rabbitmq:5672, mongo:27017, mockserver:8080
       - WAIT_HOSTS_TIMEOUT=300
       - RabbitMqConfiguration__Uri=rabbitmq
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo

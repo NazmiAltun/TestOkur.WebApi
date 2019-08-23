@@ -6,10 +6,14 @@
 
 	public static class DependencyInjectionReceiveEndpointExtensions
 	{
-		public static void RegisterConsumers(this IReceiveEndpointConfigurator configurator, IServiceProvider provider)
+		public static void RegisterConsumers(this IReceiveEndpointConfigurator configurator, IServiceProvider provider, bool isDevelopment)
 		{
-			configurator.Consumer<EvaluateExamFaultConsumer>(provider);
-			configurator.Consumer<DefaultFaultConsumer>(provider);
+			if (!isDevelopment)
+			{
+				configurator.Consumer<EvaluateExamFaultConsumer>(provider);
+				configurator.Consumer<DefaultFaultConsumer>(provider);
+			}
+
 			configurator.Consumer<ExamDeletedConsumer>(provider);
 			configurator.Consumer<ExamCreatedConsumer>(provider);
 			configurator.Consumer<ExamUpdatedConsumer>(provider);

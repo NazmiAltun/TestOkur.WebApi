@@ -40,15 +40,18 @@ namespace TestOkur.Report
 	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
 	{
-		public Startup(IConfiguration configuration)
+		public Startup(IConfiguration configuration, IHostingEnvironment environment)
 		{
 			Configuration = configuration;
+			Environment = environment;
 			configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
 			configuration.GetSection("ReportConfiguration").Bind(ReportConfiguration);
 			Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
 		}
 
 		public IConfiguration Configuration { get; }
+
+		public IHostingEnvironment Environment { get; }
 
 		private ReportConfiguration ReportConfiguration { get; } = new ReportConfiguration();
 
@@ -136,7 +139,7 @@ namespace TestOkur.Report
 				 {
 					 e.PrefetchCount = 16;
 					 e.UseMessageRetry(x => x.Interval(2, 100));
-					 e.RegisterConsumers(provider);
+					 e.RegisterConsumers(provider, Environment.IsDevelopment());
 				 });
 				 cfg.UseExtensionsLogging(new LoggerFactory());
 			 }));
