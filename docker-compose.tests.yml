@@ -42,7 +42,7 @@ services:
       - /p:CoverletOutput=../../../coverage/notification-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
   webapi-unit-test:
     image: testokur-webapi-unit-test
     container_name: webapi-unit-test
@@ -57,7 +57,7 @@ services:
       - /p:CoverletOutput=../../../coverage/webapi-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
   domain-unit-test:
     image: testokur-domain-unit-test
     container_name: domain-unit-test
@@ -72,7 +72,7 @@ services:
       - /p:CoverletOutput=../../../coverage/domain-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
   webapi-integration-test:
     image: testokur-webapi-integration-test
     container_name: webapi-integration-test
@@ -87,7 +87,7 @@ services:
       - /p:CoverletOutput=../../../coverage/webapi-integration-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
     depends_on:
       - rabbitmq
       - redis
@@ -114,7 +114,7 @@ services:
       - /p:CoverletOutput=../../../coverage/report-unit-test
       - /p:CoverletOutputFormat="opencover"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
   report-integration-test:
     image: testokur-report-integration-test
     container_name: report-integration-test
@@ -124,7 +124,7 @@ services:
       target: integrationtest
     command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage/report-integration-test /p:CoverletOutputFormat='opencover'"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
     depends_on:
       - mongo
       - rabbitmq
@@ -145,7 +145,7 @@ services:
       target: integrationtest
     command: sh -c "/wait && dotnet test /p:CollectCoverage=true /p:CoverletOutput=../../../coverage/notification-integration-test /p:CoverletOutputFormat='opencover'"
     volumes:
-      - /coverage/:/coverage
+      - ./coverage:/coverage
     depends_on:
       - rabbitmq
       - mockserver
@@ -165,4 +165,4 @@ services:
       context: .
       dockerfile: coverageMerger.Dockerfile
     volumes:
-      - /coverage/:/reports
+      - ./coverage:/reports
