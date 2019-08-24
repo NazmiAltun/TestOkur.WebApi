@@ -123,8 +123,7 @@ jobs:
           root: .
           paths:
             - webapi.tar
-            - deploy/webapi-qa.sh 
-            - deploy/webapi-prod.sh 
+            - deploy/*
   build-report:
     <<: *defaults
     steps:
@@ -148,8 +147,7 @@ jobs:
           root: .
           paths:
             - report.tar
-            - deploy/report-qa.sh 
-            - deploy/report-prod.sh 
+            - deploy/*
   build-notification:
     <<: *defaults
     steps:
@@ -173,8 +171,7 @@ jobs:
           root: .
           paths:
             - notification.tar
-            - deploy/notification-qa.sh 
-            - deploy/notification-prod.sh
+            - deploy/*
   deploy-webapi-qa:
     <<: *defaults
     steps:
@@ -214,13 +211,61 @@ jobs:
           name: Run container
           command: |
             ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/notification-qa.sh > /dev/null
-  clear-cache:
+  deploy-webapi-qa:
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Copy image to the app server
+          command: |
+            scp -q webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+      - run:
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/webapi-qa.sh > /dev/null
+  deploy-webapi-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/webapi-prod.sh > /dev/null
+  deploy-report-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/report-prod.sh > /dev/null
+  deploy-notification-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/notification-prod.sh > /dev/null
+  clear-cache-qa:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
           name: Clear Cache
           command: |
-            curl -X "DELETE" $WEBAPI_QA_URL/api/cache
+            deploy/retry.sh $WEBAPI_QA_URL/api/cache
+  clear-cache-prod:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Clear Cache
+          command: |
+            deploy/retry.sh $WEBAPI_URL/api/cache
 workflows:
   version: 2
   webapi:
@@ -274,6 +319,27 @@ workflows:
           filters:
             branches:
               only: master
-      - clear-cache:
+      - deploy-webapi-prod:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-notification-prod:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-report-prod:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - clear-cache-qa:
           requires:
             - deploy-webapi-qa
+      - clear-cache-prod:
+          requires:
+            - deploy-webapi-prod
