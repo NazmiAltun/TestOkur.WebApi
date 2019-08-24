@@ -260,19 +260,19 @@ workflows:
       - static-code-analysis:
           filters:
             tags:
-              only: /.*/
+              only: /.qa*/
       - unit-tests:
           filters:
             tags:
-              only: /.*/
+              only: /.qa*/
       - notification-report-integration-tests:
           filters:
             tags:
-              only: /.*/
+              only: /.qa*/
       - webapi-integration-tests:
           filters:
             tags:
-              only: /.*/
+              only: /.qa*/
       - code-coverage:
           requires:
             - static-code-analysis
