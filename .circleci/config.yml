@@ -211,19 +211,6 @@ jobs:
           name: Run container
           command: |
             ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/notification-qa.sh > /dev/null
-  deploy-webapi-qa:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Copy image to the app server
-          command: |
-            scp -q webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
-      - run:
-          name: Run container
-          command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/webapi-qa.sh > /dev/null
   deploy-webapi-prod:
     <<: *defaults
     steps:
