@@ -15,6 +15,7 @@
 		private readonly IWebApiClient _webApiClient;
 		private readonly INotificationFacade _notificationFacade;
 		private readonly ApplicationConfiguration _applicationConfiguration;
+		private readonly ILogger<SendLicenseExpirationNotice> _logger;
 
 		public SendLicenseExpirationNotice(
 			INotificationFacade notificationFacade,

@@ -24,10 +24,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4DC8C14D-84F4-42CC-913F-D45CB12CA317}"
 	ProjectSection(SolutionItems) = preProject
 		.circleci\config.yml = .circleci\config.yml
-		deploy-notification-qa.sh = deploy-notification-qa.sh
-		deploy-prod.sh = deploy-prod.sh
-		deploy-report-qa.sh = deploy-report-qa.sh
-		deploy-webapi-qa.sh = deploy-webapi-qa.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Common", "src\TestOkur.Common\TestOkur.Common.csproj", "{15EFE3E3-E4CE-4B12-B889-F4A209853AB2}"
