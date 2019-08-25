@@ -8,10 +8,12 @@
 	using MassTransit;
 	using Microsoft.EntityFrameworkCore;
 	using Paramore.Brighter;
+	using Paramore.Darker;
 	using TestOkur.Common;
 	using TestOkur.Data;
 	using TestOkur.Infrastructure.Cqrs;
 	using TestOkur.WebApi.Application.Captcha;
+	using TestOkur.WebApi.Application.LicenseType;
 	using TestOkur.WebApi.Application.User.Events;
 	using TestOkur.WebApi.Application.User.Services;
 
@@ -20,18 +22,21 @@
 		private readonly ICaptchaService _captchaService;
 		private readonly IPublishEndpoint _publishEndpoint;
 		private readonly IIdentityService _identityService;
+		private readonly IQueryProcessor _queryProcessor;
 		private readonly ApplicationDbContext _dbContext;
 
 		public CreateUserCommandHandler(
 			ICaptchaService captchaService,
 			ApplicationDbContext dbContext,
 			IPublishEndpoint publishEndpoint,
-			IIdentityService identityService)
+			IIdentityService identityService,
+			IQueryProcessor queryProcessor)
 		{
 			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 			_captchaService = captchaService ?? throw new ArgumentNullException(nameof(captchaService));
 			_publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
 			_identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+			_queryProcessor = queryProcessor;
 		}
 
 		[Idempotent(1)]
@@ -51,8 +56,9 @@
 
 		private async Task RegisterUserAsync(CreateUserCommand command, CancellationToken cancellationToken)
 		{
-			var licenseType = await _dbContext.LicenseTypes
-				.SingleAsync(l => l.Id == command.LicenseTypeId, cancellationToken);
+			var licenseType = _queryProcessor.Execute(new GetAllLicenseTypesQuery())
+				.First(l => l.Id == command.LicenseTypeId);
+
 			var model = new CreateCustomerUserModel()
 			{
 				Email = command.Email,

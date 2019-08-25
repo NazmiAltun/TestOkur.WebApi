@@ -35,8 +35,6 @@
 
 		public DbSet<City> Cities { get; set; }
 
-		public DbSet<LicenseType> LicenseTypes { get; set; }
-
 		public DbSet<OpticalFormType> OpticalFormTypes { get; set; }
 
 		public DbSet<ExamType> ExamTypes { get; set; }

@@ -3,8 +3,10 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
+	using Microsoft.AspNetCore.Hosting;
 	using NSubstitute;
 	using TestOkur.Notification.Configuration;
+	using TestOkur.Notification.Extensions;
 	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
@@ -83,12 +85,15 @@
 			};
 			oauthClient.GetUsersAsync().Returns(identityUsers);
 			webApiClient.GetUsersAsync().Returns(webapiUsers);
-
+			var hostingEnvironment = Substitute.For<IHostingEnvironment>();
+			hostingEnvironment.EnvironmentName.Returns("prod");
 			var task = new SendLicenseExpirationNotice(
 				notificationFacade,
 				oauthClient,
 				webApiClient,
-				configuration);
+				configuration,
+				hostingEnvironment,
+				null);
 			await task.NotifyUsersAsync();
 			await notificationFacade.Received().SendEmailAsync(
 				Arg.Any<UserModel>(), Arg.Any<Template>(), webapiUsers[1].Email);

@@ -4,13 +4,17 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
+	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.Extensions.Logging;
 	using TestOkur.Notification.Configuration;
+	using TestOkur.Notification.Extensions;
 	using TestOkur.Notification.Infrastructure;
 	using TestOkur.Notification.Infrastructure.Clients;
 	using TestOkur.Notification.Models;
 
 	internal class SendLicenseExpirationNotice : ISendLicenseExpirationNotice
 	{
+		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IOAuthClient _oAuthClient;
 		private readonly IWebApiClient _webApiClient;
 		private readonly INotificationFacade _notificationFacade;
@@ -21,26 +25,37 @@
 			INotificationFacade notificationFacade,
 			IOAuthClient oAuthClient,
 			IWebApiClient webApiClient,
-			ApplicationConfiguration applicationConfiguration)
+			ApplicationConfiguration applicationConfiguration,
+			IHostingEnvironment hostingEnvironment,
+			ILogger<SendLicenseExpirationNotice> logger)
 		{
 			_notificationFacade = notificationFacade;
 			_oAuthClient = oAuthClient;
 			_webApiClient = webApiClient;
 			_applicationConfiguration = applicationConfiguration;
+			_hostingEnvironment = hostingEnvironment;
+			_logger = logger;
 		}
 
 		public async Task NotifyUsersAsync()
 		{
 			foreach (var user in await GetUsersAsync())
 			{
-				await _notificationFacade.SendEmailAsync(
-					user,
-					Template.LicenseExpirationNoticeEmailUser,
-					user.Email);
-				await _notificationFacade.SendSmsAsync(
-					user,
-					Template.LicenseExpirationNoticeSms,
-					user.Phone);
+				if (_hostingEnvironment.IsProd())
+				{
+					await _notificationFacade.SendEmailAsync(
+						user,
+						Template.LicenseExpirationNoticeEmailUser,
+						user.Email);
+					await _notificationFacade.SendSmsAsync(
+						user,
+						Template.LicenseExpirationNoticeSms,
+						user.Phone);
+				}
+				else
+				{
+					_logger.LogWarning($"License Expiration Notification for {user.Email}");
+				}
 			}
 		}
 
@@ -50,8 +65,8 @@
 			var apiUsers = await _webApiClient.GetUsersAsync();
 
 			return (from user in identityUsers
-                where user.Active && user.ExpiryDateUtc != null && DateTime.UtcNow.Subtract(user.ExpiryDateUtc.Value).Days == _applicationConfiguration.RemainderDays
-				select apiUsers.First(u => u.SubjectId == user.Id))
+					where user.Active && user.ExpiryDateUtc != null && DateTime.UtcNow.Subtract(user.ExpiryDateUtc.Value).Days == _applicationConfiguration.RemainderDays
+					select apiUsers.First(u => u.SubjectId == user.Id))
 				.ToList();
 		}
 	}

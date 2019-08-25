@@ -2,14 +2,23 @@
 {
     public class LicenseTypeReadModel
     {
-        public int Id { get; set; }
+	    public LicenseTypeReadModel(int id, string name, int maxAllowedDeviceCount, int maxAllowedRecordCount, bool canScan)
+	    {
+		    Id = id;
+		    Name = name;
+		    MaxAllowedDeviceCount = maxAllowedDeviceCount;
+		    MaxAllowedRecordCount = maxAllowedRecordCount;
+		    CanScan = canScan;
+	    }
 
-        public string Name { get; set; }
+	    public int Id { get; set; }
 
-        public int MaxAllowedDeviceCount { get; set; }
+	    public string Name { get; set; }
 
-        public int MaxAllowedRecordCount { get; set; }
+	    public int MaxAllowedDeviceCount { get; set; }
 
-        public bool CanScan { get; set; }
+	    public int MaxAllowedRecordCount { get; set; }
+
+	    public bool CanScan { get; set; }
     }
 }

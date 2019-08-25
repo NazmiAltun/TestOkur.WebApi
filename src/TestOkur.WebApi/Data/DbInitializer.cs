@@ -11,7 +11,6 @@
 		{
 			new SettingsSeeder(),
 			new CitySeeder(),
-			new LicenseTypeSeeder(),
 			new LessonSeeder(),
 			new OpticalFormsSeeder(),
 			new ExamTypeSeeder(),
