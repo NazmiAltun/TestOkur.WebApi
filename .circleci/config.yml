@@ -243,7 +243,7 @@ jobs:
       - run:
           name: Clear Cache
           command: |
-            chmox +x deploy/retry.sh
+            chmod +x deploy/retry.sh
             deploy/retry.sh $WEBAPI_QA_URL/api/cache
   clear-cache-prod:
     <<: *defaults
@@ -253,7 +253,7 @@ jobs:
       - run:
           name: Clear Cache
           command: |
-            chmox +x deploy/retry.sh
+            chmod +x deploy/retry.sh
             deploy/retry.sh $WEBAPI_URL/api/cache
 workflows:
   version: 2
