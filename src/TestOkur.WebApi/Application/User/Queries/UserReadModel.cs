@@ -25,5 +25,7 @@
 		public string LastName { get; set; }
 
 		public string SchoolName { get; set; }
+
+		public string Notes { get; set; }
 	}
 }
