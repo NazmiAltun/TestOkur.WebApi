@@ -1,5 +1,5 @@
 #!/bin/bash
-docker stop testokur-notification && docker rm testokur-notification
+docker stop testokur-notification && docker rm testokur-notification --force
 docker run -d \
 	--env-file  /home/docker-images/notification-prod.env \
 	--name testokur-notification \

@@ -1,5 +1,5 @@
 #!/bin/bash
-docker stop testokur-report && docker rm testokur-report
+docker stop testokur-report && docker rm testokur-report --force
 docker run -d \
 	--env-file  /home/docker-images/report-prod.env \
 	--name testokur-report \

@@ -1,5 +1,5 @@
 #!/bin/bash
-docker stop testokur-webapi && docker rm testokur-webapi
+docker stop testokur-webapi && docker rm testokur-webapi --force
 docker run -d \
 	--env-file /home/docker-images/webapi-prod.env \
 	-v /home/data:/app/Data \
