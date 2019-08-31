@@ -20,11 +20,11 @@
 			await _notificationFacade.SendEmailAsync(
 				context.Message,
 				Template.SmsCreditAddedEmailUser,
-				context.Message.Phone);
+				context.Message.Email);
 			await _notificationFacade.SendSmsAsync(
 				context.Message,
 				Template.SmsCreditAddedSmsUser,
-				context.Message.Email);
+				context.Message.Phone);
 		}
 	}
 }
