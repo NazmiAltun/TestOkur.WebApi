@@ -2,6 +2,7 @@
 {
 	using System.Threading;
 	using System.Threading.Tasks;
+	using MassTransit;
 	using Microsoft.EntityFrameworkCore;
 	using Paramore.Brighter;
 	using TestOkur.Data;
@@ -10,10 +11,12 @@
 	public class AddSmsCreditsCommandHandler : RequestHandlerAsync<AddSmsCreditsCommand>
 	{
 		private readonly ApplicationDbContext _applicationDbContext;
+		private readonly IPublishEndpoint _publishEndpoint;
 
-		public AddSmsCreditsCommandHandler(ApplicationDbContext applicationDbContext)
+		public AddSmsCreditsCommandHandler(ApplicationDbContext applicationDbContext, IPublishEndpoint publishEndpoint)
 		{
 			_applicationDbContext = applicationDbContext;
+			_publishEndpoint = publishEndpoint;
 		}
 
 		[Idempotent(1)]
@@ -28,6 +31,14 @@
 					cancellationToken);
 			user.AddSmsBalance(command.Amount);
 			await _applicationDbContext.SaveChangesAsync(cancellationToken);
+			await _publishEndpoint.Publish(
+				new SmsCreditAdded(
+					command.Amount,
+					user.SmsBalance,
+					user.FirstName.Value,
+					user.LastName.Value,
+					user.Email,
+					user.Phone), cancellationToken);
 
 			return await base.HandleAsync(command, cancellationToken);
 		}

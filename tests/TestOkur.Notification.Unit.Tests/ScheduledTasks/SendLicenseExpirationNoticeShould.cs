@@ -31,7 +31,7 @@
 				{
 					Active = true,
 					Email = "user2@hotmail.com",
-					ExpiryDateUtc = DateTime.UtcNow.AddDays(-7),
+					ExpiryDateUtc = DateTime.UtcNow.AddDays(7),
 					Id = Guid.NewGuid().ToString(),
 				},
 				new IdentityUser
@@ -45,7 +45,7 @@
 				{
 					Active = true,
 					Email = "user4@hotmail.com",
-					ExpiryDateUtc = DateTime.Today.AddDays(-7).AddHours(6),
+					ExpiryDateUtc = DateTime.Today.AddDays(7).AddHours(6),
 					Id = Guid.NewGuid().ToString(),
 				},
 			};

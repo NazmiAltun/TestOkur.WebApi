@@ -31,6 +31,7 @@
 			Consume<IStudentDeleted>();
 			Consume<IStudentUpdated>();
 			Consume<IUserErrorReceived>();
+			Consume<ISmsCreditAdded>();
 		}
 
 		public static Consumer Instance { get; } = new Consumer();

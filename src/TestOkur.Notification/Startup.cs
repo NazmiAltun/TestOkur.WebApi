@@ -188,6 +188,7 @@
 					e.Consumer<SendSmsRequestFailedConsumer>(provider);
 					e.Consumer<UserActivatedConsumer>(provider);
 					e.Consumer<AccountExtendedConsumer>(provider);
+					e.Consumer<SmsCreditAddedConsumer>(provider);
 					e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
 					e.Consumer<UserErrorReceivedConsumer>(provider);
 				});

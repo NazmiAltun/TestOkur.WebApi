@@ -3,9 +3,11 @@
 	using System;
 	using System.Threading.Tasks;
 	using FluentAssertions;
+	using TestOkur.Contracts.Sms;
 	using TestOkur.TestHelper;
 	using TestOkur.TestHelper.Extensions;
 	using TestOkur.WebApi.Application.Sms.Commands;
+	using TestOkur.WebApi.Integration.Tests.Common;
 	using TestOkur.WebApi.Integration.Tests.User;
 	using Xunit;
 
@@ -29,6 +31,11 @@
 				response = await client.GetAsync($"api/v1/users/{model.Email}");
 				user = await response.ReadAsync<Domain.Model.UserModel.User>();
 				user.SmsBalance.Should().Be(additionAmount);
+				Consumer.Instance.GetAll<ISmsCreditAdded>()
+					.Should().Contain(x =>
+						x.Amount == command.Amount &&
+						x.Email == user.Email &&
+						x.Phone == user.Phone);
 			}
 		}
 	}

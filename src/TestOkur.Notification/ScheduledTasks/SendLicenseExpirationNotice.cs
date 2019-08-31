@@ -65,7 +65,7 @@
 			var apiUsers = await _webApiClient.GetUsersAsync();
 
 			return (from user in identityUsers
-					where user.Active && user.ExpiryDateUtc != null && DateTime.UtcNow.Subtract(user.ExpiryDateUtc.Value).Days == _applicationConfiguration.RemainderDays
+					where user.Active && user.ExpiryDateUtc != null && Math.Round(user.ExpiryDateUtc.Value.Subtract(DateTime.UtcNow).TotalDays) == _applicationConfiguration.RemainderDays
 					select apiUsers.First(u => u.SubjectId == user.Id))
 				.ToList();
 		}
