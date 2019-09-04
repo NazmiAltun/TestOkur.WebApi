@@ -20,11 +20,11 @@
 			await _notificationFacade.SendEmailAsync(
 				context.Message,
 				Template.AccountActivationEmailUser,
-				context.Message.Phone);
+				context.Message.Email);
 			await _notificationFacade.SendSmsAsync(
 				context.Message,
 				Template.LicenseExpirationNoticeSms,
-				context.Message.Email);
+				context.Message.Phone);
 		}
 	}
 }
