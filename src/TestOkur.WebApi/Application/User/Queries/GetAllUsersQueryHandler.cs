@@ -27,7 +27,9 @@
 								school_name_value as school_name,
 								c.name_value as city_name,
 								d.name_value as district_name,
-								u.notes
+								u.notes,
+								u.registrar_phone_value as registrar_phone,
+								u.registrar_full_name_value as registrar_full_name
 								FROM users u
 								INNER JOIN cities c ON c.id=u.city_id
 								INNER JOIN districts d ON d.id=u.district_id";
