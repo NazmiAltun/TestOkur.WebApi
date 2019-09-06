@@ -7,7 +7,7 @@
 		public static string ToSmsFriendly(this string message)
 		{
 			return string.IsNullOrEmpty(message)
-				? message
+				? string.Empty
 				: message.Replace('ö', 'o')
 					.Replace(Environment.NewLine, string.Empty)
 					.Replace('ç', 'c')

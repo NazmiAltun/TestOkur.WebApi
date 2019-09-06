@@ -8,7 +8,8 @@
 	{
 		[Theory]
 		[InlineData("öçşğüÇŞĞÜÖİı", "ocsguCSGUOIi")]
-		[InlineData(null, null)]
+		[InlineData("NECATİ YALÇIN", "NECATI YALCIN")]
+		[InlineData(null, "")]
 		[InlineData("", "")]
 		public void ReplaceTurkishCharacters(string value, string expected)
 		{
