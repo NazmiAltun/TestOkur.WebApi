@@ -7,4 +7,5 @@ docker run -d \
 	--restart=always  \
 	--network=testokur \
 	--network-alias=report-qa \
+	-m=150M \
 	testokur-report:latest

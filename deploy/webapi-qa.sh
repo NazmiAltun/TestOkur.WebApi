@@ -9,4 +9,5 @@ docker run -d \
 	--restart=always  \
 	--network=testokur \
 	--network-alias=webapi-qa \
+	-m=150M \
 	testokur-webapi:latest
