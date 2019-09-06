@@ -14,7 +14,6 @@
 			new LessonSeeder(),
 			new OpticalFormsSeeder(),
 			new ExamTypeSeeder(),
-			new UserSeeder(),
 			new ScoreFormulaSeeder(),
 			new EnumerationSeeder(),
 		};
