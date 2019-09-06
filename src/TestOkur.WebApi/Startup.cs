@@ -32,7 +32,6 @@
 	using Polly;
 	using Polly.Extensions.Http;
 	using Prometheus;
-	using signed::StackExchange.Redis;
 	using Swashbuckle.AspNetCore.Swagger;
 	using TestOkur.Common;
 	using TestOkur.Common.Configuration;
@@ -48,7 +47,10 @@
 	using TestOkur.WebApi.Application.User.Services;
 	using TestOkur.WebApi.Configuration;
 	using TestOkur.WebApi.Extensions;
+
 	using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
+	using ConnectionMultiplexer = signed::StackExchange.Redis.ConnectionMultiplexer;
+	using IConnectionMultiplexer = signed::StackExchange.Redis.IConnectionMultiplexer;
 
 	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
