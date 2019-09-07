@@ -17,7 +17,7 @@
             using (var testServer = await CreateAsync())
 			{
 				var client = testServer.CreateClient();
-                await client.PostAsync($"{ApiPath}/activate?email={command.Email}", null);
+				await client.PostAsync($"{ApiPath}/activate?email={command.Email}", null);
 				var user = (await GetUsersAsync(client)).First(u => u.Email == command.Email);
 				var @event = Consumer.Instance.GetFirst<IUserActivated>();
 				@event.Email.Should().Be(user.Email);

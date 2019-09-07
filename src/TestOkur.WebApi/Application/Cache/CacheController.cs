@@ -1,16 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Cache
 {
-	extern alias signed;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using StackExchange.Redis;
+    using System.Threading.Tasks;
 
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-
-	using IConnectionMultiplexer = signed::StackExchange.Redis.IConnectionMultiplexer;
-
-	[Route("api/cache")]
-	[AllowAnonymous]
-	public class CacheController : ControllerBase
+    [Route("api/cache")]
+    [AllowAnonymous]
+    public class CacheController : ControllerBase
 	{
 		private readonly IConnectionMultiplexer _connectionMultiplexer;
 

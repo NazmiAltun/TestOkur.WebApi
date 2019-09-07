@@ -1,59 +1,56 @@
 ﻿namespace TestOkur.WebApi
 {
-	extern alias signed;
+    using CacheManager.Core;
+    using Dapper;
+    using Dapper.FluentMap;
+    using FluentValidation.AspNetCore;
+    using HealthChecks.UI.Client;
+    using IdentityModel;
+    using MassTransit;
+    using MassTransit.RabbitMqTransport;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.DataProtection;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
+    using Paramore.Brighter.Extensions.DependencyInjection;
+    using Paramore.Darker.AspNetCore;
+    using Paramore.Darker.QueryLogging;
+    using Polly;
+    using Polly.Extensions.Http;
+    using Prometheus;
+    using StackExchange.Redis;
+    using Swashbuckle.AspNetCore.Swagger;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Net.Http;
+    using System.Reflection;
+    using TestOkur.Common;
+    using TestOkur.Common.Configuration;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.SmsModel;
+    using TestOkur.Infrastructure;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Mvc;
+    using TestOkur.Infrastructure.Threading;
+    using TestOkur.WebApi.Application.Captcha;
+    using TestOkur.WebApi.Application.City;
+    using TestOkur.WebApi.Application.User.Services;
+    using TestOkur.WebApi.Configuration;
+    using TestOkur.WebApi.Extensions;
+    using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
-	using System;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Net.Http;
-	using System.Reflection;
-	using CacheManager.Core;
-	using Dapper;
-	using Dapper.FluentMap;
-	using FluentValidation.AspNetCore;
-	using HealthChecks.UI.Client;
-	using IdentityModel;
-	using MassTransit;
-	using MassTransit.RabbitMqTransport;
-	using Microsoft.AspNetCore.Authentication.JwtBearer;
-	using Microsoft.AspNetCore.Builder;
-	using Microsoft.AspNetCore.DataProtection;
-	using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.Configuration;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
-	using Microsoft.Extensions.Options;
-	using Newtonsoft.Json;
-	using Paramore.Brighter.Extensions.DependencyInjection;
-	using Paramore.Darker.AspNetCore;
-	using Paramore.Darker.QueryLogging;
-	using Polly;
-	using Polly.Extensions.Http;
-	using Prometheus;
-	using Swashbuckle.AspNetCore.Swagger;
-	using TestOkur.Common;
-	using TestOkur.Common.Configuration;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.SmsModel;
-	using TestOkur.Infrastructure;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.Infrastructure.Extensions;
-	using TestOkur.Infrastructure.Mvc;
-	using TestOkur.Infrastructure.Threading;
-	using TestOkur.WebApi.Application.Captcha;
-	using TestOkur.WebApi.Application.City;
-	using TestOkur.WebApi.Application.User.Services;
-	using TestOkur.WebApi.Configuration;
-	using TestOkur.WebApi.Extensions;
-
-	using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
-	using ConnectionMultiplexer = signed::StackExchange.Redis.ConnectionMultiplexer;
-	using IConnectionMultiplexer = signed::StackExchange.Redis.IConnectionMultiplexer;
-
-	[ExcludeFromCodeCoverage]
-	public class Startup : IStartup
+    [ExcludeFromCodeCoverage]
+    public class Startup : IStartup
 	{
 		private const string CorsPolicyName = "EnableCorsToAll";
 
@@ -269,8 +266,8 @@
 			services.AddSingleton<IConnectionMultiplexer>(redisConnection);
 
 			services.AddDataProtection()
-				.PersistKeysToRedis(redisConnection, "DataProtection-Keys");
-		}
+                .PersistKeysToFileSystem(new DirectoryInfo("DataProtection-Keys"));
+        }
 
 		private void InitializeFluentMappings()
 		{
