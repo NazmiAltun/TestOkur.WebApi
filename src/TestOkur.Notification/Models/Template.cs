@@ -46,7 +46,7 @@
 
 		public static readonly Template LicenseExpirationNoticeSms =
 			new Template(
-				"LisansAktiflestirme_Kullanici_Sms",
+                "LicenseExpirationNoticeSms",
 				"TestOkur",
 				"LicenseExpirationNoticeSms.html");
 
@@ -56,7 +56,13 @@
 				"Lisans Bilgileriniz",
 				"User_MembershipActivation_Mail.html");
 
-		public static readonly Template AccountRegistrationEmailUser =
+        public static readonly Template AccountActivationSmsUser =
+            new Template(
+                "LisansAktiflestirme_Kullanici_Email",
+                "Lisans Bilgileriniz",
+                "User_MembershipActivation_SMS.html");
+
+        public static readonly Template AccountRegistrationEmailUser =
 			new Template(
 				"YeniLisansKaydi_Kullanici_Email",
 				"Lisans Kaydınız Alındı",

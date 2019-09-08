@@ -23,7 +23,7 @@
 				context.Message.Email);
 			await _notificationFacade.SendSmsAsync(
 				context.Message,
-				Template.LicenseExpirationNoticeSms,
+				Template.AccountActivationSmsUser,
 				context.Message.Phone);
 		}
 	}
