@@ -59,7 +59,7 @@
         public static readonly Template AccountActivationSmsUser =
             new Template(
                 "LisansAktiflestirme_Kullanici_Email",
-                "Lisans Bilgileriniz",
+                "TestOkur",
                 "User_MembershipActivation_SMS.html");
 
         public static readonly Template AccountRegistrationEmailUser =
