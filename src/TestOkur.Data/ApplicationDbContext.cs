@@ -65,7 +65,7 @@
 
 		public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
-			await AuditChanges();
+			await AuditChangesAsync();
 			return await base.SaveChangesAsync(cancellationToken);
 		}
 
@@ -79,7 +79,7 @@
 			modelBuilder.ToSnakeCase();
 		}
 
-		private async Task AuditChanges()
+		private async Task AuditChangesAsync()
 		{
 			ChangeTracker.DetectChanges();
 
