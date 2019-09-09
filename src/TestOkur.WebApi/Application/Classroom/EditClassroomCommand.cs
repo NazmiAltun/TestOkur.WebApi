@@ -16,9 +16,14 @@
 			NewGrade = newGrade;
 		}
 
-		public IEnumerable<string> CacheKeys => new[] { $"Classrooms_{UserId}" };
+        public IEnumerable<string> CacheKeys => new[]
+        {
+            $"Classrooms_{UserId}",
+            $"Students_{UserId}",
+            $"Contacts_{UserId}",
+        };
 
-		[DataMember]
+        [DataMember]
 		public int ClassroomId { get; private set; }
 
 		[DataMember]
