@@ -17,5 +17,7 @@
 		public int LicenseTypeId { get; set; }
 
 		public DateTime? ExpiryDateUtc { get; set; }
-	}
+
+        public bool? Active { get; set; }
+    }
 }

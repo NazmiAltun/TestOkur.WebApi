@@ -25,7 +25,8 @@
 			bool canScan,
 			int licenseTypeId,
 			DateTime? expiryDateUtc,
-			string notes)
+			string notes,
+            bool active)
 			: base(id)
 		{
 			UpdatedUserId = updatedUserId;
@@ -43,7 +44,8 @@
 			LicenseTypeId = licenseTypeId;
 			ExpiryDateUtc = expiryDateUtc;
 			Notes = notes;
-		}
+            Active = active;
+        }
 
 		public IEnumerable<string> CacheKeys => new[] { "Users" };
 
@@ -89,6 +91,9 @@
 		[DataMember]
 		public DateTime? ExpiryDateUtc { get; private set; }
 
+        [DataMember]
+        public bool Active { get; private set; }
+
 		[DataMember]
 		public string Notes { get; private set; }
 
@@ -103,6 +108,7 @@
 				MaxAllowedDeviceCount = MaxAllowedDeviceCount,
 				MaxAllowedStudentCount = MaxAllowedStudentCount,
 				UserId = SubjectId,
+                Active = Active,
 			};
 		}
 	}
