@@ -286,27 +286,31 @@
 
 		private void AddPolicies(IServiceCollection services)
 		{
-			services.AddAuthorization(options => options.AddPolicy(
-				AuthorizationPolicies.Public,
-				policy => policy.RequireAssertion(context =>
-					context.User.Identity.IsAuthenticated ||
-					context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
-											   c.Value == Clients.Public))));
-			services.AddAuthorization(options => options.AddPolicy(
-				AuthorizationPolicies.Private,
-				policy => policy.RequireAssertion(context =>
-					context.User.IsInRole(Roles.Admin) ||
-					context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
-											   c.Value == Clients.Private))));
-			services.AddAuthorization(options => options.AddPolicy(
-				AuthorizationPolicies.Customer,
-				policy => policy.RequireAssertion(context =>
-					context.User.IsInRole(Roles.Admin) ||
-					context.User.IsInRole(Roles.Customer))));
-			services.AddAuthorization(options => options.AddPolicy(
-				AuthorizationPolicies.Admin,
-				policy => policy.RequireRole(Roles.Admin)));
-		}
+			services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    AuthorizationPolicies.Public,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.Identity.IsAuthenticated ||
+                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
+                                                   c.Value == Clients.Public)));
+                options.AddPolicy(
+                    AuthorizationPolicies.Private,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) ||
+                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
+                                                   c.Value == Clients.Private)));
+                options.AddPolicy(
+                    AuthorizationPolicies.Customer,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) || context.User.IsInRole(Roles.Customer)));
+
+                options.AddPolicy(
+                    AuthorizationPolicies.Admin,
+                    policy => policy.RequireRole(Roles.Admin));
+
+            });
+        }
 
 		private void AddHttpClients(IServiceCollection services)
 		{
