@@ -52,10 +52,10 @@
     <None Update="Templates\NewErrorMessageReceived.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\User_LicenseExtension_Mail.html">
+    <None Update="Templates\UserSubscriptionExtendedEmail.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Templates\User_LicenseExtension_SMS.html">
+    <None Update="Templates\UserSubscriptionExtendedSms.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Templates\User_License_Expiration_Reminder_Mail.html">

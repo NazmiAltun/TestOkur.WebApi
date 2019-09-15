@@ -308,7 +308,6 @@
                 options.AddPolicy(
                     AuthorizationPolicies.Admin,
                     policy => policy.RequireRole(Roles.Admin));
-
             });
         }
 

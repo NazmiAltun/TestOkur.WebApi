@@ -14,7 +14,7 @@
 </head>
 <body>
     <p>
-        Sayın <strong>@Model.Name  @Model.Surname </strong> TestOkur lisans yenileme işleminiz yapılmıştır.
+        Sayın <strong>@Model.FirstName  @Model.LastName </strong> TestOkur lisans yenileme işleminiz yapılmıştır.
     </p>
     <p>
         Lisansınızın son kullanım tarihi : <strong> @Model.ExpiryDate.ToString("dd.MM.yyyy") </strong>
@@ -29,29 +29,6 @@
         Üyelik bilgilerinizi TestOkur üzerinden güncelleyebilirsiniz.
     </p>
     <br />
-    <table border="1" style="font-size:20px;">
-        <tr>
-            <td colspan="2">
-                <h4>Giriş Bilgileriniz</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>E-Posta Adresiniz </strong>
-            </td>
-            <td>
-                @Model.EMailAddress
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Parolanız</strong>
-            </td>
-            <td>
-                @Model.Password
-            </td>
-        </tr>
-    </table>
     <br />
     <p>
         İlginize teşekkür ederiz.

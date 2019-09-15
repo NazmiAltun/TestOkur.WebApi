@@ -1,16 +1,14 @@
-﻿namespace TestOkur.Contracts.Account
+﻿namespace TestOkur.Contracts.User
 {
 	using System;
 
-	public interface IAccountExtended : IIntegrationEvent
+	public interface IUserSubscriptionExtended : IIntegrationEvent
 	{
 		string FirstName { get; }
 
 		string LastName { get; }
 
 		string Email { get; }
-
-		string Password { get; }
 
 		string Phone { get; }
 

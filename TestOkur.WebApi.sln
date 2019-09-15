@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{F96F0EBF-817C-458F-AE0B-45944932041B}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,7 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mocks", "mocks", "{492E59C2
 	ProjectSection(SolutionItems) = preProject
 		mockserver\mocks\hc.json = mockserver\mocks\hc.json
 		mockserver\mocks\scenarios.json = mockserver\mocks\scenarios.json
-		mockserver\mocks\templates.json = mockserver\mocks\templates.json
 		mockserver\mocks\token.js = mockserver\mocks\token.js
 		mockserver\mocks\users.json = mockserver\mocks\users.json
 	EndProjectSection

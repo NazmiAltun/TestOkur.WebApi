@@ -32,23 +32,23 @@
 				"TestOkur Lisans Süreniz Dolmak Üzere",
 				"LicenseExpirationNoticeMail.html");
 
-		public static readonly Template AccountExtensionEmailUser =
+		public static readonly Template UserSubscriptionExtendedEmail =
 			new Template(
-				"LisanUzatma_Kullanici_Email",
-				"Lisans Yenileme",
-				"User_LicenseExtension_Mail.html");
+                "UserSubscriptionExtendedEmail",
+                "Lisans Yenileme",
+                "UserSubscriptionExtendedEmail.html");
 
-		public static readonly Template AccountExtensionSmsUser =
+		public static readonly Template UserSubscriptionExtendedSms =
 			new Template(
-				"LisanUzatma_Kullanici_Sms",
-				"TestOkur",
-				"User_LicenseExtension_SMS.html");
+                "UserSubscriptionExtendedSms",
+                "TestOkur",
+                "UserSubscriptionExtendedSms.html");
 
 		public static readonly Template LicenseExpirationNoticeSms =
 			new Template(
                 "LicenseExpirationNoticeSms",
-				"TestOkur",
-				"LicenseExpirationNoticeSms.html");
+                "TestOkur",
+                "LicenseExpirationNoticeSms.html");
 
 		public static readonly Template AccountActivationEmailUser =
 			new Template(
@@ -56,13 +56,13 @@
 				"Lisans Bilgileriniz",
 				"User_MembershipActivation_Mail.html");
 
-        public static readonly Template AccountActivationSmsUser =
+		public static readonly Template AccountActivationSmsUser =
             new Template(
                 "LisansAktiflestirme_Kullanici_Email",
                 "TestOkur",
                 "User_MembershipActivation_SMS.html");
 
-        public static readonly Template AccountRegistrationEmailUser =
+		public static readonly Template AccountRegistrationEmailUser =
 			new Template(
 				"YeniLisansKaydi_Kullanici_Email",
 				"Lisans Kaydınız Alındı",

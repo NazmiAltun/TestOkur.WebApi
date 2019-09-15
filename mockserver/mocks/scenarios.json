@@ -30,10 +30,7 @@
 		"/account/generate-password-reset-token": {
 			"post": "password-reset-token.html"
 		},
-		"/api/v1/settings/templates": {
-			"get": "templates.json"
-		},
-		"/api/v1/settings/appsettings": {
+    "/api/v1/settings/appsettings": {
 			"get": "appsettings.json"
 		},
 		"/Templates/User_New_User_Mail.html": {
