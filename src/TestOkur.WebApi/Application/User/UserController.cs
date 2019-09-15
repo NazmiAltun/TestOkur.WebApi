@@ -129,5 +129,15 @@
 			await _commandProcessor.SendAsync(command);
 			return Ok();
 		}
-	}
+
+		[HttpPost("extend")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(AuthorizationPolicies.Admin)]
+        public async Task<IActionResult> ExtendSubscriptionAsync([FromBody, Required]ExtendUserSubscriptionCommand command)
+        {
+            await _commandProcessor.SendAsync(command);
+            return Ok();
+        }
+    }
 }
