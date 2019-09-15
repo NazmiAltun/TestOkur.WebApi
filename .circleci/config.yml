@@ -323,7 +323,7 @@ workflows:
   deploy-prod:
     jobs:
       - build-webapi:
-        filters:
+          filters:
             tags:
               only: /^v.*/
             branches:
@@ -343,12 +343,27 @@ workflows:
       - deploy-webapi-prod:
           requires:
             - build-webapi
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - deploy-notification-prod:
           requires:
             - build-notification
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - deploy-report-prod:
           requires:
             - build-report
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - clear-cache-prod:
           requires:
             - deploy-webapi-prod
