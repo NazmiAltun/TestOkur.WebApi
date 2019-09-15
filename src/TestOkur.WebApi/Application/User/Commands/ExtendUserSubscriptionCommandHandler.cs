@@ -35,7 +35,6 @@
             await PublishEventAsync(user, command.CurrentExpiryDateTimeUtc.AddYears(1), cancellationToken);
 
             return await base.HandleAsync(command, cancellationToken);
-
         }
 
         private async Task PublishEventAsync(
