@@ -219,7 +219,7 @@ jobs:
       - run:
           name: Copy image to the app server
           command: |
-            scp -q webapi.tar $SSH_USERNAME@$PROD_SERVER:/home/docker-images/
+            scp -q webapi.tar $SSH_USERNAME@$PROD_SERVER:/home/images/
       - run:
           name: Run container
           command: |
@@ -232,7 +232,7 @@ jobs:
       - run:
           name: Copy image to the app server
           command: |
-            scp -q report.tar $SSH_USERNAME@$PROD_SERVER:/home/docker-images/
+            scp -q report.tar $SSH_USERNAME@$PROD_SERVER:/home/images/
       - run:
           name: Run container
           command: |
@@ -245,7 +245,7 @@ jobs:
       - run:
           name: Copy image to the app server
           command: |
-            scp -q notification.tar $SSH_USERNAME@$PROD_SERVER:/home/docker-images/
+            scp -q notification.tar $SSH_USERNAME@$PROD_SERVER:/home/images/
       - run:
           name: Run container
           command: |

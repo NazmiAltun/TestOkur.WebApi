@@ -1,5 +1,5 @@
 #!/bin/bash
-docker load -i /home/docker-images/report.tar
+docker load -i /home/images/report.tar
 docker stop testokur-report && docker rm testokur-report --force
 docker run -d \
 	--env-file  /home/env/report-prod.env \
