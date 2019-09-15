@@ -274,33 +274,33 @@ workflows:
   version: 2
   deploy-prod:
     jobs:
-      - build-webapi
-      - build-notification
-      - build-report
+      - build-webapi:
+        filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - build-notification:
+         filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - build-report:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - deploy-webapi-prod:
           requires:
             - build-webapi
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - deploy-notification-prod:
           requires:
             - build-notification
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - deploy-report-prod:
           requires:
             - build-report
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - clear-cache-prod:
           requires:
             - deploy-webapi-prod
