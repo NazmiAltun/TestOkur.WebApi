@@ -274,10 +274,10 @@ workflows:
   version: 2
   webapi:
     jobs:
-      - static-code-analysis:
-      - unit-tests:
-      - notification-report-integration-tests:
-      - webapi-integration-tests:
+      - static-code-analysis
+      - unit-tests
+      - notification-report-integration-tests
+      - webapi-integration-tests
       - code-coverage:
           requires:
             - static-code-analysis
