@@ -275,21 +275,9 @@ workflows:
   webapi:
     jobs:
       - static-code-analysis:
-          filters:
-            tags:
-              only: /.qa*/
       - unit-tests:
-          filters:
-            tags:
-              only: /.qa*/
       - notification-report-integration-tests:
-          filters:
-            tags:
-              only: /.qa*/
       - webapi-integration-tests:
-          filters:
-            tags:
-              only: /.qa*/
       - code-coverage:
           requires:
             - static-code-analysis
@@ -299,39 +287,36 @@ workflows:
       - build-webapi:
           requires:
             - code-coverage
-          filters:
-            tags:
-              only: /.*/
       - build-notification:
           requires:
             - code-coverage
-          filters:
-            tags:
-              only: /.*/
       - build-report:
           requires:
             - code-coverage
-          filters:
-            tags:
-              only: /.*/
       - deploy-webapi-qa:
           requires:
             - build-webapi
           filters:
             branches:
               only: master
+            tags:
+              only: /.qa*/
       - deploy-notification-qa:
           requires:
             - build-notification
           filters:
             branches:
               only: master
+            tags:
+              only: /.qa*/
       - deploy-report-qa:
           requires:
             - build-report
           filters:
             branches:
               only: master
+            tags:
+              only: /.qa*/
       - deploy-webapi-prod:
           requires:
             - build-webapi
