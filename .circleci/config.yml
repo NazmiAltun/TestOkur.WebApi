@@ -180,11 +180,11 @@ jobs:
       - run:
           name: Copy image to the app server
           command: |
-            scp -q webapi.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            scp -q webapi.tar $SSH_USERNAME@$QA_SERVER:/home/docker-images/
       - run:
           name: Run container
           command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/webapi-qa.sh > /dev/null
+            ssh  $SSH_USERNAME@$QA_SERVER 'bash -s' < deploy/webapi-qa.sh > /dev/null
   deploy-report-qa:
     <<: *defaults
     steps:
@@ -193,11 +193,11 @@ jobs:
       - run:
           name: Copy image to the app server
           command: |
-            scp -q report.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            scp -q report.tar $SSH_USERNAME@$QA_SERVER:/home/docker-images/
       - run:
           name: Run container
           command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/report-qa.sh > /dev/null
+            ssh  $SSH_USERNAME@$QA_SERVER 'bash -s' < deploy/report-qa.sh > /dev/null
   deploy-notification-qa:
     <<: *defaults
     steps:
@@ -206,11 +206,11 @@ jobs:
       - run:
           name: Copy image to the app server
           command: |
-            scp -q notification.tar $SSH_USERNAME@$SSH_HOST:/home/docker-images/
+            scp -q notification.tar $SSH_USERNAME@$QA_SERVER:/home/docker-images/
       - run:
           name: Run container
           command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/notification-qa.sh > /dev/null
+            ssh  $SSH_USERNAME@$QA_SERVER 'bash -s' < deploy/notification-qa.sh > /dev/null
   deploy-webapi-prod:
     <<: *defaults
     steps:
@@ -218,7 +218,7 @@ jobs:
       - run:
           name: Run container
           command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/webapi-prod.sh > /dev/null
+            ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/webapi-prod.sh > /dev/null
   deploy-report-prod:
     <<: *defaults
     steps:
@@ -226,7 +226,7 @@ jobs:
       - run:
           name: Run container
           command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/report-prod.sh > /dev/null
+            ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/report-prod.sh > /dev/null
   deploy-notification-prod:
     <<: *defaults
     steps:
@@ -234,7 +234,7 @@ jobs:
       - run:
           name: Run container
           command: |
-            ssh  $SSH_USERNAME@$SSH_HOST 'bash -s' < deploy/notification-prod.sh > /dev/null
+            ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/notification-prod.sh > /dev/null
   clear-cache-qa:
     <<: *defaults
     steps:
@@ -309,18 +309,24 @@ workflows:
             branches:
               only: master
       - deploy-webapi-prod:
+          requires:
+            - build-webapi
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
       - deploy-notification-prod:
+          requires:
+            - build-notification
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
       - deploy-report-prod:
+          requires:
+            - build-report
           filters:
             tags:
               only: /^v.*/
