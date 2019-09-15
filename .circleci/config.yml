@@ -272,7 +272,39 @@ jobs:
             deploy/retry.sh $WEBAPI_URL/api/cache
 workflows:
   version: 2
-  webapi:
+  deploy-prod:
+    jobs:
+      - build-webapi
+      - build-notification
+      - build-report
+      - deploy-webapi-prod:
+          requires:
+            - build-webapi
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-notification-prod:
+          requires:
+            - build-notification
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-report-prod:
+          requires:
+            - build-report
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - clear-cache-prod:
+          requires:
+            - deploy-webapi-prod
+  deploy-qa:
     jobs:
       - static-code-analysis
       - unit-tests
@@ -317,33 +349,6 @@ workflows:
               only: master
             tags:
               only: /.qa*/
-      - deploy-webapi-prod:
-          requires:
-            - build-webapi
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - deploy-notification-prod:
-          requires:
-            - build-notification
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - deploy-report-prod:
-          requires:
-            - build-report
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - clear-cache-qa:
           requires:
             - deploy-webapi-qa
-      - clear-cache-prod:
-          requires:
-            - deploy-webapi-prod
