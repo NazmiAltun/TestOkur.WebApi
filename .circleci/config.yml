@@ -297,20 +297,14 @@ workflows:
             - notification-report-integration-tests
             - webapi-integration-tests
       - build-webapi:
-          requires:
-            - code-coverage
           filters:
             tags:
               only: /.*/
       - build-notification:
-          requires:
-            - code-coverage
           filters:
             tags:
               only: /.*/
       - build-report:
-          requires:
-            - code-coverage
           filters:
             tags:
               only: /.*/
