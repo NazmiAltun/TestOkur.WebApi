@@ -236,8 +236,8 @@ jobs:
           command: |
             ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/notification-prod.sh > /dev/null
   clean-up-qa:
-   <<: *defaults
-   steps:
+    <<: *defaults
+    steps:
       - run:
           name: Prune docker images/containers
           command: |
