@@ -8,7 +8,7 @@
     "/connect/token": {
       "post": "token.js"
     },
-    "/account/api/users": {
+    "/account/users": {
       "options": 204,
       "get": "users.json"
     },
