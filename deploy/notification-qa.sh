@@ -1,5 +1,5 @@
 #!/bin/bash
-docker load -i /home/images/notification.tar
+docker pull nazmialtun/testokur-notification:latest
 docker stop testokur-notification-qa && docker rm testokur-notification-qa --force
 docker run -d \
 	--env-file  /home/env/notification-qa.env \
@@ -8,4 +8,4 @@ docker run -d \
 	--network=testokur \
 	--network-alias=notification-qa \
 	-m=200M \
-	testokur-notification:latest
+	nazmialtun/testokur-notification:latest

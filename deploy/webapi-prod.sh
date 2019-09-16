@@ -1,5 +1,5 @@
 #!/bin/bash
-docker load -i /home/images/webapi.tar
+docker pull nazmialtun/testokur-webapi:latest
 docker stop testokur-webapi && docker rm testokur-webapi --force
 docker run -d \
 	--env-file /home/env/webapi-prod.env \
@@ -9,4 +9,4 @@ docker run -d \
 	--restart=unless-stopped \
 	--network=testokur \
 	--network-alias=webapi \
-	testokur-webapi:latest
+	nazmialtun/testokur-webapi:latest

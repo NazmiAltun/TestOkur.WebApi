@@ -1,5 +1,5 @@
 #!/bin/bash
-docker load -i /home/images/notification.tar
+docker pull nazmialtun/testokur-notification:latest
 docker stop testokur-notification && docker rm testokur-notification --force
 docker run -d \
 	--env-file /home/env/notification-prod.env \
@@ -7,4 +7,4 @@ docker run -d \
 	--restart=unless-stopped  \
 	--network=testokur \
 	--network-alias=notification \
-	testokur-notification:latest
+	nazmialtun/testokur-notification:latest

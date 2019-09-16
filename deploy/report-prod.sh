@@ -1,5 +1,5 @@
 #!/bin/bash
-docker load -i /home/images/report.tar
+docker pull nazmialtun/testokur-report:latest
 docker stop testokur-report && docker rm testokur-report --force
 docker run -d \
 	--env-file  /home/env/report-prod.env \
@@ -7,4 +7,4 @@ docker run -d \
 	--restart=unless-stopped  \
 	--network=testokur \
 	--network-alias=report \
-	testokur-report:latest
+	nazmialtun/testokur-report:latest

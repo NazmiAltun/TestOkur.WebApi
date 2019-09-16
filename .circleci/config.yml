@@ -116,13 +116,17 @@ jobs:
           command: |
             docker-compose build webapi
       - run:
-          name: Compress Images
+          name: Publish Docker Image to Docker Hub
           command: |
-            docker save -o webapi.tar testokur-webapi:latest
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                IMAGE_TAG="0.0.${CIRCLE_BUILD_NUM}"
+                docker tag testokur-webapi:latest nazmialtun/testokur-webapi:$IMAGE_TAG
+                docker tag testokur-webapi:latest nazmialtun/testokur-webapi:latest
+                docker push nazmialtun/testokur-webapi:latest
+                docker push nazmialtun/testokur-webapi:$IMAGE_TAG
       - persist_to_workspace:
           root: .
           paths:
-            - webapi.tar
             - deploy/*
   build-report:
     <<: *defaults
@@ -140,13 +144,17 @@ jobs:
           command: |
             docker-compose build report
       - run:
-          name: Compress Images
+          name: Publish Docker Image to Docker Hub
           command: |
-            docker save -o report.tar testokur-report:latest
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                IMAGE_TAG="0.0.${CIRCLE_BUILD_NUM}"
+                docker tag testokur-report:latest nazmialtun/testokur-report:$IMAGE_TAG
+                docker tag testokur-report:latest nazmialtun/testokur-report:latest
+                docker push nazmialtun/testokur-report:latest
+                docker push nazmialtun/testokur-report:$IMAGE_TAG
       - persist_to_workspace:
           root: .
           paths:
-            - report.tar
             - deploy/*
   build-notification:
     <<: *defaults
@@ -164,23 +172,23 @@ jobs:
           command: |
             docker-compose build notification
       - run:
-          name: Compress Images
+          name: Publish Docker Image to Docker Hub
           command: |
-            docker save -o notification.tar testokur-notification:latest
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                IMAGE_TAG="0.0.${CIRCLE_BUILD_NUM}"
+                docker tag testokur-notification:latest nazmialtun/testokur-notification:$IMAGE_TAG
+                docker tag testokur-notification:latest nazmialtun/testokur-notification:latest
+                docker push nazmialtun/testokur-notification:latest
+                docker push nazmialtun/testokur-notification:$IMAGE_TAG
       - persist_to_workspace:
           root: .
           paths:
-            - notification.tar
             - deploy/*
   deploy-webapi-qa:
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
-      - run:
-          name: Copy image to the app server
-          command: |
-            scp -q webapi.tar $SSH_USERNAME@$QA_SERVER:/home/images/
       - run:
           name: Run container
           command: |
@@ -191,10 +199,6 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Copy image to the app server
-          command: |
-            scp -q report.tar $SSH_USERNAME@$QA_SERVER:/home/images/
-      - run:
           name: Run container
           command: |
             ssh  $SSH_USERNAME@$QA_SERVER 'bash -s' < deploy/report-qa.sh > /dev/null
@@ -204,22 +208,13 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Copy image to the app server
-          command: |
-            scp -q notification.tar $SSH_USERNAME@$QA_SERVER:/home/images/
-      - run:
           name: Run container
           command: |
             ssh  $SSH_USERNAME@$QA_SERVER 'bash -s' < deploy/notification-qa.sh > /dev/null
   deploy-webapi-prod:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Copy image to the app server
-          command: |
-            scp -q webapi.tar $SSH_USERNAME@$PROD_SERVER:/home/images/
+      - checkout
       - run:
           name: Run container
           command: |
@@ -227,12 +222,7 @@ jobs:
   deploy-report-prod:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Copy image to the app server
-          command: |
-            scp -q report.tar $SSH_USERNAME@$PROD_SERVER:/home/images/
+      - checkout
       - run:
           name: Run container
           command: |
@@ -240,12 +230,7 @@ jobs:
   deploy-notification-prod:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Copy image to the app server
-          command: |
-            scp -q notification.tar $SSH_USERNAME@$PROD_SERVER:/home/images/
+      - checkout
       - run:
           name: Run container
           command: |
@@ -322,43 +307,19 @@ workflows:
             - deploy-webapi-qa
   deploy-prod:
     jobs:
-      - build-webapi:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - build-notification:
-         filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - build-report:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - deploy-webapi-prod:
-          requires:
-            - build-webapi
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
       - deploy-notification-prod:
-          requires:
-            - build-notification
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
       - deploy-report-prod:
-          requires:
-            - build-report
           filters:
             tags:
               only: /^v.*/
