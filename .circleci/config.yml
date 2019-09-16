@@ -248,8 +248,7 @@ jobs:
   clear-cache-prod:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/repo
+      - checkout
       - run:
           name: Clear Cache
           command: |
