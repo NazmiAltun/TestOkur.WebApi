@@ -7,7 +7,7 @@
     [DataContract]
     public class ExtendUserSubscriptionCommand : CommandBase
     {
-        public ExtendUserSubscriptionCommand(string email,DateTime currentExpiryDateTimeUtc)
+        public ExtendUserSubscriptionCommand(string email, DateTime currentExpiryDateTimeUtc)
         {
             Email = email;
             CurrentExpiryDateTimeUtc = currentExpiryDateTimeUtc;

@@ -26,13 +26,40 @@
 				examTypes.Should().Contain(e => e.Name == ExamTypes.LessonExam)
 					.And
 					.Contain(e => e.Name == ExamTypes.LessonExam &&
+                                  e.AvailableForHighSchool &&
+                                  e.AvailableForPrimarySchool &&
 								  e.OpticalFormTypes.Count() == 9);
 				examTypes.Should().Contain(e => e.Name == ExamTypes.EvaluationExam)
 					.And
-					.Contain(e => e.Name == ExamTypes.LessonExam &&
-								  e.OpticalFormTypes.Count() == 9);
+					.Contain(e => e.Name == ExamTypes.EvaluationExam &&
+                                  e.AvailableForHighSchool &&
+                                  e.AvailableForPrimarySchool &&
+                                  e.OpticalFormTypes.Count() == 9);
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Tyt &&
+                                  e.AvailableForHighSchool &&
+                                  !e.AvailableForPrimarySchool);
 
-				examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Lgs &&
+                                                !e.AvailableForHighSchool &&
+                                                e.AvailableForPrimarySchool);
+
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Ayt &&
+                                                e.AvailableForHighSchool &&
+                                                !e.AvailableForPrimarySchool);
+
+                examTypes.Should().Contain(e => e.Name == ExamTypes.AytLang &&
+                                                e.AvailableForHighSchool &&
+                                                !e.AvailableForPrimarySchool);
+
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Scholarship &&
+                                                e.AvailableForHighSchool &&
+                                                e.AvailableForPrimarySchool);
+
+                examTypes.Should().Contain(e => e.Name == ExamTypes.TrialExam &&
+                                                e.AvailableForHighSchool &&
+                                                e.AvailableForPrimarySchool);
+
+                examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
 
 				examTypes.Select(e => e.Name)
 					.Should().ContainInOrder(

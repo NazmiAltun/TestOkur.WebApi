@@ -24,6 +24,7 @@
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm60ABCDE))
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm100ABCDE))
 					.WithOrder(20)
+                    .AvailableForAllSchoolTypes()
 					.Build();
 
 		private ExamType LgsExam => new ExamTypeBuilder(ExamTypes.Lgs)
@@ -31,25 +32,29 @@
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmLgsTwoPiece))
 					.WithOrder(40)
 					.WithDefaultIncorrectCorrectEliminationValue(3)
+                    .AvailableForPrimarySchool()
 					.Build();
 
 		private ExamType TytExam => new ExamTypeBuilder(ExamTypes.Tyt)
 					.WithDefaultIncorrectCorrectEliminationValue(4)
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmTyt))
 					.WithOrder(50)
-					.Build();
+                    .AvailableForHighSchool()
+                    .Build();
 
 		private ExamType AytLangExam => new ExamTypeBuilder(ExamTypes.AytLang)
 					.WithDefaultIncorrectCorrectEliminationValue(4)
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmAytLang))
 					.WithOrder(70)
-					.Build();
+                    .AvailableForHighSchool()
+                    .Build();
 
 		private ExamType AytExam => new ExamTypeBuilder(ExamTypes.Ayt)
 					.WithDefaultIncorrectCorrectEliminationValue(4)
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmAyt))
 					.WithOrder(60)
-					.Build();
+                    .AvailableForHighSchool()
+                    .Build();
 
 		private ExamType TrialExam => new ExamTypeBuilder(ExamTypes.TrialExam)
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm2ndGradeTrial))
@@ -57,13 +62,15 @@
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm4thGradeTrial))
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmTeog))
 					.WithOrder(30)
-					.Build();
+                    .AvailableForAllSchoolTypes()
+                    .Build();
 
 		private ExamType ScholarshipExam => new ExamTypeBuilder(ExamTypes.Scholarship)
 					.WithDefaultIncorrectCorrectEliminationValue(3)
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmScholarship))
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmScholarshipHigh))
 					.WithOrder(50)
+                    .AvailableForAllSchoolTypes()
 					.Build();
 
 		private ExamType SingleLessonExam => new ExamTypeBuilder(ExamTypes.LessonExam)
@@ -77,7 +84,8 @@
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm60ABCDE))
 					.AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm100ABCDE))
 					.WithOrder(10)
-					.Build();
+                    .AvailableForAllSchoolTypes()
+                    .Build();
 
 		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{

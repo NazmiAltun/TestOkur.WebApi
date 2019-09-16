@@ -11,12 +11,16 @@
 		public ExamType(
 			Name name,
 			IncorrectEliminationRate defaultIncorrectEliminationRate,
-			int order)
+            bool availableForPrimarySchool,
+            bool availableForHighSchool,
+            int order)
 		: this()
 		{
 			Name = name;
 			DefaultIncorrectEliminationRate = defaultIncorrectEliminationRate;
-			Order = order;
+            AvailableForPrimarySchool = availableForPrimarySchool;
+            AvailableForHighSchool = availableForHighSchool;
+            Order = order;
 		}
 
 		protected ExamType()
@@ -30,7 +34,11 @@
 
 		public int Order { get; private set; }
 
-		public IEnumerable<ExamTypeOpticalFormType> ExamTypeOpticalFormTypes
+        public bool AvailableForPrimarySchool { get; private set; }
+
+        public bool AvailableForHighSchool { get; private set; }
+
+        public IEnumerable<ExamTypeOpticalFormType> ExamTypeOpticalFormTypes
 			=> _examTypeOpticalFormTypes.AsReadOnly();
 
 		public void AddFormType(OpticalFormType formType)

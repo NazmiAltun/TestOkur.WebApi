@@ -11,6 +11,10 @@
 
         public int DefaultIncorrectEliminationRate { get; set; }
 
+        public bool AvailableForPrimarySchool { get; set; }
+
+        public bool AvailableForHighSchool { get; set; }
+
         public List<OpticalFormTypeReadModel> OpticalFormTypes { get; set; }
             = new List<OpticalFormTypeReadModel>();
     }

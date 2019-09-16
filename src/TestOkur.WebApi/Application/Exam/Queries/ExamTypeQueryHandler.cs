@@ -19,6 +19,8 @@
                                 ET.id,
                                 ET.name_value AS exam_type_name,
                                 ET.default_incorrect_elimination_rate_value,
+                                ET.available_for_primary_school,
+                                ET.available_for_high_school,
 								OFT.optical_form_type_id
                                 FROM exam_types ET
 								INNER JOIN exam_type_optical_form_types OFT ON ET.id=OFT.exam_type_id
