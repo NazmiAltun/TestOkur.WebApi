@@ -318,7 +318,7 @@ workflows:
       - clear-cache-qa:
           requires:
             - deploy-webapi-qa
-      - clear-up-qa:
+      - clean-up-qa:
           requires:
             - deploy-report-qa
             - deploy-webapi-qa
