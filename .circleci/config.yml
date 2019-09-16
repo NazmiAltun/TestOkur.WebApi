@@ -235,6 +235,20 @@ jobs:
           name: Run container
           command: |
             ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/notification-prod.sh > /dev/null
+  clean-up-qa:
+   <<: *defaults
+   steps:
+      - run:
+          name: Prune docker images/containers
+          command: |
+            ssh  $SSH_USERNAME@$QA_SERVER 'echo Y | docker system prune'
+  clean-up-prod:
+   <<: *defaults
+   steps:
+      - run:
+          name: Prune docker images/containers
+          command: |
+            ssh  $SSH_USERNAME@$PROD_SERVER 'echo Y | docker system prune'
   clear-cache-qa:
     <<: *defaults
     steps:
@@ -304,6 +318,11 @@ workflows:
       - clear-cache-qa:
           requires:
             - deploy-webapi-qa
+      - clear-up-qa:
+          requires:
+            - deploy-report-qa
+            - deploy-webapi-qa
+            - deploy-notification-qa
   deploy-prod:
     jobs:
       - deploy-webapi-prod:
@@ -327,6 +346,16 @@ workflows:
       - clear-cache-prod:
           requires:
             - deploy-webapi-prod
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - clean-up-prod:
+          requires:
+            - deploy-webapi-prod
+            - deploy-notification-prod
+            - deploy-report-prod
           filters:
             tags:
               only: /^v.*/
