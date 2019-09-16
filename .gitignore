@@ -248,3 +248,4 @@ coverage/
 tmp/
 !stylecop.json
 *.DotSettings
+DataProtection-Keys/
