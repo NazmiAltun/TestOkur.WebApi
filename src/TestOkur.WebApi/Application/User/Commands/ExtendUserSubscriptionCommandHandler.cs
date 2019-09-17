@@ -32,7 +32,10 @@
         {
             var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery(command.Email), cancellationToken);
             await _identityService.ExtendUserSubscriptionAsync(user.SubjectId, cancellationToken);
-            await PublishEventAsync(user, command.CurrentExpiryDateTimeUtc.AddYears(1), cancellationToken);
+            var newExpiryDate = DateTime.UtcNow > command.CurrentExpiryDateTimeUtc
+                ? DateTime.UtcNow.AddYears(1)
+                : command.CurrentExpiryDateTimeUtc.AddYears(1);
+            await PublishEventAsync(user, newExpiryDate, cancellationToken);
 
             return await base.HandleAsync(command, cancellationToken);
         }
