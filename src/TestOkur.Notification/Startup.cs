@@ -48,7 +48,7 @@
         private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
         private HangfireConfiguration HangfireConfiguration { get; } = new HangfireConfiguration();
-        
+
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
             RegisterMappings();

@@ -27,7 +27,6 @@ namespace TestOkur.Notification
 				.UseStartup<Startup>()
 				.UseSentry(options =>
 				{
-					options.Release = "qa";
 					options.MaxBreadcrumbs = 200;
 					options.HttpProxy = null;
 					options.DecompressionMethods = DecompressionMethods.None;
