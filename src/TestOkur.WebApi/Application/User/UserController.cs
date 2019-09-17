@@ -79,7 +79,7 @@
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UserReadModel>), StatusCodes.Status200OK)]
-        [Authorize(AuthorizationPolicies.Admin)]
+        [Authorize(AuthorizationPolicies.Private)]
         public async Task<IActionResult> GetUsersAsync()
         {
             var users = await _processor
