@@ -1,16 +1,17 @@
 ﻿namespace TestOkur.Notification.Integration.Tests.Common
 {
-	using Microsoft.Extensions.Configuration;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 
 	public class TestStartup : Startup
 	{
-		public TestStartup(IConfiguration configuration)
-			: base(configuration)
-		{
-		}
+        public TestStartup(IConfiguration configuration, IHostingEnvironment environment)
+            : base(configuration, environment)
+        {
+        }
 
-		protected override void AddHostedServices(IServiceCollection services)
+        protected override void AddHostedServices(IServiceCollection services)
 		{
 		}
 	}

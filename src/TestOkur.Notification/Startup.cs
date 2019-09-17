@@ -33,15 +33,18 @@
 
     public class Startup : IStartup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
             Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
             Configuration.GetSection("ApplicationConfiguration").Bind(ApplicationConfiguration);
             Configuration.GetSection("HangfireConfiguration").Bind(HangfireConfiguration);
         }
 
         private IConfiguration Configuration { get; }
+
+        private IHostingEnvironment Environment { get; }
 
         private ApplicationConfiguration ApplicationConfiguration { get; } = new ApplicationConfiguration();
 
@@ -183,6 +186,11 @@
                 {
                     e.PrefetchCount = 16;
                     e.UseMessageRetry(x => x.Interval(2, 100));
+                    if (!Environment.IsDevelopment())
+                    {
+                        e.Consumer<DefaultFaultConsumer>(provider);
+                    }
+
                     e.Consumer<NewUserRegisteredConsumer>(provider);
                     e.Consumer<SendSmsRequestReceivedConsumer>(provider);
                     e.Consumer<SendSmsRequestFailedConsumer>(provider);
