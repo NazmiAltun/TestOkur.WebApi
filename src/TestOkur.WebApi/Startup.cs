@@ -157,9 +157,13 @@
 			var connectionString = Configuration.GetConnectionString("Postgres");
 			var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
-				connectionString,
-				sql => sql.MigrationsAssembly(migrationsAssembly)));
+			services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(
+                    connectionString,
+                    sql => sql.MigrationsAssembly(migrationsAssembly));
+                options.EnableSensitiveDataLogging();
+            });
 		}
 
 		protected virtual void AddAuthentication(IServiceCollection services)
