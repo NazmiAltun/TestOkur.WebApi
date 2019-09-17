@@ -2,7 +2,8 @@
 {
 	using System;
 	using System.Diagnostics.CodeAnalysis;
-	using System.Reflection;
+    using System.Linq;
+    using System.Reflection;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using Microsoft.EntityFrameworkCore;
@@ -83,7 +84,7 @@
 		{
 			ChangeTracker.DetectChanges();
 
-			foreach (var entry in ChangeTracker.Entries())
+			foreach (var entry in ChangeTracker.Entries().ToList())
 			{
 				if (!entry.IsAuditable())
 				{
