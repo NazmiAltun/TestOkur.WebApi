@@ -25,7 +25,6 @@
         }
 
         [Idempotent(1)]
-        [Populate(2)]
         [ClearCache(3)]
         public override async Task<CreateStudentCommand> HandleAsync(
             CreateStudentCommand command,

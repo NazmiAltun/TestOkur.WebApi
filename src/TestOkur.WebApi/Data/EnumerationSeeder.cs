@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.Domain.Model.StudentModel;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.Domain.Model.StudentModel;
+    using TestOkur.Domain.SeedWork;
 
-	internal class EnumerationSeeder : ISeeder
+    internal class EnumerationSeeder : ISeeder
     {
 	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 	    {

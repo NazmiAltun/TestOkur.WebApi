@@ -1,25 +1,24 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.Domain.SeedWork;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Exam.Queries;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.Domain.SeedWork;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Exam.Queries;
+    using Exam = TestOkur.Domain.Model.ExamModel.Exam;
+    using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
-	using Exam = TestOkur.Domain.Model.ExamModel.Exam;
-	using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
-
-	public sealed class EditExamCommandHandler
+    public sealed class EditExamCommandHandler
 		: RequestHandlerAsync<EditExamCommand>
 	{
 		private readonly IQueryProcessor _queryProcessor;
@@ -37,7 +36,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<EditExamCommand> HandleAsync(
 			EditExamCommand command,

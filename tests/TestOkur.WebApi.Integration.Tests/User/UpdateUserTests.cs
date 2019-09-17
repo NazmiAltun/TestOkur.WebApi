@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System;
-	using System.Threading.Tasks;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.User.Commands;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.User.Commands;
+    using Xunit;
 
-	public class UpdateUserTests : UserTest
+    public class UpdateUserTests : UserTest
 	{
 		[Fact]
 		public async Task WhenValidValuesPosted_ThenUserShouldBeUpdated()

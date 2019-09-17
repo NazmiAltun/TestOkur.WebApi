@@ -1,20 +1,20 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
-	using Student = TestOkur.Domain.Model.StudentModel.Student;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
+    using Student = TestOkur.Domain.Model.StudentModel.Student;
 
-	public sealed class EditStudentCommandHandler : RequestHandlerAsync<EditStudentCommand>
+    public sealed class EditStudentCommandHandler : RequestHandlerAsync<EditStudentCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 		private readonly IPublishEndpoint _publishEndpoint;
@@ -26,7 +26,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<EditStudentCommand> HandleAsync(
 			EditStudentCommand command,

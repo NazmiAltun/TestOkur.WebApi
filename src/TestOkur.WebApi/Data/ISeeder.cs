@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Threading.Tasks;
-	using TestOkur.Data;
+    using System;
+    using System.Threading.Tasks;
+    using TestOkur.Data;
 
-	internal interface ISeeder
+    internal interface ISeeder
 	{
 		Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services);
 	}

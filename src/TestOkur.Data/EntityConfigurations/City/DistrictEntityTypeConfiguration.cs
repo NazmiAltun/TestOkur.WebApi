@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.CityModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.CityModel;
 
-	internal class DistrictEntityTypeConfiguration : IEntityTypeConfiguration<District>
+    internal class DistrictEntityTypeConfiguration : IEntityTypeConfiguration<District>
     {
         public void Configure(EntityTypeBuilder<District> builder)
         {

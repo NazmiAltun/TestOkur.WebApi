@@ -1,15 +1,14 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using IdentityModel.Client;
-	using Newtonsoft.Json;
-	using TestOkur.Notification.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using TestOkur.Notification.Models;
 
-	public class WebApiClient : IWebApiClient
+    public class WebApiClient : IWebApiClient
 	{
 		private const string DeductSmsEndpoint = "/api/v1/sms/deduct-credits";
 		private const string AppSettingsEndpoint = "/api/v1/settings/appsettings";

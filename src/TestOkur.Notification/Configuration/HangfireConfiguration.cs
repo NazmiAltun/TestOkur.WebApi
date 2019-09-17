@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Configuration
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	public class HangfireConfiguration
+    public class HangfireConfiguration
 	{
 		[Required]
 		public string Username { get; set; }

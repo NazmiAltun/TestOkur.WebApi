@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Configuration
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	public class SmtpConfiguration
+    public class SmtpConfiguration
 	{
 		[Required]
 		public string Host { get; set; }

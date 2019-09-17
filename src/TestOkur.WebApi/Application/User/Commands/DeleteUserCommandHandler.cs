@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.User.Services;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.User.Services;
 
-	public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>
+    public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>
 	{
 		private readonly IIdentityService _identityService;
 		private readonly ApplicationDbContext _dbContext;

@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.SmsModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.SmsModel;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class DeductSmsCreditsCommandHandler : RequestHandlerAsync<DeductSmsCreditsCommand>
+    public sealed class DeductSmsCreditsCommandHandler : RequestHandlerAsync<DeductSmsCreditsCommand>
     {
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly ISmsCreditCalculator _smsCreditCalculator;

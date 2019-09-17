@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.Optic.Form;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Optic.Form;
 
-	[DataContract]
-	public class CreateExamCommand : CommandBase, IClearCache
+    [DataContract]
+    public class CreateExamCommand : CommandBase, IClearCache
 	{
 		public CreateExamCommand(
 			Guid id,

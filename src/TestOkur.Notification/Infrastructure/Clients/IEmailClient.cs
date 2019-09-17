@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-	using System.Net.Mail;
-	using System.Threading.Tasks;
+    using System.Net.Mail;
+    using System.Threading.Tasks;
 
-	public interface IEmailClient
+    public interface IEmailClient
 	{
 		Task SendAsync(MailMessage mailMessage);
 	}

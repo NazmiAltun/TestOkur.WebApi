@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using FluentValidation;
-	using TestOkur.Common;
+    using FluentValidation;
+    using TestOkur.Common;
 
-	public class CreateStudentCommandValidator : AbstractValidator<CreateStudentCommand>
+    public class CreateStudentCommandValidator : AbstractValidator<CreateStudentCommand>
     {
         public CreateStudentCommandValidator()
         {

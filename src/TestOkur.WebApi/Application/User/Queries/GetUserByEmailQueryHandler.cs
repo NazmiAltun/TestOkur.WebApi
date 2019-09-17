@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class GetUserByEmailQueryHandler : QueryHandlerAsync<GetUserByEmailQuery, UserReadModel>
+    public sealed class GetUserByEmailQueryHandler : QueryHandlerAsync<GetUserByEmailQuery, UserReadModel>
 	{
 		private readonly IQueryProcessor _queryProcessor;
 

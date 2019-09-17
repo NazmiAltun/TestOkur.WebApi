@@ -1,27 +1,26 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.Domain.SeedWork;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.Optic.Form;
-	using TestOkur.WebApi.Application.Exam.Queries;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.Domain.SeedWork;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Optic.Form;
+    using TestOkur.WebApi.Application.Exam.Queries;
+    using Exam = TestOkur.Domain.Model.ExamModel.Exam;
+    using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
-	using Exam = TestOkur.Domain.Model.ExamModel.Exam;
-	using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
-
-	public sealed class CreateExamCommandHandler : RequestHandlerAsync<CreateExamCommand>
+    public sealed class CreateExamCommandHandler : RequestHandlerAsync<CreateExamCommand>
 	{
 		private readonly IQueryProcessor _queryProcessor;
 		private readonly IPublishEndpoint _publishEndpoint;
@@ -38,7 +37,6 @@
 		}
 
 		[Idempotent(2)]
-		[Populate(3)]
 		[ClearCache(4)]
 		public override async Task<CreateExamCommand> HandleAsync(
 			CreateExamCommand command,

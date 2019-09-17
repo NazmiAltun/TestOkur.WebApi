@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.User.Events
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.User;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.User;
 
-	public class ResetPasswordTokenGenerated : IntegrationEvent, IResetPasswordTokenGenerated
+    public class ResetPasswordTokenGenerated : IntegrationEvent, IResetPasswordTokenGenerated
 	{
 		public ResetPasswordTokenGenerated(string link, string email, string firstName, string lastName)
 		{

@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Notification.Integration.Tests
 {
-	using System.Net;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Notification.Integration.Tests.Common;
-	using Xunit;
+    using System.Net;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Notification.Integration.Tests.Common;
+    using Xunit;
 
-	public class HealthCheckTests
+    public class HealthCheckTests
 	{
 		[Fact]
 		public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()

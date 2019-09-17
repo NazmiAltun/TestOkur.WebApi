@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
-	using System.Net.Mail;
-	using System.Threading.Tasks;
-	using TestOkur.Infrastructure.Extensions;
-	using TestOkur.Notification.Models;
+    using System.Net.Mail;
+    using System.Threading.Tasks;
+    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Notification.Models;
 
-	public class EmailBuilder<TModel>
+    public class EmailBuilder<TModel>
 	{
 		private readonly ITemplateService _templateEngine;
 

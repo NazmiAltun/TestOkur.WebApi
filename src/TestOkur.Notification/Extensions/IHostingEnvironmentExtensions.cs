@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Extensions
 {
-	using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Hosting;
 
-	public static class IHostingEnvironmentExtensions
+    public static class IHostingEnvironmentExtensions
 	{
 		public static bool IsProd(this IHostingEnvironment hostingEnvironment)
 		{

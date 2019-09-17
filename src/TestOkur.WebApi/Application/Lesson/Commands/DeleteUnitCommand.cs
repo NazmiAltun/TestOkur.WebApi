@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class DeleteUnitCommand : CommandBase, IClearCache
+    public sealed class DeleteUnitCommand : CommandBase, IClearCache
 	{
 		public DeleteUnitCommand(int unitId)
 		{

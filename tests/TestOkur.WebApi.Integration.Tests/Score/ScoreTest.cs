@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Score
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.Model.ScoreModel;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Score;
-	using TestOkur.WebApi.Integration.Tests.Exam;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.Model.ScoreModel;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Score;
+    using TestOkur.WebApi.Integration.Tests.Exam;
 
-	public abstract class ScoreTest : ExamTest
+    public abstract class ScoreTest : ExamTest
 	{
 		protected new const string ApiPath = "api/v1/score-formulas";
 

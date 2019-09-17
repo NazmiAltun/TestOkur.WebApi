@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Queries
 {
-	using Dapper.FluentMap.Mapping;
+    using Dapper.FluentMap.Mapping;
 
-	public class ExamTypeReadModelMap : EntityMap<ExamTypeReadModel>
+    public class ExamTypeReadModelMap : EntityMap<ExamTypeReadModel>
     {
         public ExamTypeReadModelMap()
         {

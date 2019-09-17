@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-	using System.Collections.Generic;
-	using System.Diagnostics;
+    using System.Collections.Generic;
+    using System.Diagnostics;
 
-	[DebuggerDisplay("{FormulaType}-{ScoreName}")]
-	public class ScoreFormulaReadModel
+    [DebuggerDisplay("{FormulaType}-{ScoreName}")]
+    public class ScoreFormulaReadModel
 	{
 		public ScoreFormulaReadModel()
 		{

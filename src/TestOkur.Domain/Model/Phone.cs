@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model
 {
-	using System;
-	using System.Linq;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.Linq;
+    using TestOkur.Domain.SeedWork;
 
-	public class Phone : ValueObject
+    public class Phone : ValueObject
     {
         protected Phone()
         {

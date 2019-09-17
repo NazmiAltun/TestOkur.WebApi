@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.ExamModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class ExamBookletType : Enumeration
+    public class ExamBookletType : Enumeration
 	{
 		public static readonly ExamBookletType Single = new ExamBookletType(1, "Tek Kitapçık");
 		public static readonly ExamBookletType AB = new ExamBookletType(2, "A - B");

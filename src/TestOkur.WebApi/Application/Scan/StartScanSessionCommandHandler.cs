@@ -1,17 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Scan
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.Infrastructure.Cqrs;
+    using Exam = TestOkur.Domain.Model.ExamModel.Exam;
 
-	using Exam = TestOkur.Domain.Model.ExamModel.Exam;
-
-	public class StartScanSessionCommandHandler
+    public class StartScanSessionCommandHandler
 		: RequestHandlerAsync<StartScanSessionCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
@@ -22,7 +21,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		public override async Task<StartScanSessionCommand> HandleAsync(
 			StartScanSessionCommand command,
 			CancellationToken cancellationToken = default)

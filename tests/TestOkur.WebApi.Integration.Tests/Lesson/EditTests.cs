@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.Contracts.Lesson;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Lesson.Commands;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.Contracts.Lesson;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Lesson.Commands;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class EditTests : LessonTest
+    public class EditTests : LessonTest
 	{
 		[Fact]
 		public async Task When_ValidValuesPosted_Then_ShouldBeEdited()

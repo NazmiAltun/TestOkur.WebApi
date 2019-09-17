@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks
 {
-	using System.Threading.Tasks;
+    using System.Threading.Tasks;
 
-	internal interface ISendLicenseExpirationNotice
+    internal interface ISendLicenseExpirationNotice
 	{
 		Task NotifyUsersAsync();
 	}

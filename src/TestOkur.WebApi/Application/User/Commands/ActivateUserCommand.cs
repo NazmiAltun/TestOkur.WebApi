@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class ActivateUserCommand : CommandBase
+    [DataContract]
+    public class ActivateUserCommand : CommandBase
 	{
 		public ActivateUserCommand(string email)
 		{

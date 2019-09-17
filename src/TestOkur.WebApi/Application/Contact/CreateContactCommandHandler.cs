@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class CreateContactCommandHandler
+    public sealed class CreateContactCommandHandler
 		: RequestHandlerAsync<CreateContactCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
@@ -26,7 +26,6 @@
 		}
 
 		[Idempotent(2)]
-		[Populate(3)]
 		[ClearCache(4)]
 		public override async Task<CreateContactCommand> HandleAsync(
 			CreateContactCommand command,

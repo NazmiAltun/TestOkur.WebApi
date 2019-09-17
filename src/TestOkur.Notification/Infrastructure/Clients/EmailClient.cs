@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-	using System.Net;
-	using System.Net.Mail;
-	using System.Threading.Tasks;
-	using TestOkur.Notification.Configuration;
+    using System.Net;
+    using System.Net.Mail;
+    using System.Threading.Tasks;
+    using TestOkur.Notification.Configuration;
 
-	public class EmailClient : IEmailClient
+    public class EmailClient : IEmailClient
 	{
 		private readonly SmtpConfiguration _smtpConfiguration;
 

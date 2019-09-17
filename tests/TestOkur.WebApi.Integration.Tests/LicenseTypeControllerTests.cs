@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.LicenseType;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.LicenseType;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class LicenseTypeControllerTests : Test
+    public class LicenseTypeControllerTests : Test
     {
         private const string ApiPath = "api/v1/license-types";
 

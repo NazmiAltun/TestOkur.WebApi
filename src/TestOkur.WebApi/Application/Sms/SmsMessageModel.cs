@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Sms
 {
-	using System.Runtime.Serialization;
+    using System.Runtime.Serialization;
 
-	[DataContract]
-	public class SmsMessageModel
+    [DataContract]
+    public class SmsMessageModel
     {
         public SmsMessageModel(string receiver, string subject, string body)
         {

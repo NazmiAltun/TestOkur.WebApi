@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.LessonModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.LessonModel;
 
-	internal class LessonSeeder : ISeeder
+    internal class LessonSeeder : ISeeder
 	{
 		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 		{

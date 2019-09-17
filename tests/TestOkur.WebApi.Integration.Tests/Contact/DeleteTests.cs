@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Contact
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using Xunit;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Xunit;
 
-	public class DeleteTests : ContactTest
+    public class DeleteTests : ContactTest
 	{
 		[Fact]
 		public async Task ShouldDelete()

@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.SmsModel
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public interface ISmsCreditCalculator
+    public interface ISmsCreditCalculator
     {
         int Calculate(string message);
 

@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.SeedWork
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public abstract class Entity : ValueObject
+    public abstract class Entity : ValueObject
     {
         public long Id { get; protected set; }
 

@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Contact
 {
-	using System;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.TestHelper.Extensions;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.TestHelper.Extensions;
+    using Xunit;
 
-	public class CreateTests : ContactTest
+    public class CreateTests : ContactTest
 	{
 		[Fact]
 		public async Task When_PhoneExists_Then_ShouldReturnBadRequest()

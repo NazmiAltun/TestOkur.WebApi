@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.WebApi.Application.User.Events;
-	using TestOkur.WebApi.Application.User.Queries;
-	using TestOkur.WebApi.Application.User.Services;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.WebApi.Application.User.Events;
+    using TestOkur.WebApi.Application.User.Queries;
+    using TestOkur.WebApi.Application.User.Services;
 
-	public sealed class ActivateUserCommandHandler : RequestHandlerAsync<ActivateUserCommand>
+    public sealed class ActivateUserCommandHandler : RequestHandlerAsync<ActivateUserCommand>
 	{
 		private readonly IPublishEndpoint _publishEndpoint;
 		private readonly IIdentityService _identityService;

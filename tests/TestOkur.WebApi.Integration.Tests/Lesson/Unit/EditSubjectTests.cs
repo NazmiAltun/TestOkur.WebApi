@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson.Unit
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Contracts.Lesson;
-	using TestOkur.WebApi.Application.Lesson.Commands;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Contracts.Lesson;
+    using TestOkur.WebApi.Application.Lesson.Commands;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class EditSubjectTests : UnitTest
+    public class EditSubjectTests : UnitTest
 	{
 		[Fact]
 		public async Task Given_EditSubject_When_ValidModelPosted_Then_Server_Should_UpdateSubject()

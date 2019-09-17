@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Captcha
 {
-	using System;
+    using System;
 
-	public class Captcha
+    public class Captcha
     {
         public Captcha()
         {

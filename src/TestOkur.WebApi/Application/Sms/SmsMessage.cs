@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Sms
 {
-	using System;
-	using TestOkur.Contracts.Sms;
+    using System;
+    using TestOkur.Contracts.Sms;
 
-	public class SmsMessage : SmsMessageModel, ISmsMessage
+    public class SmsMessage : SmsMessageModel, ISmsMessage
 	{
 		public SmsMessage(SmsMessageModel model, int credit)
 		: this(model.Receiver, model.Subject, model.Body, credit)

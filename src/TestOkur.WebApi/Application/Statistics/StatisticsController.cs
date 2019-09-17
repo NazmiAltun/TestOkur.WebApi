@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Statistics
 {
-	using System;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Darker;
-	using TestOkur.Common;
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
 
-	[Route("api/v1/statistics")]
-	[Authorize(AuthorizationPolicies.Public)]
-	public class StatisticsController : ControllerBase
+    [Route("api/v1/statistics")]
+    [Authorize(AuthorizationPolicies.Public)]
+    public class StatisticsController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

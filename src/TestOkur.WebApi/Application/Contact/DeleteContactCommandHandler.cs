@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.StudentModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.StudentModel;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class DeleteContactCommandHandler : RequestHandlerAsync<DeleteContactCommand>
+    public sealed class DeleteContactCommandHandler : RequestHandlerAsync<DeleteContactCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 
@@ -19,7 +19,6 @@
 			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 		}
 
-		[Populate(1)]
 		[ClearCache(2)]
 		public override async Task<DeleteContactCommand> HandleAsync(
 			DeleteContactCommand command,

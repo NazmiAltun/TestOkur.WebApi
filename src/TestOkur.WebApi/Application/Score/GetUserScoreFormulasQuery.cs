@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class GetUserScoreFormulasQuery
+    public class GetUserScoreFormulasQuery
 		: QueryBase<IReadOnlyCollection<ScoreFormulaReadModel>>,
 		ICacheResult
 	{

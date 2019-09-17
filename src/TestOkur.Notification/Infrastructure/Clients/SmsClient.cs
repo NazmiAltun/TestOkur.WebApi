@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-	using System.Collections.Generic;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Extensions;
-	using TestOkur.Notification.Models;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Extensions;
+    using TestOkur.Notification.Models;
 
-	public class SmsClient : ISmsClient
+    public class SmsClient : ISmsClient
 	{
 		private readonly HttpClient _httpClient;
 		private readonly SmsConfiguration _smsConfiguration;

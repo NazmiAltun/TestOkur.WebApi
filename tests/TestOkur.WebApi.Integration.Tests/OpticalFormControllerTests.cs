@@ -1,19 +1,19 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System.Collections.Generic;
-	using System.Drawing;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.Model.OpticalFormModel;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.OpticalForm;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
-	using Xunit.Abstractions;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.OpticalForm;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
+    using Xunit.Abstractions;
 
-	public class OpticalFormControllerTests : Test
+    public class OpticalFormControllerTests : Test
 	{
 		private const string ApiPath = "api/v1/optical-forms";
 

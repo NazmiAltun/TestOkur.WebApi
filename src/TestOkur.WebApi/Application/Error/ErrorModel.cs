@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.Error
 {
-	using System.Runtime.Serialization;
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Alert;
+    using System.Runtime.Serialization;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Alert;
 
-	[DataContract]
-	public class ErrorModel : IntegrationEvent, IUserErrorReceived
+    [DataContract]
+    public class ErrorModel : IntegrationEvent, IUserErrorReceived
 	{
 		public ErrorModel(
 			string userEmail,

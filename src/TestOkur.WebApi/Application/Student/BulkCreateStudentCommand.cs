@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class BulkCreateStudentCommand : CommandBase, IClearCache
+    [DataContract]
+    public class BulkCreateStudentCommand : CommandBase, IClearCache
 	{
 		public BulkCreateStudentCommand(Guid id, IEnumerable<CreateStudentCommand> commands)
 		 : base(id)

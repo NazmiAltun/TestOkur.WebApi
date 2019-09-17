@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Domain
 {
-	using System;
-	using FluentAssertions;
-	using TestOkur.Domain.Model;
-	using Xunit;
+    using System;
+    using FluentAssertions;
+    using TestOkur.Domain.Model;
+    using Xunit;
 
-	public class EmailTests
+    public class EmailTests
 	{
 		[Theory]
 		[InlineData("bilgi@testokur.com")]

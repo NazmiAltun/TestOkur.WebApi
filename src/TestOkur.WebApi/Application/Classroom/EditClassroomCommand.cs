@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public sealed class EditClassroomCommand : CommandBase, IClearCache
+    [DataContract]
+    public sealed class EditClassroomCommand : CommandBase, IClearCache
 	{
 		public EditClassroomCommand(Guid id, int classroomId, string newName, int newGrade)
 			: base(id)
@@ -16,14 +16,14 @@
 			NewGrade = newGrade;
 		}
 
-        public IEnumerable<string> CacheKeys => new[]
+		public IEnumerable<string> CacheKeys => new[]
         {
             $"Classrooms_{UserId}",
             $"Students_{UserId}",
             $"Contacts_{UserId}",
         };
 
-        [DataMember]
+		[DataMember]
 		public int ClassroomId { get; private set; }
 
 		[DataMember]

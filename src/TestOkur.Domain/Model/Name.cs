@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model
 {
-	using System;
-	using TestOkur.Common;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using TestOkur.Common;
+    using TestOkur.Domain.SeedWork;
 
-	public class Name : ValueObject
+    public class Name : ValueObject
 	{
 		protected Name()
 		{

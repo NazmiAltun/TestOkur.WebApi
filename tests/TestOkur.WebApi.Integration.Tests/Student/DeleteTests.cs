@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Student
 {
-	using FluentAssertions;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using TestOkur.Contracts.Student;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Contracts.Student;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class DeleteTests : StudentTest
+    public class DeleteTests : StudentTest
 	{
 		[Fact]
 		public async Task When_StudentExists_Should_Be_Deleted()

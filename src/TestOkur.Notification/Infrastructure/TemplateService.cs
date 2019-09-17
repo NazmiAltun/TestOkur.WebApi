@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
-	using System.IO;
-	using System.Threading.Tasks;
-	using RazorLight;
+    using System.IO;
+    using System.Threading.Tasks;
+    using RazorLight;
 
-	public class TemplateService : ITemplateService
+    public class TemplateService : ITemplateService
 	{
 		private readonly IRazorLightEngine _engine;
 

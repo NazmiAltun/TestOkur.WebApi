@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model
 {
-	using System.Collections.Generic;
-	using TestOkur.Domain.SeedWork;
+    using System.Collections.Generic;
+    using TestOkur.Domain.SeedWork;
 
-	public class SchoolType : Enumeration
+    public class SchoolType : Enumeration
 	{
 		public static readonly SchoolType PrimaryAndSecondary = new SchoolType(1, "Primary And Secondary");
 		public static readonly SchoolType High = new SchoolType(2, "High");

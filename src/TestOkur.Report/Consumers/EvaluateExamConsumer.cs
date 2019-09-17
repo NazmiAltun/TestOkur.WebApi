@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Report.Domain;
-	using TestOkur.Report.Events;
-	using TestOkur.Report.Repositories;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Report.Domain;
+    using TestOkur.Report.Events;
+    using TestOkur.Report.Repositories;
 
-	public class EvaluateExamConsumer : IConsumer<IEvaluateExam>
+    public class EvaluateExamConsumer : IConsumer<IEvaluateExam>
 	{
 		private readonly IOpticalFormRepository _opticalFormRepository;
 		private readonly ILogger<EvaluateExamConsumer> _logger;

@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public sealed class EditLessonCommand : CommandBase, IClearCache
+    [DataContract]
+    public sealed class EditLessonCommand : CommandBase, IClearCache
 	{
 		public EditLessonCommand(Guid id, int lessonId, string newName)
 			: base(id)

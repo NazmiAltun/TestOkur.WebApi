@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.Contracts.User;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.Contracts.User;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class CreateUserTests : UserTest
+    public class CreateUserTests : UserTest
 	{
 		[Fact]
 		public async Task When_InvalidCaptchaPosted_Then_BadRequest_Should_Return()

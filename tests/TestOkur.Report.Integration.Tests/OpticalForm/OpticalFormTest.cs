@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using TestOkur.Optic.Answer;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Integration.Tests.Common;
-	using TestOkur.TestHelper;
-	using TestOkur.TestHelper.Extensions;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using TestOkur.Optic.Answer;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Integration.Tests.Common;
+    using TestOkur.TestHelper;
+    using TestOkur.TestHelper.Extensions;
 
-	public abstract class OpticalFormTest : Test
+    public abstract class OpticalFormTest : Test
 	{
 		protected const string ApiPath = "api/v1/forms";
 		private const string Booklets = "ABCD";

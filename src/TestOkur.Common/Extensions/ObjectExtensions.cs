@@ -1,10 +1,10 @@
 ﻿namespace System
 {
-	using System.Net.Http;
-	using System.Text;
-	using Newtonsoft.Json;
+    using System.Net.Http;
+    using System.Text;
+    using Newtonsoft.Json;
 
-	public static class ObjectExtensions
+    public static class ObjectExtensions
     {
         public static StringContent ToJsonContent<TModel>(this TModel obj)
         {

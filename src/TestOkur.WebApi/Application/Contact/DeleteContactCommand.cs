@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class DeleteContactCommand : CommandBase, IClearCache
+    public sealed class DeleteContactCommand : CommandBase, IClearCache
 	{
 		public DeleteContactCommand(int contactId)
 		{

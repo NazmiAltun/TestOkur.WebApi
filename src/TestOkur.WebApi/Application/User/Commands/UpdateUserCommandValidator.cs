@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using FluentValidation;
-	using TestOkur.Common;
+    using FluentValidation;
+    using TestOkur.Common;
 
-	public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 	{
 		public UpdateUserCommandValidator()
 		{

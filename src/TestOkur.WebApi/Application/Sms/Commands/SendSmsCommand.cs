@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class SendSmsCommand : CommandBase
+    [DataContract]
+    public class SendSmsCommand : CommandBase
 	{
 		public SendSmsCommand(
 			Guid id,

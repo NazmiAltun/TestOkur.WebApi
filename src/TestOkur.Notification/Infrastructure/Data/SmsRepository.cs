@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Data
 {
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using MongoDB.Driver;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Models;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using MongoDB.Driver;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Models;
 
-	internal class SmsRepository : ISmsRepository
+    internal class SmsRepository : ISmsRepository
 	{
 		private readonly TestOkurContext _context;
 

@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class GetAllUsersQuery :
+    public class GetAllUsersQuery :
 		QueryBase<IReadOnlyCollection<UserReadModel>>,
 		ICacheResult
 	{

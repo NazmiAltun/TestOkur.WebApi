@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
-	using System;
-	using System.Collections.Generic;
-	using Paramore.Darker;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using Paramore.Darker;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class GetAllOpticalFormTypesQuery :
+    public sealed class GetAllOpticalFormTypesQuery :
         IQuery<IReadOnlyCollection<OpticalFormTypeReadModel>>,
         ICacheResult
     {

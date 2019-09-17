@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Contracts
 {
-	using System;
+    using System;
 
-	public interface IIntegrationEvent
+    public interface IIntegrationEvent
     {
         Guid Id { get; }
 

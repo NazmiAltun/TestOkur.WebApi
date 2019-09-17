@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Classroom;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Classroom;
 
-	public class ClassroomDeleted : IntegrationEvent, IClassroomDeleted
+    public class ClassroomDeleted : IntegrationEvent, IClassroomDeleted
 	{
 		public ClassroomDeleted(int classroomId)
 		{

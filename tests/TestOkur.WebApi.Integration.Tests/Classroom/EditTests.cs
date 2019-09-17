@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Classroom
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.Contracts.Classroom;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Classroom;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.Contracts.Classroom;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Classroom;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class EditTests : ClassroomTest
+    public class EditTests : ClassroomTest
 	{
 		[Fact]
 		public async Task WhenExistingValuesPosted_Then_BadRequestShouldBeReturned()

@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Queries
 {
-	using System.Collections.Generic;
-	using TestOkur.WebApi.Application.OpticalForm;
+    using System.Collections.Generic;
+    using TestOkur.WebApi.Application.OpticalForm;
 
-	public class ExamTypeReadModel
+    public class ExamTypeReadModel
     {
         public int Id { get; set; }
 

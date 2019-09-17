@@ -1,21 +1,21 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Common.Configuration;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Captcha;
-	using TestOkur.WebApi.Application.User.Events;
-	using TestOkur.WebApi.Application.User.Queries;
-	using TestOkur.WebApi.Application.User.Services;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Common.Configuration;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Captcha;
+    using TestOkur.WebApi.Application.User.Events;
+    using TestOkur.WebApi.Application.User.Queries;
+    using TestOkur.WebApi.Application.User.Services;
 
-	public sealed class SendResetPasswordLinkCommandHandler : RequestHandlerAsync<SendResetPasswordLinkCommand>
+    public sealed class SendResetPasswordLinkCommandHandler : RequestHandlerAsync<SendResetPasswordLinkCommand>
 	{
 		private readonly IQueryProcessor _queryProcessor;
 		private readonly ICaptchaService _captchaService;

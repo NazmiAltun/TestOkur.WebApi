@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using Paramore.Brighter;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using Paramore.Brighter;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class AddSmsCreditsCommand : Command, IClearCache
+    [DataContract]
+    public class AddSmsCreditsCommand : Command, IClearCache
 	{
 		public AddSmsCreditsCommand(Guid commandId, int userId, int amount)
 			: base(commandId)

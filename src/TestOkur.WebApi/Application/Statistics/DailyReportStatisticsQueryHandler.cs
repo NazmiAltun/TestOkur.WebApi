@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Statistics
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.WebApi.Configuration;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.WebApi.Configuration;
 
 	//TODO:IMplement
-	public sealed class DailyReportStatisticsQueryHandler
+    public sealed class DailyReportStatisticsQueryHandler
         : QueryHandlerAsync<DailyReportStatisticsQuery, DailyReportStatisticsReadModel>
     {
         private readonly string _connectionString;

@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using FluentValidation;
+    using FluentValidation;
 
-	public class BulkCreateStudentCommandValidator : AbstractValidator<BulkCreateStudentCommand>
+    public class BulkCreateStudentCommandValidator : AbstractValidator<BulkCreateStudentCommand>
 	{
 		public BulkCreateStudentCommandValidator()
 		{

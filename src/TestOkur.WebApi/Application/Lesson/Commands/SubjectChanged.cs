@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Lesson;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Lesson;
 
-	public class SubjectChanged : IntegrationEvent, ISubjectChanged
+    public class SubjectChanged : IntegrationEvent, ISubjectChanged
 	{
 		public SubjectChanged(int subjectId, string newName)
 		{

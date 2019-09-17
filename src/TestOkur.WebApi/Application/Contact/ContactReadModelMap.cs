@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
-	using Dapper.FluentMap.Mapping;
+    using Dapper.FluentMap.Mapping;
 
-	public class ContactReadModelMap : EntityMap<ContactReadModel>
+    public class ContactReadModelMap : EntityMap<ContactReadModel>
 	{
 		public ContactReadModelMap()
 		{

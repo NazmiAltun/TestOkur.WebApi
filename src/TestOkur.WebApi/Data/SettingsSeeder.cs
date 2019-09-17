@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.SettingModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.SettingModel;
 
-	internal class SettingsSeeder : ISeeder
+    internal class SettingsSeeder : ISeeder
     {
 	    private AppSetting AdminPhones =>
 		    new AppSetting(
@@ -31,7 +31,7 @@
 	    private AppSetting SystemAdminEmails =>
 		    new AppSetting(
 			    AppSettings.SystemAdminEmails,
-                "nazmialtun@windowslive.com;necatiyalcin@gmail.com;fuatkayadelen@hotmail.com",
+			    "nazmialtun@windowslive.com;necatiyalcin@gmail.com;fuatkayadelen@hotmail.com",
 			    "Sistem yoneticisi e-posta adresi.Her bir e-posta adresinden sonra ';' eklemek gerekiyor");
 
 	    private AppSetting DailyJobRunTime =>

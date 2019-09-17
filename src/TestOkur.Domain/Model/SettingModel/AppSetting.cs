@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.SettingModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class AppSetting : Entity, IAuditable
+    public class AppSetting : Entity, IAuditable
     {
         public AppSetting(Name name, string value, string comment)
         {

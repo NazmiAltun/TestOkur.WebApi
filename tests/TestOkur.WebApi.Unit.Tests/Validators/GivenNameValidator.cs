@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Validators
 {
-	using FluentAssertions;
-	using FluentValidation.Internal;
-	using FluentValidation.Validators;
-	using TestOkur.Common;
-	using TestOkur.WebApi.Validators;
-	using Xunit;
+    using FluentAssertions;
+    using FluentValidation.Internal;
+    using FluentValidation.Validators;
+    using TestOkur.Common;
+    using TestOkur.WebApi.Validators;
+    using Xunit;
 
-	public class GivenNameValidator
+    public class GivenNameValidator
 	{
 		private readonly NameValidator _validator;
 		private readonly PropertyRule _propertyRule;

@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Exam
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using TestOkur.WebApi.Application.Scan;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using TestOkur.WebApi.Application.Scan;
+    using Xunit;
 
-	public class ScanTests : ExamTest
+    public class ScanTests : ExamTest
 	{
 		protected new const string ApiPath = "api/v1/scan-sessions";
 

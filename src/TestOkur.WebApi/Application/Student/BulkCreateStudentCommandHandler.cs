@@ -1,18 +1,18 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.StudentModel;
-	using TestOkur.Infrastructure.Cqrs;
-	using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.StudentModel;
+    using TestOkur.Infrastructure.Cqrs;
+    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
-	public class BulkCreateStudentCommandHandler : RequestHandlerAsync<BulkCreateStudentCommand>
+    public class BulkCreateStudentCommandHandler : RequestHandlerAsync<BulkCreateStudentCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 
@@ -22,7 +22,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<BulkCreateStudentCommand> HandleAsync(
 			BulkCreateStudentCommand command,

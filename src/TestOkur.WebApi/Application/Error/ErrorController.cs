@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Error
 {
-	using System.IO;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using TestOkur.Common;
+    using System.IO;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using TestOkur.Common;
 
-	[Route("api/v1/error")]
-	[Authorize(AuthorizationPolicies.Customer)]
-	public class ErrorController : ControllerBase
+    [Route("api/v1/error")]
+    [Authorize(AuthorizationPolicies.Customer)]
+    public class ErrorController : ControllerBase
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IPublishEndpoint _publishEndpoint;

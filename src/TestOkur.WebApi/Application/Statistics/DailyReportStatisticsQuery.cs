@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Statistics
 {
-	using Paramore.Darker;
+    using Paramore.Darker;
 
-	public class DailyReportStatisticsQuery
+    public class DailyReportStatisticsQuery
         : IQuery<DailyReportStatisticsReadModel>
     {
     }

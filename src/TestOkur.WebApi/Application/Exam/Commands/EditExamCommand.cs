@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.Optic.Form;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Optic.Form;
 
-	[DataContract]
-	public class EditExamCommand : CommandBase, IClearCache
+    [DataContract]
+    public class EditExamCommand : CommandBase, IClearCache
 	{
 		public EditExamCommand(
 			Guid id,

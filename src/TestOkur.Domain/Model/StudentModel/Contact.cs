@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.StudentModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class Contact : Entity, IAuditable
+    public class Contact : Entity, IAuditable
 	{
 		public Contact(Name firstName, Name lastName, Phone phone, ContactType contactType, string labels)
 		{

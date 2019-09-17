@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Domain
 {
-	using FluentAssertions;
-	using TestOkur.Domain.SeedWork;
-	using Xunit;
+    using FluentAssertions;
+    using TestOkur.Domain.SeedWork;
+    using Xunit;
 
-	public class ValueObjectTests
+    public class ValueObjectTests
 	{
 		[Fact]
 		public void GivenEqualityOperator_WhenObjectsHaveSameProperties_Then_ResultShouldBeTrue()

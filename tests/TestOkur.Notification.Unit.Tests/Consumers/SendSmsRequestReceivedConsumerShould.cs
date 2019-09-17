@@ -1,23 +1,23 @@
 ﻿namespace TestOkur.Notification.Unit.Tests.Consumers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using MassTransit;
-	using Microsoft.Extensions.Logging;
-	using NSubstitute;
-	using RichardSzalay.MockHttp;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Consumers;
-	using TestOkur.Notification.Infrastructure.Clients;
-	using TestOkur.Notification.Infrastructure.Data;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using NSubstitute;
+    using RichardSzalay.MockHttp;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Consumers;
+    using TestOkur.Notification.Infrastructure.Clients;
+    using TestOkur.Notification.Infrastructure.Data;
+    using Xunit;
 
-	public class SendSmsRequestReceivedConsumerShould
+    public class SendSmsRequestReceivedConsumerShould
     {
         private readonly IWebApiClient _webApiClient;
         private readonly SmsConfiguration _configuration;

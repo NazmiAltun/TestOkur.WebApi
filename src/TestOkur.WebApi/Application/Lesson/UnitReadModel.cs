@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public class UnitReadModel
+    public class UnitReadModel
 	{
 		public int Id { get; set; }
 

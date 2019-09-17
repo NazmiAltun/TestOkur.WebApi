@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Migrations
 {
-	using System;
-	using Microsoft.EntityFrameworkCore.Migrations;
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
 
-	public partial class SmsGroupdAndContactAuditable : Migration
+    public partial class SmsGroupdAndContactAuditable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

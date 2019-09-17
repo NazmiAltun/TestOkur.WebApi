@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
-	using Hangfire.Dashboard;
-	using TestOkur.Notification.Configuration;
+    using Hangfire.Dashboard;
+    using TestOkur.Notification.Configuration;
 
-	public class BasicDashboardAuthorizationFilter : IDashboardAuthorizationFilter
+    public class BasicDashboardAuthorizationFilter : IDashboardAuthorizationFilter
 	{
 		private readonly HangfireConfiguration _hangfireConfiguration;
 

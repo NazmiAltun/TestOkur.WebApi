@@ -1,21 +1,21 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Sms
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Sms;
-	using TestOkur.WebApi.Application.Sms.Commands;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using TestOkur.WebApi.Integration.Tests.Extensions;
-	using TestOkur.WebApi.Integration.Tests.User;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Sms;
+    using TestOkur.WebApi.Application.Sms.Commands;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using TestOkur.WebApi.Integration.Tests.Extensions;
+    using TestOkur.WebApi.Integration.Tests.User;
+    using Xunit;
 
-	public class SendSmsTests : UserTest
+    public class SendSmsTests : UserTest
 	{
 		private new const string ApiPath = "api/v1/sms";
 

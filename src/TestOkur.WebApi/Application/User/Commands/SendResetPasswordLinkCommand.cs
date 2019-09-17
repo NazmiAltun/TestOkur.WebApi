@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class SendResetPasswordLinkCommand : CommandBase
+    [DataContract]
+    public class SendResetPasswordLinkCommand : CommandBase
 	{
 		public SendResetPasswordLinkCommand(
 			Guid id,

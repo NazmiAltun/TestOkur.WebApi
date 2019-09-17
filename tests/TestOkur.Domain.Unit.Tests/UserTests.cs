@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Domain
 {
-	using System;
-	using FluentAssertions;
-	using TestOkur.Domain.Model.CityModel;
-	using TestOkur.Domain.Model.UserModel;
-	using TestOkur.Domain.SeedWork;
-	using Xunit;
+    using System;
+    using FluentAssertions;
+    using TestOkur.Domain.Model.CityModel;
+    using TestOkur.Domain.Model.UserModel;
+    using TestOkur.Domain.SeedWork;
+    using Xunit;
 
-	public class UserTests
+    public class UserTests
 	{
 		private readonly User _user;
 

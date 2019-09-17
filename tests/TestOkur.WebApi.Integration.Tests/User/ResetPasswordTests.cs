@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.Contracts.User;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.User.Commands;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.Contracts.User;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.User.Commands;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class ResetPasswordTests : UserTest
+    public class ResetPasswordTests : UserTest
 	{
 		[Theory]
 		[InlineData("")]

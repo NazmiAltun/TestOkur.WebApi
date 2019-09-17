@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Extensions
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Security.Claims;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.TestHost;
-	using Microsoft.Extensions.DependencyInjection;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.User.Queries;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.TestHost;
+    using Microsoft.Extensions.DependencyInjection;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.User.Queries;
 
-	public static class TestServerExtensions
+    public static class TestServerExtensions
 	{
 		private const string UserApiPath = "api/v1/users";
 

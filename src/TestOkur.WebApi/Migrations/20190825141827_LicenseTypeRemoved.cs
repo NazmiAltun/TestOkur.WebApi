@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Migrations
 {
-	using Microsoft.EntityFrameworkCore.Migrations;
+    using Microsoft.EntityFrameworkCore.Migrations;
 
-	public partial class LicenseTypeRemoved : Migration
+    public partial class LicenseTypeRemoved : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,5 +1,10 @@
 ﻿namespace TestOkur.WebApi
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Net.Http;
+    using System.Reflection;
     using CacheManager.Core;
     using Dapper;
     using Dapper.FluentMap;
@@ -28,11 +33,6 @@
     using Prometheus;
     using StackExchange.Redis;
     using Swashbuckle.AspNetCore.Swagger;
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Net.Http;
-    using System.Reflection;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Data;
@@ -216,7 +216,8 @@
 		{
 			services.AddSingleton<ICaptchaService, CaptchaService>();
 			services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
-			services.AddTransient<IUserIdProvider, UserIdProvider>();
+			services.AddScoped<IUserIdProvider, UserIdProvider>();
+			services.AddScoped<IContextCommandProcessor, ContextCommandProcessor>();
 			services.AddHttpContextAccessor();
 		}
 

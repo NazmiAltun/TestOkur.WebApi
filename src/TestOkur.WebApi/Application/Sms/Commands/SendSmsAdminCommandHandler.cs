@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Paramore.Brighter;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Paramore.Brighter;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class SendSmsAdminCommandHandler : RequestHandlerAsync<SendSmsAdminCommand>
+    public sealed class SendSmsAdminCommandHandler : RequestHandlerAsync<SendSmsAdminCommand>
 	{
 		private const string Subject = "TESTOKUR";
 
@@ -21,7 +21,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		public override async Task<SendSmsAdminCommand> HandleAsync(
 			SendSmsAdminCommand command,
 			CancellationToken cancellationToken = default)

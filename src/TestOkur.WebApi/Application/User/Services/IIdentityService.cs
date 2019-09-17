@@ -9,12 +9,12 @@
 
         Task DeleteUserAsync(string id, CancellationToken cancellationToken);
 
-		Task ActivateUserAsync(string email, CancellationToken cancellationToken);
+        Task ActivateUserAsync(string email, CancellationToken cancellationToken);
 
-		Task RegisterUserAsync(CreateCustomerUserModel model, CancellationToken cancellationToken = default);
+        Task RegisterUserAsync(CreateCustomerUserModel model, CancellationToken cancellationToken = default);
 
-		Task UpdateUserAsync(UpdateUserModel model, CancellationToken cancellationToken = default);
+        Task UpdateUserAsync(UpdateUserModel model, CancellationToken cancellationToken = default);
 
-		Task<string> GeneratePasswordResetTokenAsync(string email, CancellationToken cancellationToken = default);
+        Task<string> GeneratePasswordResetTokenAsync(string email, CancellationToken cancellationToken = default);
 	}
 }

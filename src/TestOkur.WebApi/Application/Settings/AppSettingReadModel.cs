@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Settings
 {
-	using System;
+    using System;
 
-	public class AppSettingReadModel
+    public class AppSettingReadModel
     {
         public string Name { get; set; }
 

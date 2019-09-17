@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Events;
-	using TestOkur.Report.Integration.Tests.Common;
-	using TestOkur.TestHelper;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Events;
+    using TestOkur.Report.Integration.Tests.Common;
+    using TestOkur.TestHelper;
+    using Xunit;
 
-	public class DeleteTests : OpticalFormTest
+    public class DeleteTests : OpticalFormTest
 	{
 		[Fact]
 		public async Task ShouldDeleteTheForm_And_ReevaluateTheExam()

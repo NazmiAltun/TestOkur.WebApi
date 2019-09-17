@@ -1,26 +1,26 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.WebApi.Application.Lesson.Commands;
-	using TestOkur.WebApi.Application.Lesson.Queries;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Lesson.Commands;
+    using TestOkur.WebApi.Application.Lesson.Queries;
 
-	[Route("api/v1/units")]
-	[Authorize(AuthorizationPolicies.Customer)]
-	public class UnitController : ControllerBase
+    [Route("api/v1/units")]
+    [Authorize(AuthorizationPolicies.Customer)]
+    public class UnitController : ControllerBase
 	{
-		private readonly IAmACommandProcessor _commandProcessor;
+		private readonly IContextCommandProcessor _commandProcessor;
 		private readonly IQueryProcessor _queryProcessor;
 
-		public UnitController(IQueryProcessor queryProcessor, IAmACommandProcessor commandProcessor)
+		public UnitController(IQueryProcessor queryProcessor, IContextCommandProcessor commandProcessor)
 		{
 			_commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
 			_queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
@@ -31,7 +31,7 @@
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> CreateAsync([FromBody, Required]CreateUnitCommand command)
 		{
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 			return Ok();
 		}
 
@@ -46,7 +46,7 @@
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteAsync(int id)
 		{
-			await _commandProcessor.SendAsync(new DeleteUnitCommand(id));
+			await _commandProcessor.ExecuteAsync(new DeleteUnitCommand(id));
 			return Ok();
 		}
 
@@ -55,7 +55,7 @@
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> EditAsync([FromBody, Required]EditUnitCommand command)
 		{
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 			return Ok();
 		}
 
@@ -65,7 +65,7 @@
 		public async Task<IActionResult> AddSubjectAsync(int unitId, [FromBody, Required]AddSubjectCommand command)
 		{
 			command.UnitId = unitId;
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 			return Ok();
 		}
 
@@ -73,7 +73,7 @@
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<IActionResult> DeleteSubjectAsync(int unitId, int id)
 		{
-			await _commandProcessor.SendAsync(
+			await _commandProcessor.ExecuteAsync(
 				new DeleteSubjectCommand(unitId, id));
 			return Ok();
 		}
@@ -84,7 +84,7 @@
 		public async Task<IActionResult> EditSubjectAsync(int unitId, [FromBody, Required]EditSubjectCommand command)
 		{
 			command.UnitId = unitId;
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 			return Ok();
 		}
 	}

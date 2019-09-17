@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using Microsoft.EntityFrameworkCore;
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.Domain.Model.OpticalFormModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.Domain.Model.OpticalFormModel;
 
-	internal class ExamTypeSeeder : ISeeder
+    internal class ExamTypeSeeder : ISeeder
 	{
 		private List<OpticalFormType> _formTypes;
 

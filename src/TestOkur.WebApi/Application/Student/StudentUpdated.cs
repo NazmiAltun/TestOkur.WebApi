@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Student;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Student;
 
-	public class StudentUpdated : IntegrationEvent, IStudentUpdated
+    public class StudentUpdated : IntegrationEvent, IStudentUpdated
 	{
 		public StudentUpdated(int classroomId, int studentNumber, string lastName, string firstName, int studentId)
 		{

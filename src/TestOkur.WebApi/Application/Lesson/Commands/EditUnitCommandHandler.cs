@@ -1,20 +1,20 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Lesson.Queries;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Lesson.Queries;
 
-	public sealed class EditUnitCommandHandler : RequestHandlerAsync<EditUnitCommand>
+    public sealed class EditUnitCommandHandler : RequestHandlerAsync<EditUnitCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 		private readonly IQueryProcessor _queryProcessor;
@@ -28,7 +28,6 @@
 		}
 
 		[Idempotent(2)]
-		[Populate(3)]
 		[ClearCache(4)]
 		public override async Task<EditUnitCommand> HandleAsync(
 			EditUnitCommand command,

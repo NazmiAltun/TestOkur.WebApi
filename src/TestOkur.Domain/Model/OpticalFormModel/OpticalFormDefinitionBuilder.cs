@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.OpticalFormModel
 {
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
-	public class OpticalFormDefinitionBuilder
+    public class OpticalFormDefinitionBuilder
     {
         private readonly string _name;
         private readonly IList<OpticalFormTextLocation> _textLocations;

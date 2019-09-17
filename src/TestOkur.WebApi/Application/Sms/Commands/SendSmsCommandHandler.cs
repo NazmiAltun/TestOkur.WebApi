@@ -1,25 +1,25 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using IdentityModel;
-	using MassTransit;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.SmsModel;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.User.Queries;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using IdentityModel;
+    using MassTransit;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.SmsModel;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.User.Queries;
 
-	public sealed class SendSmsCommandHandler : RequestHandlerAsync<SendSmsCommand>
+    public sealed class SendSmsCommandHandler : RequestHandlerAsync<SendSmsCommand>
 	{
 		private readonly IQueryProcessor _queryProcessor;
 		private readonly ISmsCreditCalculator _smsCreditCalculator;
@@ -47,7 +47,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		public override async Task<SendSmsCommand> HandleAsync(
 			SendSmsCommand command,
 			CancellationToken cancellationToken = default)

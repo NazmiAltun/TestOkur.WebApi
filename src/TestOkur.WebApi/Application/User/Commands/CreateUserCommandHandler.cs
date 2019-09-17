@@ -1,23 +1,23 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Captcha;
-	using TestOkur.WebApi.Application.LicenseType;
-	using TestOkur.WebApi.Application.User.Events;
-	using TestOkur.WebApi.Application.User.Services;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Captcha;
+    using TestOkur.WebApi.Application.LicenseType;
+    using TestOkur.WebApi.Application.User.Events;
+    using TestOkur.WebApi.Application.User.Services;
 
-	public sealed class CreateUserCommandHandler : RequestHandlerAsync<CreateUserCommand>
+    public sealed class CreateUserCommandHandler : RequestHandlerAsync<CreateUserCommand>
 	{
 		private readonly ICaptchaService _captchaService;
 		private readonly IPublishEndpoint _publishEndpoint;

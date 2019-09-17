@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.ExamModel
 {
-	using System;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using TestOkur.Domain.SeedWork;
 
-	public class IncorrectEliminationRate : ValueObject
+    public class IncorrectEliminationRate : ValueObject
     {
         protected IncorrectEliminationRate()
         {

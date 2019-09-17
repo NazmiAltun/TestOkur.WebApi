@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Common
 {
-	using System;
-	using System.Security.Claims;
-	using IdentityModel;
-	using MassTransit;
-	using MassTransit.RabbitMqTransport;
-	using Microsoft.Extensions.Configuration;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Common;
-	using TestOkur.TestHelper;
+    using System;
+    using System.Security.Claims;
+    using IdentityModel;
+    using MassTransit;
+    using MassTransit.RabbitMqTransport;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Common;
+    using TestOkur.TestHelper;
 
-	public class TestStartup : Startup
+    public class TestStartup : Startup
 	{
 		public TestStartup(IConfiguration configuration, ILoggerFactory loggerFactory)
 			  : base(configuration, loggerFactory)

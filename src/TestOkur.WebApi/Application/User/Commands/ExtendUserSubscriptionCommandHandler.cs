@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-    using MassTransit;
-    using Paramore.Brighter;
-    using Paramore.Darker;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using MassTransit;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Application.User.Services;

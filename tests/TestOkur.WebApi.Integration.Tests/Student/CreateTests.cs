@@ -1,12 +1,9 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Student
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using FluentAssertions;
-    using Newtonsoft.Json;
     using TestOkur.Common;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
@@ -25,12 +22,24 @@
                 var classroomId = await GetClassroomIdAsync(client);
                 var command = new BulkCreateStudentCommand(
                     Guid.NewGuid(),
-                    new[] {
-                    new CreateStudentCommand(Guid.NewGuid(),"A","B",RandomGen.Next(1000),classroomId,null,
-                        new []
-                        {
-                            new CreateContactCommand(Guid.NewGuid(), "A","B",string.Empty, 2),
-                        }),
+                    new[]
+                    {
+                        new CreateStudentCommand(
+                            Guid.NewGuid(),
+                            "A",
+                            "B",
+                            RandomGen.Next(1000),
+                            classroomId,
+                            null,
+                            new[]
+                            {
+                                new CreateContactCommand(
+                                    Guid.NewGuid(),
+                                    "A",
+                                    "B",
+                                    string.Empty,
+                                    2),
+                            }),
                     });
                 var response = await client.PostAsync($"{ApiPath}/bulk", command.ToJsonContent());
                 response.EnsureSuccessStatusCode();

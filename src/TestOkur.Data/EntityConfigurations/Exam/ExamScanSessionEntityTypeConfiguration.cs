@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations.Exam
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.ExamModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.ExamModel;
 
-	internal class ExamScanSessionEntityTypeConfiguration
+    internal class ExamScanSessionEntityTypeConfiguration
 		: IEntityTypeConfiguration<ExamScanSession>
 	{
 		public void Configure(EntityTypeBuilder<ExamScanSession> builder)

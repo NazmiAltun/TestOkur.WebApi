@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.SeedWork
 {
-	using System;
+    using System;
 
-	public class DomainException : Exception
+    public class DomainException : Exception
     {
         protected DomainException(string message)
             : base(message)

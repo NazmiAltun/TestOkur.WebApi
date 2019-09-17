@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using TestOkur.Contracts.Exam;
-	using TestOkur.Report.Repositories;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.Exam;
+    using TestOkur.Report.Repositories;
 
-	internal class ExamUpdatedConsumer : IConsumer<IExamUpdated>
+    internal class ExamUpdatedConsumer : IConsumer<IExamUpdated>
 	{
 		private readonly IOpticalFormRepository _opticalFormRepository;
 		private readonly EvaluateExamConsumer _evaluateExamConsumer;

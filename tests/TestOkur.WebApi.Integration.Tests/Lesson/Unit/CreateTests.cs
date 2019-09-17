@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson.Unit
 {
-	using System;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.TestHelper.Extensions;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.TestHelper.Extensions;
+    using Xunit;
 
-	public class CreateTests : UnitTest
+    public class CreateTests : UnitTest
 	{
 		[Fact]
 		public async Task When_UnitExists_Then_BadRequestShouldBeReturned()

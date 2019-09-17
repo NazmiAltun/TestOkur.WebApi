@@ -1,28 +1,28 @@
 ﻿namespace TestOkur.Data
 {
-	using System;
-	using System.Diagnostics.CodeAnalysis;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.ChangeTracking;
-	using TestOkur.Data.Extensions;
-	using TestOkur.Domain.Model.CityModel;
-	using TestOkur.Domain.Model.ClassroomModel;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.Model.OpticalFormModel;
-	using TestOkur.Domain.Model.ScoreModel;
-	using TestOkur.Domain.Model.SettingModel;
-	using TestOkur.Domain.Model.StudentModel;
-	using TestOkur.Domain.Model.UserModel;
-	using TestOkur.Infrastructure;
-	using TestOkur.Infrastructure.Extensions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using TestOkur.Data.Extensions;
+    using TestOkur.Domain.Model.CityModel;
+    using TestOkur.Domain.Model.ClassroomModel;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.Domain.Model.ScoreModel;
+    using TestOkur.Domain.Model.SettingModel;
+    using TestOkur.Domain.Model.StudentModel;
+    using TestOkur.Domain.Model.UserModel;
+    using TestOkur.Infrastructure;
+    using TestOkur.Infrastructure.Extensions;
 
-	[ExcludeFromCodeCoverage]
-	public class ApplicationDbContext : DbContext
+    [ExcludeFromCodeCoverage]
+    public class ApplicationDbContext : DbContext
 	{
 		private readonly IUserIdProvider _userIdProvider;
 

@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.Model.OpticalFormModel;
-	using TestOkur.Domain.Model.ScoreModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.Domain.Model.ScoreModel;
 
-	internal class ScoreFormulaSeeder : ISeeder
+    internal class ScoreFormulaSeeder : ISeeder
 	{
 	    public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
 	    {

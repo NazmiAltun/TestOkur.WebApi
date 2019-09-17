@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
-	using System;
-	using System.Runtime.Serialization;
+    using System;
+    using System.Runtime.Serialization;
 
-	[Serializable]
-	public class SmsException : Exception
+    [Serializable]
+    public class SmsException : Exception
 	{
 		public SmsException()
 		{

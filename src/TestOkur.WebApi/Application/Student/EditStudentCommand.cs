@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Contact;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Contact;
 
-	[DataContract]
-	public class EditStudentCommand : CommandBase, IClearCache
+    [DataContract]
+    public class EditStudentCommand : CommandBase, IClearCache
     {
         public EditStudentCommand(
 			Guid id,

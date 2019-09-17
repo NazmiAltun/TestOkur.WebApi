@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson
 {
-	using System;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.TestHelper.Extensions;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.TestHelper.Extensions;
+    using Xunit;
 
-	public class CreateTests : LessonTest
+    public class CreateTests : LessonTest
 	{
 		[Fact]
 		public async Task When_Lesson_Exists_Then_BadRequestShouldBeReturned()

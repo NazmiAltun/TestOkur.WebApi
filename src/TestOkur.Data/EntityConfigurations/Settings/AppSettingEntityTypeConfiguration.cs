@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.SettingModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.SettingModel;
 
-	internal class AppSettingEntityTypeConfiguration : IEntityTypeConfiguration<AppSetting>
+    internal class AppSettingEntityTypeConfiguration : IEntityTypeConfiguration<AppSetting>
 	{
 		public void Configure(EntityTypeBuilder<AppSetting> builder)
 		{

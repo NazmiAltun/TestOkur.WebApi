@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using City = TestOkur.Domain.Model.CityModel.City;
-	using User = TestOkur.Domain.Model.UserModel.User;
+    using System;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using City = TestOkur.Domain.Model.CityModel.City;
+    using User = TestOkur.Domain.Model.UserModel.User;
 
-	public sealed class UpdateUserCommandHandler : RequestHandlerAsync<UpdateUserCommand>
+    public sealed class UpdateUserCommandHandler : RequestHandlerAsync<UpdateUserCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 
@@ -21,7 +21,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<UpdateUserCommand> HandleAsync(
 			UpdateUserCommand command,

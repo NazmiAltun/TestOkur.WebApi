@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Report.Configuration
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	public class ReportConfiguration
+    public class ReportConfiguration
 	{
 		[Required]
 		public string ConnectionString { get; set; }

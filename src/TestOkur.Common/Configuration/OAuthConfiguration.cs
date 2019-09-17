@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Common.Configuration
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	public class OAuthConfiguration
+    public class OAuthConfiguration
     {
 		[Required]
 		public string Authority { get; set; }

@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Optic.Answer;
-	using TestOkur.Optic.Form;
-	using TestOkur.Optic.Score;
-	using TestOkur.TestHelper;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Optic.Answer;
+    using TestOkur.Optic.Form;
+    using TestOkur.Optic.Score;
+    using TestOkur.TestHelper;
+    using Xunit;
 
-	public class AddTests : OpticalFormTest
+    public class AddTests : OpticalFormTest
 	{
 		[Fact]
 		public async Task FormWithScoreShouldBeAdded()

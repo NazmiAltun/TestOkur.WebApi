@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using Dapper.FluentMap.Mapping;
+    using Dapper.FluentMap.Mapping;
 
-	public class ClassroomReadModelMap : EntityMap<ClassroomReadModel>
+    public class ClassroomReadModelMap : EntityMap<ClassroomReadModel>
 	{
 		public ClassroomReadModelMap()
 		{

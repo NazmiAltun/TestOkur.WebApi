@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Report.Domain
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Optic.Form;
-	using static System.Math;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Optic.Form;
+    using static System.Math;
 
-	public class AverageList
+    public class AverageList
 	{
 		private readonly string _name;
 		private readonly Func<StudentOpticalFormSection, float> _averageSelector;

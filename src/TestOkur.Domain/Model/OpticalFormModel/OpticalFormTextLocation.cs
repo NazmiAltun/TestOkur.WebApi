@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.OpticalFormModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class OpticalFormTextLocation : Entity
+    public class OpticalFormTextLocation : Entity
     {
         public OpticalFormTextLocation(
             Location name,

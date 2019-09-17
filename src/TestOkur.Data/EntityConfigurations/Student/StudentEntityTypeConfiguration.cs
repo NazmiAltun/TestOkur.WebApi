@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.StudentModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.StudentModel;
 
-	internal class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
+    internal class StudentEntityTypeConfiguration : IEntityTypeConfiguration<Student>
 	{
 		public void Configure(EntityTypeBuilder<Student> builder)
 		{

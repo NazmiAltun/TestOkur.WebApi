@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model.SmsModel
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
-	public class SmsCreditCalculator : ISmsCreditCalculator
+    public class SmsCreditCalculator : ISmsCreditCalculator
 	{
 		private const decimal CharacterCountPerSms = 160;
 

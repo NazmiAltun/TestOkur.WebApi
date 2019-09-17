@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Models
 {
-	using System;
+    using System;
 
-	public class DeductSmsCreditsModel
+    public class DeductSmsCreditsModel
     {
         public Guid Id { get; set; }
 

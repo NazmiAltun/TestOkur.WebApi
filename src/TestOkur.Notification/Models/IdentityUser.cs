@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Models
 {
-	using System;
+    using System;
 
-	public class IdentityUser
+    public class IdentityUser
 	{
 		public string Email { get; set; }
 

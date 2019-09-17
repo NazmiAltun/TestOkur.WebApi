@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using TestOkur.Contracts.User;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Models;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.User;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Models;
 
-	internal class UserSubscriptionExtendedConsumer : IConsumer<IUserSubscriptionExtended>
+    internal class UserSubscriptionExtendedConsumer : IConsumer<IUserSubscriptionExtended>
 	{
         private readonly INotificationFacade _notificationFacade;
 

@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Report.Extensions
 {
-	using IdentityModel;
-	using Microsoft.AspNetCore.Http;
+    using IdentityModel;
+    using Microsoft.AspNetCore.Http;
 
-	public static class IHttpContextAccessorExtensions
+    public static class IHttpContextAccessorExtensions
 	{
 		public static string GetUserId(this IHttpContextAccessor httpContextAccessor)
 		{

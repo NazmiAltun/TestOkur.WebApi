@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model.OpticalFormModel
 {
-	using System;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.SeedWork;
 
-	public class FormLessonSection : Entity
+    public class FormLessonSection : Entity
 	{
 		public FormLessonSection(Lesson lesson, int maxQuestionCount, int formPart)
 			: this(lesson, maxQuestionCount, default, formPart)

@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.Report.Unit.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using FluentAssertions;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Domain;
-	using TestOkur.TestHelper.Extensions;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using FluentAssertions;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Domain;
+    using TestOkur.TestHelper.Extensions;
+    using Xunit;
 
-	public class AverageListTests
+    public class AverageListTests
 	{
 		private readonly Random _random = new Random();
 

@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Statistics
 {
-	using System;
+    using System;
 
-	public class DailyReportStatisticsReadModel
+    public class DailyReportStatisticsReadModel
     {
         public DateTime Today { get; set; }
 

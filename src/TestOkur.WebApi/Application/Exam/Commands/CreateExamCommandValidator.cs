@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using FluentValidation;
+    using FluentValidation;
 
-	public class CreateExamCommandValidator : AbstractValidator<CreateExamCommand>
+    public class CreateExamCommandValidator : AbstractValidator<CreateExamCommand>
 	{
 		public CreateExamCommandValidator()
 		{

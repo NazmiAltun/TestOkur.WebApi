@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class AddSmsCreditsCommandHandler : RequestHandlerAsync<AddSmsCreditsCommand>
+    public class AddSmsCreditsCommandHandler : RequestHandlerAsync<AddSmsCreditsCommand>
 	{
 		private readonly ApplicationDbContext _applicationDbContext;
 		private readonly IPublishEndpoint _publishEndpoint;

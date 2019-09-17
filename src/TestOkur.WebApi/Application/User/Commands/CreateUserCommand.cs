@@ -1,16 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Domain.Model.CityModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Domain.Model.CityModel;
+    using TestOkur.Infrastructure.Cqrs;
+    using City = TestOkur.Domain.Model.CityModel.City;
+    using User = TestOkur.Domain.Model.UserModel.User;
 
-	using City = TestOkur.Domain.Model.CityModel.City;
-	using User = TestOkur.Domain.Model.UserModel.User;
-
-	[DataContract]
-	public class CreateUserCommand : CommandBase, IClearCache
+    [DataContract]
+    public class CreateUserCommand : CommandBase, IClearCache
 	{
 		public CreateUserCommand(
 			Guid id,

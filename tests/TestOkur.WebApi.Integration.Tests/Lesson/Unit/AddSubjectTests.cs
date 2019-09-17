@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson.Unit
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Common;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Lesson.Commands;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Common;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Lesson.Commands;
+    using Xunit;
 
-	public class AddSubjectTests : UnitTest
+    public class AddSubjectTests : UnitTest
 	{
 		[Fact]
 		public async Task Given_AddSubject_When_NameIsEmpty_Then_Server_Should_ReturnBadRequest()

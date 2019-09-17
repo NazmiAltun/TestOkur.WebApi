@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System.Net;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Net;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class HealthCheckTests : Test
+    public class HealthCheckTests : Test
     {
         [Fact]
         public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()

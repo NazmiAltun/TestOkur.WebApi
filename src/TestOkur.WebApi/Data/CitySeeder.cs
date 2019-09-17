@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using OfficeOpenXml;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.CityModel;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using OfficeOpenXml;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.CityModel;
 
-	internal class CitySeeder : ISeeder
+    internal class CitySeeder : ISeeder
 	{
 		private const string CityExcelFilePath = "cities-districts.xlsx";
 

@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Domain.Model.StudentModel
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Domain.Model.ClassroomModel;
-	using TestOkur.Domain.SeedWork;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Domain.Model.ClassroomModel;
+    using TestOkur.Domain.SeedWork;
 
-	public class Student : Entity, IAuditable
+    public class Student : Entity, IAuditable
 	{
 		private readonly List<Contact> _contacts = new List<Contact>();
 

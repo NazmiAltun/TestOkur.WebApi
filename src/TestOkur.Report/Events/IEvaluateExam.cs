@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Report.Events
 {
-	using TestOkur.Contracts;
+    using TestOkur.Contracts;
 
-	public interface IEvaluateExam : IIntegrationEvent
+    public interface IEvaluateExam : IIntegrationEvent
 	{
 		int ExamId { get; }
 	}

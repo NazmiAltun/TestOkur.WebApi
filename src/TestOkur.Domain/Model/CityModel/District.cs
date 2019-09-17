@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.CityModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class District : Entity
+    public class District : Entity
     {
         public District(long id, Name name)
         {

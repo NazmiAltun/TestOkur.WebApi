@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Configuration
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	public class SmsConfiguration
+    public class SmsConfiguration
 	{
 		[Required]
 		public string ServiceUrl { get; set; }

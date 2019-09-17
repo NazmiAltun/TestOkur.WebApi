@@ -1,20 +1,20 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
-	public sealed class EditClassroomCommandHandler : RequestHandlerAsync<EditClassroomCommand>
+    public sealed class EditClassroomCommandHandler : RequestHandlerAsync<EditClassroomCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 		private readonly IQueryProcessor _queryProcessor;
@@ -31,7 +31,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<EditClassroomCommand> HandleAsync(
 			EditClassroomCommand command,

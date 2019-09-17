@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Cache
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using StackExchange.Redis;
-    using System.Threading.Tasks;
 
     [Route("api/cache")]
     [AllowAnonymous]

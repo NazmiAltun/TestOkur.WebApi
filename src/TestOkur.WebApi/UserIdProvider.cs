@@ -1,19 +1,19 @@
 ﻿namespace TestOkur.WebApi
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using CacheManager.Core;
-	using Dapper;
-	using IdentityModel;
-	using Microsoft.AspNetCore.Http;
-	using Npgsql;
-	using TestOkur.Infrastructure;
-	using TestOkur.WebApi.Application.User.Queries;
-	using TestOkur.WebApi.Configuration;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using CacheManager.Core;
+    using Dapper;
+    using IdentityModel;
+    using Microsoft.AspNetCore.Http;
+    using Npgsql;
+    using TestOkur.Infrastructure;
+    using TestOkur.WebApi.Application.User.Queries;
+    using TestOkur.WebApi.Configuration;
 
-	public class UserIdProvider : IUserIdProvider
+    public class UserIdProvider : IUserIdProvider
 	{
 		private const string CacheKey = "UserIdMap";
 

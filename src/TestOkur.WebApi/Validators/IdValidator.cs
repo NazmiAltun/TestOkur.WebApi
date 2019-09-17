@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Validators
 {
-	using System;
-	using FluentValidation.Validators;
+    using System;
+    using FluentValidation.Validators;
 
-	public class IdValidator : PropertyValidator
+    public class IdValidator : PropertyValidator
     {
         public IdValidator(string errorMessage)
             : base(errorMessage)

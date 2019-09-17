@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Contact;
-	using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
-	using Student = TestOkur.Domain.Model.StudentModel.Student;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Contact;
+    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
+    using Student = TestOkur.Domain.Model.StudentModel.Student;
 
-	[DataContract]
-	public class CreateStudentCommand : CommandBase, IClearCache
+    [DataContract]
+    public class CreateStudentCommand : CommandBase, IClearCache
 	{
 		public CreateStudentCommand(
 			Guid id,

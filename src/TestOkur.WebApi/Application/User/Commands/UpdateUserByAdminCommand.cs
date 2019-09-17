@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.User.Services;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.User.Services;
 
-	[DataContract]
-	public class UpdateUserByAdminCommand : CommandBase, IClearCache
+    [DataContract]
+    public class UpdateUserByAdminCommand : CommandBase, IClearCache
 	{
 		public UpdateUserByAdminCommand(
 			Guid id,
@@ -26,7 +26,7 @@
 			int licenseTypeId,
 			DateTime? expiryDateUtc,
 			string notes,
-            bool active)
+			bool active)
 			: base(id)
 		{
 			UpdatedUserId = updatedUserId;
@@ -44,7 +44,7 @@
 			LicenseTypeId = licenseTypeId;
 			ExpiryDateUtc = expiryDateUtc;
 			Notes = notes;
-            Active = active;
+			Active = active;
         }
 
 		public IEnumerable<string> CacheKeys => new[] { "Users" };
@@ -91,8 +91,8 @@
 		[DataMember]
 		public DateTime? ExpiryDateUtc { get; private set; }
 
-        [DataMember]
-        public bool Active { get; private set; }
+		[DataMember]
+		public bool Active { get; private set; }
 
 		[DataMember]
 		public string Notes { get; private set; }
@@ -108,7 +108,7 @@
 				MaxAllowedDeviceCount = MaxAllowedDeviceCount,
 				MaxAllowedStudentCount = MaxAllowedStudentCount,
 				UserId = SubjectId,
-                Active = Active,
+				Active = Active,
 			};
 		}
 	}

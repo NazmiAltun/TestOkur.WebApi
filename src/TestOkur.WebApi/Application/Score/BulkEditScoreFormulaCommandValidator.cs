@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-	using FluentValidation;
+    using FluentValidation;
 
-	public class BulkEditScoreFormulaCommandValidator : AbstractValidator<BulkEditScoreFormulaCommand>
+    public class BulkEditScoreFormulaCommandValidator : AbstractValidator<BulkEditScoreFormulaCommand>
 	{
 		public BulkEditScoreFormulaCommandValidator()
 		{

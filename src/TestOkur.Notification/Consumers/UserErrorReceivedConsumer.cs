@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using TestOkur.Contracts.Alert;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Models;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.Alert;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Models;
 
-	internal class UserErrorReceivedConsumer : IConsumer<IUserErrorReceived>
+    internal class UserErrorReceivedConsumer : IConsumer<IUserErrorReceived>
 	{
 		private readonly INotificationFacade _notificationFacade;
 

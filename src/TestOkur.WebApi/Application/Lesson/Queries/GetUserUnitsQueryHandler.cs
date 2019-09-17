@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Queries
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class GetUserUnitsQueryHandler
+    public sealed class GetUserUnitsQueryHandler
 		: QueryHandlerAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>
 	{
 		private const string Sql = @"SELECT u.Id,

@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks
 {
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Notification.Extensions;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Models;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Notification.Extensions;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Models;
 
-	internal class DailyReport : IDailyReport
+    internal class DailyReport : IDailyReport
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly INotificationFacade _notificationFacade;

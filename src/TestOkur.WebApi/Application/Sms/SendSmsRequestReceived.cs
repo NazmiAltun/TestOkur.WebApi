@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.Sms
 {
-	using System.Collections.Generic;
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Sms;
+    using System.Collections.Generic;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Sms;
 
-	public class SendSmsRequestReceived : IntegrationEvent, ISendSmsRequestReceived
+    public class SendSmsRequestReceived : IntegrationEvent, ISendSmsRequestReceived
     {
         public SendSmsRequestReceived(
             int userId,

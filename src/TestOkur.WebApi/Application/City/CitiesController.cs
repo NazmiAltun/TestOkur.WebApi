@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.City
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Darker;
-	using TestOkur.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
 
-	[Route("api/v1/cities")]
-	[Authorize(AuthorizationPolicies.Public)]
-	public class CitiesController : ControllerBase
+    [Route("api/v1/cities")]
+    [Authorize(AuthorizationPolicies.Public)]
+    public class CitiesController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

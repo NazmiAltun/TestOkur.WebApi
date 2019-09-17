@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Report
 {
-	using System;
-	using System.Net;
-	using Microsoft.AspNetCore;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.Extensions.Logging;
-	using Prometheus.DotNetRuntime;
+    using System;
+    using System.Net;
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Prometheus.DotNetRuntime;
 
-	public static class Program
+    public static class Program
 	{
 		public static void Main(string[] args)
 		{

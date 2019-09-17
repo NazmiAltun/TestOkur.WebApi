@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Localization;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Localization;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class LocalizationApiTests : Test
+    public class LocalizationApiTests : Test
 	{
 		private const string ApiPath = "api/v1/localization";
 

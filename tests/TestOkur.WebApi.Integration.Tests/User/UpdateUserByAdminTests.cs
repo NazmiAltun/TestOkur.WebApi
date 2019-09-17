@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.TestHelper;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.User.Commands;
-	using TestOkur.WebApi.Application.User.Queries;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.TestHelper;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.User.Commands;
+    using TestOkur.WebApi.Application.User.Queries;
+    using Xunit;
 
-	public class UpdateUserByAdminTests : UserTest
+    public class UpdateUserByAdminTests : UserTest
 	{
 		[Fact]
 		public async Task ShouldUpdateUser()
@@ -41,7 +41,7 @@
 					RandomGen.Next(4) + 1,
 					DateTime.Now.AddDays(200),
 					RandomGen.String(100),
-                    true);
+					true);
 				response = await client.PostAsync(
 					$"{ApiPath}/update-by-admin",
 					command.ToJsonContent());

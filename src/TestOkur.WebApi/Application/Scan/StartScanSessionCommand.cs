@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.Scan
 {
-	using System;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class StartScanSessionCommand : CommandBase
+    [DataContract]
+    public class StartScanSessionCommand : CommandBase
 	{
 		public StartScanSessionCommand(
 			Guid id,

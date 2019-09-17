@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Validators
 {
-	using System;
-	using FluentValidation.Validators;
-	using TestOkur.Domain.Model;
+    using System;
+    using FluentValidation.Validators;
+    using TestOkur.Domain.Model;
 
-	public class StudentNumberValidator : PropertyValidator
+    public class StudentNumberValidator : PropertyValidator
     {
         public StudentNumberValidator(string errorMessage)
             : base(errorMessage)

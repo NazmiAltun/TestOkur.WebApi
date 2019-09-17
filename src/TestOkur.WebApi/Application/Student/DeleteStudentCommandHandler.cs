@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using Student = TestOkur.Domain.Model.StudentModel.Student;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using Student = TestOkur.Domain.Model.StudentModel.Student;
 
-	public class DeleteStudentCommandHandler : RequestHandlerAsync<DeleteStudentCommand>
+    public class DeleteStudentCommandHandler : RequestHandlerAsync<DeleteStudentCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 		private readonly IPublishEndpoint _publishEndpoint;
@@ -21,7 +21,6 @@
 			_publishEndpoint = publishEndpoint;
 		}
 
-		[Populate(1)]
 		[ClearCache(2)]
 		public override async Task<DeleteStudentCommand> HandleAsync(
 			DeleteStudentCommand command,

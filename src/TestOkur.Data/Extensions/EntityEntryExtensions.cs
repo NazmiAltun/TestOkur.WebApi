@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Data.Extensions
 {
-	using Microsoft.EntityFrameworkCore.ChangeTracking;
-	using TestOkur.Domain.SeedWork;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using TestOkur.Domain.SeedWork;
 
-	internal static class EntityEntryExtensions
+    internal static class EntityEntryExtensions
 	{
 		public static bool IsAuditable(this EntityEntry entry)
 		{

@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Report.Events
 {
-	using TestOkur.Contracts;
+    using TestOkur.Contracts;
 
-	public class EvaluateExam : IntegrationEvent, IEvaluateExam
+    public class EvaluateExam : IntegrationEvent, IEvaluateExam
 	{
 		public EvaluateExam(int examId)
 		{

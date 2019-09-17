@@ -1,18 +1,18 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Extensions;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Infrastructure.Clients;
-	using TestOkur.Notification.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Extensions;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Infrastructure.Clients;
+    using TestOkur.Notification.Models;
 
-	internal class SendLicenseExpirationNotice : ISendLicenseExpirationNotice
+    internal class SendLicenseExpirationNotice : ISendLicenseExpirationNotice
 	{
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IOAuthClient _oAuthClient;

@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.User.Services;
-	using User = TestOkur.Domain.Model.UserModel.User;
+    using System;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.User.Services;
+    using User = TestOkur.Domain.Model.UserModel.User;
 
-	public sealed class UpdateUserByAdminCommandHandler
+    public sealed class UpdateUserByAdminCommandHandler
 		: RequestHandlerAsync<UpdateUserByAdminCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;

@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model.UserModel
 {
-	using System.Collections.Generic;
-	using TestOkur.Domain.Model.CityModel;
-	using TestOkur.Domain.SeedWork;
+    using System.Collections.Generic;
+    using TestOkur.Domain.Model.CityModel;
+    using TestOkur.Domain.SeedWork;
 
-	public class User : Entity, IAuditable
+    public class User : Entity, IAuditable
 	{
 		public User(
 			string subjectId,

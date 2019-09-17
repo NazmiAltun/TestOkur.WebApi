@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
-	using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
-	[DataContract]
-	public class CreateLessonCommand : CommandBase, IClearCache
+    [DataContract]
+    public class CreateLessonCommand : CommandBase, IClearCache
 	{
 		public CreateLessonCommand(Guid id, string name)
 			: base(id)

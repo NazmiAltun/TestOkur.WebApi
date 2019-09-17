@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.OpticalFormModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.OpticalFormModel;
 
-	internal class OpticalFormTextLocationEntityTypeConfiguration : IEntityTypeConfiguration<OpticalFormTextLocation>
+    internal class OpticalFormTextLocationEntityTypeConfiguration : IEntityTypeConfiguration<OpticalFormTextLocation>
     {
         public void Configure(EntityTypeBuilder<OpticalFormTextLocation> builder)
         {

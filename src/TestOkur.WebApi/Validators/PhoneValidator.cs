@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Validators
 {
-	using FluentValidation.Validators;
-	using TestOkur.Domain.Model;
+    using FluentValidation.Validators;
+    using TestOkur.Domain.Model;
 
-	public class PhoneValidator : PropertyValidator
+    public class PhoneValidator : PropertyValidator
     {
         public PhoneValidator(string errorMessage)
             : base(errorMessage)

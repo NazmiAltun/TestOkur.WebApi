@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.Model.OpticalFormModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.Model.OpticalFormModel;
 
-	internal class OpticalFormsSeeder : ISeeder
+    internal class OpticalFormsSeeder : ISeeder
 	{
 		private OpticalFormDefinition ScholarshipHigh =>
 			new OpticalFormDefinitionBuilder(OpticalFormDefinitions.ScholarshipHigh)

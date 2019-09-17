@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Contracts.Sms
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public interface ISendSmsRequestReceived : IIntegrationEvent
+    public interface ISendSmsRequestReceived : IIntegrationEvent
     {
         int UserId { get; }
 

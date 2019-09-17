@@ -1,19 +1,19 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Microsoft.AspNetCore.Hosting;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Microsoft.AspNetCore.Hosting;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class GetAllOpticalFormTypesQueryHandler : QueryHandlerAsync<GetAllOpticalFormTypesQuery, IReadOnlyCollection<OpticalFormTypeReadModel>>
+    public sealed class GetAllOpticalFormTypesQueryHandler : QueryHandlerAsync<GetAllOpticalFormTypesQuery, IReadOnlyCollection<OpticalFormTypeReadModel>>
 	{
 		private const string FormTypesSelectSql = @"SELECT oft.id,
 								oft.name_value as name,

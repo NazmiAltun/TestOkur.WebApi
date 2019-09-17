@@ -1,13 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Linq;
+using TestOkur.Optic.Form;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Unit.Tests")]
 
 namespace TestOkur.Report.Domain
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Optic.Form;
-
 	public class Evaluator : IEvaluator
 	{
 		public List<StudentOpticalForm> JoinSets(List<StudentOpticalForm> firstSet, List<StudentOpticalForm> secondSet)

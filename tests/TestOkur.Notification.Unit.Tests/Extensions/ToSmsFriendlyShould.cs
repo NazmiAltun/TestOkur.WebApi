@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.Unit.Tests.Extensions
 {
-	using FluentAssertions;
-	using TestOkur.Notification.Extensions;
-	using Xunit;
+    using FluentAssertions;
+    using TestOkur.Notification.Extensions;
+    using Xunit;
 
-	public class ToSmsFriendlyShould
+    public class ToSmsFriendlyShould
 	{
 		[Theory]
 		[InlineData("öçşğüÇŞĞÜÖİı", "ocsguCSGUOIi")]

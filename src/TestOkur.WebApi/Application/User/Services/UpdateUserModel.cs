@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.User.Services
 {
-	using System;
+    using System;
 
-	public class UpdateUserModel
+    public class UpdateUserModel
 	{
 		public string UserId { get; set; }
 
@@ -18,6 +18,6 @@
 
 		public DateTime? ExpiryDateUtc { get; set; }
 
-        public bool? Active { get; set; }
+		public bool? Active { get; set; }
     }
 }

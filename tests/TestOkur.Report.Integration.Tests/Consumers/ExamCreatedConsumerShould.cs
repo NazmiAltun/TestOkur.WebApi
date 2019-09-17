@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Optic.Form;
-	using Xunit;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Optic.Form;
+    using Xunit;
 
-	public class ExamCreatedConsumerShould : ConsumerTest
+    public class ExamCreatedConsumerShould : ConsumerTest
 	{
 		[Fact]
 		public async Task PersistAnswerKeyForms_When_ValidMessagePassed()

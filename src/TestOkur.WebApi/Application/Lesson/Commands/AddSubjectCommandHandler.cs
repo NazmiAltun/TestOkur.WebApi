@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class AddSubjectCommandHandler : RequestHandlerAsync<AddSubjectCommand>
+    public class AddSubjectCommandHandler : RequestHandlerAsync<AddSubjectCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 
@@ -19,7 +19,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<AddSubjectCommand> HandleAsync(
 			AddSubjectCommand command,

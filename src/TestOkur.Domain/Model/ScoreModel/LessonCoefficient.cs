@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.ScoreModel
 {
-	using TestOkur.Domain.Model.OpticalFormModel;
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.Domain.SeedWork;
 
-	public class LessonCoefficient : Entity
+    public class LessonCoefficient : Entity
 	{
 		public LessonCoefficient(
 			FormLessonSection examLessonSection,

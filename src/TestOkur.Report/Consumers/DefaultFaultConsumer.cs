@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
 
-	public class DefaultFaultConsumer : IConsumer<Fault>
+    public class DefaultFaultConsumer : IConsumer<Fault>
 	{
 		private readonly ILogger<DefaultFaultConsumer> _logger;
 

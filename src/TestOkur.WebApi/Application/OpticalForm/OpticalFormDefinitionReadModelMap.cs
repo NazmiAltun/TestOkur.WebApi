@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
-	using Dapper.FluentMap.Mapping;
+    using Dapper.FluentMap.Mapping;
 
-	public class OpticalFormDefinitionReadModelMap : EntityMap<OpticalFormDefinitionReadModel>
+    public class OpticalFormDefinitionReadModelMap : EntityMap<OpticalFormDefinitionReadModel>
     {
         public OpticalFormDefinitionReadModelMap()
         {

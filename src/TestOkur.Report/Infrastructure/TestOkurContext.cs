@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Infrastructure
 {
-	using MongoDB.Driver;
-	using TestOkur.Infrastructure.Mvc;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Configuration;
+    using MongoDB.Driver;
+    using TestOkur.Infrastructure.Mvc;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Configuration;
 
-	public class TestOkurContext
+    public class TestOkurContext
 	{
 		private readonly IMongoDatabase _database = null;
 

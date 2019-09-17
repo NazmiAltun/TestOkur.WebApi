@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.User.Commands;
-	using TestOkur.WebApi.Application.User.Queries;
-	using TestOkur.WebApi.Integration.Tests.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.User.Commands;
+    using TestOkur.WebApi.Application.User.Queries;
+    using TestOkur.WebApi.Integration.Tests.Common;
 
-	public abstract class UserTest : Test
+    public abstract class UserTest : Test
 	{
 		protected const string ApiPath = "api/v1/users";
 

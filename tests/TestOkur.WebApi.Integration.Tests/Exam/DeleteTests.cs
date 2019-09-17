@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Exam
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Contracts.Exam;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Contracts.Exam;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class DeleteTests : ExamTest
+    public class DeleteTests : ExamTest
 	{
 		[Fact]
 		public async Task ShouldDeleteAndPublishEvent()

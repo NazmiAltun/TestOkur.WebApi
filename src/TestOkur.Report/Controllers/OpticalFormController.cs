@@ -1,22 +1,22 @@
 ﻿namespace TestOkur.Report.Controllers
 {
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using TestOkur.Common;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Events;
-	using TestOkur.Report.Extensions;
-	using TestOkur.Report.Repositories;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using TestOkur.Common;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Events;
+    using TestOkur.Report.Extensions;
+    using TestOkur.Report.Repositories;
 
-	[Route("api/v1/forms")]
-	[Authorize(AuthorizationPolicies.Customer)]
-	public class OpticalFormController : ControllerBase
+    [Route("api/v1/forms")]
+    [Authorize(AuthorizationPolicies.Customer)]
+    public class OpticalFormController : ControllerBase
 	{
 		private readonly IPublishEndpoint _publishEndpoint;
 		private readonly IHttpContextAccessor _httpContextAccessor;

@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class CreateClassroomCommandHandler : RequestHandlerAsync<CreateClassroomCommand>
+    public sealed class CreateClassroomCommandHandler : RequestHandlerAsync<CreateClassroomCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 		private readonly IQueryProcessor _queryProcessor;
@@ -25,7 +25,6 @@
 		}
 
 		[Idempotent(2)]
-		[Populate(3)]
 		[ClearCache(4)]
 		public override async Task<CreateClassroomCommand> HandleAsync(
 			CreateClassroomCommand command,

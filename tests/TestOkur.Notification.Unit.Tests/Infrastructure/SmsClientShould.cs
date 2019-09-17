@@ -1,18 +1,18 @@
 ﻿namespace TestOkur.Notification.Unit.Tests.Infrastructure
 {
-	using System;
-	using System.Net;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using RichardSzalay.MockHttp;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Infrastructure.Clients;
-	using TestOkur.Notification.Models;
-	using Xunit;
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using RichardSzalay.MockHttp;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Infrastructure.Clients;
+    using TestOkur.Notification.Models;
+    using Xunit;
 
-	public class SmsClientShould
+    public class SmsClientShould
 	{
 		private readonly SmsConfiguration _configuration;
 

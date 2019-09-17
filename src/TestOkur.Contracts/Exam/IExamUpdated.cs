@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Contracts.Exam
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Optic.Form;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Optic.Form;
 
-	public interface IExamUpdated : IIntegrationEvent
+    public interface IExamUpdated : IIntegrationEvent
 	{
 		int ExamId { get; }
 

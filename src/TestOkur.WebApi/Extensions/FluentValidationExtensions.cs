@@ -1,10 +1,10 @@
 ﻿namespace FluentValidation
 {
-	using TestOkur.Common;
-	using TestOkur.Domain.SeedWork;
-	using TestOkur.WebApi.Validators;
+    using TestOkur.Common;
+    using TestOkur.Domain.SeedWork;
+    using TestOkur.WebApi.Validators;
 
-	public static class FluentValidationExtensions
+    public static class FluentValidationExtensions
     {
 	    public static IRuleBuilderOptions<T, TProperty> StudentNumber<T, TProperty>(
 		    this IRuleBuilder<T, TProperty> ruleBuilder,

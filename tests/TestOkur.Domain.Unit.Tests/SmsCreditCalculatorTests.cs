@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Domain
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using FluentAssertions;
-	using TestOkur.Domain.Model.SmsModel;
-	using Xunit;
+    using System.Collections.Generic;
+    using System.Linq;
+    using FluentAssertions;
+    using TestOkur.Domain.Model.SmsModel;
+    using Xunit;
 
-	public class SmsCreditCalculatorTests
+    public class SmsCreditCalculatorTests
 	{
 		private readonly SmsCreditCalculator _smsCreditCalculator;
 

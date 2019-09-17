@@ -1,21 +1,21 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Error
 {
-	using System;
-	using System.IO;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Http.Internal;
-	using TestOkur.Contracts.Alert;
-	using TestOkur.Infrastructure.Extensions;
-	using TestOkur.TestHelper;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Error;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.IO;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+    using TestOkur.Contracts.Alert;
+    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.TestHelper;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Error;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class ErrorControllerTests : Test
+    public class ErrorControllerTests : Test
 	{
 		private const string ApiPath = "api/v1/error";
 

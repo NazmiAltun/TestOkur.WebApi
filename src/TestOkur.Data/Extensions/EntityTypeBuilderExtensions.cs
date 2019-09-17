@@ -1,10 +1,10 @@
 ﻿namespace Microsoft.EntityFrameworkCore.Metadata.Builders
 {
-	using System;
-	using System.Linq.Expressions;
-	using TestOkur.Domain.Model;
+    using System;
+    using System.Linq.Expressions;
+    using TestOkur.Domain.Model;
 
-	internal static class EntityTypeBuilderExtensions
+    internal static class EntityTypeBuilderExtensions
 	{
 		public static void OwnsEmail<TEntity>(
 			this EntityTypeBuilder<TEntity> builder,

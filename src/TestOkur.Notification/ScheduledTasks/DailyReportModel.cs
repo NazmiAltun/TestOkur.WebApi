@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks
 {
-	using System;
+    using System;
 
-	public class DailyReportModel
+    public class DailyReportModel
 	{
 		public DateTime Today => DateTime.Today;
 

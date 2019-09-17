@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Domain.Model
 {
-	using System;
-	using System.ComponentModel.DataAnnotations;
-	using TestOkur.Common;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using TestOkur.Common;
+    using TestOkur.Domain.SeedWork;
 
-	public class Email : ValueObject
+    public class Email : ValueObject
 	{
 		private static readonly EmailAddressAttribute EmailAddressAttribute = new EmailAddressAttribute();
 

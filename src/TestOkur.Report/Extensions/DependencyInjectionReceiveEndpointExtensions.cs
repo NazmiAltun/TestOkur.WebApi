@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Report.Extensions
 {
-	using System;
-	using MassTransit;
-	using TestOkur.Report.Consumers;
+    using System;
+    using MassTransit;
+    using TestOkur.Report.Consumers;
 
-	public static class DependencyInjectionReceiveEndpointExtensions
+    public static class DependencyInjectionReceiveEndpointExtensions
 	{
 		public static void RegisterConsumers(this IReceiveEndpointConfigurator configurator, IServiceProvider provider, bool isDevelopment)
 		{

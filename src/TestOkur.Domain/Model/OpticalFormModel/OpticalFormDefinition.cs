@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.OpticalFormModel
 {
-	using System.Collections.Generic;
-	using TestOkur.Domain.SeedWork;
+    using System.Collections.Generic;
+    using TestOkur.Domain.SeedWork;
 
-	public class OpticalFormDefinition : Entity
+    public class OpticalFormDefinition : Entity
     {
         public OpticalFormDefinition(
             string name,

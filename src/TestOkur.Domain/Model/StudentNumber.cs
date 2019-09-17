@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model
 {
-	using System;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using TestOkur.Domain.SeedWork;
 
-	public class StudentNumber : ValueObject
+    public class StudentNumber : ValueObject
 	{
 		public const int Min = 0;
 		public const int Max = 99999;

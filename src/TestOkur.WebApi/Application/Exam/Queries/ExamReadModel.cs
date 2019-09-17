@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Queries
 {
-	using System;
+    using System;
 
-	public class ExamReadModel
+    public class ExamReadModel
 	{
 		public int Id { get; set; }
 

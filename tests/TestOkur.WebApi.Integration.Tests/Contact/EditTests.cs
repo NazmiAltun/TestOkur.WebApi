@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Contact
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.TestHelper;
-	using TestOkur.WebApi.Application.Contact;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.TestHelper;
+    using TestOkur.WebApi.Application.Contact;
+    using Xunit;
 
-	public class EditTests : ContactTest
+    public class EditTests : ContactTest
 	{
 		[Fact]
 		public async Task ShoudEditInBulk()

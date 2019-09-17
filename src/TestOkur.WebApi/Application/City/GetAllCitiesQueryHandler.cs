@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.City
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class GetAllCitiesQueryHandler : QueryHandlerAsync<GetAllCitiesQuery, IReadOnlyCollection<CityReadModel>>
+    public sealed class GetAllCitiesQueryHandler : QueryHandlerAsync<GetAllCitiesQuery, IReadOnlyCollection<CityReadModel>>
 	{
 		private const string Sql = @"SELECT c.id,c.name_value as Name, d.id, d.name_value As districtname FROM cities c
                                  INNER JOIN districts d on c.id = d.city_id

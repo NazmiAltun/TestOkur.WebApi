@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.Notification.Unit.Tests.Infrastructure
 {
-	using System;
-	using System.IO;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using RazorLight;
-	using TestOkur.Notification.Infrastructure;
-	using Xunit;
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using RazorLight;
+    using TestOkur.Notification.Infrastructure;
+    using Xunit;
 
-	public class RazorViewToStringRendererShould
+    public class RazorViewToStringRendererShould
 	{
 		private readonly TemplateService _render;
 

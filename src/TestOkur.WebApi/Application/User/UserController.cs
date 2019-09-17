@@ -1,28 +1,28 @@
 ﻿namespace TestOkur.WebApi.Application.User
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel.DataAnnotations;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Brighter;
-	using Paramore.Darker;
-	using TestOkur.Common;
-	using TestOkur.Domain;
-	using TestOkur.WebApi.Application.User.Commands;
-	using TestOkur.WebApi.Application.User.Queries;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
+    using TestOkur.Domain;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.User.Commands;
+    using TestOkur.WebApi.Application.User.Queries;
 
-	[Route("api/v1/users")]
-	public sealed class UserController : ControllerBase
+    [Route("api/v1/users")]
+    public sealed class UserController : ControllerBase
 	{
-		private readonly IAmACommandProcessor _commandProcessor;
+		private readonly IContextCommandProcessor _commandProcessor;
 		private readonly IQueryProcessor _queryProcessor;
 
 		public UserController(
-			IAmACommandProcessor commandProcessor,
-			IQueryProcessor queryProcessor)
+            IContextCommandProcessor commandProcessor,
+            IQueryProcessor queryProcessor)
 		{
 			_commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
 			_queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
@@ -34,7 +34,7 @@
 		[Authorize(AuthorizationPolicies.Public)]
 		public async Task<IActionResult> SendResetPasswordLinkAsync([FromBody, Required]SendResetPasswordLinkCommand command)
 		{
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 
 			return Ok(SuccessCodes.PasswordResetLinkSent);
 		}
@@ -45,7 +45,7 @@
 		[Authorize(AuthorizationPolicies.Customer)]
 		public async Task<IActionResult> UpdateUserAsync([FromBody, Required]UpdateUserCommand command)
 		{
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 
 			return Ok(SuccessCodes.UserUpdated);
 		}
@@ -56,7 +56,7 @@
 		[Authorize(AuthorizationPolicies.Public)]
 		public async Task<IActionResult> CreateUserAsync([FromBody, Required]CreateUserCommand command)
 		{
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 
 			return Ok(SuccessCodes.UserCreated);
 		}
@@ -66,7 +66,7 @@
 		[Authorize(AuthorizationPolicies.Admin)]
 		public async Task<IActionResult> DeleteAsync(int id)
 		{
-			await _commandProcessor.SendAsync(new DeleteUserCommand(id));
+			await _commandProcessor.ExecuteAsync(new DeleteUserCommand(id));
 			return Ok();
 		}
 
@@ -77,7 +77,7 @@
 		public async Task<IActionResult> ActivateAsync([FromQuery, Required]string email)
 		{
 			var command = new ActivateUserCommand(email);
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 			return Ok(SuccessCodes.UserActivated);
 		}
 
@@ -126,17 +126,17 @@
 		[Authorize(AuthorizationPolicies.Admin)]
 		public async Task<IActionResult> UpdateUserByAdminAsync([FromBody, Required]UpdateUserByAdminCommand command)
 		{
-			await _commandProcessor.SendAsync(command);
+			await _commandProcessor.ExecuteAsync(command);
 			return Ok();
 		}
 
 		[HttpPost("extend")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(AuthorizationPolicies.Admin)]
-        public async Task<IActionResult> ExtendSubscriptionAsync([FromBody, Required]ExtendUserSubscriptionCommand command)
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[Authorize(AuthorizationPolicies.Admin)]
+		public async Task<IActionResult> ExtendSubscriptionAsync([FromBody, Required]ExtendUserSubscriptionCommand command)
         {
-            await _commandProcessor.SendAsync(command);
+            await _commandProcessor.ExecuteAsync(command);
             return Ok();
         }
     }

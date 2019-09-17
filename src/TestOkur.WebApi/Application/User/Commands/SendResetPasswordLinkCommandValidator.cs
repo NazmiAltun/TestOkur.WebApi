@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using FluentValidation;
-	using TestOkur.Common;
+    using FluentValidation;
+    using TestOkur.Common;
 
-	public class SendResetPasswordLinkCommandValidator : AbstractValidator<SendResetPasswordLinkCommand>
+    public class SendResetPasswordLinkCommandValidator : AbstractValidator<SendResetPasswordLinkCommand>
 	{
 		public SendResetPasswordLinkCommandValidator()
 		{

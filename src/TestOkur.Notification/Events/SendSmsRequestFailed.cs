@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Notification.Events
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Sms;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Sms;
 
-	internal class SendSmsRequestFailed : IntegrationEvent, ISendSmsRequestFailed
+    internal class SendSmsRequestFailed : IntegrationEvent, ISendSmsRequestFailed
 	{
 		public SendSmsRequestFailed(
 			int userId,

@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-	using MassTransit;
-	using System.Threading.Tasks;
-	using TestOkur.Contracts.Student;
-	using TestOkur.Report.Repositories;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.Student;
+    using TestOkur.Report.Repositories;
 
-	internal class StudentDeletedConsumer : IConsumer<IStudentDeleted>
+    internal class StudentDeletedConsumer : IConsumer<IStudentDeleted>
 	{
 		private readonly EvaluateExamConsumer _evaluateExamConsumer;
 		private readonly IOpticalFormRepository _opticalFormRepository;

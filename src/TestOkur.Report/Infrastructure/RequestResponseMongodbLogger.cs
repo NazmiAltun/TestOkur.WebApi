@@ -1,11 +1,10 @@
 ﻿namespace TestOkur.Report.Infrastructure
 {
-	using System.Threading.Tasks;
+    using System.Threading.Tasks;
+    using TestOkur.Infrastructure.Mvc;
+    using TestOkur.Report.Configuration;
 
-	using TestOkur.Infrastructure.Mvc;
-	using TestOkur.Report.Configuration;
-
-	public class RequestResponseMongodbLogger : IRequestResponseLogger
+    public class RequestResponseMongodbLogger : IRequestResponseLogger
 	{
 		private readonly TestOkurContext _context;
 

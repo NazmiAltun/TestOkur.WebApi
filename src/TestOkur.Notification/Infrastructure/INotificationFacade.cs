@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
-	using System.Threading.Tasks;
-	using TestOkur.Notification.Models;
+    using System.Threading.Tasks;
+    using TestOkur.Notification.Models;
 
-	public interface INotificationFacade
+    public interface INotificationFacade
 	{
 		Task SendSmsAsync<TModel>(TModel model, Template template, string receiver);
 

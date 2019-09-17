@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.ScoreModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.ScoreModel;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class CloneScoreFormulaCommandHandler
+    public sealed class CloneScoreFormulaCommandHandler
 		: RequestHandlerAsync<CloneScoreFormulaCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
@@ -23,7 +23,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<CloneScoreFormulaCommand> HandleAsync(
 			CloneScoreFormulaCommand command,

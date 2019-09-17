@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.OpticalFormModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.OpticalFormModel;
 
-	internal class OpticalFormDefinitionEntityTypeConfiguration : IEntityTypeConfiguration<OpticalFormDefinition>
+    internal class OpticalFormDefinitionEntityTypeConfiguration : IEntityTypeConfiguration<OpticalFormDefinition>
     {
         public void Configure(EntityTypeBuilder<OpticalFormDefinition> builder)
         {

@@ -1,20 +1,20 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Common;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.Notification.Events;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Infrastructure.Clients;
-	using TestOkur.Notification.Infrastructure.Data;
-	using TestOkur.Notification.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Common;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.Notification.Events;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Infrastructure.Clients;
+    using TestOkur.Notification.Infrastructure.Data;
+    using TestOkur.Notification.Models;
 
-	public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>
+    public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>
 	{
 		private readonly ILogger<SendSmsRequestReceivedConsumer> _logger;
 		private readonly ISmsClient _smsClient;

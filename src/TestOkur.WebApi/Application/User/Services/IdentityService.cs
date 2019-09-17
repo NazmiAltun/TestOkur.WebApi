@@ -8,7 +8,6 @@
     using IdentityModel.Client;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
-    using TestOkur.Domain.Model;
 
     public class IdentityService : IIdentityService
     {

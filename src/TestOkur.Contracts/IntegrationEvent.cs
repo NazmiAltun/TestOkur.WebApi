@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Contracts
 {
-	using System;
+    using System;
 
-	public class IntegrationEvent : IIntegrationEvent
+    public class IntegrationEvent : IIntegrationEvent
     {
         public IntegrationEvent()
         {

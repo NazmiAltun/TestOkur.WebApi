@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class UpdateUserCommand : CommandBase, IClearCache
+    [DataContract]
+    public class UpdateUserCommand : CommandBase, IClearCache
 	{
 		public UpdateUserCommand(
 			Guid id,

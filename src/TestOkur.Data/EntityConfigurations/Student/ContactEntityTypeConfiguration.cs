@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.StudentModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.StudentModel;
 
-	internal class ContactEntityTypeConfiguration : IEntityTypeConfiguration<Contact>
+    internal class ContactEntityTypeConfiguration : IEntityTypeConfiguration<Contact>
 	{
 		public void Configure(EntityTypeBuilder<Contact> builder)
 		{

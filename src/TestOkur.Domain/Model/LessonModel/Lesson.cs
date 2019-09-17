@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.LessonModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class Lesson : Entity, IAuditable
+    public class Lesson : Entity, IAuditable
 	{
 		public Lesson(Name name)
 		{

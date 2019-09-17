@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Domain.SeedWork;
 
-	public class Grade : ValueObject
+    public class Grade : ValueObject
 	{
 		public const int Min = 1;
 		public const int Max = 12;

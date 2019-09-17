@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model.ExamModel
 {
-	using System;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Domain.SeedWork;
 
-	public class Exam : Entity, IAuditable
+    public class Exam : Entity, IAuditable
 	{
 		public Exam(
 			Name name,

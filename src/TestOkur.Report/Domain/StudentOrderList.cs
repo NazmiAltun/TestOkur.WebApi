@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Domain
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Optic.Form;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Optic.Form;
 
-	public class StudentOrderList
+    public class StudentOrderList
 	{
 		private readonly string _orderName;
 		private readonly Func<StudentOpticalForm, float> _selector;

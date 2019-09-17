@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Report.Unit.Tests
 {
-	using System;
-	using System.Collections.Generic;
-	using FluentAssertions;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Domain;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using FluentAssertions;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Domain;
+    using Xunit;
 
-	public class StudentOrderListTests
+    public class StudentOrderListTests
 	{
 		private readonly Random _random = new Random();
 

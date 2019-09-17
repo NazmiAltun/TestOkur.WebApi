@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using TestOkur.Contracts.Lesson;
-	using TestOkur.Report.Repositories;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.Lesson;
+    using TestOkur.Report.Repositories;
 
-	internal class SubjectChangedConsumer : IConsumer<ISubjectChanged>
+    internal class SubjectChangedConsumer : IConsumer<ISubjectChanged>
 	{
 		private readonly IOpticalFormRepository _opticalFormRepository;
 

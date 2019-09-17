@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Common
 {
-	using Microsoft.AspNetCore.TestHost;
-	using TestOkur.TestHelper;
+    using Microsoft.AspNetCore.TestHost;
+    using TestOkur.TestHelper;
 
-	public class TestServerFactory : TestServerFactory<TestStartup>
+    public class TestServerFactory : TestServerFactory<TestStartup>
 	{
 		static TestServerFactory()
 		{

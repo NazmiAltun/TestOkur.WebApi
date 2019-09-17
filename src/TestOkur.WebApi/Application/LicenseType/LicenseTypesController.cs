@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.LicenseType
 {
-	using System;
-	using System.Collections.Generic;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Darker;
-	using TestOkur.Common;
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
 
-	[Route("api/v1/license-types")]
-	[Authorize(AuthorizationPolicies.Public)]
-	public class LicenseTypesController : ControllerBase
+    [Route("api/v1/license-types")]
+    [Authorize(AuthorizationPolicies.Public)]
+    public class LicenseTypesController : ControllerBase
 	{
 		private readonly IQueryProcessor _queryProcessor;
 

@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.SeedWork
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Reflection;
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
 
-	public abstract class Enumeration : Entity, IComparable
+    public abstract class Enumeration : Entity, IComparable
     {
         protected Enumeration()
         {

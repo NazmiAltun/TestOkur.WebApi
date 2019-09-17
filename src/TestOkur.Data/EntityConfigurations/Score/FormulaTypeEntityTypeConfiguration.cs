@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations.Score
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.ScoreModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.ScoreModel;
 
-	internal class FormulaTypeEntityTypeConfiguration
+    internal class FormulaTypeEntityTypeConfiguration
 		: IEntityTypeConfiguration<FormulaType>
 	{
 		public void Configure(EntityTypeBuilder<FormulaType> builder)

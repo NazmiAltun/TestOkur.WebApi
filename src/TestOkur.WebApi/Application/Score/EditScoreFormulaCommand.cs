@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
 
-	[DataContract]
-	public class EditScoreFormulaCommand : CommandBase
+    [DataContract]
+    public class EditScoreFormulaCommand : CommandBase
 	{
 		public EditScoreFormulaCommand(
 			int scoreFormulaId,

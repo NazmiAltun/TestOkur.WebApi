@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.OpticalFormModel
 {
-	using System;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using TestOkur.Domain.SeedWork;
 
-	public class Location : ValueObject
+    public class Location : ValueObject
     {
         protected Location()
         {

@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Domain
 {
-	using FluentAssertions;
-	using TestOkur.Domain.SeedWork;
-	using Xunit;
+    using FluentAssertions;
+    using TestOkur.Domain.SeedWork;
+    using Xunit;
 
-	public class EnumerationTests
+    public class EnumerationTests
 	{
 		[Fact]
 		public void Given_GetAll_ShouldReturnAllValues()

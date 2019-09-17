@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Common
 {
-	using System.Security.Claims;
-	using IdentityModel;
-	using Microsoft.AspNetCore.TestHost;
-	using Microsoft.Extensions.DependencyInjection;
-	using TestOkur.TestHelper;
+    using System.Security.Claims;
+    using IdentityModel;
+    using Microsoft.AspNetCore.TestHost;
+    using Microsoft.Extensions.DependencyInjection;
+    using TestOkur.TestHelper;
 
-	public abstract class Test
+    public abstract class Test
 	{
 		private static readonly TestServerFactory TestServerFactory = new TestServerFactory();
 		private TestServer _testServer;

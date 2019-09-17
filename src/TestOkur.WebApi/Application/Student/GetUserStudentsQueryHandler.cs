@@ -1,18 +1,18 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.Contact;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.Contact;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class GetUserStudentsQueryHandler
+    public sealed class GetUserStudentsQueryHandler
 		: QueryHandlerAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>
 	{
 		private const string Sql = @"SELECT s.*,cr.name_value, cr.grade_value,s.classroom_id

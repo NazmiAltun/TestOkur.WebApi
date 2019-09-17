@@ -1,18 +1,18 @@
 ﻿namespace TestOkur.Notification.Unit.Tests.ScheduledTasks
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Hosting;
-	using NSubstitute;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Infrastructure.Clients;
-	using TestOkur.Notification.Models;
-	using TestOkur.Notification.ScheduledTasks;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Hosting;
+    using NSubstitute;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Infrastructure.Clients;
+    using TestOkur.Notification.Models;
+    using TestOkur.Notification.ScheduledTasks;
+    using Xunit;
 
-	public class SendLicenseExpirationNoticeShould
+    public class SendLicenseExpirationNoticeShould
 	{
 		[Fact]
 		public async Task SendEmailAndSmsToSoonToBeExpiredLicenseOwners()

@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Models;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Models;
 
-	internal class SendSmsRequestFailedConsumer : IConsumer<ISendSmsRequestFailed>
+    internal class SendSmsRequestFailedConsumer : IConsumer<ISendSmsRequestFailed>
 	{
         private readonly INotificationFacade _notificationFacade;
 

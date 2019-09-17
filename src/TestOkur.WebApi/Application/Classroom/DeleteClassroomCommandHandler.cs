@@ -1,17 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
+    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
-	using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
-
-	public sealed class DeleteClassroomCommandHandler : RequestHandlerAsync<DeleteClassroomCommand>
+    public sealed class DeleteClassroomCommandHandler : RequestHandlerAsync<DeleteClassroomCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 		private readonly IPublishEndpoint _publishEndpoint;
@@ -22,7 +21,6 @@
 			_publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
 		}
 
-		[Populate(1)]
 		[ClearCache(2)]
 		public override async Task<DeleteClassroomCommand> HandleAsync(
 			DeleteClassroomCommand command,

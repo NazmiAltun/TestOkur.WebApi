@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Score
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using Xunit;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Xunit;
 
-	public class DeleteTests : EditTests
+    public class DeleteTests : EditTests
 	{
 		[Fact]
 		public async Task UsersScoreFormulasShouldBeDeleted()

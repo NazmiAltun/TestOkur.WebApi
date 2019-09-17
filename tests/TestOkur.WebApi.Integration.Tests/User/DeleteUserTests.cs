@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using Xunit;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Xunit;
 
-	public class DeleteUserTests : UserTest
+    public class DeleteUserTests : UserTest
 	{
 		[Fact]
 		public async Task UserShouldBeDeleted()

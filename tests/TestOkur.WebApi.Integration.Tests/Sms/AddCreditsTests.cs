@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Sms
 {
-	using System;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Contracts.Sms;
-	using TestOkur.TestHelper;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Sms.Commands;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using TestOkur.WebApi.Integration.Tests.User;
-	using Xunit;
+    using System;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Contracts.Sms;
+    using TestOkur.TestHelper;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Sms.Commands;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using TestOkur.WebApi.Integration.Tests.User;
+    using Xunit;
 
-	public class AddCreditsTests : UserTest
+    public class AddCreditsTests : UserTest
 	{
 		private new const string ApiPath = "api/v1/sms/add-credits";
 

@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi
 {
-	using System;
-	using System.Net;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.Extensions.Logging;
-	using Prometheus.DotNetRuntime;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Extensions;
-	using TestOkur.WebApi.Data;
+    using System;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Prometheus.DotNetRuntime;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.WebApi.Data;
 
-	public static class Program
+    public static class Program
 	{
 		public static async Task Main(string[] args)
 		{

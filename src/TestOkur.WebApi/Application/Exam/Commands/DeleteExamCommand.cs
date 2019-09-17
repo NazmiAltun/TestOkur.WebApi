@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class DeleteExamCommand : CommandBase, IClearCache
+    public sealed class DeleteExamCommand : CommandBase, IClearCache
 	{
 		public DeleteExamCommand(int examId)
 		{

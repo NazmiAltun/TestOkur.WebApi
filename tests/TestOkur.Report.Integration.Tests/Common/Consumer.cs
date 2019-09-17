@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Common
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using MassTransit.Testing;
-	using TestOkur.Report.Events;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using MassTransit.Testing;
+    using TestOkur.Report.Events;
 
-	internal class Consumer : MultiTestConsumer
+    internal class Consumer : MultiTestConsumer
 	{
 		public Consumer()
 			: base(TimeSpan.FromSeconds(10))

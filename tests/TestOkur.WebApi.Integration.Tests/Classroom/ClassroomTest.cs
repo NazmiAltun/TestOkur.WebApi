@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Classroom
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using TestOkur.Domain.Model;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Classroom;
-	using TestOkur.WebApi.Integration.Tests.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using TestOkur.Domain.Model;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Classroom;
+    using TestOkur.WebApi.Integration.Tests.Common;
 
-	public abstract class ClassroomTest : Test
+    public abstract class ClassroomTest : Test
 	{
 		protected const string ApiPath = "api/v1/classrooms";
 

@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Notification.Models
 {
-	using System;
-	using TestOkur.Contracts.Sms;
+    using System;
+    using TestOkur.Contracts.Sms;
 
-	public class Sms
+    public class Sms
 	{
 		public Sms()
 		{

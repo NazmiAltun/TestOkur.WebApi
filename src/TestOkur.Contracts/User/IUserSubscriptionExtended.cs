@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Contracts.User
 {
-	using System;
+    using System;
 
-	public interface IUserSubscriptionExtended : IIntegrationEvent
+    public interface IUserSubscriptionExtended : IIntegrationEvent
 	{
 		string FirstName { get; }
 

@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Notification
 {
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.Extensions.Hosting;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.Extensions.Hosting;
 
-	public class BusService : IHostedService
+    public class BusService : IHostedService
     {
         private readonly IBusControl _busControl;
 

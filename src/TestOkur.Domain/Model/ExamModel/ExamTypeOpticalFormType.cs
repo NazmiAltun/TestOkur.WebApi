@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.ExamModel
 {
-	using TestOkur.Domain.Model.OpticalFormModel;
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.Domain.SeedWork;
 
-	public class ExamTypeOpticalFormType : Entity
+    public class ExamTypeOpticalFormType : Entity
 	{
 		public ExamTypeOpticalFormType(OpticalFormType opticalFormType)
 		{

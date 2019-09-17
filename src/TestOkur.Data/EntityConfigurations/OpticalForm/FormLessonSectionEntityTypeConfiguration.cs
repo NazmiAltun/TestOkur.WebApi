@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.OpticalFormModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.OpticalFormModel;
 
-	internal class FormLessonSectionEntityTypeConfiguration : IEntityTypeConfiguration<FormLessonSection>
+    internal class FormLessonSectionEntityTypeConfiguration : IEntityTypeConfiguration<FormLessonSection>
     {
         public void Configure(EntityTypeBuilder<FormLessonSection> builder)
         {

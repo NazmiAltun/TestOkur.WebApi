@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Domain.Model.CityModel
 {
-	using System.Collections.Generic;
-	using TestOkur.Domain.SeedWork;
+    using System.Collections.Generic;
+    using TestOkur.Domain.SeedWork;
 
-	public class City : Entity
+    public class City : Entity
     {
         private readonly List<District> _districts;
 

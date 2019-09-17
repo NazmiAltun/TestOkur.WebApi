@@ -1,21 +1,21 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Domain.Model;
-	using TestOkur.TestHelper;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Classroom;
-	using TestOkur.WebApi.Application.Contact;
-	using TestOkur.WebApi.Application.Lesson.Commands;
-	using TestOkur.WebApi.Application.Student;
-	using TestOkur.WebApi.Application.User.Queries;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Domain.Model;
+    using TestOkur.TestHelper;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Classroom;
+    using TestOkur.WebApi.Application.Contact;
+    using TestOkur.WebApi.Application.Lesson.Commands;
+    using TestOkur.WebApi.Application.Student;
+    using TestOkur.WebApi.Application.User.Queries;
+    using Xunit;
 
-	public class GetUserTests : UserTest
+    public class GetUserTests : UserTest
 	{
 		private const string Numbers = "123456789";
 

@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Settings
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class GetAllAppSettingsQueryHandler : QueryHandlerAsync<GetAllAppSettingsQuery, IReadOnlyCollection<AppSettingReadModel>>
+    public sealed class GetAllAppSettingsQueryHandler : QueryHandlerAsync<GetAllAppSettingsQuery, IReadOnlyCollection<AppSettingReadModel>>
     {
         private readonly string _connectionString;
 

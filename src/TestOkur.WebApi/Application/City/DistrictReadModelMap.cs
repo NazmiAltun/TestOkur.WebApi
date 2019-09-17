@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.City
 {
-	using Dapper.FluentMap.Mapping;
+    using Dapper.FluentMap.Mapping;
 
-	public class DistrictReadModelMap : EntityMap<DistrictReadModel>
+    public class DistrictReadModelMap : EntityMap<DistrictReadModel>
     {
         public DistrictReadModelMap()
         {

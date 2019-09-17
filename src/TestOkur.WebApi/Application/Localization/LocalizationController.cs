@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Localization
 {
-	using System;
-	using System.Collections.Generic;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Darker;
-	using TestOkur.Common;
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
 
-	[Route("api/v1/localization")]
-	[Authorize(AuthorizationPolicies.Public)]
-	public class LocalizationController : ControllerBase
+    [Route("api/v1/localization")]
+    [Authorize(AuthorizationPolicies.Public)]
+    public class LocalizationController : ControllerBase
 	{
 		private readonly IQueryProcessor _queryProcessor;
 

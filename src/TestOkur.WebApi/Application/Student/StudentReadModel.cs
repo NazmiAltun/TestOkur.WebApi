@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System.Collections.Generic;
-	using TestOkur.WebApi.Application.Contact;
+    using System.Collections.Generic;
+    using TestOkur.WebApi.Application.Contact;
 
-	public class StudentReadModel
+    public class StudentReadModel
     {
         public int Id { get; set; }
 

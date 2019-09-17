@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Configuration
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
 
-	public class ApplicationConfiguration
+    public class ApplicationConfiguration
 	{
 		[Required]
 		public string ConnectionString { get; set; }

@@ -1,14 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Runtime.Serialization;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
+    using TestOkur.Infrastructure.Cqrs;
+    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
-	using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
-
-	[DataContract]
-	public class CreateClassroomCommand : CommandBase, IClearCache
+    [DataContract]
+    public class CreateClassroomCommand : CommandBase, IClearCache
 	{
 		public CreateClassroomCommand(Guid id, int grade, string name)
 		 : base(id)

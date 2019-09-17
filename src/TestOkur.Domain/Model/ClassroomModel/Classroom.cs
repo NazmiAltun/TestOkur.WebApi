@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.ClassroomModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class Classroom : Entity, IAuditable
+    public class Classroom : Entity, IAuditable
 	{
 		public Classroom(Grade grade, Name name)
 		{

@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Score
 {
-	using System.Threading.Tasks;
-	using Xunit;
+    using System.Threading.Tasks;
+    using Xunit;
 
-	public class GetTests : ScoreTest
+    public class GetTests : ScoreTest
 	{
 		[Fact]
 		public async Task ShouldReturnScoreFormulas()

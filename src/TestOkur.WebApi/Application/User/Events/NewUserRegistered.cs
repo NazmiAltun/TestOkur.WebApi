@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.User.Events
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.User;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.User;
 
-	public class NewUserRegistered : IntegrationEvent, INewUserRegistered
+    public class NewUserRegistered : IntegrationEvent, INewUserRegistered
 	{
 		public NewUserRegistered(
 			string email,

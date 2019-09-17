@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Exam
 {
-	using System;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Contracts.Exam;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Exam.Commands;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Contracts.Exam;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Exam.Commands;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class EditTests : ExamTest
+    public class EditTests : ExamTest
 	{
 		[Fact]
 		public async Task WhenNotExistingValuesPosted_Then_ShouldEdit()

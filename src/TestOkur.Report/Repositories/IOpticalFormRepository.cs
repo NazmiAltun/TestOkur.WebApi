@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Report.Repositories
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq.Expressions;
-	using System.Threading.Tasks;
-	using TestOkur.Contracts.Student;
-	using TestOkur.Optic.Form;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using TestOkur.Contracts.Student;
+    using TestOkur.Optic.Form;
 
-	public interface IOpticalFormRepository
+    public interface IOpticalFormRepository
 	{
 		Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms);
 

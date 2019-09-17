@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.Domain.Model.ExamModel;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.Exam.Queries;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.Domain.Model.ExamModel;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.Exam.Queries;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class ExamTypeControllerTests : Test
+    public class ExamTypeControllerTests : Test
 	{
 		private const string ApiPath = "api/v1/exam-types";
 
@@ -35,31 +35,31 @@
                                   e.AvailableForHighSchool &&
                                   e.AvailableForPrimarySchool &&
                                   e.OpticalFormTypes.Count() == 9);
-                examTypes.Should().Contain(e => e.Name == ExamTypes.Tyt &&
+				examTypes.Should().Contain(e => e.Name == ExamTypes.Tyt &&
                                   e.AvailableForHighSchool &&
                                   !e.AvailableForPrimarySchool);
 
-                examTypes.Should().Contain(e => e.Name == ExamTypes.Lgs &&
+				examTypes.Should().Contain(e => e.Name == ExamTypes.Lgs &&
                                                 !e.AvailableForHighSchool &&
                                                 e.AvailableForPrimarySchool);
 
-                examTypes.Should().Contain(e => e.Name == ExamTypes.Ayt &&
+				examTypes.Should().Contain(e => e.Name == ExamTypes.Ayt &&
                                                 e.AvailableForHighSchool &&
                                                 !e.AvailableForPrimarySchool);
 
-                examTypes.Should().Contain(e => e.Name == ExamTypes.AytLang &&
+				examTypes.Should().Contain(e => e.Name == ExamTypes.AytLang &&
                                                 e.AvailableForHighSchool &&
                                                 !e.AvailableForPrimarySchool);
 
-                examTypes.Should().Contain(e => e.Name == ExamTypes.Scholarship &&
+				examTypes.Should().Contain(e => e.Name == ExamTypes.Scholarship &&
                                                 e.AvailableForHighSchool &&
                                                 e.AvailableForPrimarySchool);
 
-                examTypes.Should().Contain(e => e.Name == ExamTypes.TrialExam &&
+				examTypes.Should().Contain(e => e.Name == ExamTypes.TrialExam &&
                                                 e.AvailableForHighSchool &&
                                                 e.AvailableForPrimarySchool);
 
-                examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
+				examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
 
 				examTypes.Select(e => e.Name)
 					.Should().ContainInOrder(

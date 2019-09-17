@@ -1,42 +1,41 @@
 ﻿using System.Runtime.CompilerServices;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
+using GreenPipes;
+using HealthChecks.UI.Client;
+using MassTransit;
+using MassTransit.RabbitMqTransport;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson.Serialization.Serializers;
+using Prometheus;
+using TestOkur.Common;
+using TestOkur.Common.Configuration;
+using TestOkur.Infrastructure.Extensions;
+using TestOkur.Infrastructure.Mvc;
+using TestOkur.Optic.Form;
+using TestOkur.Report.Configuration;
+using TestOkur.Report.Domain;
+using TestOkur.Report.Extensions;
+using TestOkur.Report.Infrastructure;
+using TestOkur.Report.Repositories;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
 namespace TestOkur.Report
 {
-	using System;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Linq;
-	using System.Reflection;
-	using GreenPipes;
-	using HealthChecks.UI.Client;
-	using MassTransit;
-	using MassTransit.RabbitMqTransport;
-	using Microsoft.AspNetCore.Authentication.JwtBearer;
-	using Microsoft.AspNetCore.Builder;
-	using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Extensions.Configuration;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
-	using Microsoft.Extensions.Options;
-	using MongoDB.Bson;
-	using MongoDB.Bson.Serialization;
-	using MongoDB.Bson.Serialization.IdGenerators;
-	using MongoDB.Bson.Serialization.Serializers;
-	using Prometheus;
-	using TestOkur.Common;
-	using TestOkur.Common.Configuration;
-	using TestOkur.Infrastructure.Extensions;
-	using TestOkur.Infrastructure.Mvc;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Configuration;
-	using TestOkur.Report.Domain;
-	using TestOkur.Report.Extensions;
-	using TestOkur.Report.Infrastructure;
-	using TestOkur.Report.Repositories;
-
 	[ExcludeFromCodeCoverage]
 	public class Startup : IStartup
 	{

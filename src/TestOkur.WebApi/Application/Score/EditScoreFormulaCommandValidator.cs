@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-	using FluentValidation;
-	using TestOkur.Common;
+    using FluentValidation;
+    using TestOkur.Common;
 
-	public class EditScoreFormulaCommandValidator : AbstractValidator<EditScoreFormulaCommand>
+    public class EditScoreFormulaCommandValidator : AbstractValidator<EditScoreFormulaCommand>
 	{
 		public EditScoreFormulaCommandValidator()
 		{

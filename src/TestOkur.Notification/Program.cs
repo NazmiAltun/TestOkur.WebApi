@@ -1,16 +1,15 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Net;
+using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Prometheus.DotNetRuntime;
 
 [assembly: InternalsVisibleTo("TestOkur.Notification.Unit.Tests")]
 
 namespace TestOkur.Notification
 {
-	using System;
-	using System.Net;
-	using Microsoft.AspNetCore;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.Extensions.Logging;
-	using Prometheus.DotNetRuntime;
-
 	public static class Program
 	{
 		public static void Main(string[] args)

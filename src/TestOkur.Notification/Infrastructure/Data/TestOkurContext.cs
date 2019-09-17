@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Data
 {
-	using MongoDB.Driver;
-	using TestOkur.Notification.Configuration;
-	using TestOkur.Notification.Models;
+    using MongoDB.Driver;
+    using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Models;
 
-	public class TestOkurContext
+    public class TestOkurContext
 	{
 		private readonly IMongoDatabase _database = null;
 

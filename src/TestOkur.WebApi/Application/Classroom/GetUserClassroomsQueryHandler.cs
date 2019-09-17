@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class GetUserClassroomsQueryHandler
+    public sealed class GetUserClassroomsQueryHandler
 		: QueryHandlerAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>
 	{
 		private readonly string _connectionString;

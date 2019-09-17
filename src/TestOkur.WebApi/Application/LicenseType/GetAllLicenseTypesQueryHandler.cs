@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.LicenseType
 {
-	using System.Collections.Generic;
-	using Paramore.Darker;
+    using System.Collections.Generic;
+    using Paramore.Darker;
 
-	public sealed class GetAllLicenseTypesQueryHandler : QueryHandler<GetAllLicenseTypesQuery, IReadOnlyCollection<LicenseTypeReadModel>>
+    public sealed class GetAllLicenseTypesQueryHandler : QueryHandler<GetAllLicenseTypesQuery, IReadOnlyCollection<LicenseTypeReadModel>>
 	{
 		public override IReadOnlyCollection<LicenseTypeReadModel> Execute(GetAllLicenseTypesQuery query)
 		{

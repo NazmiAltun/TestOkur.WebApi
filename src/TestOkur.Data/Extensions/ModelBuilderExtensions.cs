@@ -1,12 +1,12 @@
 ﻿namespace Microsoft.EntityFrameworkCore
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Reflection;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using TestOkur.Domain.SeedWork;
 
-	internal static class ModelBuilderExtensions
+    internal static class ModelBuilderExtensions
     {
         public static void AddAuditableProperties(this ModelBuilder modelBuilder)
         {

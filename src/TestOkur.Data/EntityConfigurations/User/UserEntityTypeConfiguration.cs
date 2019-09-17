@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Data.EntityConfigurations
 {
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
-	using TestOkur.Domain.Model.UserModel;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TestOkur.Domain.Model.UserModel;
 
-	internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+    internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 	{
 		public void Configure(EntityTypeBuilder<User> builder)
 		{

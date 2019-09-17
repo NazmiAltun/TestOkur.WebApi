@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson.Unit
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using Xunit;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Xunit;
 
-	public class DeleteTests : UnitTest
+    public class DeleteTests : UnitTest
 	{
 		[Fact]
 		public async Task ShouldDeleteSubject()

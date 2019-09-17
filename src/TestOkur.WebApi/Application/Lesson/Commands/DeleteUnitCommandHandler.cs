@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.LessonModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class DeleteUnitCommandHandler
+    public sealed class DeleteUnitCommandHandler
 		: RequestHandlerAsync<DeleteUnitCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
@@ -19,7 +19,6 @@
 			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 		}
 
-		[Populate(1)]
 		[ClearCache(2)]
 		public override async Task<DeleteUnitCommand> HandleAsync(
 			DeleteUnitCommand command,

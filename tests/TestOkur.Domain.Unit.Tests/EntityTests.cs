@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Unit.Tests.Domain
 {
-	using FluentAssertions;
-	using TestOkur.Domain.SeedWork;
-	using Xunit;
+    using FluentAssertions;
+    using TestOkur.Domain.SeedWork;
+    using Xunit;
 
-	public class EntityTests
+    public class EntityTests
 	{
 		[Fact]
 		public void GivenEntity_WhenIdsAreSame_Then_TheyShouldBeEqual()

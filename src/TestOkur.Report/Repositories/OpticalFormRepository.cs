@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.Report.Repositories
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Linq.Expressions;
-	using System.Threading.Tasks;
-	using MongoDB.Driver;
-	using TestOkur.Contracts.Student;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Configuration;
-	using TestOkur.Report.Infrastructure;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using MongoDB.Driver;
+    using TestOkur.Contracts.Student;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Configuration;
+    using TestOkur.Report.Infrastructure;
 
-	public class OpticalFormRepository : IOpticalFormRepository
+    public class OpticalFormRepository : IOpticalFormRepository
 	{
 		private readonly TestOkurContext _context;
 

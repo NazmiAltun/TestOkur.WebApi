@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model.ScoreModel
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Domain.SeedWork;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Domain.SeedWork;
 
-	public class ScoreFormula : Entity, IAuditable
+    public class ScoreFormula : Entity, IAuditable
 	{
 		private readonly List<LessonCoefficient> _coefficients
 			= new List<LessonCoefficient>();

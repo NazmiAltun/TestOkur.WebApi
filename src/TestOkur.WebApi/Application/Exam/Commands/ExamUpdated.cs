@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Exam;
-	using TestOkur.Optic.Form;
-	using Exam = TestOkur.Domain.Model.ExamModel.Exam;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Exam;
+    using TestOkur.Optic.Form;
+    using Exam = TestOkur.Domain.Model.ExamModel.Exam;
 
-	public class ExamUpdated : IntegrationEvent, IExamUpdated
+    public class ExamUpdated : IntegrationEvent, IExamUpdated
 	{
 		public ExamUpdated(Exam exam, IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms)
 		{

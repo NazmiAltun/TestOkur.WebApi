@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Classroom;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Classroom;
 
-	public class ClassroomUpdated : IntegrationEvent, IClassroomUpdated
+    public class ClassroomUpdated : IntegrationEvent, IClassroomUpdated
 	{
 		public ClassroomUpdated(int classroomId, int grade, string name)
 		{

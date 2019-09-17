@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class GetUserStudentsQuery :
+    public sealed class GetUserStudentsQuery :
 		QueryBase<IReadOnlyCollection<StudentReadModel>>,
 		ICacheResult
     {

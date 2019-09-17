@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
-	using System;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Domain.Model.StudentModel;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Domain.Model.StudentModel;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class BulkEditContactsCommandHandler : RequestHandlerAsync<BulkEditContactsCommand>
+    public class BulkEditContactsCommandHandler : RequestHandlerAsync<BulkEditContactsCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
 
@@ -20,7 +20,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		[ClearCache(3)]
 		public override async Task<BulkEditContactsCommand> HandleAsync(
 			BulkEditContactsCommand command,

@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Localization
 {
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using OfficeOpenXml;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using OfficeOpenXml;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class GetLocalStringsQueryHandler : QueryHandler<GetLocalStringsQuery, IReadOnlyCollection<LocalString>>
+    public class GetLocalStringsQueryHandler : QueryHandler<GetLocalStringsQuery, IReadOnlyCollection<LocalString>>
 	{
 		[QueryLogging(1)]
 		[ResultCaching(2)]

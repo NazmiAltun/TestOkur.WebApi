@@ -1,19 +1,19 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Consumers;
-	using TestOkur.Report.Domain;
-	using TestOkur.Report.Repositories;
-	using TestOkur.TestHelper;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Consumers;
+    using TestOkur.Report.Domain;
+    using TestOkur.Report.Repositories;
+    using TestOkur.TestHelper;
+    using Xunit;
 
-	public class EvaluateExamConsumerShould : ConsumerTest
+    public class EvaluateExamConsumerShould : ConsumerTest
 	{
 		[Fact]
 		public async Task ShouldEvaluateAndSaveResults()

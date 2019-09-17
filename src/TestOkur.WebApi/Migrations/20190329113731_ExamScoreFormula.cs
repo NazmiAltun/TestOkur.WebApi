@@ -1,11 +1,10 @@
 ﻿namespace TestOkur.WebApi.Migrations
 {
-	using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.CodeAnalysis;
+    using Microsoft.EntityFrameworkCore.Migrations;
 
-	using Microsoft.EntityFrameworkCore.Migrations;
-
-	[SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1122:UseStringEmptyForEmptyStrings", Justification = "Reviewed.")]
-	public partial class ExamScoreFormula : Migration
+    [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1122:UseStringEmptyForEmptyStrings", Justification = "Reviewed.")]
+    public partial class ExamScoreFormula : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

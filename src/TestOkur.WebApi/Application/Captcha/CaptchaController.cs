@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Captcha
 {
-	using System;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using TestOkur.Common;
+    using System;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using TestOkur.Common;
 
-	[Route("api/v1/captcha")]
-	[Authorize(AuthorizationPolicies.Public)]
-	public class CaptchaController : ControllerBase
+    [Route("api/v1/captcha")]
+    [Authorize(AuthorizationPolicies.Public)]
+    public class CaptchaController : ControllerBase
     {
         private readonly ICaptchaService _captchaService;
 

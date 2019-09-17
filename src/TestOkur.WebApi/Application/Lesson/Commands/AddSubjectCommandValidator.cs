@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-	using FluentValidation;
-	using TestOkur.Common;
+    using FluentValidation;
+    using TestOkur.Common;
 
-	public class AddSubjectCommandValidator : AbstractValidator<AddSubjectCommand>
+    public class AddSubjectCommandValidator : AbstractValidator<AddSubjectCommand>
     {
         public AddSubjectCommandValidator()
         {

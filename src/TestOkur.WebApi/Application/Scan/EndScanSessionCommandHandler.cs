@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Scan
 {
-	using System;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Microsoft.EntityFrameworkCore;
-	using Paramore.Brighter;
-	using TestOkur.Data;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using TestOkur.Data;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class EndScanSessionCommandHandler
+    public class EndScanSessionCommandHandler
 		: RequestHandlerAsync<EndScanSessionCommand>
 	{
 		private readonly ApplicationDbContext _dbContext;
@@ -19,7 +19,6 @@
 		}
 
 		[Idempotent(1)]
-		[Populate(2)]
 		public override async Task<EndScanSessionCommand> HandleAsync(
 			EndScanSessionCommand command,
 			CancellationToken cancellationToken = default)

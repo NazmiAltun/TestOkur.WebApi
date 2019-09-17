@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
-	using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class GetUserByEmailQuery : QueryBase<UserReadModel>
+    public class GetUserByEmailQuery : QueryBase<UserReadModel>
 	{
 		public GetUserByEmailQuery()
 		{

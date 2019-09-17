@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Domain.Model.StudentModel
 {
-	using TestOkur.Domain.SeedWork;
+    using TestOkur.Domain.SeedWork;
 
-	public class ContactType : Enumeration
+    public class ContactType : Enumeration
 	{
 		public static readonly ContactType Mother = new ContactType(1, "Mother");
 		public static readonly ContactType Father = new ContactType(2, "Father");

@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Domain.Model.LessonModel
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Domain.SeedWork;
 
-	public class Unit : Entity, IAuditable
+    public class Unit : Entity, IAuditable
 	{
 		private readonly List<Subject> _subjects;
 

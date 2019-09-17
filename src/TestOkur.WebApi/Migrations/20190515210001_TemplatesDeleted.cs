@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Migrations
 {
-	using System;
-	using Microsoft.EntityFrameworkCore.Migrations;
-	using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+    using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-	public partial class TemplatesDeleted : Migration
+    public partial class TemplatesDeleted : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,18 +1,18 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Queries
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Dapper;
-	using Npgsql;
-	using Paramore.Darker;
-	using Paramore.Darker.QueryLogging;
-	using TestOkur.Infrastructure.Cqrs;
-	using TestOkur.WebApi.Application.OpticalForm;
-	using TestOkur.WebApi.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
+    using Paramore.Darker.QueryLogging;
+    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.WebApi.Application.OpticalForm;
+    using TestOkur.WebApi.Configuration;
 
-	public sealed class ExamTypeQueryHandler : QueryHandlerAsync<ExamTypeQuery, IReadOnlyCollection<ExamTypeReadModel>>
+    public sealed class ExamTypeQueryHandler : QueryHandlerAsync<ExamTypeQuery, IReadOnlyCollection<ExamTypeReadModel>>
 	{
 		private const string ExamTypesSelectSql = @"
                                 SELECT 

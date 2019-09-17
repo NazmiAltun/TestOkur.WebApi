@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Validators
 {
-	using System;
-	using System.Linq;
-	using FluentValidation.Validators;
-	using TestOkur.Domain.SeedWork;
+    using System;
+    using System.Linq;
+    using FluentValidation.Validators;
+    using TestOkur.Domain.SeedWork;
 
-	public class EnumerationValidator<TEnum> : PropertyValidator
+    public class EnumerationValidator<TEnum> : PropertyValidator
         where TEnum : Enumeration, new()
     {
         public EnumerationValidator(string errorMessage)

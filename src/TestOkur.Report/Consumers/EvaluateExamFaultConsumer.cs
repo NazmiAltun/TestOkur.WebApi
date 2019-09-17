@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using Microsoft.Extensions.Logging;
-	using TestOkur.Report.Events;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using TestOkur.Report.Events;
 
-	internal class EvaluateExamFaultConsumer : IConsumer<Fault<IEvaluateExam>>
+    internal class EvaluateExamFaultConsumer : IConsumer<Fault<IEvaluateExam>>
 	{
 		private readonly ILogger<EvaluateExamFaultConsumer> _logger;
 

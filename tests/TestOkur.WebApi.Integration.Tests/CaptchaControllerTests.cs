@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System;
-	using System.Drawing;
-	using System.Drawing.Imaging;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class CaptchaControllerTests : Test
+    public class CaptchaControllerTests : Test
     {
         private const string ApiPath = "api/v1/captcha";
 

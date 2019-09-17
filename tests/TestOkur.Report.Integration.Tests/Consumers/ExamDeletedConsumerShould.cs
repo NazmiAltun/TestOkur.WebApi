@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using MassTransit;
-	using NSubstitute;
-	using TestOkur.Contracts.Exam;
-	using TestOkur.Optic.Form;
-	using TestOkur.Report.Consumers;
-	using TestOkur.Report.Repositories;
-	using Xunit;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using MassTransit;
+    using NSubstitute;
+    using TestOkur.Contracts.Exam;
+    using TestOkur.Optic.Form;
+    using TestOkur.Report.Consumers;
+    using TestOkur.Report.Repositories;
+    using Xunit;
 
-	public class ExamDeletedConsumerShould : ConsumerTest
+    public class ExamDeletedConsumerShould : ConsumerTest
 	{
 		[Fact]
 		public async Task DeleteOpticalForms()

@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Score
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.WebApi.Application.Score;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.WebApi.Application.Score;
+    using Xunit;
 
-	public class EditTests : ScoreTest
+    public class EditTests : ScoreTest
 	{
 		protected const float BasePoint = 50;
 		protected const float Coefficient = 0.5f;

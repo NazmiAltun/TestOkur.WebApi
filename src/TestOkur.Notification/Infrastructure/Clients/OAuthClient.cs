@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-	using System.Collections.Generic;
-	using System.Net.Http;
-	using System.Threading.Tasks;
-	using IdentityModel.Client;
-	using Newtonsoft.Json;
-	using TestOkur.Common.Configuration;
-	using TestOkur.Notification.Models;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using IdentityModel.Client;
+    using Newtonsoft.Json;
+    using TestOkur.Common.Configuration;
+    using TestOkur.Notification.Models;
 
-	public class OAuthClient : IOAuthClient
+    public class OAuthClient : IOAuthClient
 	{
 		private const string GetUsersPath = "account/users";
 		private readonly HttpClient _httpClient;

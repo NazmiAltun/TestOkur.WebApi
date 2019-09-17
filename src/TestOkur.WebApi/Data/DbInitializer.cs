@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Data
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using TestOkur.Data;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using TestOkur.Data;
 
-	public static class DbInitializer
+    public static class DbInitializer
 	{
 		private static readonly IEnumerable<ISeeder> Seeders = new ISeeder[]
 		{

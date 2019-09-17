@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests
 {
-	using System.Collections.Generic;
-	using System.Globalization;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using FluentAssertions;
-	using TestOkur.TestHelper.Extensions;
-	using TestOkur.WebApi.Application.City;
-	using TestOkur.WebApi.Integration.Tests.Common;
-	using Xunit;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using FluentAssertions;
+    using TestOkur.TestHelper.Extensions;
+    using TestOkur.WebApi.Application.City;
+    using TestOkur.WebApi.Integration.Tests.Common;
+    using Xunit;
 
-	public class CityControllerTests : Test
+    public class CityControllerTests : Test
 	{
 		private const string ApiPath = "api/v1/cities";
 

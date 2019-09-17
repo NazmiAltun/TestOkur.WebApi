@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Extensions
 {
-	using System;
+    using System;
 
-	internal static class StringExtensions
+    internal static class StringExtensions
 	{
 		public static string ToSmsFriendly(this string message)
 		{

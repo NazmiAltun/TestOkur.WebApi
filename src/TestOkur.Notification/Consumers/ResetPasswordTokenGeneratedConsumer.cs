@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
-	using System.Threading.Tasks;
-	using MassTransit;
-	using TestOkur.Contracts.User;
-	using TestOkur.Notification.Infrastructure;
-	using TestOkur.Notification.Models;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using TestOkur.Contracts.User;
+    using TestOkur.Notification.Infrastructure;
+    using TestOkur.Notification.Models;
 
-	internal class ResetPasswordTokenGeneratedConsumer
+    internal class ResetPasswordTokenGeneratedConsumer
 		: IConsumer<IResetPasswordTokenGenerated>
 	{
 		private readonly INotificationFacade _notificationFacade;

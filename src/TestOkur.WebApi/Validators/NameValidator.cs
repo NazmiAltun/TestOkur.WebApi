@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Validators
 {
-	using FluentValidation.Validators;
-	using TestOkur.Domain.Model;
+    using FluentValidation.Validators;
+    using TestOkur.Domain.Model;
 
-	public class NameValidator : PropertyValidator
+    public class NameValidator : PropertyValidator
     {
         public NameValidator(string errorMessage)
             : base(errorMessage)

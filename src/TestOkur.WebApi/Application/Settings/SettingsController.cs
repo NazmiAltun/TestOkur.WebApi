@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Settings
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
-	using Paramore.Darker;
-	using TestOkur.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
+    using TestOkur.Common;
 
-	[Route("api/v1/settings")]
-	[Authorize(AuthorizationPolicies.Private)]
-	public class SettingsController : ControllerBase
+    [Route("api/v1/settings")]
+    [Authorize(AuthorizationPolicies.Private)]
+    public class SettingsController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 

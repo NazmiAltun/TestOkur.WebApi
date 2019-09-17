@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Domain.Model.ScoreModel
 {
-	using System.Collections.Generic;
-	using System.Linq;
-	using TestOkur.Domain.Model.OpticalFormModel;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Domain.Model.OpticalFormModel;
 
-	public class ScoreFormulaBuilder
+    public class ScoreFormulaBuilder
 	{
 		private readonly List<LessonCoefficient> _lessonCoefficients;
 		private readonly List<Grade> _grades;

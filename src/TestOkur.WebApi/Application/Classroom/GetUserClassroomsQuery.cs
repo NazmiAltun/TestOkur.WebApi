@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-	using System;
-	using System.Collections.Generic;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public class GetUserClassroomsQuery :
+    public class GetUserClassroomsQuery :
 		QueryBase<IReadOnlyCollection<ClassroomReadModel>>,
 		ICacheResult
 	{

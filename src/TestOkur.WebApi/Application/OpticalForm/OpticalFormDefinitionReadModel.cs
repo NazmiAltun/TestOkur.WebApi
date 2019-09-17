@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public class OpticalFormDefinitionReadModel
+    public class OpticalFormDefinitionReadModel
     {
         public int Id { get; set; }
 

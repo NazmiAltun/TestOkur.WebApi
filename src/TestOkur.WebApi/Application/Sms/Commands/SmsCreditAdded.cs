@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-	using TestOkur.Contracts;
-	using TestOkur.Contracts.Sms;
+    using TestOkur.Contracts;
+    using TestOkur.Contracts.Sms;
 
-	public class SmsCreditAdded : IntegrationEvent, ISmsCreditAdded
+    public class SmsCreditAdded : IntegrationEvent, ISmsCreditAdded
 	{
 		public SmsCreditAdded(int amount, int totalSmsCredits, string firstName, string lastName, string email, string phone)
 		{

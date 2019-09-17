@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Captcha
 {
-	using System;
-	using System.IO;
+    using System;
+    using System.IO;
 
-	public interface ICaptchaService
+    public interface ICaptchaService
     {
         Stream Generate(Guid id);
 

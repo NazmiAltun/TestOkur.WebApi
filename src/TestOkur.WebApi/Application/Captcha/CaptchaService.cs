@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Captcha
 {
-	using System;
-	using System.Drawing;
-	using System.Drawing.Imaging;
-	using System.IO;
-	using System.Linq;
-	using CacheManager.Core;
+    using System;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+    using System.Linq;
+    using CacheManager.Core;
 
-	public class CaptchaService : ICaptchaService
+    public class CaptchaService : ICaptchaService
 	{
 		private const string Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private const string FontFamily = "Ubuntu";

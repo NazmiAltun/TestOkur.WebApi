@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.City
 {
-	using System;
-	using System.Collections.Generic;
-	using Paramore.Darker;
-	using TestOkur.Infrastructure.Cqrs;
+    using System;
+    using System.Collections.Generic;
+    using Paramore.Darker;
+    using TestOkur.Infrastructure.Cqrs;
 
-	public sealed class GetAllCitiesQuery :
+    public sealed class GetAllCitiesQuery :
         IQuery<IReadOnlyCollection<CityReadModel>>,
         ICacheResult
     {
