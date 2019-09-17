@@ -57,13 +57,15 @@
 		public Student ToDomainModel(Classroom classroom) => ToDomainModel(classroom, UserId);
 
 		public Student ToDomainModel(Classroom classroom, int userId)
-		{
-			return new Student(
+        {
+            var contacts = Contacts?.Select(c => c.ToDomainModel()).Where(x => x != null);
+
+            return new Student(
 				FirstName,
 				LastName,
 				StudentNumber,
 				classroom,
-				Contacts?.Select(c => c.ToDomainModel()) ?? Enumerable.Empty<Domain.Model.StudentModel.Contact>(),
+				Contacts?.Select(c => c.ToDomainModel()).Where(x => x != null) ?? Enumerable.Empty<Domain.Model.StudentModel.Contact>(),
 				Notes);
 		}
 	}

@@ -47,35 +47,7 @@
 			return command;
 		}
 
-		private CreateStudentCommand GenerateCommand(int classroomId)
-		{
-			var contacts = new List<CreateContactCommand>
-			{
-				new CreateContactCommand(
-					Guid.NewGuid(),
-					Random.RandomString(10),
-					Random.RandomString(10),
-					RandomGen.Phone(),
-					1),
-				new CreateContactCommand(
-					Guid.NewGuid(),
-					Random.RandomString(10),
-					Random.RandomString(10),
-					RandomGen.Phone(),
-					1),
-			};
-
-			return new CreateStudentCommand(
-				Guid.NewGuid(),
-				Random.RandomString(6),
-				Random.RandomString(8),
-				Random.Next(StudentNumber.Min, StudentNumber.Max),
-				classroomId,
-				Random.RandomString(200),
-				contacts);
-		}
-
-		private async Task<int> GetClassroomIdAsync(HttpClient client)
+        protected async Task<int> GetClassroomIdAsync(HttpClient client)
 		{
 			const string ApiPath = "api/v1/classrooms";
 
@@ -91,5 +63,33 @@
 
 			return list.First().Id;
 		}
-	}
+
+        private CreateStudentCommand GenerateCommand(int classroomId)
+        {
+            var contacts = new List<CreateContactCommand>
+            {
+                new CreateContactCommand(
+                    Guid.NewGuid(),
+                    Random.RandomString(10),
+                    Random.RandomString(10),
+                    RandomGen.Phone(),
+                    1),
+                new CreateContactCommand(
+                    Guid.NewGuid(),
+                    Random.RandomString(10),
+                    Random.RandomString(10),
+                    RandomGen.Phone(),
+                    1),
+            };
+
+            return new CreateStudentCommand(
+                Guid.NewGuid(),
+                Random.RandomString(6),
+                Random.RandomString(8),
+                Random.Next(StudentNumber.Min, StudentNumber.Max),
+                classroomId,
+                Random.RandomString(200),
+                contacts);
+        }
+    }
 }
