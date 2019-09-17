@@ -22,15 +22,7 @@
 		public static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
 				.UseStartup<Startup>()
-				.UseSentry(options =>
-				{
-					options.MaxBreadcrumbs = 200;
-					options.HttpProxy = null;
-					options.DecompressionMethods = DecompressionMethods.None;
-					options.MaxQueueItems = 100;
-					options.ShutdownTimeout = TimeSpan.FromSeconds(5);
-				})
-				.ConfigureLogging((hostingContext, logging) =>
+                .ConfigureLogging((hostingContext, logging) =>
 				{
 					logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
 					.AddConsole()

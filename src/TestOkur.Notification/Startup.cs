@@ -71,6 +71,7 @@
                 .UseMemoryCachingProvider()
                 .Build());
             services.AddTransient<ISmsRepository, SmsRepository>();
+            services.AddApplicationInsightsTelemetry();
             services.AddMvc();
             return services.BuildServiceProvider();
         }

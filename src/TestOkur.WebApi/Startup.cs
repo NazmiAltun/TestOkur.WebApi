@@ -80,7 +80,8 @@
 					   .AllowAnyMethod()
 					   .AllowAnyHeader();
 			}));
-			services.AddMvc(options =>
+            services.AddApplicationInsightsTelemetry();
+            services.AddMvc(options =>
 				{
 					options.Filters.Add(new ProducesAttribute("application/json"));
 					options.Filters.Add(new ValidateInputFilter());
