@@ -3,6 +3,6 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class GetUserRecordCountsQuery : QueryBase<UserRecords>
-	{
-	}
+    {
+    }
 }

@@ -8,24 +8,24 @@
     [Route("api/cache")]
     [AllowAnonymous]
     public class CacheController : ControllerBase
-	{
-		private readonly IConnectionMultiplexer _connectionMultiplexer;
+    {
+        private readonly IConnectionMultiplexer _connectionMultiplexer;
 
-		public CacheController(IConnectionMultiplexer connectionMultiplexer)
-		{
-			_connectionMultiplexer = connectionMultiplexer;
-		}
+        public CacheController(IConnectionMultiplexer connectionMultiplexer)
+        {
+            _connectionMultiplexer = connectionMultiplexer;
+        }
 
-		[HttpDelete]
-		public async Task<IActionResult> DeleteAsync()
-		{
-			foreach (var endPoint in _connectionMultiplexer.GetEndPoints())
-			{
-				var server = _connectionMultiplexer.GetServer(endPoint);
-				await server.FlushAllDatabasesAsync();
-			}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync()
+        {
+            foreach (var endPoint in _connectionMultiplexer.GetEndPoints())
+            {
+                var server = _connectionMultiplexer.GetServer(endPoint);
+                await server.FlushAllDatabasesAsync();
+            }
 
-			return NoContent();
-		}
-	}
+            return NoContent();
+        }
+    }
 }

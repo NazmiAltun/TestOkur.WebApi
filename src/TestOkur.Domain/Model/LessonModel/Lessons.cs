@@ -17,5 +17,5 @@
         public const string Chemistry = "Kimya";
         public const string History = "Tarih";
         public const string Philosophy = "Felsefe";
-	}
+    }
 }

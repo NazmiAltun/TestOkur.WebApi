@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     public interface IEmailClient
-	{
-		Task SendAsync(MailMessage mailMessage);
-	}
+    {
+        Task SendAsync(MailMessage mailMessage);
+    }
 }

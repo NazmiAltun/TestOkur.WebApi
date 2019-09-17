@@ -4,18 +4,18 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class DeleteStudentCommand : CommandBase, IClearCache
-	{
-		public DeleteStudentCommand(int studentId)
-		{
-			StudentId = studentId;
-		}
+    {
+        public DeleteStudentCommand(int studentId)
+        {
+            StudentId = studentId;
+        }
 
-		public IEnumerable<string> CacheKeys => new[]
-		{
-			$"Students_{UserId}",
-			$"Contacts_{UserId}",
-		};
+        public IEnumerable<string> CacheKeys => new[]
+        {
+            $"Students_{UserId}",
+            $"Contacts_{UserId}",
+        };
 
-		public int StudentId { get; }
-	}
+        public int StudentId { get; }
+    }
 }

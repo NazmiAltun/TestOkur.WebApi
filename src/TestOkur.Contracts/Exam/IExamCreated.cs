@@ -5,17 +5,17 @@
     using TestOkur.Optic.Form;
 
     public interface IExamCreated : IIntegrationEvent
-	{
-		int ExamId { get; }
+    {
+        int ExamId { get; }
 
-		int IncorrectEliminationRate { get; }
+        int IncorrectEliminationRate { get; }
 
-		DateTime ExamDate { get; }
+        DateTime ExamDate { get; }
 
-		string ExamName { get; }
+        string ExamName { get; }
 
-		string ExamTypeName { get; }
+        string ExamTypeName { get; }
 
-		IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
-	}
+        IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
+    }
 }

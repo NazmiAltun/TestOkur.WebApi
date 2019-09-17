@@ -12,31 +12,31 @@
     using TestOkur.WebApi.Data;
 
     public static class Program
-	{
-		public static async Task Main(string[] args)
-		{
-			DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
-			{
-				Console.WriteLine(e.ToString());
-			}).StartCollecting();
+    {
+        public static async Task Main(string[] args)
+        {
+            DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
+            {
+                Console.WriteLine(e.ToString());
+            }).StartCollecting();
 
-			var host = BuildWebHost(args);
-			await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
-			{
-				await DbInitializer.SeedAsync(context, services);
-			});
+            var host = BuildWebHost(args);
+            await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
+            {
+                await DbInitializer.SeedAsync(context, services);
+            });
 
-			host.Run();
-		}
+            host.Run();
+        }
 
-		public static IWebHost BuildWebHost(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>()
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
                 .ConfigureLogging((hostingContext, logging) =>
-				 {
-					 logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
-						 .AddConsole()
-						 .AddDebug();
-				 }).Build();
-	}
+                 {
+                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
+                         .AddConsole()
+                         .AddDebug();
+                 }).Build();
+    }
 }

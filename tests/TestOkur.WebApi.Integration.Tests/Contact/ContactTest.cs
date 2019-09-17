@@ -11,29 +11,29 @@
     using TestOkur.WebApi.Integration.Tests.Student;
 
     public class ContactTest : StudentTest
-	{
-		protected async Task<CreateContactCommand> CreateContactAsync(HttpClient client)
-		{
-			const string ApiPath = "api/v1/contacts";
-			var command = new CreateContactCommand(
-				Guid.NewGuid(),
-				Random.RandomString(10),
-				Random.RandomString(10),
-				RandomGen.Phone(),
-				(int)ContactType.Directory.Id);
+    {
+        protected async Task<CreateContactCommand> CreateContactAsync(HttpClient client)
+        {
+            const string ApiPath = "api/v1/contacts";
+            var command = new CreateContactCommand(
+                Guid.NewGuid(),
+                Random.RandomString(10),
+                Random.RandomString(10),
+                RandomGen.Phone(),
+                (int)ContactType.Directory.Id);
 
-			var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-			response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-			return command;
-		}
+            return command;
+        }
 
-		protected new async Task<IEnumerable<ContactReadModel>> GetListAsync(HttpClient client)
-		{
-			const string ApiPath = "api/v1/contacts";
+        protected new async Task<IEnumerable<ContactReadModel>> GetListAsync(HttpClient client)
+        {
+            const string ApiPath = "api/v1/contacts";
 
-			var response = await client.GetAsync(ApiPath);
-			return await response.ReadAsync<IEnumerable<ContactReadModel>>();
-		}
-	}
+            var response = await client.GetAsync(ApiPath);
+            return await response.ReadAsync<IEnumerable<ContactReadModel>>();
+        }
+    }
 }

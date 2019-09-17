@@ -10,17 +10,17 @@
     using TestOkur.WebApi.Application.User.Queries;
 
     public static class TestServerExtensions
-	{
-		private const string UserApiPath = "api/v1/users";
+    {
+        private const string UserApiPath = "api/v1/users";
 
-		public static async Task<UserReadModel> GetCurrentUserInSession(this TestServer testServer)
-		{
-			var subjectId = (testServer.Host.Services
-				.GetRequiredService(typeof(Claim)) as Claim).Value;
-			var response = await testServer.CreateClient().GetAsync(UserApiPath);
-			var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
+        public static async Task<UserReadModel> GetCurrentUserInSession(this TestServer testServer)
+        {
+            var subjectId = (testServer.Host.Services
+                .GetRequiredService(typeof(Claim)) as Claim).Value;
+            var response = await testServer.CreateClient().GetAsync(UserApiPath);
+            var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
 
-			return users.First(u => u.SubjectId == subjectId);
-		}
-	}
+            return users.First(u => u.SubjectId == subjectId);
+        }
+    }
 }

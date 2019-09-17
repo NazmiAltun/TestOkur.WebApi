@@ -12,9 +12,9 @@
     using TestOkur.WebApi.Configuration;
 
     public class GetUserScoreFormulasQueryHandler
-		: QueryHandlerAsync<GetUserScoreFormulasQuery, IReadOnlyCollection<ScoreFormulaReadModel>>
-	{
-		private const string Sql = @"SELECT 
+        : QueryHandlerAsync<GetUserScoreFormulasQuery, IReadOnlyCollection<ScoreFormulaReadModel>>
+    {
+        private const string Sql = @"SELECT 
 								sf.id,
 								sf.grade_value as grade,
 								sf.name_value as score_name,
@@ -38,44 +38,43 @@
 								WHERE sf.created_by=@userId
 								ORDER BY score_name,els.list_order";
 
-		private readonly string _connectionString;
+        private readonly string _connectionString;
 
-		public GetUserScoreFormulasQueryHandler(ApplicationConfiguration configurationOptions)
-		{
-			_connectionString = configurationOptions.Postgres;
-		}
+        public GetUserScoreFormulasQueryHandler(ApplicationConfiguration configurationOptions)
+        {
+            _connectionString = configurationOptions.Postgres;
+        }
 
-		[PopulateQuery(1)]
-		[QueryLogging(2)]
-		[ResultCaching(3)]
-		public override async Task<IReadOnlyCollection<ScoreFormulaReadModel>> ExecuteAsync(
-			GetUserScoreFormulasQuery query,
-			CancellationToken cancellationToken = default)
-		{
-			using (var connection = new NpgsqlConnection(_connectionString))
-			{
-				var dict = new Dictionary<int, ScoreFormulaReadModel>();
+        [QueryLogging(2)]
+        [ResultCaching(3)]
+        public override async Task<IReadOnlyCollection<ScoreFormulaReadModel>> ExecuteAsync(
+            GetUserScoreFormulasQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                var dict = new Dictionary<int, ScoreFormulaReadModel>();
 
-				return (await connection
-						.QueryAsync<ScoreFormulaReadModel, LessonCoefficientReadModel, ScoreFormulaReadModel>(
-							Sql,
-							(scoreFormula, coefficient) =>
-							{
-								if (!dict.TryGetValue(scoreFormula.Id, out var scoreFormulaEntry))
-								{
-									scoreFormulaEntry = scoreFormula;
-									dict.Add(scoreFormulaEntry.Id, scoreFormulaEntry);
-								}
+                return (await connection
+                        .QueryAsync<ScoreFormulaReadModel, LessonCoefficientReadModel, ScoreFormulaReadModel>(
+                            Sql,
+                            (scoreFormula, coefficient) =>
+                            {
+                                if (!dict.TryGetValue(scoreFormula.Id, out var scoreFormulaEntry))
+                                {
+                                    scoreFormulaEntry = scoreFormula;
+                                    dict.Add(scoreFormulaEntry.Id, scoreFormulaEntry);
+                                }
 
-								scoreFormulaEntry.Coefficients.Add(coefficient);
+                                scoreFormulaEntry.Coefficients.Add(coefficient);
 
-								return scoreFormulaEntry;
-							},
-							new { query.UserId },
-							splitOn: "lesson_coefficient_id"))
-					.Distinct()
-					.ToList();
-			}
-		}
-	}
+                                return scoreFormulaEntry;
+                            },
+                            new { query.UserId },
+                            splitOn: "lesson_coefficient_id"))
+                    .Distinct()
+                    .ToList();
+            }
+        }
+    }
 }

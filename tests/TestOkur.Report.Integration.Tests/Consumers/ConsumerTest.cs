@@ -14,25 +14,25 @@
     using TestOkur.TestHelper;
 
     public abstract class ConsumerTest : OpticalFormTest
-	{
-		protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer)
-		{
-			return await ExecuteExamCreatedConsumerAsync(
-				testServer,
-				GenerateAnswerKeyOpticalForms(4).ToList());
-		}
+    {
+        protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer)
+        {
+            return await ExecuteExamCreatedConsumerAsync(
+                testServer,
+                GenerateAnswerKeyOpticalForms(4).ToList());
+        }
 
-		protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, List<AnswerKeyOpticalForm> answerKeyOpticalForms)
-		{
-			var examId = RandomGen.Next();
-			var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-			var consumer = new ExamCreatedConsumer(repository as IOpticalFormRepository);
-			var context = Substitute.For<ConsumeContext<IExamCreated>>();
-			context.Message.ExamId.Returns(examId);
-			context.Message.AnswerKeyOpticalForms.Returns(answerKeyOpticalForms);
-			await consumer.Consume(context);
+        protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, List<AnswerKeyOpticalForm> answerKeyOpticalForms)
+        {
+            var examId = RandomGen.Next();
+            var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
+            var consumer = new ExamCreatedConsumer(repository as IOpticalFormRepository);
+            var context = Substitute.For<ConsumeContext<IExamCreated>>();
+            context.Message.ExamId.Returns(examId);
+            context.Message.AnswerKeyOpticalForms.Returns(answerKeyOpticalForms);
+            await consumer.Consume(context);
 
-			return examId;
-		}
-	}
+            return examId;
+        }
+    }
 }

@@ -4,18 +4,18 @@
 
     public interface ISmsMessage
     {
-		Guid Id { get; }
+        Guid Id { get; }
 
-		string Subject { get; }
+        string Subject { get; }
 
-		string Body { get; }
+        string Body { get; }
 
-		string Receiver { get; }
+        string Receiver { get; }
 
-		int Credit { get; }
+        int Credit { get; }
 
-		string StudentOpticalFormId { get; }
+        string StudentOpticalFormId { get; }
 
-		int ExamId { get; }
+        int ExamId { get; }
     }
 }

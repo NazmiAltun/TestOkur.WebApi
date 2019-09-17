@@ -4,7 +4,7 @@
 
     public class ApplicationConfiguration
     {
-		[Required]
-		public string Postgres { get; set; }
+        [Required]
+        public string Postgres { get; set; }
     }
 }

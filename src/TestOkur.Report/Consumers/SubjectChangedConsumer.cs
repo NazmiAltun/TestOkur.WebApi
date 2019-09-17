@@ -6,19 +6,19 @@
     using TestOkur.Report.Repositories;
 
     internal class SubjectChangedConsumer : IConsumer<ISubjectChanged>
-	{
-		private readonly IOpticalFormRepository _opticalFormRepository;
+    {
+        private readonly IOpticalFormRepository _opticalFormRepository;
 
-		public SubjectChangedConsumer(IOpticalFormRepository opticalFormRepository)
-		{
-			_opticalFormRepository = opticalFormRepository;
-		}
+        public SubjectChangedConsumer(IOpticalFormRepository opticalFormRepository)
+        {
+            _opticalFormRepository = opticalFormRepository;
+        }
 
-		public async Task Consume(ConsumeContext<ISubjectChanged> context)
-		{
-			await _opticalFormRepository.UpdateSubjectNameAsync(
-				context.Message.SubjectId,
-				context.Message.NewName);
-		}
-	}
+        public async Task Consume(ConsumeContext<ISubjectChanged> context)
+        {
+            await _opticalFormRepository.UpdateSubjectNameAsync(
+                context.Message.SubjectId,
+                context.Message.NewName);
+        }
+    }
 }

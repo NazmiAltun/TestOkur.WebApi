@@ -5,11 +5,11 @@
     using TestOkur.Notification.Models;
 
     public interface IWebApiClient
-	{
-		Task<IEnumerable<UserModel>> GetUsersAsync();
+    {
+        Task<IEnumerable<UserModel>> GetUsersAsync();
 
-		Task<AppSettingReadModel> GetAppSettingAsync(string name);
+        Task<AppSettingReadModel> GetAppSettingAsync(string name);
 
-		Task DeductSmsCreditsAsync(int userId, string smsBody);
-	}
+        Task DeductSmsCreditsAsync(int userId, string smsBody);
+    }
 }

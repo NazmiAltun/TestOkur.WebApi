@@ -5,24 +5,24 @@
 
     [Serializable]
     public class SmsException : Exception
-	{
-		public SmsException()
-		{
-		}
+    {
+        public SmsException()
+        {
+        }
 
-		public SmsException(string message)
-			: base(message)
-		{
-		}
+        public SmsException(string message)
+            : base(message)
+        {
+        }
 
-		public SmsException(string message, Exception innerException)
-			: base(message, innerException)
-		{
-		}
+        public SmsException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
 
-		protected SmsException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
-	}
+        protected SmsException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
 }

@@ -6,17 +6,17 @@
     using TestOkur.Report.Repositories;
 
     internal class ExamDeletedConsumer : IConsumer<IExamDeleted>
-	{
-		private readonly IOpticalFormRepository _opticalFormRepository;
+    {
+        private readonly IOpticalFormRepository _opticalFormRepository;
 
-		public ExamDeletedConsumer(IOpticalFormRepository opticalFormRepository)
-		{
-			_opticalFormRepository = opticalFormRepository;
-		}
+        public ExamDeletedConsumer(IOpticalFormRepository opticalFormRepository)
+        {
+            _opticalFormRepository = opticalFormRepository;
+        }
 
-		public async Task Consume(ConsumeContext<IExamDeleted> context)
-		{
-			await _opticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
-		}
-	}
+        public async Task Consume(ConsumeContext<IExamDeleted> context)
+        {
+            await _opticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
+        }
+    }
 }

@@ -5,17 +5,17 @@
     using TestOkur.Domain.Model;
 
     public class GradeValidator : PropertyValidator
-	{
-		public GradeValidator(string errorMessage)
-			: base(errorMessage)
-		{
-		}
+    {
+        public GradeValidator(string errorMessage)
+            : base(errorMessage)
+        {
+        }
 
-		protected override bool IsValid(PropertyValidatorContext context)
-		{
-			var value = Convert.ToInt32(context.PropertyValue);
+        protected override bool IsValid(PropertyValidatorContext context)
+        {
+            var value = Convert.ToInt32(context.PropertyValue);
 
-			return Grade.IsValid(value);
-		}
-	}
+            return Grade.IsValid(value);
+        }
+    }
 }

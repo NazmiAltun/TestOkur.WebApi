@@ -7,20 +7,20 @@
 
     [DataContract]
     public class BulkCreateStudentCommand : CommandBase, IClearCache
-	{
-		public BulkCreateStudentCommand(Guid id, IEnumerable<CreateStudentCommand> commands)
-		 : base(id)
-		{
-			Commands = commands;
-		}
+    {
+        public BulkCreateStudentCommand(Guid id, IEnumerable<CreateStudentCommand> commands)
+         : base(id)
+        {
+            Commands = commands;
+        }
 
-		public IEnumerable<string> CacheKeys => new[]
-		{
-			$"Students_{UserId}",
-			$"Contacts_{UserId}",
-		};
+        public IEnumerable<string> CacheKeys => new[]
+        {
+            $"Students_{UserId}",
+            $"Contacts_{UserId}",
+        };
 
-		[DataMember]
-		public IEnumerable<CreateStudentCommand> Commands { get; private set; }
-	}
+        [DataMember]
+        public IEnumerable<CreateStudentCommand> Commands { get; private set; }
+    }
 }

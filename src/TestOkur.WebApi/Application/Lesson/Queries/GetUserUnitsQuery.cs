@@ -5,10 +5,10 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public class GetUserUnitsQuery : QueryBase<IReadOnlyCollection<UnitReadModel>>,
-		ICacheResult
-	{
-		public string CacheKey => $"Units_{UserId}";
+        ICacheResult
+    {
+        public string CacheKey => $"Units_{UserId}";
 
-		public TimeSpan CacheDuration => TimeSpan.FromHours(2);
-	}
+        public TimeSpan CacheDuration => TimeSpan.FromHours(2);
+    }
 }

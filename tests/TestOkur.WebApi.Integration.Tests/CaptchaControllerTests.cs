@@ -23,9 +23,9 @@
                 response.EnsureSuccessStatusCode();
                 var stream = await response.Content.ReadAsStreamAsync();
                 using (var image = Image.FromStream(stream))
-	            {
-		            image.RawFormat.Should().Be(ImageFormat.Png);
-	            }
+                {
+                    image.RawFormat.Should().Be(ImageFormat.Png);
+                }
             }
         }
     }

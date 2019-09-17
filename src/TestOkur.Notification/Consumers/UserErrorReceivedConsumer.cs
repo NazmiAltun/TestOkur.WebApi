@@ -7,19 +7,19 @@
     using TestOkur.Notification.Models;
 
     internal class UserErrorReceivedConsumer : IConsumer<IUserErrorReceived>
-	{
-		private readonly INotificationFacade _notificationFacade;
+    {
+        private readonly INotificationFacade _notificationFacade;
 
-		public UserErrorReceivedConsumer(INotificationFacade notificationFacade)
-		{
-			_notificationFacade = notificationFacade;
-		}
+        public UserErrorReceivedConsumer(INotificationFacade notificationFacade)
+        {
+            _notificationFacade = notificationFacade;
+        }
 
-		public async Task Consume(ConsumeContext<IUserErrorReceived> context)
-		{
-			await _notificationFacade.SendEmailToAdminsAsync(
-				context.Message,
-				Template.UserErrorAlertEmail);
-		}
-	}
+        public async Task Consume(ConsumeContext<IUserErrorReceived> context)
+        {
+            await _notificationFacade.SendEmailToAdminsAsync(
+                context.Message,
+                Template.UserErrorAlertEmail);
+        }
+    }
 }

@@ -7,16 +7,16 @@
     using Xunit;
 
     public class PrometheusTests : Test
-	{
-		[Fact]
-		public async Task PrometheusMetricEndpointShouldReturnResult()
-		{
-			using (var testServer = await CreateAsync())
-			{
-				var response = await testServer.CreateClient().GetAsync("metrics-core");
-				response.StatusCode.Should().Be(HttpStatusCode.OK);
-				response.Content.Headers.ContentType.MediaType.Should().Be("text/plain");
-			}
-		}
-	}
+    {
+        [Fact]
+        public async Task PrometheusMetricEndpointShouldReturnResult()
+        {
+            using (var testServer = await CreateAsync())
+            {
+                var response = await testServer.CreateClient().GetAsync("metrics-core");
+                response.StatusCode.Should().Be(HttpStatusCode.OK);
+                response.Content.Headers.ContentType.MediaType.Should().Be("text/plain");
+            }
+        }
+    }
 }

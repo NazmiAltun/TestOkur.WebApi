@@ -4,14 +4,14 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class DeleteExamCommand : CommandBase, IClearCache
-	{
-		public DeleteExamCommand(int examId)
-		{
-			ExamId = examId;
-		}
+    {
+        public DeleteExamCommand(int examId)
+        {
+            ExamId = examId;
+        }
 
-		public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
+        public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
-		public int ExamId { get; private set; }
-	}
+        public int ExamId { get; private set; }
+    }
 }

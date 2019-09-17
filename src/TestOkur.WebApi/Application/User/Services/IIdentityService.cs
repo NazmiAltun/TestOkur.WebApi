@@ -16,5 +16,5 @@
         Task UpdateUserAsync(UpdateUserModel model, CancellationToken cancellationToken = default);
 
         Task<string> GeneratePasswordResetTokenAsync(string email, CancellationToken cancellationToken = default);
-	}
+    }
 }

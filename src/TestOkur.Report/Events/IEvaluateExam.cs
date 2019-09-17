@@ -3,7 +3,7 @@
     using TestOkur.Contracts;
 
     public interface IEvaluateExam : IIntegrationEvent
-	{
-		int ExamId { get; }
-	}
+    {
+        int ExamId { get; }
+    }
 }

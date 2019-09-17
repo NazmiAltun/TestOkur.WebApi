@@ -8,20 +8,20 @@
 
     [DataContract]
     public class AddSmsCreditsCommand : Command, IClearCache
-	{
-		public AddSmsCreditsCommand(Guid commandId, int userId, int amount)
-			: base(commandId)
-		{
-			UserId = userId;
-			Amount = amount;
-		}
+    {
+        public AddSmsCreditsCommand(Guid commandId, int userId, int amount)
+            : base(commandId)
+        {
+            UserId = userId;
+            Amount = amount;
+        }
 
-		[DataMember]
-		public int UserId { get; private set; }
+        [DataMember]
+        public int UserId { get; private set; }
 
-		[DataMember]
-		public int Amount { get; private set; }
+        [DataMember]
+        public int Amount { get; private set; }
 
-		public IEnumerable<string> CacheKeys => new[] { "Users" };
-	}
+        public IEnumerable<string> CacheKeys => new[] { "Users" };
+    }
 }

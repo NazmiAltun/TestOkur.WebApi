@@ -1,9 +1,9 @@
 ﻿namespace TestOkur.Notification.Models
 {
-	public class AppSettingReadModel
-	{
-		public string Name { get; set; }
+    public class AppSettingReadModel
+    {
+        public string Name { get; set; }
 
-		public string Value { get; set; }
-	}
+        public string Value { get; set; }
+    }
 }

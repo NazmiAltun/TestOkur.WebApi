@@ -18,13 +18,13 @@
         {
             using (var testServer = await CreateAsync())
             {
-	            var client = testServer.CreateClient();
-	            var response = await client.GetAsync(ApiPath);
-	            response.EnsureSuccessStatusCode();
-	            var list = await response.ReadAsync<IEnumerable<LicenseTypeReadModel>>();
+                var client = testServer.CreateClient();
+                var response = await client.GetAsync(ApiPath);
+                response.EnsureSuccessStatusCode();
+                var list = await response.ReadAsync<IEnumerable<LicenseTypeReadModel>>();
 
-	            list.Should().HaveCountGreaterThan(5);
-	            list.SingleOrDefault(i => i.Name == "İLKOKUL-ORTAOKUL – (BİREYSEL)")
+                list.Should().HaveCountGreaterThan(5);
+                list.SingleOrDefault(i => i.Name == "İLKOKUL-ORTAOKUL – (BİREYSEL)")
                     .Should()
                     .NotBeNull();
             }

@@ -5,19 +5,19 @@
     using RazorLight;
 
     public class TemplateService : ITemplateService
-	{
-		private readonly IRazorLightEngine _engine;
+    {
+        private readonly IRazorLightEngine _engine;
 
-		public TemplateService(IRazorLightEngine engine)
-		{
-			_engine = engine;
-		}
+        public TemplateService(IRazorLightEngine engine)
+        {
+            _engine = engine;
+        }
 
-		public async Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
-		{
-			var template = File.ReadAllText(Path.Combine("Templates", filePath));
-			var name = Path.GetFileNameWithoutExtension(filePath);
-			return await _engine.CompileRenderAsync(name, template, viewModel);
-		}
-	}
+        public async Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
+        {
+            var template = File.ReadAllText(Path.Combine("Templates", filePath));
+            var name = Path.GetFileNameWithoutExtension(filePath);
+            return await _engine.CompileRenderAsync(name, template, viewModel);
+        }
+    }
 }

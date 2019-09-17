@@ -7,19 +7,19 @@
     using TestOkur.Report.Events;
 
     internal class Consumer : MultiTestConsumer
-	{
-		public Consumer()
-			: base(TimeSpan.FromSeconds(10))
-		{
-			Consume<IEvaluateExam>();
-		}
+    {
+        public Consumer()
+            : base(TimeSpan.FromSeconds(10))
+        {
+            Consume<IEvaluateExam>();
+        }
 
-		public static Consumer Instance { get; } = new Consumer();
+        public static Consumer Instance { get; } = new Consumer();
 
-		public IEnumerable<T> GetAll<T>()
-			where T : class
-		{
-			return Received.Select<T>().Select(r => r.Context.Message);
-		}
-	}
+        public IEnumerable<T> GetAll<T>()
+            where T : class
+        {
+            return Received.Select<T>().Select(r => r.Context.Message);
+        }
+    }
 }

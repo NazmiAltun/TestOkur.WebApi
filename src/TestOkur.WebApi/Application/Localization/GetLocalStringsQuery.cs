@@ -6,18 +6,18 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class GetLocalStringsQuery :
-		IQuery<IReadOnlyCollection<LocalString>>,
-		ICacheResult
-	{
-		public GetLocalStringsQuery(string cultureCode)
-		{
-			CultureCode = cultureCode;
-		}
+        IQuery<IReadOnlyCollection<LocalString>>,
+        ICacheResult
+    {
+        public GetLocalStringsQuery(string cultureCode)
+        {
+            CultureCode = cultureCode;
+        }
 
-		public string CultureCode { get; }
+        public string CultureCode { get; }
 
-		public string CacheKey => CultureCode;
+        public string CacheKey => CultureCode;
 
-		public TimeSpan CacheDuration => TimeSpan.FromDays(1);
-	}
+        public TimeSpan CacheDuration => TimeSpan.FromDays(1);
+    }
 }

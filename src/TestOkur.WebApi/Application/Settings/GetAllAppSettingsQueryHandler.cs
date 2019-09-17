@@ -17,8 +17,8 @@
 
         public GetAllAppSettingsQueryHandler(ApplicationConfiguration configurationOptions)
         {
-	        _connectionString = configurationOptions.Postgres;
-		}
+            _connectionString = configurationOptions.Postgres;
+        }
 
         [QueryLogging(1)]
         [ResultCaching(2)]

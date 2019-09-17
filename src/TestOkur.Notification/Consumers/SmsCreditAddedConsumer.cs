@@ -7,7 +7,7 @@
     using TestOkur.Notification.Models;
 
     internal class SmsCreditAddedConsumer : IConsumer<ISmsCreditAdded>
-	{
+    {
         private readonly INotificationFacade _notificationFacade;
 
         public SmsCreditAddedConsumer(INotificationFacade notificationFacade)
@@ -16,15 +16,15 @@
         }
 
         public async Task Consume(ConsumeContext<ISmsCreditAdded> context)
-		{
-			await _notificationFacade.SendEmailAsync(
-				context.Message,
-				Template.SmsCreditAddedEmailUser,
-				context.Message.Email);
-			await _notificationFacade.SendSmsAsync(
-				context.Message,
-				Template.SmsCreditAddedSmsUser,
-				context.Message.Phone);
-		}
-	}
+        {
+            await _notificationFacade.SendEmailAsync(
+                context.Message,
+                Template.SmsCreditAddedEmailUser,
+                context.Message.Email);
+            await _notificationFacade.SendSmsAsync(
+                context.Message,
+                Template.SmsCreditAddedSmsUser,
+                context.Message.Phone);
+        }
+    }
 }

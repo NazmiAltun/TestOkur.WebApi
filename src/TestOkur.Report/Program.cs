@@ -8,25 +8,25 @@
     using Prometheus.DotNetRuntime;
 
     public static class Program
-	{
-		public static void Main(string[] args)
-		{
-			DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
-			{
-				Console.WriteLine(e.ToString());
-			}).StartCollecting();
+    {
+        public static void Main(string[] args)
+        {
+            DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
+            {
+                Console.WriteLine(e.ToString());
+            }).StartCollecting();
 
-			BuildWebHost(args).Run();
-		}
+            BuildWebHost(args).Run();
+        }
 
-		public static IWebHost BuildWebHost(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>()
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
                 .ConfigureLogging((hostingContext, logging) =>
-				{
-					logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
-					.AddConsole()
-					.AddDebug();
-				}).Build();
-	}
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
+                    .AddConsole()
+                    .AddDebug();
+                }).Build();
+    }
 }

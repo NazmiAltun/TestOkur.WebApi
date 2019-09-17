@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -16,12 +17,12 @@
     public sealed class CreateStudentCommandHandler : RequestHandlerAsync<CreateStudentCommand>
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IQueryProcessor _queryProcessor;
+        private readonly IProcessor _processor;
 
-        public CreateStudentCommandHandler(ApplicationDbContext dbContext, IQueryProcessor queryProcessor)
+        public CreateStudentCommandHandler(ApplicationDbContext dbContext, IProcessor processor)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _queryProcessor = queryProcessor;
+            _processor = processor;
         }
 
         [Idempotent(1)]
@@ -49,7 +50,7 @@
             CancellationToken cancellationToken)
         {
             var query = new GetUserStudentsQuery();
-            var list = await _queryProcessor.ExecuteAsync(query, cancellationToken);
+            var list = await _processor.ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(query, cancellationToken);
 
             if (list.Any(c => c.StudentNumber == command.StudentNumber))
             {

@@ -4,13 +4,13 @@
     using TestOkur.Notification.Models;
 
     public interface INotificationFacade
-	{
-		Task SendSmsAsync<TModel>(TModel model, Template template, string receiver);
+    {
+        Task SendSmsAsync<TModel>(TModel model, Template template, string receiver);
 
-		Task SendEmailToSystemAdminsAsync<TModel>(TModel model, Template template);
+        Task SendEmailToSystemAdminsAsync<TModel>(TModel model, Template template);
 
-		Task SendEmailToAdminsAsync<TModel>(TModel model, Template template);
+        Task SendEmailToAdminsAsync<TModel>(TModel model, Template template);
 
-		Task SendEmailAsync<TModel>(TModel model, Template template, string receiver);
-	}
+        Task SendEmailAsync<TModel>(TModel model, Template template, string receiver);
+    }
 }

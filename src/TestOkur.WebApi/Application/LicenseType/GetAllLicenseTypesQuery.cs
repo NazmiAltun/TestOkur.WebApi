@@ -5,6 +5,6 @@
 
     public sealed class GetAllLicenseTypesQuery :
         IQuery<IReadOnlyCollection<LicenseTypeReadModel>>
-	{
+    {
     }
 }

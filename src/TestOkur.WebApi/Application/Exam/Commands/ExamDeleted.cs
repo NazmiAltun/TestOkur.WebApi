@@ -4,12 +4,12 @@
     using TestOkur.Contracts.Exam;
 
     public class ExamDeleted : IntegrationEvent, IExamDeleted
-	{
-		public ExamDeleted(int examId)
-		{
-			ExamId = examId;
-		}
+    {
+        public ExamDeleted(int examId)
+        {
+            ExamId = examId;
+        }
 
-		public int ExamId { get; }
-	}
+        public int ExamId { get; }
+    }
 }

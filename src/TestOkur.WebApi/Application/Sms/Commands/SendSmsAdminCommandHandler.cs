@@ -9,31 +9,31 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class SendSmsAdminCommandHandler : RequestHandlerAsync<SendSmsAdminCommand>
-	{
-		private const string Subject = "TESTOKUR";
+    {
+        private const string Subject = "TESTOKUR";
 
-		private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-		public SendSmsAdminCommandHandler(IPublishEndpoint publishEndpoint)
-		{
-			_publishEndpoint = publishEndpoint ??
-							   throw new ArgumentNullException(nameof(publishEndpoint));
-		}
+        public SendSmsAdminCommandHandler(IPublishEndpoint publishEndpoint)
+        {
+            _publishEndpoint = publishEndpoint ??
+                               throw new ArgumentNullException(nameof(publishEndpoint));
+        }
 
-		[Idempotent(1)]
-		public override async Task<SendSmsAdminCommand> HandleAsync(
-			SendSmsAdminCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			var @event = new SendSmsRequestReceived(
-				default,
-				default,
-				new[] { new SmsMessage(command.Receiver, Subject, command.Body, 0), },
-				"nazmialtun@windowslive.com");
-			await _publishEndpoint.Publish<ISendSmsRequestReceived>(
-				@event,
-				cancellationToken);
-			return await base.HandleAsync(command, cancellationToken);
-		}
-	}
+        [Idempotent(1)]
+        public override async Task<SendSmsAdminCommand> HandleAsync(
+            SendSmsAdminCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            var @event = new SendSmsRequestReceived(
+                default,
+                default,
+                new[] { new SmsMessage(command.Receiver, Subject, command.Body, 0), },
+                "nazmialtun@windowslive.com");
+            await _publishEndpoint.Publish<ISendSmsRequestReceived>(
+                @event,
+                cancellationToken);
+            return await base.HandleAsync(command, cancellationToken);
+        }
+    }
 }

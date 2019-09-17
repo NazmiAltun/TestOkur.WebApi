@@ -4,12 +4,12 @@
     using TestOkur.Common;
 
     public class SendResetPasswordLinkCommandValidator : AbstractValidator<SendResetPasswordLinkCommand>
-	{
-		public SendResetPasswordLinkCommandValidator()
-		{
-			RuleFor(m => m.Email)
-				.EmailAddress()
-				.WithMessage(ErrorCodes.InvalidEmailAddress);
-		}
-	}
+    {
+        public SendResetPasswordLinkCommandValidator()
+        {
+            RuleFor(m => m.Email)
+                .EmailAddress()
+                .WithMessage(ErrorCodes.InvalidEmailAddress);
+        }
+    }
 }

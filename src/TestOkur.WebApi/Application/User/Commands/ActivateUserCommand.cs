@@ -5,13 +5,13 @@
 
     [DataContract]
     public class ActivateUserCommand : CommandBase
-	{
-		public ActivateUserCommand(string email)
-		{
-			Email = email;
-		}
+    {
+        public ActivateUserCommand(string email)
+        {
+            Email = email;
+        }
 
-		[DataMember]
-		public string Email { get; }
-	}
+        [DataMember]
+        public string Email { get; }
+    }
 }

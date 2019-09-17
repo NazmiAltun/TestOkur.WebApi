@@ -4,17 +4,17 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public class DeleteSubjectCommand : CommandBase, IClearCache
-	{
-		public DeleteSubjectCommand(int unitId, int subjectId)
-		{
-			UnitId = unitId;
-			SubjectId = subjectId;
-		}
+    {
+        public DeleteSubjectCommand(int unitId, int subjectId)
+        {
+            UnitId = unitId;
+            SubjectId = subjectId;
+        }
 
-		public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
+        public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
 
-		public int UnitId { get; }
+        public int UnitId { get; }
 
-		public int SubjectId { get; }
-	}
+        public int SubjectId { get; }
+    }
 }

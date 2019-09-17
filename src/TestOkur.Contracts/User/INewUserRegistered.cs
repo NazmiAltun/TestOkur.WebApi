@@ -1,25 +1,25 @@
 ﻿namespace TestOkur.Contracts.User
 {
-	public interface INewUserRegistered : IIntegrationEvent
-	{
-		string Email { get; }
+    public interface INewUserRegistered : IIntegrationEvent
+    {
+        string Email { get; }
 
-		string RegistrarFullName { get; }
+        string RegistrarFullName { get; }
 
-		string RegistrarPhone { get; }
+        string RegistrarPhone { get; }
 
-		string UserFirstName { get; }
+        string UserFirstName { get; }
 
-		string UserLastName { get; }
+        string UserLastName { get; }
 
-		string SchoolName { get; }
+        string SchoolName { get; }
 
-		string UserPhone { get; }
+        string UserPhone { get; }
 
-		string LicenseType { get; }
+        string LicenseType { get; }
 
-		string District { get; }
+        string District { get; }
 
-		string City { get; }
-	}
+        string City { get; }
+    }
 }

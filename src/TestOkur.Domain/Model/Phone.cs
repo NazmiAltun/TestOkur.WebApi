@@ -29,16 +29,16 @@
         }
 
         public static void Validate(string value)
-	    {
-		    if (string.IsNullOrEmpty(value))
-		    {
-			    throw new ArgumentNullException(value);
-		    }
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(value);
+            }
 
-		    if (value.Length != 10 || !value.All(char.IsDigit) || !value.StartsWith("5"))
-		    {
-			    throw new ArgumentException($"Invalid phone number: {value}", nameof(value));
-		    }
-	    }
-	}
+            if (value.Length != 10 || !value.All(char.IsDigit) || !value.StartsWith("5"))
+            {
+                throw new ArgumentException($"Invalid phone number: {value}", nameof(value));
+            }
+        }
+    }
 }

@@ -12,19 +12,19 @@
         {
             foreach (var type in GetAuditableTypes())
             {
-	            modelBuilder.Entity(type).Property<int>("CreatedBy");
-	            modelBuilder.Entity(type).Property<int>("UpdatedBy");
-	            modelBuilder.Entity(type).Property<DateTime>("CreatedOnUTC");
-	            modelBuilder.Entity(type).Property<DateTime>("UpdatedOnUTC");
+                modelBuilder.Entity(type).Property<int>("CreatedBy");
+                modelBuilder.Entity(type).Property<int>("UpdatedBy");
+                modelBuilder.Entity(type).Property<DateTime>("CreatedOnUTC");
+                modelBuilder.Entity(type).Property<DateTime>("UpdatedOnUTC");
             }
         }
 
         private static IEnumerable<Type> GetAuditableTypes()
-	    {
-			return Assembly.GetAssembly(typeof(IAuditable))
-				.GetTypes()
-				.Where(t => t.IsClass &&
-				            typeof(IAuditable).IsAssignableFrom(t));
-		}
+        {
+            return Assembly.GetAssembly(typeof(IAuditable))
+                .GetTypes()
+                .Where(t => t.IsClass &&
+                            typeof(IAuditable).IsAssignableFrom(t));
+        }
     }
 }

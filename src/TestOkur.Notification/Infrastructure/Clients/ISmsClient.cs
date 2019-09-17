@@ -4,7 +4,7 @@
     using TestOkur.Notification.Models;
 
     public interface ISmsClient
-	{
-		Task<string> SendAsync(Sms sms);
-	}
+    {
+        Task<string> SendAsync(Sms sms);
+    }
 }

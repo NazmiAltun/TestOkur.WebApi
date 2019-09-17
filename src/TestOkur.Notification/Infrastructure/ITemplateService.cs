@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     public interface ITemplateService
-	{
-		Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel);
-	}
+    {
+        Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel);
+    }
 }

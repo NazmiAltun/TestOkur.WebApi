@@ -3,10 +3,10 @@
     using FluentValidation;
 
     public class CreateExamCommandValidator : AbstractValidator<CreateExamCommand>
-	{
-		public CreateExamCommandValidator()
-		{
-			RuleFor(m => m.Name).Name();
-		}
-	}
+    {
+        public CreateExamCommandValidator()
+        {
+            RuleFor(m => m.Name).Name();
+        }
+    }
 }

@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     internal interface IDailyReport
-	{
-		Task SendAsync();
-	}
+    {
+        Task SendAsync();
+    }
 }

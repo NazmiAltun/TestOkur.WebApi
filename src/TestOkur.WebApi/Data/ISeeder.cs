@@ -5,7 +5,7 @@
     using TestOkur.Data;
 
     internal interface ISeeder
-	{
-		Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services);
-	}
+    {
+        Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services);
+    }
 }

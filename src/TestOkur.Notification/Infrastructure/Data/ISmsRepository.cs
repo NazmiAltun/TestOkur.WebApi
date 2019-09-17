@@ -5,11 +5,11 @@
     using TestOkur.Notification.Models;
 
     public interface ISmsRepository
-	{
-		Task AddManyAsync(IEnumerable<Sms> list);
+    {
+        Task AddManyAsync(IEnumerable<Sms> list);
 
-		Task AddAsync(Sms sms);
+        Task AddAsync(Sms sms);
 
-		Task UpdateSmsAsync(Sms sms);
-	}
+        Task UpdateSmsAsync(Sms sms);
+    }
 }

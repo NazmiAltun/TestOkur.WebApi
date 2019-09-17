@@ -1,35 +1,35 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
-	public class UserReadModel
-	{
-		public int Id { get; set; }
+    public class UserReadModel
+    {
+        public int Id { get; set; }
 
-		public string SubjectId { get; set; }
+        public string SubjectId { get; set; }
 
-		public int SmsBalance { get; set; }
+        public int SmsBalance { get; set; }
 
-		public string CityName { get; set; }
+        public string CityName { get; set; }
 
-		public string DistrictName { get; set; }
+        public string DistrictName { get; set; }
 
-		public int CityId { get; set; }
+        public int CityId { get; set; }
 
-		public int DistrictId { get; set; }
+        public int DistrictId { get; set; }
 
-		public string Email { get; set; }
+        public string Email { get; set; }
 
-		public string Phone { get; set; }
+        public string Phone { get; set; }
 
-		public string FirstName { get; set; }
+        public string FirstName { get; set; }
 
-		public string LastName { get; set; }
+        public string LastName { get; set; }
 
-		public string SchoolName { get; set; }
+        public string SchoolName { get; set; }
 
-		public string Notes { get; set; }
+        public string Notes { get; set; }
 
-		public string RegistrarFullName { get; set; }
+        public string RegistrarFullName { get; set; }
 
-		public string RegistrarPhone { get; set; }
-	}
+        public string RegistrarPhone { get; set; }
+    }
 }

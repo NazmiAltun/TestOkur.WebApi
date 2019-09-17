@@ -1,10 +1,5 @@
 ﻿namespace TestOkur.WebApi
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Net.Http;
-    using System.Reflection;
     using CacheManager.Core;
     using Dapper;
     using Dapper.FluentMap;
@@ -33,6 +28,11 @@
     using Prometheus;
     using StackExchange.Redis;
     using Swashbuckle.AspNetCore.Swagger;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Net.Http;
+    using System.Reflection;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Data;
@@ -51,248 +51,248 @@
 
     [ExcludeFromCodeCoverage]
     public class Startup : IStartup
-	{
-		private const string CorsPolicyName = "EnableCorsToAll";
+    {
+        private const string CorsPolicyName = "EnableCorsToAll";
 
-		public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
-		{
-			LoggerFactory = loggerFactory;
-			Configuration = configuration;
-			Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
-			Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
-		}
+        public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
+        {
+            LoggerFactory = loggerFactory;
+            Configuration = configuration;
+            Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
+            Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
+        }
 
-		private IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
-		private ILoggerFactory LoggerFactory { get; }
+        private ILoggerFactory LoggerFactory { get; }
 
-		private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
+        private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
-		private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
+        private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
 
-		public IServiceProvider ConfigureServices(IServiceCollection services)
-		{
-			AddOptions(services);
+        public IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            AddOptions(services);
 
-			services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
-			{
-				builder.AllowAnyOrigin()
-					   .AllowAnyMethod()
-					   .AllowAnyHeader();
-			}));
+            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddApplicationInsightsTelemetry();
             services.AddMvc(options =>
-				{
-					options.Filters.Add(new ProducesAttribute("application/json"));
-					options.Filters.Add(new ValidateInputFilter());
-				})
-				.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-				.AddJsonOptions(options =>
-				{
-					options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-				});
+                {
+                    options.Filters.Add(new ProducesAttribute("application/json"));
+                    options.Filters.Add(new ValidateInputFilter());
+                })
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
-			AddCqrsFramework(services);
-			AddHealthChecks(services);
-			AddSwagger(services);
-			AddCache(services);
-			AddDatabase(services);
-			AddAuthentication(services);
-			AddPolicies(services);
-			AddMessageBus(services);
-			AddHttpClients(services);
-			RegisterServices(services);
+            AddCqrsFramework(services);
+            AddHealthChecks(services);
+            AddSwagger(services);
+            AddCache(services);
+            AddDatabase(services);
+            AddAuthentication(services);
+            AddPolicies(services);
+            AddMessageBus(services);
+            AddHttpClients(services);
+            RegisterServices(services);
 
-			return services.BuildServiceProvider();
-		}
+            return services.BuildServiceProvider();
+        }
 
-		public void Configure(IApplicationBuilder app)
-		{
-			var env = app.ApplicationServices.GetService<IHostingEnvironment>();
+        public void Configure(IApplicationBuilder app)
+        {
+            var env = app.ApplicationServices.GetService<IHostingEnvironment>();
 
-			app.UseHttpMetrics();
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
+            app.UseHttpMetrics();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
-			app.UseMetricServer("/metrics-core");
-			UseHealthChecks(app);
-			app.UseCors(CorsPolicyName);
-			app.UseAuthentication();
-			app.UseMiddleware<ErrorHandlingMiddleware>();
-			app.UseMvc();
-			app.UseStaticFiles();
-			InitializeFluentMappings();
-			UseSwagger(app);
-		}
+            app.UseMetricServer("/metrics-core");
+            UseHealthChecks(app);
+            app.UseCors(CorsPolicyName);
+            app.UseAuthentication();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMvc();
+            app.UseStaticFiles();
+            InitializeFluentMappings();
+            UseSwagger(app);
+        }
 
-		protected virtual void AddMessageBus(
-			IServiceCollection services,
-			Action<IRabbitMqReceiveEndpointConfigurator> configure = null)
-		{
-			var busControl = Bus.Factory.CreateUsingRabbitMq(
-				cfg =>
-				{
-					var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-					var host = cfg.Host(new Uri(uriStr), hc =>
-					{
-						hc.Username(RabbitMqConfiguration.Username);
-						hc.Password(RabbitMqConfiguration.Password);
-					});
+        protected virtual void AddMessageBus(
+            IServiceCollection services,
+            Action<IRabbitMqReceiveEndpointConfigurator> configure = null)
+        {
+            var busControl = Bus.Factory.CreateUsingRabbitMq(
+                cfg =>
+                {
+                    var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+                    var host = cfg.Host(new Uri(uriStr), hc =>
+                    {
+                        hc.Username(RabbitMqConfiguration.Username);
+                        hc.Password(RabbitMqConfiguration.Password);
+                    });
 
-					if (configure != null)
-					{
-						cfg.ReceiveEndpoint(host, configure);
-					}
-				});
+                    if (configure != null)
+                    {
+                        cfg.ReceiveEndpoint(host, configure);
+                    }
+                });
 
-			services.AddSingleton<IPublishEndpoint>(busControl);
-			services.AddSingleton<IBus>(busControl);
-			services.AddSingleton(busControl);
-			services.AddMassTransit();
-		}
+            services.AddSingleton<IPublishEndpoint>(busControl);
+            services.AddSingleton<IBus>(busControl);
+            services.AddSingleton(busControl);
+            services.AddMassTransit();
+        }
 
-		protected virtual void AddDatabase(IServiceCollection services)
-		{
-			var connectionString = Configuration.GetConnectionString("Postgres");
-			var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+        protected virtual void AddDatabase(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("Postgres");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-			services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(
                     connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
                 options.EnableSensitiveDataLogging();
             });
-		}
+        }
 
-		protected virtual void AddAuthentication(IServiceCollection services)
-		{
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddIdentityServerAuthentication(options =>
-				{
-					options.Authority = OAuthConfiguration.Authority;
-					options.RequireHttpsMetadata = OAuthConfiguration.RequireHttpsMetadata;
-					options.ApiName = OAuthConfiguration.ApiName;
-					options.JwtValidationClockSkew = TimeSpan.FromHours(24);
-				});
-		}
+        protected virtual void AddAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = OAuthConfiguration.Authority;
+                    options.RequireHttpsMetadata = OAuthConfiguration.RequireHttpsMetadata;
+                    options.ApiName = OAuthConfiguration.ApiName;
+                    options.JwtValidationClockSkew = TimeSpan.FromHours(24);
+                });
+        }
 
-		private static void UseHealthChecks(IApplicationBuilder app)
-		{
-			var hcOptions = new HealthCheckOptions()
-			{
-				Predicate = _ => true,
-				ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-			};
-			app.UseHealthChecks("/hc", hcOptions);
-		}
+        private static void UseHealthChecks(IApplicationBuilder app)
+        {
+            var hcOptions = new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+            };
+            app.UseHealthChecks("/hc", hcOptions);
+        }
 
-		private void UseSwagger(IApplicationBuilder app)
-		{
-			if (!Configuration.GetValue<bool>("SwaggerEnabled"))
-			{
-				return;
-			}
+        private void UseSwagger(IApplicationBuilder app)
+        {
+            if (!Configuration.GetValue<bool>("SwaggerEnabled"))
+            {
+                return;
+            }
 
-			app.UseSwagger();
-			app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestOkur Web Api"); });
-		}
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestOkur Web Api"); });
+        }
 
-		private void AddOptions(IServiceCollection services)
-		{
-			services.AddOptions();
-			services.ConfigureAndValidate<ApplicationConfiguration>(Configuration);
-			services.ConfigureAndValidate<OAuthConfiguration>(Configuration);
+        private void AddOptions(IServiceCollection services)
+        {
+            services.AddOptions();
+            services.ConfigureAndValidate<ApplicationConfiguration>(Configuration);
+            services.ConfigureAndValidate<OAuthConfiguration>(Configuration);
 
-			services.AddSingleton(resolver =>
-				resolver.GetRequiredService<IOptions<ApplicationConfiguration>>().Value);
+            services.AddSingleton(resolver =>
+                resolver.GetRequiredService<IOptions<ApplicationConfiguration>>().Value);
 
-			services.AddSingleton(resolver =>
-				resolver.GetRequiredService<IOptions<OAuthConfiguration>>().Value);
-		}
+            services.AddSingleton(resolver =>
+                resolver.GetRequiredService<IOptions<OAuthConfiguration>>().Value);
+        }
 
-		private void RegisterServices(IServiceCollection services)
-		{
-			services.AddSingleton<ICaptchaService, CaptchaService>();
-			services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
-			services.AddScoped<IUserIdProvider, UserIdProvider>();
-			services.AddScoped<IContextCommandProcessor, ContextCommandProcessor>();
-			services.AddHttpContextAccessor();
-		}
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddSingleton<ICaptchaService, CaptchaService>();
+            services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
+            services.AddScoped<IUserIdProvider, UserIdProvider>();
+            services.AddScoped<IProcessor, Processor>();
+            services.AddHttpContextAccessor();
+        }
 
-		private void AddCqrsFramework(IServiceCollection services)
-		{
-			services.AddDarker()
-				.AddHandlersFromAssemblies(typeof(GetAllCitiesQuery).Assembly)
-				.AddJsonQueryLogging()
-				.AddCustomDecorators();
+        private void AddCqrsFramework(IServiceCollection services)
+        {
+            services.AddDarker()
+                .AddHandlersFromAssemblies(typeof(GetAllCitiesQuery).Assembly)
+                .AddJsonQueryLogging()
+                .AddCustomDecorators();
 
-			services.AddBrighter()
-				.AsyncHandlersFromAssemblies(Assembly.GetExecutingAssembly())
-				.AddPipelineHandlers();
-		}
+            services.AddBrighter()
+                .AsyncHandlersFromAssemblies(Assembly.GetExecutingAssembly())
+                .AddPipelineHandlers();
+        }
 
-		private void AddSwagger(IServiceCollection services)
-		{
-			services.AddSwaggerGen(c =>
-			{
-				c.DescribeAllEnumsAsStrings();
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.DescribeAllEnumsAsStrings();
 
-				c.SwaggerDoc("v1", new Info { Title = "TestOkur Web Api", Version = "v1" });
-			});
-		}
+                c.SwaggerDoc("v1", new Info { Title = "TestOkur Web Api", Version = "v1" });
+            });
+        }
 
-		private void AddHealthChecks(IServiceCollection services)
-		{
-			var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-			services.AddHealthChecks()
-				.AddNpgSql(Configuration.GetConnectionString("Postgres"))
-				.AddRedis(Configuration.GetConnectionString("Redis"))
-				.AddIdentityServer(new Uri(OAuthConfiguration.Authority))
-				.AddRabbitMQ(rabbitMqUri);
-		}
+        private void AddHealthChecks(IServiceCollection services)
+        {
+            var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+            services.AddHealthChecks()
+                .AddNpgSql(Configuration.GetConnectionString("Postgres"))
+                .AddRedis(Configuration.GetConnectionString("Redis"))
+                .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
+                .AddRabbitMQ(rabbitMqUri);
+        }
 
-		private void AddCache(IServiceCollection services)
-		{
-			var cacheManagerConfig =
-				ConfigurationBuilder.BuildConfiguration(cfg =>
-				{
-					cfg.WithJsonSerializer()
-						.WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
-						.WithRedisBackplane("redis")
-						.WithRedisCacheHandle("redis", true);
-				});
+        private void AddCache(IServiceCollection services)
+        {
+            var cacheManagerConfig =
+                ConfigurationBuilder.BuildConfiguration(cfg =>
+                {
+                    cfg.WithJsonSerializer()
+                        .WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
+                        .WithRedisBackplane("redis")
+                        .WithRedisCacheHandle("redis", true);
+                });
 
-			services.AddSingleton(cacheManagerConfig);
-			services.AddCacheManager();
+            services.AddSingleton(cacheManagerConfig);
+            services.AddCacheManager();
 
-			var redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
-			services.AddSingleton<IConnectionMultiplexer>(redisConnection);
+            var redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
+            services.AddSingleton<IConnectionMultiplexer>(redisConnection);
 
-			services.AddDataProtection()
+            services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo("DataProtection-Keys"));
         }
 
-		private void InitializeFluentMappings()
-		{
-			using (CrossProcessLockFactory.CreateCrossProcessLock())
-			{
-				DefaultTypeMap.MatchNamesWithUnderscores = true;
-				if (FluentMapper.EntityMaps.IsEmpty)
-				{
-					FluentMapper.Initialize(config =>
-					{
-						config.AddMapFromCurrentAssembly();
-					});
-				}
-			}
-		}
+        private void InitializeFluentMappings()
+        {
+            using (CrossProcessLockFactory.CreateCrossProcessLock())
+            {
+                DefaultTypeMap.MatchNamesWithUnderscores = true;
+                if (FluentMapper.EntityMaps.IsEmpty)
+                {
+                    FluentMapper.Initialize(config =>
+                    {
+                        config.AddMapFromCurrentAssembly();
+                    });
+                }
+            }
+        }
 
-		private void AddPolicies(IServiceCollection services)
-		{
-			services.AddAuthorization(options =>
+        private void AddPolicies(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
             {
                 options.AddPolicy(
                     AuthorizationPolicies.Public,
@@ -317,28 +317,28 @@
             });
         }
 
-		private void AddHttpClients(IServiceCollection services)
-		{
-			services.AddHttpClient<IIdentityService, IdentityService>(client =>
-			{
-				client.BaseAddress = new Uri(OAuthConfiguration.Authority);
-			}).AddPolicyHandler(GetRetryPolicy())
-			.AddPolicyHandler(GetCircuitBreakerPolicy());
-		}
+        private void AddHttpClients(IServiceCollection services)
+        {
+            services.AddHttpClient<IIdentityService, IdentityService>(client =>
+            {
+                client.BaseAddress = new Uri(OAuthConfiguration.Authority);
+            }).AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
+        }
 
-		private IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
-		{
-			return HttpPolicyExtensions
-				.HandleTransientHttpError()
-				.OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-				.WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-		}
+        private IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
 
-		private IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
-		{
-			return HttpPolicyExtensions
-				.HandleTransientHttpError()
-				.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
-		}
-	}
+        private IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+        {
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+        }
+    }
 }

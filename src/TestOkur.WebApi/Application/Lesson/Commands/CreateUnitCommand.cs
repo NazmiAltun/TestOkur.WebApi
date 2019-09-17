@@ -9,26 +9,26 @@
 
     [DataContract]
     public class CreateUnitCommand : CommandBase, IClearCache
-	{
-		public CreateUnitCommand(Guid id, string name, int lessonId, int grade)
-			: base(id)
-		{
-			Name = name;
-			LessonId = lessonId;
-			Grade = grade;
-		}
+    {
+        public CreateUnitCommand(Guid id, string name, int lessonId, int grade)
+            : base(id)
+        {
+            Name = name;
+            LessonId = lessonId;
+            Grade = grade;
+        }
 
-		public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
+        public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
 
-		[DataMember]
-		public string Name { get; private set; }
+        [DataMember]
+        public string Name { get; private set; }
 
-		[DataMember]
-		public int Grade { get; private set; }
+        [DataMember]
+        public int Grade { get; private set; }
 
-		[DataMember]
-		public int LessonId { get; private set; }
+        [DataMember]
+        public int LessonId { get; private set; }
 
-		public Unit ToDomainModel(Lesson lesson) => new Unit(Name, lesson, Grade);
-	}
+        public Unit ToDomainModel(Lesson lesson) => new Unit(Name, lesson, Grade);
+    }
 }

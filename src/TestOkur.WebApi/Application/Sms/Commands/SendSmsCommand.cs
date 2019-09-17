@@ -7,16 +7,16 @@
 
     [DataContract]
     public class SendSmsCommand : CommandBase
-	{
-		public SendSmsCommand(
-			Guid id,
-			IEnumerable<SmsMessageModel> messages)
-		 : base(id)
-		{
-			Messages = messages;
-		}
+    {
+        public SendSmsCommand(
+            Guid id,
+            IEnumerable<SmsMessageModel> messages)
+         : base(id)
+        {
+            Messages = messages;
+        }
 
-		[DataMember]
-		public IEnumerable<SmsMessageModel> Messages { get; private set; }
-	}
+        [DataMember]
+        public IEnumerable<SmsMessageModel> Messages { get; private set; }
+    }
 }

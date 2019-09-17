@@ -8,24 +8,24 @@
     using Exam = TestOkur.Domain.Model.ExamModel.Exam;
 
     public class ExamUpdated : IntegrationEvent, IExamUpdated
-	{
-		public ExamUpdated(Exam exam, IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms)
-		{
-			ExamId = (int)exam.Id;
-			IncorrectEliminationRate = exam.IncorrectEliminationRate;
-			ExamDate = exam.ExamDate;
-			ExamName = exam.Name.Value;
-			AnswerKeyOpticalForms = answerKeyOpticalForms;
-		}
+    {
+        public ExamUpdated(Exam exam, IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms)
+        {
+            ExamId = (int)exam.Id;
+            IncorrectEliminationRate = exam.IncorrectEliminationRate;
+            ExamDate = exam.ExamDate;
+            ExamName = exam.Name.Value;
+            AnswerKeyOpticalForms = answerKeyOpticalForms;
+        }
 
-		public int ExamId { get; }
+        public int ExamId { get; }
 
-		public int IncorrectEliminationRate { get; }
+        public int IncorrectEliminationRate { get; }
 
-		public DateTime ExamDate { get; }
+        public DateTime ExamDate { get; }
 
-		public string ExamName { get; }
+        public string ExamName { get; }
 
-		public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
-	}
+        public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
+    }
 }

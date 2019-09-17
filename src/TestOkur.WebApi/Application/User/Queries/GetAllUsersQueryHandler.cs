@@ -12,8 +12,8 @@
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetAllUsersQueryHandler : QueryHandlerAsync<GetAllUsersQuery, IReadOnlyCollection<UserReadModel>>
-	{
-		private const string Sql = @"
+    {
+        private const string Sql = @"
 								SELECT
 								u.id,
 								subject_id,
@@ -34,25 +34,24 @@
 								INNER JOIN cities c ON c.id=u.city_id
 								INNER JOIN districts d ON d.id=u.district_id";
 
-		private readonly string _connectionString;
+        private readonly string _connectionString;
 
-		public GetAllUsersQueryHandler(ApplicationConfiguration configurationOptions)
-		{
-			_connectionString = configurationOptions.Postgres;
-		}
+        public GetAllUsersQueryHandler(ApplicationConfiguration configurationOptions)
+        {
+            _connectionString = configurationOptions.Postgres;
+        }
 
-		[PopulateQuery(1)]
-		[QueryLogging(2)]
-		[ResultCaching(3)]
-		public override async Task<IReadOnlyCollection<UserReadModel>> ExecuteAsync(
-			GetAllUsersQuery query,
-			CancellationToken cancellationToken = default)
-		{
-			using (var connection = new NpgsqlConnection(_connectionString))
-			{
-				return (await connection.QueryAsync<UserReadModel>(Sql))
-					.ToList();
-			}
-		}
-	}
+        [QueryLogging(2)]
+        [ResultCaching(3)]
+        public override async Task<IReadOnlyCollection<UserReadModel>> ExecuteAsync(
+            GetAllUsersQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                return (await connection.QueryAsync<UserReadModel>(Sql))
+                    .ToList();
+            }
+        }
+    }
 }

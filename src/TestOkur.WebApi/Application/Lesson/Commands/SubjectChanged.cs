@@ -4,15 +4,15 @@
     using TestOkur.Contracts.Lesson;
 
     public class SubjectChanged : IntegrationEvent, ISubjectChanged
-	{
-		public SubjectChanged(int subjectId, string newName)
-		{
-			SubjectId = subjectId;
-			NewName = newName;
-		}
+    {
+        public SubjectChanged(int subjectId, string newName)
+        {
+            SubjectId = subjectId;
+            NewName = newName;
+        }
 
-		public int SubjectId { get; }
+        public int SubjectId { get; }
 
-		public string NewName { get; }
-	}
+        public string NewName { get; }
+    }
 }

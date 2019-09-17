@@ -7,21 +7,21 @@
     using TestOkur.Notification.Models;
 
     internal class ResetPasswordTokenGeneratedConsumer
-		: IConsumer<IResetPasswordTokenGenerated>
-	{
-		private readonly INotificationFacade _notificationFacade;
+        : IConsumer<IResetPasswordTokenGenerated>
+    {
+        private readonly INotificationFacade _notificationFacade;
 
-		public ResetPasswordTokenGeneratedConsumer(INotificationFacade notificationFacade)
-		{
-			_notificationFacade = notificationFacade;
-		}
+        public ResetPasswordTokenGeneratedConsumer(INotificationFacade notificationFacade)
+        {
+            _notificationFacade = notificationFacade;
+        }
 
-		public async Task Consume(ConsumeContext<IResetPasswordTokenGenerated> context)
-		{
-			await _notificationFacade.SendEmailAsync(
-				context.Message,
-				Template.PasswordResetEmailUser,
-				context.Message.Email);
-		}
-	}
+        public async Task Consume(ConsumeContext<IResetPasswordTokenGenerated> context)
+        {
+            await _notificationFacade.SendEmailAsync(
+                context.Message,
+                Template.PasswordResetEmailUser,
+                context.Message.Email);
+        }
+    }
 }

@@ -4,26 +4,26 @@
     using TestOkur.Domain.SeedWork;
 
     public class LessonCoefficient : Entity
-	{
-		public LessonCoefficient(
-			FormLessonSection examLessonSection,
-			float coefficient)
-		{
-			ExamLessonSection = examLessonSection;
-			Coefficient = coefficient;
-		}
+    {
+        public LessonCoefficient(
+            FormLessonSection examLessonSection,
+            float coefficient)
+        {
+            ExamLessonSection = examLessonSection;
+            Coefficient = coefficient;
+        }
 
-		protected LessonCoefficient()
-		{
-		}
+        protected LessonCoefficient()
+        {
+        }
 
-		public FormLessonSection ExamLessonSection { get; private set; }
+        public FormLessonSection ExamLessonSection { get; private set; }
 
-		public float Coefficient { get; private set; }
+        public float Coefficient { get; private set; }
 
-		public void SetNewCoefficient(float coefficient)
-		{
-			Coefficient = coefficient;
-		}
-	}
+        public void SetNewCoefficient(float coefficient)
+        {
+            Coefficient = coefficient;
+        }
+    }
 }

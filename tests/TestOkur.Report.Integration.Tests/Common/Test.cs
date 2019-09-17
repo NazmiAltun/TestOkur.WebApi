@@ -7,28 +7,28 @@
     using TestOkur.TestHelper;
 
     public abstract class Test
-	{
-		private static readonly TestServerFactory TestServerFactory = new TestServerFactory();
-		private TestServer _testServer;
+    {
+        private static readonly TestServerFactory TestServerFactory = new TestServerFactory();
+        private TestServer _testServer;
 
-		public TestServer Create() => Create(RandomGen.Next(1000));
+        public TestServer Create() => Create(RandomGen.Next(1000));
 
-		public TestServer Create(int userId)
-		{
-			if (_testServer == null)
-			{
-				void Configure(IServiceCollection services)
-				{
-					services.AddSingleton(
-						new Claim(
-							JwtClaimTypes.Subject,
-							userId.ToString()));
-				}
+        public TestServer Create(int userId)
+        {
+            if (_testServer == null)
+            {
+                void Configure(IServiceCollection services)
+                {
+                    services.AddSingleton(
+                        new Claim(
+                            JwtClaimTypes.Subject,
+                            userId.ToString()));
+                }
 
-				_testServer = TestServerFactory.Create(Configure);
-			}
+                _testServer = TestServerFactory.Create(Configure);
+            }
 
-			return _testServer;
-		}
-	}
+            return _testServer;
+        }
+    }
 }

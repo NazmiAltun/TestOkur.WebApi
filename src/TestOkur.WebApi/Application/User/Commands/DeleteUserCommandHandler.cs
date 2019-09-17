@@ -9,40 +9,40 @@
     using TestOkur.WebApi.Application.User.Services;
 
     public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>
-	{
-		private readonly IIdentityService _identityService;
-		private readonly ApplicationDbContext _dbContext;
+    {
+        private readonly IIdentityService _identityService;
+        private readonly ApplicationDbContext _dbContext;
 
-		public DeleteUserCommandHandler(IIdentityService identityService, ApplicationDbContext dbContext)
-		{
-			_identityService = identityService;
-			_dbContext = dbContext;
-		}
+        public DeleteUserCommandHandler(IIdentityService identityService, ApplicationDbContext dbContext)
+        {
+            _identityService = identityService;
+            _dbContext = dbContext;
+        }
 
-		[Idempotent(1)]
-		[ClearCache(2)]
-		public override async Task<DeleteUserCommand> HandleAsync(
-			DeleteUserCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			var user = await GetUserAsync(command.DeleteUserId, cancellationToken);
+        [Idempotent(1)]
+        [ClearCache(2)]
+        public override async Task<DeleteUserCommand> HandleAsync(
+            DeleteUserCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            var user = await GetUserAsync(command.DeleteUserId, cancellationToken);
 
-			if (user != null)
-			{
-				await _identityService.DeleteUserAsync(user.SubjectId, cancellationToken);
-				_dbContext.Remove(user);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-			}
+            if (user != null)
+            {
+                await _identityService.DeleteUserAsync(user.SubjectId, cancellationToken);
+                _dbContext.Remove(user);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
 
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            return await base.HandleAsync(command, cancellationToken);
+        }
 
-		private async Task<Domain.Model.UserModel.User> GetUserAsync(
-			int id,
-			CancellationToken cancellationToken)
-		{
-			return await _dbContext.Users.FirstOrDefaultAsync(
-				l => l.Id == id, cancellationToken);
-		}
-	}
+        private async Task<Domain.Model.UserModel.User> GetUserAsync(
+            int id,
+            CancellationToken cancellationToken)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(
+                l => l.Id == id, cancellationToken);
+        }
+    }
 }

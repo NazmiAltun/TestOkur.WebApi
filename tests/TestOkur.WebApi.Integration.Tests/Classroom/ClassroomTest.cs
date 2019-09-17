@@ -10,26 +10,26 @@
     using TestOkur.WebApi.Integration.Tests.Common;
 
     public abstract class ClassroomTest : Test
-	{
-		protected const string ApiPath = "api/v1/classrooms";
+    {
+        protected const string ApiPath = "api/v1/classrooms";
 
-		protected async Task<CreateClassroomCommand> CreateClassroomAsync(HttpClient client)
-		{
-			var command = new CreateClassroomCommand(
-				Guid.NewGuid(),
-				Random.Next(Grade.Min, Grade.Max),
-				Random.RandomString(3));
+        protected async Task<CreateClassroomCommand> CreateClassroomAsync(HttpClient client)
+        {
+            var command = new CreateClassroomCommand(
+                Guid.NewGuid(),
+                Random.Next(Grade.Min, Grade.Max),
+                Random.RandomString(3));
 
-			var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-			response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-			return command;
-		}
+            return command;
+        }
 
-		protected async Task<IEnumerable<ClassroomReadModel>> GetListAsync(HttpClient client)
-		{
-			var response = await client.GetAsync(ApiPath);
-			return await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
-		}
-	}
+        protected async Task<IEnumerable<ClassroomReadModel>> GetListAsync(HttpClient client)
+        {
+            var response = await client.GetAsync(ApiPath);
+            return await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
+        }
+    }
 }

@@ -3,16 +3,16 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public class GetUserByEmailQuery : QueryBase<UserReadModel>
-	{
-		public GetUserByEmailQuery()
-		{
-		}
+    {
+        public GetUserByEmailQuery()
+        {
+        }
 
-		public GetUserByEmailQuery(string email)
-		{
-			Email = email;
-		}
+        public GetUserByEmailQuery(string email)
+        {
+            Email = email;
+        }
 
-		public string Email { get; }
-	}
+        public string Email { get; }
+    }
 }

@@ -12,21 +12,21 @@
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetAllCitiesQueryHandler : QueryHandlerAsync<GetAllCitiesQuery, IReadOnlyCollection<CityReadModel>>
-	{
-		private const string Sql = @"SELECT c.id,c.name_value as Name, d.id, d.name_value As districtname FROM cities c
+    {
+        private const string Sql = @"SELECT c.id,c.name_value as Name, d.id, d.name_value As districtname FROM cities c
                                  INNER JOIN districts d on c.id = d.city_id
                                  order by Name, districtname";
 
-		private readonly string _connectionString;
+        private readonly string _connectionString;
 
-		public GetAllCitiesQueryHandler(ApplicationConfiguration configurationOptions)
+        public GetAllCitiesQueryHandler(ApplicationConfiguration configurationOptions)
         {
-	        _connectionString = configurationOptions.Postgres;
+            _connectionString = configurationOptions.Postgres;
         }
 
-		[QueryLogging(1)]
-		[ResultCaching(2)]
-		public override async Task<IReadOnlyCollection<CityReadModel>> ExecuteAsync(GetAllCitiesQuery query, CancellationToken cancellationToken = default)
+        [QueryLogging(1)]
+        [ResultCaching(2)]
+        public override async Task<IReadOnlyCollection<CityReadModel>> ExecuteAsync(GetAllCitiesQuery query, CancellationToken cancellationToken = default)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {

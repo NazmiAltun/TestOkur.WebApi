@@ -14,57 +14,57 @@
     using TestOkur.WebApi.Integration.Tests.Common;
 
     public abstract class StudentTest : Test
-	{
-		protected const string ApiPath = "api/v1/students";
-		protected const string Numbers = "123456789";
+    {
+        protected const string ApiPath = "api/v1/students";
+        protected const string Numbers = "123456789";
 
-		protected async Task<IEnumerable<StudentReadModel>> GetListAsync(HttpClient client)
-		{
-			var response = await client.GetAsync(ApiPath);
-			return await response.ReadAsync<IEnumerable<StudentReadModel>>();
-		}
+        protected async Task<IEnumerable<StudentReadModel>> GetListAsync(HttpClient client)
+        {
+            var response = await client.GetAsync(ApiPath);
+            return await response.ReadAsync<IEnumerable<StudentReadModel>>();
+        }
 
-		protected async Task<IEnumerable<CreateStudentCommand>> GenerateCommandsAsync(
-			HttpClient client, int count)
-		{
-			var classroomId = await GetClassroomIdAsync(client);
-			var list = new List<CreateStudentCommand>();
+        protected async Task<IEnumerable<CreateStudentCommand>> GenerateCommandsAsync(
+            HttpClient client, int count)
+        {
+            var classroomId = await GetClassroomIdAsync(client);
+            var list = new List<CreateStudentCommand>();
 
-			for (var i = 0; i < count; i++)
-			{
-				list.Add(GenerateCommand(classroomId));
-			}
+            for (var i = 0; i < count; i++)
+            {
+                list.Add(GenerateCommand(classroomId));
+            }
 
-			return list;
-		}
+            return list;
+        }
 
-		protected async Task<CreateStudentCommand> CreateStudentAsync(HttpClient client)
-		{
-			var classroomId = await GetClassroomIdAsync(client);
-			var command = GenerateCommand(classroomId);
-			await client.PostAsync(ApiPath, command.ToJsonContent());
+        protected async Task<CreateStudentCommand> CreateStudentAsync(HttpClient client)
+        {
+            var classroomId = await GetClassroomIdAsync(client);
+            var command = GenerateCommand(classroomId);
+            await client.PostAsync(ApiPath, command.ToJsonContent());
 
-			return command;
-		}
+            return command;
+        }
 
-		protected async Task<int> GetClassroomIdAsync(HttpClient client)
-		{
-			const string ApiPath = "api/v1/classrooms";
+        protected async Task<int> GetClassroomIdAsync(HttpClient client)
+        {
+            const string ApiPath = "api/v1/classrooms";
 
-			var command = new CreateClassroomCommand(
-					Guid.NewGuid(),
-					Random.Next(Grade.Min, Grade.Max),
-					Random.RandomString(3));
-			var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-			response.EnsureSuccessStatusCode();
+            var command = new CreateClassroomCommand(
+                    Guid.NewGuid(),
+                    Random.Next(Grade.Min, Grade.Max),
+                    Random.RandomString(3));
+            var response = await client.PostAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-			response = await client.GetAsync(ApiPath);
-			var list = await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
+            response = await client.GetAsync(ApiPath);
+            var list = await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
 
-			return list.First().Id;
-		}
+            return list.First().Id;
+        }
 
-		private CreateStudentCommand GenerateCommand(int classroomId)
+        private CreateStudentCommand GenerateCommand(int classroomId)
         {
             var contacts = new List<CreateContactCommand>
             {

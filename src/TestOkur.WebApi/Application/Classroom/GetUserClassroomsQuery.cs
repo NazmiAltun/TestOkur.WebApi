@@ -5,11 +5,11 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public class GetUserClassroomsQuery :
-		QueryBase<IReadOnlyCollection<ClassroomReadModel>>,
-		ICacheResult
-	{
-		public string CacheKey => $"Classrooms_{UserId}";
+        QueryBase<IReadOnlyCollection<ClassroomReadModel>>,
+        ICacheResult
+    {
+        public string CacheKey => $"Classrooms_{UserId}";
 
-		public TimeSpan CacheDuration => TimeSpan.FromHours(4);
-	}
+        public TimeSpan CacheDuration => TimeSpan.FromHours(4);
+    }
 }

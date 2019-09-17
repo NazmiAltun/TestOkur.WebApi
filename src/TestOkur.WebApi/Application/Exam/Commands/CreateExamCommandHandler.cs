@@ -21,75 +21,75 @@
     using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
     public sealed class CreateExamCommandHandler : RequestHandlerAsync<CreateExamCommand>
-	{
-		private readonly IQueryProcessor _queryProcessor;
-		private readonly IPublishEndpoint _publishEndpoint;
-		private readonly ApplicationDbContext _dbContext;
+    {
+        private readonly IProcessor _processor;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ApplicationDbContext _dbContext;
 
-		public CreateExamCommandHandler(
-			ApplicationDbContext dbContext,
-			IQueryProcessor queryProcessor,
-			IPublishEndpoint publishEndpoint)
-		{
-			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-			_queryProcessor = queryProcessor;
-			_publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-		}
+        public CreateExamCommandHandler(
+            ApplicationDbContext dbContext,
+            IProcessor processor,
+            IPublishEndpoint publishEndpoint)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _processor = processor;
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+        }
 
-		[Idempotent(2)]
-		[ClearCache(4)]
-		public override async Task<CreateExamCommand> HandleAsync(
-			CreateExamCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			await EnsureNotExistsAsync(command.Name, cancellationToken);
+        [Idempotent(2)]
+        [ClearCache(4)]
+        public override async Task<CreateExamCommand> HandleAsync(
+            CreateExamCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            await EnsureNotExistsAsync(command.Name, cancellationToken);
 
-			var exam = new Exam(
-				command.Name,
-				command.ExamDate,
-				await _dbContext.ExamTypes.FirstAsync(e => e.Id == command.ExamTypeId, cancellationToken),
-				Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.ExamBookletTypeId),
-				command.IncorrectEliminationRate,
-				Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.AnswerFormFormat),
-				await GetLessonAsync(command.LessonId),
-				command.ApplicableFormTypeCode,
-				command.Notes);
+            var exam = new Exam(
+                command.Name,
+                command.ExamDate,
+                await _dbContext.ExamTypes.FirstAsync(e => e.Id == command.ExamTypeId, cancellationToken),
+                Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.ExamBookletTypeId),
+                command.IncorrectEliminationRate,
+                Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.AnswerFormFormat),
+                await GetLessonAsync(command.LessonId),
+                command.ApplicableFormTypeCode,
+                command.Notes);
 
-			_dbContext.Attach(exam.ExamBookletType);
-			_dbContext.Attach(exam.AnswerFormFormat);
-			_dbContext.Exams.Add(exam);
-			await _dbContext.SaveChangesAsync(cancellationToken);
-			await PublishEventAsync(exam, command.AnswerKeyOpticalForms, cancellationToken);
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            _dbContext.Attach(exam.ExamBookletType);
+            _dbContext.Attach(exam.AnswerFormFormat);
+            _dbContext.Exams.Add(exam);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            await PublishEventAsync(exam, command.AnswerKeyOpticalForms, cancellationToken);
+            return await base.HandleAsync(command, cancellationToken);
+        }
 
-		private async Task PublishEventAsync(
-			Exam exam,
-			IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms,
-			CancellationToken cancellationToken)
-		{
-			await _publishEndpoint.Publish(
-				new ExamCreated(exam, answerKeyOpticalForms),
-				cancellationToken);
-		}
+        private async Task PublishEventAsync(
+            Exam exam,
+            IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms,
+            CancellationToken cancellationToken)
+        {
+            await _publishEndpoint.Publish(
+                new ExamCreated(exam, answerKeyOpticalForms),
+                cancellationToken);
+        }
 
-		private async Task EnsureNotExistsAsync(
-			string name, CancellationToken cancellationToken)
-		{
-			var list = (await _queryProcessor.ExecuteAsync(
-				new GetUserExamsQuery(), cancellationToken)).ToList();
+        private async Task EnsureNotExistsAsync(
+            string name, CancellationToken cancellationToken)
+        {
+            var list = (await _processor.ExecuteAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>(
+                new GetUserExamsQuery(), cancellationToken)).ToList();
 
-			if (list.Any(c => c.Name == name))
-			{
-				throw new ValidationException(ErrorCodes.ExamExists);
-			}
-		}
+            if (list.Any(c => c.Name == name))
+            {
+                throw new ValidationException(ErrorCodes.ExamExists);
+            }
+        }
 
-		private async Task<Lesson> GetLessonAsync(int id)
-		{
-			return id <= 0 ?
-				null :
-				await _dbContext.Lessons.FirstAsync(l => l.Id == id);
-		}
-	}
+        private async Task<Lesson> GetLessonAsync(int id)
+        {
+            return id <= 0 ?
+                null :
+                await _dbContext.Lessons.FirstAsync(l => l.Id == id);
+        }
+    }
 }

@@ -10,15 +10,15 @@
     using TestOkur.WebApi.Data;
 
     public class TestServerFactory : TestServerFactory<TestStartup>
-	{
-		public async Task<TestServer> CreateAsync(Action<IServiceCollection> configureServices = null)
-		{
-			var testServer = Create(configureServices);
-			await testServer.Host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
-			{
-				await DbInitializer.SeedAsync(context, services);
-			});
-			return testServer;
-		}
-	}
+    {
+        public async Task<TestServer> CreateAsync(Action<IServiceCollection> configureServices = null)
+        {
+            var testServer = Create(configureServices);
+            await testServer.Host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
+            {
+                await DbInitializer.SeedAsync(context, services);
+            });
+            return testServer;
+        }
+    }
 }

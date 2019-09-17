@@ -1,13 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Domain;
     using TestOkur.Infrastructure.Cqrs;
@@ -16,13 +15,11 @@
     [Authorize(AuthorizationPolicies.Customer)]
     public class ClassroomController : ControllerBase
     {
-        private readonly IQueryProcessor _queryProcessor;
-        private readonly IContextCommandProcessor _commandProcessor;
+        private readonly IProcessor _processor;
 
-        public ClassroomController(IQueryProcessor queryProcessor, IContextCommandProcessor commandProcessor)
+        public ClassroomController(IProcessor processor)
         {
-            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
-            _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
+            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
         [HttpPost]
@@ -30,7 +27,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync([FromBody, Required]CreateClassroomCommand command)
         {
-            await _commandProcessor.ExecuteAsync(command);
+            await _processor.SendAsync(command);
             return Ok(SuccessCodes.ClassCreated);
         }
 
@@ -38,14 +35,14 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<ClassroomReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new GetUserClassroomsQuery()));
+            return Ok(await _processor.ExecuteAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>(new GetUserClassroomsQuery()));
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _commandProcessor.ExecuteAsync(new DeleteClassroomCommand(id));
+            await _processor.SendAsync(new DeleteClassroomCommand(id));
             return Ok();
         }
 
@@ -54,7 +51,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditAsync([FromBody, Required]EditClassroomCommand command)
         {
-            await _commandProcessor.ExecuteAsync(command);
+            await _processor.SendAsync(command);
             return Ok();
         }
     }

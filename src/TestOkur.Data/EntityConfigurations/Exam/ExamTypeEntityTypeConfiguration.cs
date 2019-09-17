@@ -5,7 +5,7 @@
     using TestOkur.Domain.Model.ExamModel;
 
     internal class ExamTypeEntityTypeConfiguration
-		: IEntityTypeConfiguration<ExamType>
+        : IEntityTypeConfiguration<ExamType>
     {
         public void Configure(EntityTypeBuilder<ExamType> builder)
         {

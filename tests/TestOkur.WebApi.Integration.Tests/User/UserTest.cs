@@ -10,28 +10,28 @@
     using TestOkur.WebApi.Integration.Tests.Common;
 
     public abstract class UserTest : Test
-	{
-		protected const string ApiPath = "api/v1/users";
+    {
+        protected const string ApiPath = "api/v1/users";
 
-		protected async Task<CreateUserCommand> CreateUserAsync(
-			HttpClient client,
-			IServiceProvider serviceProvider)
-		{
-			var captcha = await GetCaptchaAsync(client, serviceProvider);
-			var city = await GetRandomCityAsync(client);
-			var licenseType = await GetRandomLicenseTypeAsync(client);
-			var command = GenerateCreateUserCommand(captcha, city, licenseType);
-			var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-			response.EnsureSuccessStatusCode();
+        protected async Task<CreateUserCommand> CreateUserAsync(
+            HttpClient client,
+            IServiceProvider serviceProvider)
+        {
+            var captcha = await GetCaptchaAsync(client, serviceProvider);
+            var city = await GetRandomCityAsync(client);
+            var licenseType = await GetRandomLicenseTypeAsync(client);
+            var command = GenerateCreateUserCommand(captcha, city, licenseType);
+            var response = await client.PostAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-			return command;
-		}
+            return command;
+        }
 
-		protected async Task<IReadOnlyCollection<UserReadModel>> GetUsersAsync(
-			HttpClient client)
-		{
-			var response = await client.GetAsync(ApiPath);
-			return await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
-		}
-	}
+        protected async Task<IReadOnlyCollection<UserReadModel>> GetUsersAsync(
+            HttpClient client)
+        {
+            var response = await client.GetAsync(ApiPath);
+            return await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
+        }
+    }
 }

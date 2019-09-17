@@ -4,10 +4,10 @@
     using TestOkur.Domain.SeedWork;
 
     internal static class EntityEntryExtensions
-	{
-		public static bool IsAuditable(this EntityEntry entry)
-		{
-			return typeof(IAuditable).IsAssignableFrom(entry.Metadata.ClrType);
-		}
-	}
+    {
+        public static bool IsAuditable(this EntityEntry entry)
+        {
+            return typeof(IAuditable).IsAssignableFrom(entry.Metadata.ClrType);
+        }
+    }
 }

@@ -16,47 +16,45 @@
     [Route("api/v1/exams")]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ExamController : ControllerBase
-	{
-		private readonly IQueryProcessor _queryProcessor;
-		private readonly IContextCommandProcessor _commandProcessor;
+    {
+        private readonly IProcessor _processor;
 
-		public ExamController(IQueryProcessor queryProcessor, IContextCommandProcessor commandProcessor)
-		{
-			_commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
-			_queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
-		}
+        public ExamController(IProcessor processor)
+        {
+            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+        }
 
-		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public async Task<IActionResult> CreateAsync([FromBody, Required]CreateExamCommand command)
-		{
-			await _commandProcessor.ExecuteAsync(command);
-			return Ok();
-		}
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateExamCommand command)
+        {
+            await _processor.SendAsync(command);
+            return Ok();
+        }
 
-		[HttpGet]
-		[ProducesResponseType(typeof(IReadOnlyCollection<ExamReadModel>), StatusCodes.Status200OK)]
-		public async Task<IActionResult> GetAsync()
-		{
-			return Ok(await _queryProcessor.ExecuteAsync(new GetUserExamsQuery()));
-		}
+        [HttpGet]
+        [ProducesResponseType(typeof(IReadOnlyCollection<ExamReadModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok(await _processor.ExecuteAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>(new GetUserExamsQuery()));
+        }
 
-		[HttpDelete("{id}")]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> DeleteAsync(int id)
-		{
-			await _commandProcessor.ExecuteAsync(new DeleteExamCommand(id));
-			return Ok();
-		}
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            await _processor.SendAsync(new DeleteExamCommand(id));
+            return Ok();
+        }
 
-		[HttpPut]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public async Task<IActionResult> EditAsync([FromBody, Required]EditExamCommand command)
-		{
-			await _commandProcessor.ExecuteAsync(command);
-			return Ok();
-		}
-	}
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> EditAsync([FromBody, Required]EditExamCommand command)
+        {
+            await _processor.SendAsync(command);
+            return Ok();
+        }
+    }
 }

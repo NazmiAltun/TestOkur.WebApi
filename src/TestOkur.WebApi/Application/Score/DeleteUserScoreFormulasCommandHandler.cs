@@ -10,32 +10,32 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class DeleteUserScoreFormulasCommandHandler
-		: RequestHandlerAsync<DeleteUserScoreFormulasCommand>
-	{
-		private readonly ApplicationDbContext _dbContext;
+        : RequestHandlerAsync<DeleteUserScoreFormulasCommand>
+    {
+        private readonly ApplicationDbContext _dbContext;
 
-		public DeleteUserScoreFormulasCommandHandler(ApplicationDbContext dbContext)
-		{
-			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-		}
+        public DeleteUserScoreFormulasCommandHandler(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
 
-		[ClearCache(2)]
-		public override async Task<DeleteUserScoreFormulasCommand> HandleAsync(
-			DeleteUserScoreFormulasCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			var formulas = _dbContext.ScoreFormulas
-				.Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId &&
-				            EF.Property<int>(s, "CreatedBy") != default)
-				.ToList();
+        [ClearCache(2)]
+        public override async Task<DeleteUserScoreFormulasCommand> HandleAsync(
+            DeleteUserScoreFormulasCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            var formulas = _dbContext.ScoreFormulas
+                .Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId &&
+                            EF.Property<int>(s, "CreatedBy") != default)
+                .ToList();
 
-			if (formulas.Any())
-			{
-				_dbContext.ScoreFormulas.RemoveRange(formulas);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-			}
+            if (formulas.Any())
+            {
+                _dbContext.ScoreFormulas.RemoveRange(formulas);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
 
-			return await base.HandleAsync(command, cancellationToken);
-		}
-	}
+            return await base.HandleAsync(command, cancellationToken);
+        }
+    }
 }

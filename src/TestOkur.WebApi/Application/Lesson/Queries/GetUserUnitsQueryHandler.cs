@@ -12,9 +12,9 @@
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetUserUnitsQueryHandler
-		: QueryHandlerAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>
-	{
-		private const string Sql = @"SELECT u.Id,
+        : QueryHandlerAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>
+    {
+        private const string Sql = @"SELECT u.Id,
 								u.name_value as name,
 								u.lesson_id,
 								l.name_value as lesson,
@@ -27,46 +27,45 @@
 								WHERE u.created_by=@userId
 								ORDER BY u.name_value,s.name_value";
 
-		private readonly string _connectionString;
+        private readonly string _connectionString;
 
-		public GetUserUnitsQueryHandler(ApplicationConfiguration configurationOptions)
-		{
-			_connectionString = configurationOptions.Postgres;
-		}
+        public GetUserUnitsQueryHandler(ApplicationConfiguration configurationOptions)
+        {
+            _connectionString = configurationOptions.Postgres;
+        }
 
-		[PopulateQuery(1)]
-		[QueryLogging(2)]
-		[ResultCaching(3)]
-		public override async Task<IReadOnlyCollection<UnitReadModel>> ExecuteAsync(
-			GetUserUnitsQuery query,
-			CancellationToken cancellationToken = default)
-		{
-			using (var connection = new NpgsqlConnection(_connectionString))
-			{
-				var dictionary = new Dictionary<int, UnitReadModel>();
+        [QueryLogging(2)]
+        [ResultCaching(3)]
+        public override async Task<IReadOnlyCollection<UnitReadModel>> ExecuteAsync(
+            GetUserUnitsQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                var dictionary = new Dictionary<int, UnitReadModel>();
 
-				return (await connection.QueryAsync<UnitReadModel, SubjectReadModel, UnitReadModel>(
-						Sql,
-						(unit, subject) =>
-						{
-							if (!dictionary.TryGetValue(unit.Id, out var unitEntry))
-							{
-								unitEntry = unit;
-								dictionary.Add(unitEntry.Id, unitEntry);
-							}
+                return (await connection.QueryAsync<UnitReadModel, SubjectReadModel, UnitReadModel>(
+                        Sql,
+                        (unit, subject) =>
+                        {
+                            if (!dictionary.TryGetValue(unit.Id, out var unitEntry))
+                            {
+                                unitEntry = unit;
+                                dictionary.Add(unitEntry.Id, unitEntry);
+                            }
 
-							if (subject != null)
-							{
-								unitEntry.Subjects.Add(subject);
-							}
+                            if (subject != null)
+                            {
+                                unitEntry.Subjects.Add(subject);
+                            }
 
-							return unitEntry;
-						},
-						new { query.UserId },
-						splitOn: "subject_id"))
-					.Distinct()
-					.ToList();
-			}
-		}
-	}
+                            return unitEntry;
+                        },
+                        new { query.UserId },
+                        splitOn: "subject_id"))
+                    .Distinct()
+                    .ToList();
+            }
+        }
+    }
 }

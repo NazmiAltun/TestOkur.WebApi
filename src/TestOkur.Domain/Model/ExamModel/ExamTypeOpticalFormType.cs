@@ -4,16 +4,16 @@
     using TestOkur.Domain.SeedWork;
 
     public class ExamTypeOpticalFormType : Entity
-	{
-		public ExamTypeOpticalFormType(OpticalFormType opticalFormType)
-		{
-			OpticalFormType = opticalFormType;
-		}
+    {
+        public ExamTypeOpticalFormType(OpticalFormType opticalFormType)
+        {
+            OpticalFormType = opticalFormType;
+        }
 
-		protected ExamTypeOpticalFormType()
-		{
-		}
+        protected ExamTypeOpticalFormType()
+        {
+        }
 
-		public OpticalFormType OpticalFormType { get; private set; }
-	}
+        public OpticalFormType OpticalFormType { get; private set; }
+    }
 }

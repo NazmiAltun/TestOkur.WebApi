@@ -13,39 +13,39 @@
     using TestOkur.Contracts.User;
 
     internal class Consumer : MultiTestConsumer
-	{
-		public Consumer()
-			: base(TimeSpan.FromSeconds(10))
-		{
-			Consume<ISendSmsRequestReceived>();
-			Consume<INewUserRegistered>();
-			Consume<IUserActivated>();
-			Consume<IResetPasswordTokenGenerated>();
-			Consume<IExamDeleted>();
-			Consume<IExamCreated>();
-			Consume<IExamUpdated>();
-			Consume<ILessonNameChanged>();
-			Consume<ISubjectChanged>();
-			Consume<IClassroomDeleted>();
-			Consume<IClassroomUpdated>();
-			Consume<IStudentDeleted>();
-			Consume<IStudentUpdated>();
-			Consume<IUserErrorReceived>();
-			Consume<ISmsCreditAdded>();
-		}
+    {
+        public Consumer()
+            : base(TimeSpan.FromSeconds(10))
+        {
+            Consume<ISendSmsRequestReceived>();
+            Consume<INewUserRegistered>();
+            Consume<IUserActivated>();
+            Consume<IResetPasswordTokenGenerated>();
+            Consume<IExamDeleted>();
+            Consume<IExamCreated>();
+            Consume<IExamUpdated>();
+            Consume<ILessonNameChanged>();
+            Consume<ISubjectChanged>();
+            Consume<IClassroomDeleted>();
+            Consume<IClassroomUpdated>();
+            Consume<IStudentDeleted>();
+            Consume<IStudentUpdated>();
+            Consume<IUserErrorReceived>();
+            Consume<ISmsCreditAdded>();
+        }
 
-		public static Consumer Instance { get; } = new Consumer();
+        public static Consumer Instance { get; } = new Consumer();
 
-		public IEnumerable<T> GetAll<T>()
-			where T : class
-		{
-			return Received.Select<T>().Select(r => r.Context.Message);
-		}
+        public IEnumerable<T> GetAll<T>()
+            where T : class
+        {
+            return Received.Select<T>().Select(r => r.Context.Message);
+        }
 
-		public T GetFirst<T>()
-			where T : class
-		{
-			return Received.Select<T>().First().Context.Message;
-		}
-	}
+        public T GetFirst<T>()
+            where T : class
+        {
+            return Received.Select<T>().First().Context.Message;
+        }
+    }
 }

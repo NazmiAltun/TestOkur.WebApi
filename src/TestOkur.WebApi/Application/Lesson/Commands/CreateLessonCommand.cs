@@ -8,18 +8,18 @@
 
     [DataContract]
     public class CreateLessonCommand : CommandBase, IClearCache
-	{
-		public CreateLessonCommand(Guid id, string name)
-			: base(id)
-		{
-			Name = name;
-		}
+    {
+        public CreateLessonCommand(Guid id, string name)
+            : base(id)
+        {
+            Name = name;
+        }
 
-		public IEnumerable<string> CacheKeys => new[] { $"Lessons_{UserId}" };
+        public IEnumerable<string> CacheKeys => new[] { $"Lessons_{UserId}" };
 
-		[DataMember]
-		public string Name { get; private set; }
+        [DataMember]
+        public string Name { get; private set; }
 
-		public Lesson ToDomainModel() => new Lesson(Name);
-	}
+        public Lesson ToDomainModel() => new Lesson(Name);
+    }
 }

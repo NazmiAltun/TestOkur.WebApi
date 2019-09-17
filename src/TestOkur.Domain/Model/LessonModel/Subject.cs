@@ -3,21 +3,21 @@
     using TestOkur.Domain.SeedWork;
 
     public class Subject : Entity, IAuditable
-	{
-		public Subject(Name name)
-		{
-			Name = name;
-		}
+    {
+        public Subject(Name name)
+        {
+            Name = name;
+        }
 
-		protected Subject()
-		{
-		}
+        protected Subject()
+        {
+        }
 
-		public Name Name { get; private set; }
+        public Name Name { get; private set; }
 
-		public void SetName(string name)
-		{
-			Name = name;
-		}
-	}
+        public void SetName(string name)
+        {
+            Name = name;
+        }
+    }
 }

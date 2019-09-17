@@ -12,23 +12,22 @@
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetUserExamsQueryHandler
-		: QueryHandlerAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>
-	{
-		private readonly string _connectionString;
+        : QueryHandlerAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>
+    {
+        private readonly string _connectionString;
 
-		public GetUserExamsQueryHandler(ApplicationConfiguration configurationOptions)
-		{
-			_connectionString = configurationOptions.Postgres;
-		}
+        public GetUserExamsQueryHandler(ApplicationConfiguration configurationOptions)
+        {
+            _connectionString = configurationOptions.Postgres;
+        }
 
-		[PopulateQuery(1)]
-		[QueryLogging(2)]
-		[ResultCaching(3)]
-		public override async Task<IReadOnlyCollection<ExamReadModel>> ExecuteAsync(
-			GetUserExamsQuery query,
-			CancellationToken cancellationToken = default)
-		{
-			const string sql = @"SELECT 
+        [QueryLogging(2)]
+        [ResultCaching(3)]
+        public override async Task<IReadOnlyCollection<ExamReadModel>> ExecuteAsync(
+            GetUserExamsQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            const string sql = @"SELECT 
 								e.id,
 								e.answer_form_format_id,
 								e.name_value as name,
@@ -54,12 +53,12 @@
 								WHERE e.created_by=@userId
 								ORDER BY e.created_on_utc DESC";
 
-			using (var connection = new NpgsqlConnection(_connectionString))
-			{
-				return (await connection.QueryAsync<ExamReadModel>(
-					sql,
-					new { userId = query.UserId })).ToList();
-			}
-		}
-	}
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                return (await connection.QueryAsync<ExamReadModel>(
+                    sql,
+                    new { userId = query.UserId })).ToList();
+            }
+        }
+    }
 }

@@ -13,45 +13,45 @@
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
     public class BulkCreateStudentCommandHandler : RequestHandlerAsync<BulkCreateStudentCommand>
-	{
-		private readonly ApplicationDbContext _dbContext;
+    {
+        private readonly ApplicationDbContext _dbContext;
 
-		public BulkCreateStudentCommandHandler(ApplicationDbContext dbContext)
-		{
-			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-		}
+        public BulkCreateStudentCommandHandler(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
 
-		[Idempotent(1)]
-		[ClearCache(3)]
-		public override async Task<BulkCreateStudentCommand> HandleAsync(
-			BulkCreateStudentCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			var contactTypes = new List<ContactType>();
+        [Idempotent(1)]
+        [ClearCache(3)]
+        public override async Task<BulkCreateStudentCommand> HandleAsync(
+            BulkCreateStudentCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            var contactTypes = new List<ContactType>();
 
-			foreach (var subCommand in command.Commands)
-			{
-				var classroom = await GetClassroomAsync(subCommand.ClassroomId, cancellationToken);
-				_dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
-				contactTypes.AddRange(subCommand
-					.ToDomainModel(classroom, command.UserId)
-					.Contacts.Select(c => c.ContactType));
-			}
+            foreach (var subCommand in command.Commands)
+            {
+                var classroom = await GetClassroomAsync(subCommand.ClassroomId, cancellationToken);
+                _dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
+                contactTypes.AddRange(subCommand
+                    .ToDomainModel(classroom, command.UserId)
+                    .Contacts.Select(c => c.ContactType));
+            }
 
-			_dbContext.AttachRange(contactTypes.Distinct());
-			await _dbContext.SaveChangesAsync(cancellationToken);
+            _dbContext.AttachRange(contactTypes.Distinct());
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            return await base.HandleAsync(command, cancellationToken);
+        }
 
-		private async Task<Classroom> GetClassroomAsync(
-			int classroomId,
-			CancellationToken cancellationToken)
-		{
-			return await _dbContext.Classrooms
-				.FirstAsync(
-					c => c.Id == classroomId,
-					cancellationToken);
-		}
-	}
+        private async Task<Classroom> GetClassroomAsync(
+            int classroomId,
+            CancellationToken cancellationToken)
+        {
+            return await _dbContext.Classrooms
+                .FirstAsync(
+                    c => c.Id == classroomId,
+                    cancellationToken);
+        }
+    }
 }

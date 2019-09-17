@@ -4,18 +4,18 @@
     using TestOkur.Contracts.Classroom;
 
     public class ClassroomUpdated : IntegrationEvent, IClassroomUpdated
-	{
-		public ClassroomUpdated(int classroomId, int grade, string name)
-		{
-			ClassroomId = classroomId;
-			Grade = grade;
-			Name = name;
-		}
+    {
+        public ClassroomUpdated(int classroomId, int grade, string name)
+        {
+            ClassroomId = classroomId;
+            Grade = grade;
+            Name = name;
+        }
 
-		public int ClassroomId { get; }
+        public int ClassroomId { get; }
 
-		public int Grade { get; }
+        public int Grade { get; }
 
-		public string Name { get; }
-	}
+        public string Name { get; }
+    }
 }

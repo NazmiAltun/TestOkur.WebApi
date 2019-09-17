@@ -10,5 +10,5 @@
         public const string AytLang = "AYT-Dil";
         public const string TrialExam = "Deneme Sınavı";
         public const string Scholarship = "Bursluluk Sınavı";
-	}
+    }
 }

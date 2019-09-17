@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.Contracts.Sms
 {
-	public interface ISendSmsRequestFailed : IIntegrationEvent
-	{
-		int UserId { get; }
+    public interface ISendSmsRequestFailed : IIntegrationEvent
+    {
+        int UserId { get; }
 
-		string SmsBody { get; }
+        string SmsBody { get; }
 
-		string Receiver { get; }
+        string Receiver { get; }
 
-		string ErrorMessage { get; }
+        string ErrorMessage { get; }
 
-		string UserFriendlyMessage { get; }
+        string UserFriendlyMessage { get; }
 
-		string UserEmail { get; }
-	}
+        string UserEmail { get; }
+    }
 }

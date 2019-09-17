@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Contracts.User
 {
-	public interface IResetPasswordTokenGenerated : IIntegrationEvent
-	{
-		string Link { get; }
+    public interface IResetPasswordTokenGenerated : IIntegrationEvent
+    {
+        string Link { get; }
 
-		string Email { get; }
+        string Email { get; }
 
-		string FirstName { get; }
+        string FirstName { get; }
 
-		string LastName { get; }
-	}
+        string LastName { get; }
+    }
 }

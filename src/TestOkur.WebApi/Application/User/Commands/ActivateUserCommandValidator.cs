@@ -4,11 +4,11 @@
     using TestOkur.Common;
 
     public class ActivateUserCommandValidator : AbstractValidator<ActivateUserCommand>
-	{
-		public ActivateUserCommandValidator()
-		{
-			RuleFor(m => m.UserId)
-				.Id(ErrorCodes.InvalidUserId);
-		}
-	}
+    {
+        public ActivateUserCommandValidator()
+        {
+            RuleFor(m => m.UserId)
+                .Id(ErrorCodes.InvalidUserId);
+        }
+    }
 }

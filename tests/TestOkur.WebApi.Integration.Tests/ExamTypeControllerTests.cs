@@ -11,67 +11,67 @@
     using Xunit;
 
     public class ExamTypeControllerTests : Test
-	{
-		private const string ApiPath = "api/v1/exam-types";
+    {
+        private const string ApiPath = "api/v1/exam-types";
 
-		[Fact]
-		public async Task GetExamTypes_Should_Return_AllExamTypes()
-		{
-			using (var testServer = await CreateAsync())
-			{
-				var client = testServer.CreateClient();
-				var response = await client.GetAsync(ApiPath);
-				var examTypes = await response.ReadAsync<IEnumerable<ExamTypeReadModel>>();
+        [Fact]
+        public async Task GetExamTypes_Should_Return_AllExamTypes()
+        {
+            using (var testServer = await CreateAsync())
+            {
+                var client = testServer.CreateClient();
+                var response = await client.GetAsync(ApiPath);
+                var examTypes = await response.ReadAsync<IEnumerable<ExamTypeReadModel>>();
 
-				examTypes.Should().Contain(e => e.Name == ExamTypes.LessonExam)
-					.And
-					.Contain(e => e.Name == ExamTypes.LessonExam &&
-                                  e.AvailableForHighSchool &&
-                                  e.AvailableForPrimarySchool &&
-								  e.OpticalFormTypes.Count() == 9);
-				examTypes.Should().Contain(e => e.Name == ExamTypes.EvaluationExam)
-					.And
-					.Contain(e => e.Name == ExamTypes.EvaluationExam &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.LessonExam)
+                    .And
+                    .Contain(e => e.Name == ExamTypes.LessonExam &&
                                   e.AvailableForHighSchool &&
                                   e.AvailableForPrimarySchool &&
                                   e.OpticalFormTypes.Count() == 9);
-				examTypes.Should().Contain(e => e.Name == ExamTypes.Tyt &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.EvaluationExam)
+                    .And
+                    .Contain(e => e.Name == ExamTypes.EvaluationExam &&
+                                  e.AvailableForHighSchool &&
+                                  e.AvailableForPrimarySchool &&
+                                  e.OpticalFormTypes.Count() == 9);
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Tyt &&
                                   e.AvailableForHighSchool &&
                                   !e.AvailableForPrimarySchool);
 
-				examTypes.Should().Contain(e => e.Name == ExamTypes.Lgs &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Lgs &&
                                                 !e.AvailableForHighSchool &&
                                                 e.AvailableForPrimarySchool);
 
-				examTypes.Should().Contain(e => e.Name == ExamTypes.Ayt &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Ayt &&
                                                 e.AvailableForHighSchool &&
                                                 !e.AvailableForPrimarySchool);
 
-				examTypes.Should().Contain(e => e.Name == ExamTypes.AytLang &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.AytLang &&
                                                 e.AvailableForHighSchool &&
                                                 !e.AvailableForPrimarySchool);
 
-				examTypes.Should().Contain(e => e.Name == ExamTypes.Scholarship &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.Scholarship &&
                                                 e.AvailableForHighSchool &&
                                                 e.AvailableForPrimarySchool);
 
-				examTypes.Should().Contain(e => e.Name == ExamTypes.TrialExam &&
+                examTypes.Should().Contain(e => e.Name == ExamTypes.TrialExam &&
                                                 e.AvailableForHighSchool &&
                                                 e.AvailableForPrimarySchool);
 
-				examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
+                examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
 
-				examTypes.Select(e => e.Name)
-					.Should().ContainInOrder(
-						ExamTypes.LessonExam,
-						ExamTypes.EvaluationExam,
-						ExamTypes.TrialExam,
-						ExamTypes.Lgs,
-						ExamTypes.Scholarship,
-						ExamTypes.Tyt,
-						ExamTypes.Ayt,
-						ExamTypes.AytLang);
-			}
-		}
-	}
+                examTypes.Select(e => e.Name)
+                    .Should().ContainInOrder(
+                        ExamTypes.LessonExam,
+                        ExamTypes.EvaluationExam,
+                        ExamTypes.TrialExam,
+                        ExamTypes.Lgs,
+                        ExamTypes.Scholarship,
+                        ExamTypes.Tyt,
+                        ExamTypes.Ayt,
+                        ExamTypes.AytLang);
+            }
+        }
+    }
 }

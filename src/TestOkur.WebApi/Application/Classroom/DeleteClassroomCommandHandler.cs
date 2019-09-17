@@ -11,47 +11,47 @@
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
     public sealed class DeleteClassroomCommandHandler : RequestHandlerAsync<DeleteClassroomCommand>
-	{
-		private readonly ApplicationDbContext _dbContext;
-		private readonly IPublishEndpoint _publishEndpoint;
+    {
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-		public DeleteClassroomCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
-		{
-			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-			_publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-		}
+        public DeleteClassroomCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+        }
 
-		[ClearCache(2)]
-		public override async Task<DeleteClassroomCommand> HandleAsync(
-			DeleteClassroomCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			var classroom = await GetClassroomAsync(command, cancellationToken);
+        [ClearCache(2)]
+        public override async Task<DeleteClassroomCommand> HandleAsync(
+            DeleteClassroomCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            var classroom = await GetClassroomAsync(command, cancellationToken);
 
-			if (classroom != null)
-			{
-				_dbContext.Remove(classroom);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				await PublishEventAsync(command.ClassroomId, cancellationToken);
-			}
+            if (classroom != null)
+            {
+                _dbContext.Remove(classroom);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+                await PublishEventAsync(command.ClassroomId, cancellationToken);
+            }
 
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            return await base.HandleAsync(command, cancellationToken);
+        }
 
-		private async Task PublishEventAsync(int id, CancellationToken cancellationToken)
-		{
-			await _publishEndpoint.Publish(
-				new ClassroomDeleted(id),
-				cancellationToken);
-		}
+        private async Task PublishEventAsync(int id, CancellationToken cancellationToken)
+        {
+            await _publishEndpoint.Publish(
+                new ClassroomDeleted(id),
+                cancellationToken);
+        }
 
-		private async Task<Classroom> GetClassroomAsync(
-			DeleteClassroomCommand command,
-			CancellationToken cancellationToken)
-		{
-			return await _dbContext.Classrooms.FirstOrDefaultAsync(
-				l => l.Id == command.ClassroomId && EF.Property<int>(l, "CreatedBy") == command.UserId,
-				cancellationToken);
-		}
-	}
+        private async Task<Classroom> GetClassroomAsync(
+            DeleteClassroomCommand command,
+            CancellationToken cancellationToken)
+        {
+            return await _dbContext.Classrooms.FirstOrDefaultAsync(
+                l => l.Id == command.ClassroomId && EF.Property<int>(l, "CreatedBy") == command.UserId,
+                cancellationToken);
+        }
+    }
 }

@@ -8,20 +8,20 @@
     using Xunit;
 
     public class ActivateUserTests : UserTest
-	{
-		[Fact]
-		public async Task When_ValidValues_Are_Posted_Then_User_Should_Be_Activated_And_Event_Published()
-		{
+    {
+        [Fact]
+        public async Task When_ValidValues_Are_Posted_Then_User_Should_Be_Activated_And_Event_Published()
+        {
             var command = await CreateUserAsync(CreateAsync);
 
             using (var testServer = await CreateAsync())
-			{
-				var client = testServer.CreateClient();
-				await client.PostAsync($"{ApiPath}/activate?email={command.Email}", null);
-				var user = (await GetUsersAsync(client)).First(u => u.Email == command.Email);
-				var @event = Consumer.Instance.GetFirst<IUserActivated>();
-				@event.Email.Should().Be(user.Email);
-			}
-		}
-	}
+            {
+                var client = testServer.CreateClient();
+                await client.PostAsync($"{ApiPath}/activate?email={command.Email}", null);
+                var user = (await GetUsersAsync(client)).First(u => u.Email == command.Email);
+                var @event = Consumer.Instance.GetFirst<IUserActivated>();
+                @event.Email.Should().Be(user.Email);
+            }
+        }
+    }
 }

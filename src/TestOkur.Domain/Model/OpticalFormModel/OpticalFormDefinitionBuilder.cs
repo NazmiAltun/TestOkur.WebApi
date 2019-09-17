@@ -25,13 +25,13 @@
         }
 
         private string SubFolder =>
-	        _schoolType == SchoolType.PrimaryAndSecondary
-		        ? "PrimarySchool"
-		        : "HighSchool";
+            _schoolType == SchoolType.PrimaryAndSecondary
+                ? "PrimarySchool"
+                : "HighSchool";
 
         public OpticalFormDefinition Build()
         {
-	        return new OpticalFormDefinition(
+            return new OpticalFormDefinition(
                 _name,
                 _studentNoFillWidth,
                 _studentNoXInterval,

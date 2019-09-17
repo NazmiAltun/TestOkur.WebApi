@@ -17,22 +17,22 @@
 
         public GetSharedLessonQueryHandler(ApplicationConfiguration configurationOptions)
         {
-	        _connectionString = configurationOptions.Postgres;
-		}
+            _connectionString = configurationOptions.Postgres;
+        }
 
         [QueryLogging(1)]
         [ResultCaching(2)]
         public override async Task<IReadOnlyCollection<LessonReadModel>> ExecuteAsync(GetSharedLessonQuery query, CancellationToken cancellationToken = default)
         {
-	        const string sql = @"SELECT id,name_value AS Name, 1 as shared FROM lessons
+            const string sql = @"SELECT id,name_value AS Name, 1 as shared FROM lessons
 							   WHERE created_by=0
 	                           ORDER BY name_value";
 
-	        using (var connection = new NpgsqlConnection(_connectionString))
+            using (var connection = new NpgsqlConnection(_connectionString))
             {
-	            return (await connection
-		            .QueryAsync<LessonReadModel>(sql))
-		            .ToList();
+                return (await connection
+                    .QueryAsync<LessonReadModel>(sql))
+                    .ToList();
             }
         }
     }

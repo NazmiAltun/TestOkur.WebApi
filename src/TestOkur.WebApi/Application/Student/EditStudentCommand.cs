@@ -10,15 +10,15 @@
     public class EditStudentCommand : CommandBase, IClearCache
     {
         public EditStudentCommand(
-			Guid id,
-			int studentId,
-			string newFirstName,
-			string newLastName,
-			int newStudentNumber,
-			int newClassroomId,
-			string newNotes,
-			List<CreateContactCommand> contacts)
-	        : base(id)
+            Guid id,
+            int studentId,
+            string newFirstName,
+            string newLastName,
+            int newStudentNumber,
+            int newClassroomId,
+            string newNotes,
+            List<CreateContactCommand> contacts)
+            : base(id)
         {
             StudentId = studentId;
             NewFirstName = newFirstName;
@@ -31,8 +31,8 @@
 
         public IEnumerable<string> CacheKeys => new[]
         {
-	        $"Students_{UserId}",
-	        $"Contacts_{UserId}",
+            $"Students_{UserId}",
+            $"Contacts_{UserId}",
         };
 
         [DataMember]

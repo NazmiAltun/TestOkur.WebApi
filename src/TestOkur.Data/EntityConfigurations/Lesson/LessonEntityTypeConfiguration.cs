@@ -12,6 +12,6 @@
             builder.Property(_ => _.Id)
              .ForNpgsqlUseSequenceHiLo("lessons_seq");
             builder.OwnsName(_ => _.Name, 50);
-		}
+        }
     }
 }

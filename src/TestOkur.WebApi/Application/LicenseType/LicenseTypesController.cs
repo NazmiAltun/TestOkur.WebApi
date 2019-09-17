@@ -11,19 +11,19 @@
     [Route("api/v1/license-types")]
     [Authorize(AuthorizationPolicies.Public)]
     public class LicenseTypesController : ControllerBase
-	{
-		private readonly IQueryProcessor _queryProcessor;
+    {
+        private readonly IQueryProcessor _queryProcessor;
 
-		public LicenseTypesController(IQueryProcessor queryProcessor)
-		{
-			_queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
-		}
+        public LicenseTypesController(IQueryProcessor queryProcessor)
+        {
+            _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
+        }
 
-		[HttpGet]
-		[ProducesResponseType(typeof(IReadOnlyCollection<LicenseTypeReadModel>), StatusCodes.Status200OK)]
-		public IActionResult Get()
-		{
-			return Ok(_queryProcessor.Execute(new GetAllLicenseTypesQuery()));
-		}
-	}
+        [HttpGet]
+        [ProducesResponseType(typeof(IReadOnlyCollection<LicenseTypeReadModel>), StatusCodes.Status200OK)]
+        public IActionResult Get()
+        {
+            return Ok(_queryProcessor.Execute(new GetAllLicenseTypesQuery()));
+        }
+    }
 }

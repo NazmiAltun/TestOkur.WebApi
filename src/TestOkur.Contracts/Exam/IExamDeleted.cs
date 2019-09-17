@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.Contracts.Exam
 {
-	public interface IExamDeleted : IIntegrationEvent
-	{
-		int ExamId { get; }
-	}
+    public interface IExamDeleted : IIntegrationEvent
+    {
+        int ExamId { get; }
+    }
 }

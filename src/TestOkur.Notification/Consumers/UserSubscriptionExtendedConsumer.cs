@@ -7,7 +7,7 @@
     using TestOkur.Notification.Models;
 
     internal class UserSubscriptionExtendedConsumer : IConsumer<IUserSubscriptionExtended>
-	{
+    {
         private readonly INotificationFacade _notificationFacade;
 
         public UserSubscriptionExtendedConsumer(INotificationFacade notificationFacade)
@@ -16,15 +16,15 @@
         }
 
         public async Task Consume(ConsumeContext<IUserSubscriptionExtended> context)
-		{
-			await _notificationFacade.SendEmailAsync(
-				context.Message,
-				Template.UserSubscriptionExtendedEmail,
-				context.Message.Email);
-			await _notificationFacade.SendSmsAsync(
-				context.Message,
-				Template.UserSubscriptionExtendedSms,
-				context.Message.Phone);
-		}
-	}
+        {
+            await _notificationFacade.SendEmailAsync(
+                context.Message,
+                Template.UserSubscriptionExtendedEmail,
+                context.Message.Email);
+            await _notificationFacade.SendSmsAsync(
+                context.Message,
+                Template.UserSubscriptionExtendedSms,
+                context.Message.Phone);
+        }
+    }
 }

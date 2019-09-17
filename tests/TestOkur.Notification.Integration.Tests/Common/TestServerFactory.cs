@@ -4,13 +4,13 @@
     using TestOkur.TestHelper;
 
     public class TestServerFactory : TestServerFactory<TestStartup>
-	{
-		static TestServerFactory()
-		{
-			TestServer = new TestServerFactory()
-				.Create();
-		}
+    {
+        static TestServerFactory()
+        {
+            TestServer = new TestServerFactory()
+                .Create();
+        }
 
-		public static TestServer TestServer { get; }
-	}
+        public static TestServer TestServer { get; }
+    }
 }

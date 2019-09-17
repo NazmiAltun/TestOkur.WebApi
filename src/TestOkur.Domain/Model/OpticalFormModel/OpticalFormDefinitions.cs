@@ -27,5 +27,5 @@
         public const string TEOG1 = "TEOG1";
         public const string TEOG2 = "TEOG2";
         public const string SRC = "SRC";
-	}
+    }
 }

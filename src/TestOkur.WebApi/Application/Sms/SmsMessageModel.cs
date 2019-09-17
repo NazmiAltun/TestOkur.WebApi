@@ -26,5 +26,5 @@
 
         [DataMember]
         public int ExamId { get; private set; }
-	}
+    }
 }

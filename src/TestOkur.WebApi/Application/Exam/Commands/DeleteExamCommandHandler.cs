@@ -10,48 +10,48 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class DeleteExamCommandHandler : RequestHandlerAsync<DeleteExamCommand>
-	{
-		private readonly ApplicationDbContext _dbContext;
-		private readonly IPublishEndpoint _publishEndpoint;
+    {
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-		public DeleteExamCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
-		{
-			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-			_publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-		}
+        public DeleteExamCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+        }
 
-		[ClearCache(2)]
-		public override async Task<DeleteExamCommand> HandleAsync(
-			DeleteExamCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			var exam = await GetAsync(command, cancellationToken);
+        [ClearCache(2)]
+        public override async Task<DeleteExamCommand> HandleAsync(
+            DeleteExamCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            var exam = await GetAsync(command, cancellationToken);
 
-			if (exam != null)
-			{
-				_dbContext.Remove(exam);
-				await _dbContext.SaveChangesAsync(cancellationToken);
-				await PublishEventAsync(command.ExamId, cancellationToken);
-			}
+            if (exam != null)
+            {
+                _dbContext.Remove(exam);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+                await PublishEventAsync(command.ExamId, cancellationToken);
+            }
 
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            return await base.HandleAsync(command, cancellationToken);
+        }
 
-		private async Task PublishEventAsync(int id, CancellationToken cancellationToken)
-		{
-			await _publishEndpoint.Publish(
-				new ExamDeleted(id),
-				cancellationToken);
-		}
+        private async Task PublishEventAsync(int id, CancellationToken cancellationToken)
+        {
+            await _publishEndpoint.Publish(
+                new ExamDeleted(id),
+                cancellationToken);
+        }
 
-		private async Task<Domain.Model.ExamModel.Exam> GetAsync(
-			DeleteExamCommand command,
-			CancellationToken cancellationToken)
-		{
-			return await _dbContext.Exams.FirstOrDefaultAsync(
-				l => l.Id == command.ExamId &&
-				     EF.Property<int>(l, "CreatedBy") == command.UserId,
-				cancellationToken);
-		}
-	}
+        private async Task<Domain.Model.ExamModel.Exam> GetAsync(
+            DeleteExamCommand command,
+            CancellationToken cancellationToken)
+        {
+            return await _dbContext.Exams.FirstOrDefaultAsync(
+                l => l.Id == command.ExamId &&
+                     EF.Property<int>(l, "CreatedBy") == command.UserId,
+                cancellationToken);
+        }
+    }
 }

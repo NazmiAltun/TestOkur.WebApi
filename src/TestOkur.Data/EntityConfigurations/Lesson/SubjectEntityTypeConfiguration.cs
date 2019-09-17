@@ -5,13 +5,13 @@
     using TestOkur.Domain.Model.LessonModel;
 
     internal class SubjectEntityTypeConfiguration : IEntityTypeConfiguration<Subject>
-	{
-		public void Configure(EntityTypeBuilder<Subject> builder)
-		{
-			builder.ToTable("subjects");
-			builder.Property(_ => _.Id)
-				.ForNpgsqlUseSequenceHiLo("subjects_seq");
-			builder.OwnsName(_ => _.Name, 150);
-		}
-	}
+    {
+        public void Configure(EntityTypeBuilder<Subject> builder)
+        {
+            builder.ToTable("subjects");
+            builder.Property(_ => _.Id)
+                .ForNpgsqlUseSequenceHiLo("subjects_seq");
+            builder.OwnsName(_ => _.Name, 150);
+        }
+    }
 }

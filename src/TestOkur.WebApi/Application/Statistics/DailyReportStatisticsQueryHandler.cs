@@ -7,7 +7,7 @@
     using Paramore.Darker.QueryLogging;
     using TestOkur.WebApi.Configuration;
 
-	//TODO:IMplement
+    //TODO:IMplement
     public sealed class DailyReportStatisticsQueryHandler
         : QueryHandlerAsync<DailyReportStatisticsQuery, DailyReportStatisticsReadModel>
     {
@@ -15,8 +15,8 @@
 
         public DailyReportStatisticsQueryHandler(ApplicationConfiguration configurationOptions)
         {
-			_connectionString = configurationOptions.Postgres;
-		}
+            _connectionString = configurationOptions.Postgres;
+        }
 
         [QueryLogging(1)]
         public override Task<DailyReportStatisticsReadModel> ExecuteAsync(DailyReportStatisticsQuery query, CancellationToken cancellationToken = default)

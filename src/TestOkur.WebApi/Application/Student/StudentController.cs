@@ -15,13 +15,11 @@
     [Authorize(AuthorizationPolicies.Customer)]
     public class StudentController : ControllerBase
     {
-        private readonly IQueryProcessor _queryProcessor;
-        private readonly IContextCommandProcessor _commandProcessor;
+        private readonly IProcessor _processor;
 
-        public StudentController(IQueryProcessor queryProcessor, IContextCommandProcessor commandProcessor)
+        public StudentController(IProcessor processor)
         {
-            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
-            _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
+            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
         [HttpPost]
@@ -29,7 +27,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync([FromBody, Required]CreateStudentCommand command)
         {
-            await _commandProcessor.ExecuteAsync(command);
+            await _processor.SendAsync(command);
             return Ok();
         }
 
@@ -37,7 +35,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _commandProcessor.ExecuteAsync(new DeleteStudentCommand(id));
+            await _processor.SendAsync(new DeleteStudentCommand(id));
             return Ok();
         }
 
@@ -46,7 +44,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditAsync([FromBody, Required]EditStudentCommand command)
         {
-            await _commandProcessor.ExecuteAsync(command);
+            await _processor.SendAsync(command);
             return Ok();
         }
 
@@ -54,7 +52,7 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<StudentReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new GetUserStudentsQuery()));
+            return Ok(await _processor.ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(new GetUserStudentsQuery()));
         }
 
         [HttpPost("bulk")]
@@ -62,7 +60,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateBulkAsync([FromBody, Required]BulkCreateStudentCommand command)
         {
-            await _commandProcessor.ExecuteAsync(command);
+            await _processor.SendAsync(command);
 
             return Ok();
         }

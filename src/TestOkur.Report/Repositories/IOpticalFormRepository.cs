@@ -8,41 +8,41 @@
     using TestOkur.Optic.Form;
 
     public interface IOpticalFormRepository
-	{
-		Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms);
+    {
+        Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms);
 
-		Task AddManyAsync(IEnumerable<StudentOpticalForm> forms);
+        Task AddManyAsync(IEnumerable<StudentOpticalForm> forms);
 
-		Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
+        Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
 
-		Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
+        Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
 
-		Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId);
+        Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId);
 
-		Task<IEnumerable<AnswerKeyOpticalForm>> GetAnswerKeyOpticalForms(int examId);
+        Task<IEnumerable<AnswerKeyOpticalForm>> GetAnswerKeyOpticalForms(int examId);
 
-		Task<IEnumerable<int>> GetExamIdsAsync(
-			Expression<Func<StudentOpticalForm, int>> selector,
-			int selectorId);
+        Task<IEnumerable<int>> GetExamIdsAsync(
+            Expression<Func<StudentOpticalForm, int>> selector,
+            int selectorId);
 
-		Task DeleteByExamIdAsync(int examId);
+        Task DeleteByExamIdAsync(int examId);
 
-		Task DeleteByClassroomIdAsync(int classroomId);
+        Task DeleteByClassroomIdAsync(int classroomId);
 
-		Task DeleteByStudentIdAsync(int studentId);
+        Task DeleteByStudentIdAsync(int studentId);
 
-		Task DeleteAnswerKeyOpticalFormsByExamIdAsync(int examId);
+        Task DeleteAnswerKeyOpticalFormsByExamIdAsync(int examId);
 
-		Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms);
+        Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms);
 
-		Task<StudentOpticalForm> DeleteOneAsync(string id);
+        Task<StudentOpticalForm> DeleteOneAsync(string id);
 
-		Task UpdateStudentAsync(IStudentUpdated studentUpdatedEvent);
+        Task UpdateStudentAsync(IStudentUpdated studentUpdatedEvent);
 
-		Task UpdateClassroomAsync(int classroomId, int grade, string name);
+        Task UpdateClassroomAsync(int classroomId, int grade, string name);
 
-		Task UpdateLessonNameAsync(int lessonId, string newLessonName);
+        Task UpdateLessonNameAsync(int lessonId, string newLessonName);
 
-		Task UpdateSubjectNameAsync(int subjectId, string newSubjectName);
-	}
+        Task UpdateSubjectNameAsync(int subjectId, string newSubjectName);
+    }
 }

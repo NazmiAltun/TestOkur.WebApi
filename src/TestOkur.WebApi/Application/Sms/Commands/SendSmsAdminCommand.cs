@@ -6,18 +6,18 @@
 
     [DataContract]
     public class SendSmsAdminCommand : CommandBase
-	{
-		public SendSmsAdminCommand(Guid id, string receiver, string body)
-			: base(id)
-		{
-			Receiver = receiver;
-			Body = body;
-		}
+    {
+        public SendSmsAdminCommand(Guid id, string receiver, string body)
+            : base(id)
+        {
+            Receiver = receiver;
+            Body = body;
+        }
 
-		[DataMember]
-		public string Body { get; private set; }
+        [DataMember]
+        public string Body { get; private set; }
 
-		[DataMember]
-		public string Receiver { get; private set; }
-	}
+        [DataMember]
+        public string Receiver { get; private set; }
+    }
 }

@@ -3,15 +3,15 @@
     using System;
 
     public interface IUserSubscriptionExtended : IIntegrationEvent
-	{
-		string FirstName { get; }
+    {
+        string FirstName { get; }
 
-		string LastName { get; }
+        string LastName { get; }
 
-		string Email { get; }
+        string Email { get; }
 
-		string Phone { get; }
+        string Phone { get; }
 
-		DateTime ExpiryDate { get; }
-	}
+        DateTime ExpiryDate { get; }
+    }
 }

@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     internal interface ISendLicenseExpirationNotice
-	{
-		Task NotifyUsersAsync();
-	}
+    {
+        Task NotifyUsersAsync();
+    }
 }

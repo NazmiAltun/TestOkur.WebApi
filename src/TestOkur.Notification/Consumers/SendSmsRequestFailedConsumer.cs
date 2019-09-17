@@ -7,7 +7,7 @@
     using TestOkur.Notification.Models;
 
     internal class SendSmsRequestFailedConsumer : IConsumer<ISendSmsRequestFailed>
-	{
+    {
         private readonly INotificationFacade _notificationFacade;
 
         public SendSmsRequestFailedConsumer(INotificationFacade notificationFacade)
@@ -16,10 +16,10 @@
         }
 
         public async Task Consume(ConsumeContext<ISendSmsRequestFailed> context)
-		{
-			await _notificationFacade.SendEmailToSystemAdminsAsync(
+        {
+            await _notificationFacade.SendEmailToSystemAdminsAsync(
                 context.Message,
                 Template.SmsFailureEmailAdmin);
-		}
-	}
+        }
+    }
 }

@@ -12,42 +12,42 @@
     [Route("api/v1/error")]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ErrorController : ControllerBase
-	{
-		private readonly IHostingEnvironment _hostingEnvironment;
-		private readonly IPublishEndpoint _publishEndpoint;
+    {
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-		public ErrorController(IPublishEndpoint publishEndpoint, IHostingEnvironment hostingEnvironment)
-		{
-			_publishEndpoint = publishEndpoint;
-			_hostingEnvironment = hostingEnvironment;
-		}
+        public ErrorController(IPublishEndpoint publishEndpoint, IHostingEnvironment hostingEnvironment)
+        {
+            _publishEndpoint = publishEndpoint;
+            _hostingEnvironment = hostingEnvironment;
+        }
 
-		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> PostAsync([FromBody]ErrorModel model)
-		{
-			await _publishEndpoint.Publish(model);
-			return Accepted();
-		}
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> PostAsync([FromBody]ErrorModel model)
+        {
+            await _publishEndpoint.Publish(model);
+            return Accepted();
+        }
 
-		[HttpPost("upload")]
-		public async Task<IActionResult> UploadAsync(IFormFile file)
-		{
-			await SaveImageAsync(file);
-			return Ok($@"\uploads\{file.FileName}");
-		}
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadAsync(IFormFile file)
+        {
+            await SaveImageAsync(file);
+            return Ok($@"\uploads\{file.FileName}");
+        }
 
-		private async Task SaveImageAsync(IFormFile file)
-		{
-			var path = Path.Combine(
-			    _hostingEnvironment.WebRootPath,
-			    "uploads",
-			    file.FileName);
+        private async Task SaveImageAsync(IFormFile file)
+        {
+            var path = Path.Combine(
+                _hostingEnvironment.WebRootPath,
+                "uploads",
+                file.FileName);
 
-			using (var stream = new FileStream(path, FileMode.Create))
-			{
-				await file.CopyToAsync(stream);
-			}
-		}
-	}
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+        }
+    }
 }

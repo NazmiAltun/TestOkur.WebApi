@@ -10,48 +10,48 @@
     using TestOkur.Infrastructure.Cqrs;
 
     public sealed class BulkEditScoreFormulaCommandHandler
-		: RequestHandlerAsync<BulkEditScoreFormulaCommand>
-	{
-		private readonly ApplicationDbContext _dbContext;
+        : RequestHandlerAsync<BulkEditScoreFormulaCommand>
+    {
+        private readonly ApplicationDbContext _dbContext;
 
-		public BulkEditScoreFormulaCommandHandler(ApplicationDbContext dbContext)
-		{
-			_dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-		}
+        public BulkEditScoreFormulaCommandHandler(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
 
-		[Idempotent(1)]
-		[ClearCache(3)]
-		public override async Task<BulkEditScoreFormulaCommand> HandleAsync(
-			BulkEditScoreFormulaCommand command,
-			CancellationToken cancellationToken = default)
-		{
-			foreach (var subCommand in command.Commands)
-			{
-				var formula = await GetAsync(
-					subCommand.ScoreFormulaId,
-					command.UserId,
-					cancellationToken);
+        [Idempotent(1)]
+        [ClearCache(3)]
+        public override async Task<BulkEditScoreFormulaCommand> HandleAsync(
+            BulkEditScoreFormulaCommand command,
+            CancellationToken cancellationToken = default)
+        {
+            foreach (var subCommand in command.Commands)
+            {
+                var formula = await GetAsync(
+                    subCommand.ScoreFormulaId,
+                    command.UserId,
+                    cancellationToken);
 
-				formula.Update(
-					subCommand.BasePoint,
-					subCommand.Coefficients);
-			}
+                formula.Update(
+                    subCommand.BasePoint,
+                    subCommand.Coefficients);
+            }
 
-			await _dbContext.SaveChangesAsync(cancellationToken);
-			return await base.HandleAsync(command, cancellationToken);
-		}
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return await base.HandleAsync(command, cancellationToken);
+        }
 
-		private async Task<ScoreFormula> GetAsync(
-			int id,
-			int userId,
-			CancellationToken cancellationToken)
-		{
-			return await _dbContext.ScoreFormulas
-				.Include(s => s.Coefficients)
-				.FirstAsync(
-					f => f.Id == id &&
-					     EF.Property<int>(f, "CreatedBy") == userId,
-					cancellationToken);
-		}
-	}
+        private async Task<ScoreFormula> GetAsync(
+            int id,
+            int userId,
+            CancellationToken cancellationToken)
+        {
+            return await _dbContext.ScoreFormulas
+                .Include(s => s.Coefficients)
+                .FirstAsync(
+                    f => f.Id == id &&
+                         EF.Property<int>(f, "CreatedBy") == userId,
+                    cancellationToken);
+        }
+    }
 }

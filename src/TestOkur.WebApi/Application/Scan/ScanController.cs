@@ -12,28 +12,28 @@
     [Route("api/v1/scan-sessions")]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ScanController : ControllerBase
-	{
-		private readonly IContextCommandProcessor _commandProcessor;
+    {
+        private readonly IProcessor _commandProcessor;
 
-		public ScanController(IContextCommandProcessor commandProcessor)
-		{
-			_commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
-		}
+        public ScanController(IProcessor commandProcessor)
+        {
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
+        }
 
-		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> StartAsync([FromBody, Required]StartScanSessionCommand command)
-		{
-			await _commandProcessor.ExecuteAsync(command);
-			return Ok();
-		}
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> StartAsync([FromBody, Required]StartScanSessionCommand command)
+        {
+            await _commandProcessor.SendAsync(command);
+            return Ok();
+        }
 
-		[HttpPut]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		public async Task<IActionResult> EndAsync([FromBody, Required]EndScanSessionCommand command)
-		{
-			await _commandProcessor.ExecuteAsync(command);
-			return Ok();
-		}
-	}
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> EndAsync([FromBody, Required]EndScanSessionCommand command)
+        {
+            await _commandProcessor.SendAsync(command);
+            return Ok();
+        }
+    }
 }

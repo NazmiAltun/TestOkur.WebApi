@@ -10,25 +10,25 @@ using Prometheus.DotNetRuntime;
 
 namespace TestOkur.Notification
 {
-	public static class Program
-	{
-		public static void Main(string[] args)
-		{
-			DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
-			{
-				Console.WriteLine(e.ToString());
-			}).StartCollecting();
-			BuildWebHost(args).Run();
-		}
+    public static class Program
+    {
+        public static void Main(string[] args)
+        {
+            DotNetRuntimeStatsBuilder.Default().WithErrorHandler(e =>
+            {
+                Console.WriteLine(e.ToString());
+            }).StartCollecting();
+            BuildWebHost(args).Run();
+        }
 
-		public static IWebHost BuildWebHost(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>()
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
                 .ConfigureLogging((hostingContext, logging) =>
-				{
-					logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
-					.AddConsole()
-					.AddDebug();
-				}).Build();
-	}
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
+                    .AddConsole()
+                    .AddDebug();
+                }).Build();
+    }
 }

@@ -8,55 +8,55 @@
     using TestOkur.Notification.Models;
 
     public class SmsClient : ISmsClient
-	{
-		private readonly HttpClient _httpClient;
-		private readonly SmsConfiguration _smsConfiguration;
+    {
+        private readonly HttpClient _httpClient;
+        private readonly SmsConfiguration _smsConfiguration;
 
-		public SmsClient(HttpClient httpClient, SmsConfiguration smsConfiguration)
-		{
-			_httpClient = httpClient;
-			_smsConfiguration = smsConfiguration;
-		}
+        public SmsClient(HttpClient httpClient, SmsConfiguration smsConfiguration)
+        {
+            _httpClient = httpClient;
+            _smsConfiguration = smsConfiguration;
+        }
 
-		public async Task<string> SendAsync(Sms sms)
-		{
-			var smsFriendlyBody = sms.Body.ToSmsFriendly();
+        public async Task<string> SendAsync(Sms sms)
+        {
+            var smsFriendlyBody = sms.Body.ToSmsFriendly();
 
-			var request = CreateRequest(sms, smsFriendlyBody);
-			var response = await _httpClient.SendAsync(request);
-			await EnsureSuccess(response);
+            var request = CreateRequest(sms, smsFriendlyBody);
+            var response = await _httpClient.SendAsync(request);
+            await EnsureSuccess(response);
 
-			return smsFriendlyBody;
-		}
+            return smsFriendlyBody;
+        }
 
-		private HttpRequestMessage CreateRequest(Sms sms, string smsFriendlyBody)
-		{
-			var values = new Dictionary<string, string>
-			{
-				{ "kullanici", _smsConfiguration.User },
-				{ "sifre", _smsConfiguration.Password },
-				{ "gonderenadi", sms.Subject },
-				{ "mesaj", smsFriendlyBody },
-				{ "numaralar", sms.Phone },
-			};
+        private HttpRequestMessage CreateRequest(Sms sms, string smsFriendlyBody)
+        {
+            var values = new Dictionary<string, string>
+            {
+                { "kullanici", _smsConfiguration.User },
+                { "sifre", _smsConfiguration.Password },
+                { "gonderenadi", sms.Subject },
+                { "mesaj", smsFriendlyBody },
+                { "numaralar", sms.Phone },
+            };
 
-			var request = new HttpRequestMessage(HttpMethod.Post, _smsConfiguration.ServiceUrl)
-			{
-				Content = new FormUrlEncodedContent(values),
-			};
-			request.Properties.Add("sms", sms);
-			return request;
-		}
+            var request = new HttpRequestMessage(HttpMethod.Post, _smsConfiguration.ServiceUrl)
+            {
+                Content = new FormUrlEncodedContent(values),
+            };
+            request.Properties.Add("sms", sms);
+            return request;
+        }
 
-		private async Task EnsureSuccess(HttpResponseMessage response)
-		{
-			response.EnsureSuccessStatusCode();
-			var message = await response.Content.ReadAsStringAsync();
+        private async Task EnsureSuccess(HttpResponseMessage response)
+        {
+            response.EnsureSuccessStatusCode();
+            var message = await response.Content.ReadAsStringAsync();
 
-			if (message.Contains("|"))
-			{
-				throw new SmsException(message.Substring(message.LastIndexOf('|') + 1));
-			}
-		}
-	}
+            if (message.Contains("|"))
+            {
+                throw new SmsException(message.Substring(message.LastIndexOf('|') + 1));
+            }
+        }
+    }
 }

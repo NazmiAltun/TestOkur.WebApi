@@ -5,14 +5,14 @@
     using Microsoft.Extensions.DependencyInjection;
 
     public class TestStartup : Startup
-	{
+    {
         public TestStartup(IConfiguration configuration, IHostingEnvironment environment)
             : base(configuration, environment)
         {
         }
 
         protected override void AddHostedServices(IServiceCollection services)
-		{
-		}
-	}
+        {
+        }
+    }
 }

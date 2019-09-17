@@ -16,58 +16,58 @@
     using Xunit;
 
     public class ErrorControllerTests : Test
-	{
-		private const string ApiPath = "api/v1/error";
+    {
+        private const string ApiPath = "api/v1/error";
 
-		[Fact]
-		public async Task When_ErrorPosted_Then_EventShouldBePublished()
-		{
-			using (var testServer = await CreateWithUserAsync())
-			{
-				var client = testServer.CreateClient();
-				var imagePath = string.Empty;
+        [Fact]
+        public async Task When_ErrorPosted_Then_EventShouldBePublished()
+        {
+            using (var testServer = await CreateWithUserAsync())
+            {
+                var client = testServer.CreateClient();
+                var imagePath = string.Empty;
 
-				using (var stream = File.OpenRead(Path.Combine("Error", "ss.png")))
-				{
-					var response = await client.PostAsync($"{ApiPath}/upload", new MultipartFormDataContent()
-					{
-						{ new ByteArrayContent(stream.ToByteArray()), "file", "ss.png" },
-					});
-					response.EnsureSuccessStatusCode();
-					imagePath = await response.ReadAsync<string>();
-				}
+                using (var stream = File.OpenRead(Path.Combine("Error", "ss.png")))
+                {
+                    var response = await client.PostAsync($"{ApiPath}/upload", new MultipartFormDataContent()
+                    {
+                        { new ByteArrayContent(stream.ToByteArray()), "file", "ss.png" },
+                    });
+                    response.EnsureSuccessStatusCode();
+                    imagePath = await response.ReadAsync<string>();
+                }
 
-				var model = new ErrorModel(
-					$"{RandomGen.String(20)}@gmail.com",
-					RandomGen.Next().ToString(),
-					RandomGen.Next(),
-					RandomGen.Next(),
-					RandomGen.String(20),
-					imagePath,
-					null,
-					null,
-					"Houston!We've a problem");
-				await client.PostAsync(ApiPath, model.ToJsonContent());
-				Consumer.Instance.GetAll<IUserErrorReceived>()
-					.Should().Contain(x =>
-						x.ReporterUserId == model.ReporterUserId &&
-						x.Description == model.Description &&
-						x.ExamId == model.ExamId &&
-						x.Image1FilePath == imagePath &&
-						x.ExamName == model.ExamName);
-			}
-		}
+                var model = new ErrorModel(
+                    $"{RandomGen.String(20)}@gmail.com",
+                    RandomGen.Next().ToString(),
+                    RandomGen.Next(),
+                    RandomGen.Next(),
+                    RandomGen.String(20),
+                    imagePath,
+                    null,
+                    null,
+                    "Houston!We've a problem");
+                await client.PostAsync(ApiPath, model.ToJsonContent());
+                Consumer.Instance.GetAll<IUserErrorReceived>()
+                    .Should().Contain(x =>
+                        x.ReporterUserId == model.ReporterUserId &&
+                        x.Description == model.Description &&
+                        x.ExamId == model.ExamId &&
+                        x.Image1FilePath == imagePath &&
+                        x.ExamName == model.ExamName);
+            }
+        }
 
-		private FormFile GetFormFile()
-		{
-			using (var stream = File.OpenRead(@"Error\ErrorSS.png"))
-			{
-				return new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name))
-				{
-					Headers = new HeaderDictionary(),
-					ContentType = "application/png",
-				};
-			}
-		}
-	}
+        private FormFile GetFormFile()
+        {
+            using (var stream = File.OpenRead(@"Error\ErrorSS.png"))
+            {
+                return new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name))
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = "application/png",
+                };
+            }
+        }
+    }
 }

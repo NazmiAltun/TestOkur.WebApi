@@ -8,19 +8,19 @@
     using TestOkur.Infrastructure.Extensions;
 
     public static class FluentMapConfigurationExtensions
-	{
-		public static void AddMapFromCurrentAssembly(this FluentMapConfiguration configuration)
-		{
-			var method = configuration.GetType().GetMethod("AddMap");
-			Assembly.GetExecutingAssembly().GetTypes()
-				.Where(t => typeof(IEntityMap).IsAssignableFrom(t))
-				.Each(t =>
-				{
-					method.MakeGenericMethod(t.GetInterfaces()
-							.First(i => i.IsGenericType)
-							.GetGenericArguments().First())
-						.Invoke(configuration, new[] { Activator.CreateInstance(t) });
-				});
-		}
-	}
+    {
+        public static void AddMapFromCurrentAssembly(this FluentMapConfiguration configuration)
+        {
+            var method = configuration.GetType().GetMethod("AddMap");
+            Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => typeof(IEntityMap).IsAssignableFrom(t))
+                .Each(t =>
+                {
+                    method.MakeGenericMethod(t.GetInterfaces()
+                            .First(i => i.IsGenericType)
+                            .GetGenericArguments().First())
+                        .Invoke(configuration, new[] { Activator.CreateInstance(t) });
+                });
+        }
+    }
 }

@@ -16,111 +16,111 @@
     using Xunit;
 
     public class GetUserTests : UserTest
-	{
-		private const string Numbers = "123456789";
+    {
+        private const string Numbers = "123456789";
 
-		[Fact]
-		public async Task GivenGetRecords_ShouldReturnCountOfUserRecords()
-		{
-			using (var testServer = await CreateWithUserAsync())
-			{
-				var client = testServer.CreateClient();
-				for (var i = 0; i < 2; i++)
-				{
-					await CreateClassroomAsync(client);
-					await CreateLessonAsync(client);
-					await CreateStudentAsync(client);
-				}
+        [Fact]
+        public async Task GivenGetRecords_ShouldReturnCountOfUserRecords()
+        {
+            using (var testServer = await CreateWithUserAsync())
+            {
+                var client = testServer.CreateClient();
+                for (var i = 0; i < 2; i++)
+                {
+                    await CreateClassroomAsync(client);
+                    await CreateLessonAsync(client);
+                    await CreateStudentAsync(client);
+                }
 
-				var response = await client.GetAsync($"{ApiPath}/record-counts");
-				response.EnsureSuccessStatusCode();
-				var records = await response.ReadAsync<UserRecords>();
-				records.ClassroomCount.Should().Be(2);
-				records.LessonCount.Should().Be(2);
-				records.StudentCount.Should().Be(2);
-				records.ExamCount.Should().Be(0);
-			}
-		}
+                var response = await client.GetAsync($"{ApiPath}/record-counts");
+                response.EnsureSuccessStatusCode();
+                var records = await response.ReadAsync<UserRecords>();
+                records.ClassroomCount.Should().Be(2);
+                records.LessonCount.Should().Be(2);
+                records.StudentCount.Should().Be(2);
+                records.ExamCount.Should().Be(0);
+            }
+        }
 
-		[Fact]
-		public async Task GivenGetUsers_ShouldReturnSeededUsers()
-		{
-			using (var testServer = await CreateAsync())
-			{
-				var client = testServer.CreateClient();
-				var response = await client.GetAsync(ApiPath);
-				var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
-				users.Should().NotBeEmpty();
-			}
-		}
+        [Fact]
+        public async Task GivenGetUsers_ShouldReturnSeededUsers()
+        {
+            using (var testServer = await CreateAsync())
+            {
+                var client = testServer.CreateClient();
+                var response = await client.GetAsync(ApiPath);
+                var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
+                users.Should().NotBeEmpty();
+            }
+        }
 
-		private async Task<CreateClassroomCommand> CreateClassroomAsync(HttpClient client)
-		{
-			const string ApiPath = "api/v1/classrooms";
-			var command = new CreateClassroomCommand(
-					Guid.NewGuid(),
-					Random.Next(Grade.Min, Grade.Max),
-					Random.RandomString(3));
+        private async Task<CreateClassroomCommand> CreateClassroomAsync(HttpClient client)
+        {
+            const string ApiPath = "api/v1/classrooms";
+            var command = new CreateClassroomCommand(
+                    Guid.NewGuid(),
+                    Random.Next(Grade.Min, Grade.Max),
+                    Random.RandomString(3));
 
-			var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-			response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-			return command;
-		}
+            return command;
+        }
 
-		private async Task<CreateStudentCommand> CreateStudentAsync(HttpClient client)
-		{
-			const string ApiPath = "api/v1/students";
-			const string ClassroomApiPath = "api/v1/classrooms";
+        private async Task<CreateStudentCommand> CreateStudentAsync(HttpClient client)
+        {
+            const string ApiPath = "api/v1/students";
+            const string ClassroomApiPath = "api/v1/classrooms";
 
-			var response = await client.GetAsync(ClassroomApiPath);
-			var list = await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
-			var command = GenerateCommand(list.Random().Id);
-			await client.PostAsync(ApiPath, command.ToJsonContent());
+            var response = await client.GetAsync(ClassroomApiPath);
+            var list = await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
+            var command = GenerateCommand(list.Random().Id);
+            await client.PostAsync(ApiPath, command.ToJsonContent());
 
-			return command;
-		}
+            return command;
+        }
 
-		private CreateStudentCommand GenerateCommand(int classroomId)
-		{
-			var contacts = new List<CreateContactCommand>
-			{
-				new CreateContactCommand(
-					Guid.NewGuid(),
-					Random.RandomString(10),
-					Random.RandomString(10),
-					RandomGen.Phone(),
-					1),
-				new CreateContactCommand(
-					Guid.NewGuid(),
-					Random.RandomString(10),
-					Random.RandomString(10),
-					RandomGen.Phone(),
-					2),
-			};
+        private CreateStudentCommand GenerateCommand(int classroomId)
+        {
+            var contacts = new List<CreateContactCommand>
+            {
+                new CreateContactCommand(
+                    Guid.NewGuid(),
+                    Random.RandomString(10),
+                    Random.RandomString(10),
+                    RandomGen.Phone(),
+                    1),
+                new CreateContactCommand(
+                    Guid.NewGuid(),
+                    Random.RandomString(10),
+                    Random.RandomString(10),
+                    RandomGen.Phone(),
+                    2),
+            };
 
-			return new CreateStudentCommand(
-				Guid.NewGuid(),
-				Random.RandomString(6),
-				Random.RandomString(8),
-				Random.Next(StudentNumber.Min, StudentNumber.Max),
-				classroomId,
-				Random.RandomString(200),
-				contacts);
-		}
+            return new CreateStudentCommand(
+                Guid.NewGuid(),
+                Random.RandomString(6),
+                Random.RandomString(8),
+                Random.Next(StudentNumber.Min, StudentNumber.Max),
+                classroomId,
+                Random.RandomString(200),
+                contacts);
+        }
 
-		private async Task<CreateLessonCommand> CreateLessonAsync(HttpClient client)
-		{
-			const string ApiPath = "api/v1/lessons";
+        private async Task<CreateLessonCommand> CreateLessonAsync(HttpClient client)
+        {
+            const string ApiPath = "api/v1/lessons";
 
-			var command = new CreateLessonCommand(
-					Guid.NewGuid(),
-					Random.RandomString(10));
+            var command = new CreateLessonCommand(
+                    Guid.NewGuid(),
+                    Random.RandomString(10));
 
-			var response = await client.PostAsync(ApiPath, command.ToJsonContent());
-			response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-			return command;
-		}
-	}
+            return command;
+        }
+    }
 }

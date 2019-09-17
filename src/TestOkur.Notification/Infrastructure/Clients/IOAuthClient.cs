@@ -5,9 +5,9 @@
     using TestOkur.Notification.Models;
 
     public interface IOAuthClient
-	{
-		Task<string> GetTokenAsync();
+    {
+        Task<string> GetTokenAsync();
 
-		Task<IEnumerable<IdentityUser>> GetUsersAsync();
-	}
+        Task<IEnumerable<IdentityUser>> GetUsersAsync();
+    }
 }

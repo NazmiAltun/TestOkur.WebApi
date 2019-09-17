@@ -12,32 +12,31 @@
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetUserClassroomsQueryHandler
-		: QueryHandlerAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>
-	{
-		private readonly string _connectionString;
+        : QueryHandlerAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>
+    {
+        private readonly string _connectionString;
 
-		public GetUserClassroomsQueryHandler(ApplicationConfiguration configurationOptions)
-		{
-			_connectionString = configurationOptions.Postgres;
-		}
+        public GetUserClassroomsQueryHandler(ApplicationConfiguration configurationOptions)
+        {
+            _connectionString = configurationOptions.Postgres;
+        }
 
-		[PopulateQuery(1)]
-		[QueryLogging(2)]
-		[ResultCaching(3)]
-		public override async Task<IReadOnlyCollection<ClassroomReadModel>> ExecuteAsync(
-			GetUserClassroomsQuery query,
-			CancellationToken cancellationToken = default)
-		{
-			const string sql = "SELECT * FROM classrooms " +
-			                   "WHERE created_by=@userId " +
-							   "ORDER BY grade_value,name_value";
+        [QueryLogging(2)]
+        [ResultCaching(3)]
+        public override async Task<IReadOnlyCollection<ClassroomReadModel>> ExecuteAsync(
+            GetUserClassroomsQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            const string sql = "SELECT * FROM classrooms " +
+                               "WHERE created_by=@userId " +
+                               "ORDER BY grade_value,name_value";
 
-			using (var connection = new NpgsqlConnection(_connectionString))
-			{
-				return (await connection.QueryAsync<ClassroomReadModel>(
-					sql,
-					new { userId = query.UserId })).ToList();
-			}
-		}
-	}
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                return (await connection.QueryAsync<ClassroomReadModel>(
+                    sql,
+                    new { userId = query.UserId })).ToList();
+            }
+        }
+    }
 }

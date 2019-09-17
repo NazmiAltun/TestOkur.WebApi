@@ -10,25 +10,25 @@
     using TestOkur.Domain.Model.LessonModel;
 
     internal class LessonSeeder : ISeeder
-	{
-		public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
-		{
-			if (await dbContext.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
-			{
-				return;
-			}
+    {
+        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
+        {
+            if (await dbContext.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
+            {
+                return;
+            }
 
-			dbContext.Lessons.AddRange(GetLessons());
-			await dbContext.SaveChangesAsync();
-		}
+            dbContext.Lessons.AddRange(GetLessons());
+            await dbContext.SaveChangesAsync();
+        }
 
-		private static IEnumerable<Lesson> GetLessons()
-		{
-			return typeof(Lessons)
-				.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
-				.Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
-				.Select(x => (string)x.GetRawConstantValue())
-				.Select(s => new Lesson(s));
-		}
-	}
+        private static IEnumerable<Lesson> GetLessons()
+        {
+            return typeof(Lessons)
+                .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
+                .Select(x => (string)x.GetRawConstantValue())
+                .Select(s => new Lesson(s));
+        }
+    }
 }

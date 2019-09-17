@@ -7,5 +7,5 @@
         public const string AytSay = "AYT-SAY";
         public const string AytEa = "AYT-EA";
         public const string AytLang = "AYT-DİL";
-	}
+    }
 }
