@@ -36,6 +36,7 @@ namespace TestOkur.Report
     using TestOkur.Report.Domain;
     using TestOkur.Report.Extensions;
     using TestOkur.Report.Infrastructure;
+    using TestOkur.Report.Models;
     using TestOkur.Report.Repositories;
 
     [ExcludeFromCodeCoverage]
@@ -161,7 +162,7 @@ namespace TestOkur.Report
                         .SetIdGenerator(StringObjectIdGenerator.Instance)
                         .SetSerializer(new StringSerializer(BsonType.ObjectId));
                 });
-
+                BsonClassMap.RegisterClassMap<ReportRequest>(cm => { cm.AutoMap(); });
                 BsonClassMap.RegisterClassMap<StudentOpticalForm>(cm => { cm.AutoMap(); });
                 BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>(cm => { cm.AutoMap(); });
             }
@@ -169,7 +170,8 @@ namespace TestOkur.Report
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<IOpticalFormRepository, OpticalFormRepository>();
+            services.AddTransient<IOpticalFormRepository, OpticalFormRepository>();
+            services.AddTransient<IReportRequestRepository, ReportRequestRepository>();
             services.AddSingleton<IRequestResponseLogger, RequestResponseMongodbLogger>();
             services.AddSingleton<IEvaluator, Evaluator>();
             services.AddHttpContextAccessor();

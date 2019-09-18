@@ -4,10 +4,11 @@
     using TestOkur.Infrastructure.Mvc;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
+    using TestOkur.Report.Models;
 
     public class TestOkurContext
     {
-        private readonly IMongoDatabase _database = null;
+        private readonly IMongoDatabase _database;
 
         public TestOkurContext(ReportConfiguration configuration)
         {
@@ -23,5 +24,8 @@
 
         public IMongoCollection<RequestResponseLog> RequestResponseLogs =>
             _database.GetCollection<RequestResponseLog>("RequestResponseLogs");
+
+        public IMongoCollection<ReportRequest> ReportRequests =>
+            _database.GetCollection<ReportRequest>("ReportRequests");
     }
 }
