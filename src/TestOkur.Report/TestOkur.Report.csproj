@@ -25,7 +25,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TestOkur.Infrastructure" Version="1.0.37" />
+    <PackageReference Include="TestOkur.Infrastructure" Version="1.0.40" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.64" />
   </ItemGroup>
   <ItemGroup>

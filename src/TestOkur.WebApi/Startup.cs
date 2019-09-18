@@ -40,6 +40,7 @@
     using TestOkur.Infrastructure;
     using TestOkur.Infrastructure.Cqrs;
     using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Monitoring;
     using TestOkur.Infrastructure.Mvc;
     using TestOkur.Infrastructure.Threading;
     using TestOkur.WebApi.Application.Captcha;
@@ -78,6 +79,7 @@
                        .AllowAnyHeader();
             }));
             services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddMvc(options =>
                 {
                     options.Filters.Add(new ProducesAttribute("application/json"));

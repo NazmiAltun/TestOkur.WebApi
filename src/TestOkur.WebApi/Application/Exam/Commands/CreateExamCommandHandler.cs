@@ -41,7 +41,7 @@
             CreateExamCommand command,
             CancellationToken cancellationToken = default)
         {
-            await EnsureNotExistsAsync(command.Name, cancellationToken);
+            await EnsureNotExistsAsync(command, cancellationToken);
             Exam exam = null;
 
             using (var dbContext = _dbContextFactory.Create(command.UserId))
@@ -78,12 +78,12 @@
         }
 
         private async Task EnsureNotExistsAsync(
-            string name, CancellationToken cancellationToken)
+            CreateExamCommand command, CancellationToken cancellationToken)
         {
             var list = (await _processor.ExecuteAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>(
-                new GetUserExamsQuery(), cancellationToken)).ToList();
+                new GetUserExamsQuery(command.UserId), cancellationToken)).ToList();
 
-            if (list.Any(c => c.Name == name))
+            if (list.Any(c => c.Name == command.Name))
             {
                 throw new ValidationException(ErrorCodes.ExamExists);
             }

@@ -1,10 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestOkur.Data;
     using TestOkur.Domain.Model.ScoreModel;
     using TestOkur.Infrastructure.Cqrs;
@@ -46,7 +45,6 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        //TODO:Fix
         private async Task<ScoreFormula> GetAsync(
             ApplicationDbContext dbContext,
             int id,

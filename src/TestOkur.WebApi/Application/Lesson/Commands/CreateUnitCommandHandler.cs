@@ -47,7 +47,7 @@
             CancellationToken cancellationToken = default)
         {
             var units = await _processor.ExecuteAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>(
-                new GetUserUnitsQuery(), cancellationToken);
+                new GetUserUnitsQuery(command.UserId), cancellationToken);
 
             if (units.Any(l => string.Equals(l.Name, command.Name, StringComparison.InvariantCultureIgnoreCase) &&
                                l.Grade == command.Grade &&

@@ -64,7 +64,7 @@
             CancellationToken cancellationToken)
         {
             var classrooms = await _processor.ExecuteAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>(
-                new GetUserClassroomsQuery(),
+                new GetUserClassroomsQuery(command.UserId),
                 cancellationToken);
 
             if (classrooms.Any(

@@ -106,7 +106,7 @@
             CancellationToken cancellationToken)
         {
             var list = (await _processor.ExecuteAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>(
-                new GetUserExamsQuery(), cancellationToken)).ToList();
+                new GetUserExamsQuery(command.UserId), cancellationToken)).ToList();
 
             if (list.Any(c => c.Name == command.NewName &&
                      c.Id != command.ExamId))

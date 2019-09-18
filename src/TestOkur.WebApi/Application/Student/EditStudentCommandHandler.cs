@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -16,13 +17,15 @@
 
     public sealed class EditStudentCommandHandler : RequestHandlerAsync<EditStudentCommand>
     {
+        private readonly IProcessor _processor;
         private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public EditStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
+        public EditStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory, IProcessor processor)
         {
             _publishEndpoint = publishEndpoint;
             _dbContextFactory = dbContextFactory;
+            _processor = processor;
         }
 
         [Idempotent(1)]
@@ -33,7 +36,7 @@
         {
             using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                await EnsureNotExistsAsync(dbContext, command, cancellationToken);
+                await EnsureNotExistsAsync(command, cancellationToken);
                 var student = await GetStudentAsync(dbContext, command, cancellationToken);
 
                 if (student != null)
@@ -91,17 +94,16 @@
                     cancellationToken);
         }
 
-        //TODO:Use query processor instead
         private async Task EnsureNotExistsAsync(
-            ApplicationDbContext dbContext,
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            if (await dbContext.Students.AnyAsync(
-                c => c.StudentNumber.Value == command.NewStudentNumber &&
-                     c.Id != command.StudentId &&
-                     EF.Property<int>(c, "CreatedBy") == command.UserId,
-                cancellationToken))
+            var students = await _processor
+                .ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(
+                    new GetUserStudentsQuery(command.UserId), cancellationToken);
+            if (students.Any(
+                s => s.StudentNumber == command.NewStudentNumber &&
+                     s.Id != command.StudentId))
             {
                 throw new ValidationException(ErrorCodes.StudentExists);
             }

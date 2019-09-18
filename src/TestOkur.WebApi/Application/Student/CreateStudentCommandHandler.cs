@@ -51,7 +51,7 @@
             CreateStudentCommand command,
             CancellationToken cancellationToken)
         {
-            var query = new GetUserStudentsQuery();
+            var query = new GetUserStudentsQuery(command.UserId);
             var list = await _processor.ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(query, cancellationToken);
 
             if (list.Any(c => c.StudentNumber == command.StudentNumber))

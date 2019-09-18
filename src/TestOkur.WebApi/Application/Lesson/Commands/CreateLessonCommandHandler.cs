@@ -35,7 +35,7 @@
             CreateLessonCommand command,
             CancellationToken cancellationToken = default)
         {
-            await EnsureLessonDoesNotExistAsync(command.Name, cancellationToken);
+            await EnsureLessonDoesNotExistAsync(command, cancellationToken);
             using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 dbContext.Lessons.Add(command.ToDomainModel());
@@ -46,20 +46,20 @@
         }
 
         private async Task EnsureLessonDoesNotExistAsync(
-            string name,
+            CreateLessonCommand command,
             CancellationToken cancellationToken)
         {
-            await EnsureNotExistsInSharedAsync(name, cancellationToken);
-            await EnsureNotExistsInUserLessons(name, cancellationToken);
+            await EnsureNotExistsInSharedAsync(command.Name, cancellationToken);
+            await EnsureNotExistsInUserLessons(command, cancellationToken);
         }
 
-        private async Task EnsureNotExistsInUserLessons(string name, CancellationToken cancellationToken)
+        private async Task EnsureNotExistsInUserLessons(CreateLessonCommand command, CancellationToken cancellationToken)
         {
-            var lessonsByUserQuery = new GetUserLessonsQuery();
+            var lessonsByUserQuery = new GetUserLessonsQuery(command.UserId);
             var lessonsByUser = await _processor
                 .ExecuteAsync<GetUserLessonsQuery, IReadOnlyCollection<LessonReadModel>>(lessonsByUserQuery, cancellationToken);
 
-            if (lessonsByUser.Any(l => string.Equals(l.Name, name, StringComparison.InvariantCultureIgnoreCase)))
+            if (lessonsByUser.Any(l => string.Equals(l.Name, command.Name, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new ValidationException(ErrorCodes.LessonExists);
             }

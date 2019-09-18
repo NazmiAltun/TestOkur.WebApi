@@ -51,7 +51,7 @@
             CancellationToken cancellationToken)
         {
             var units = await _processor.ExecuteAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>(
-                new GetUserUnitsQuery(),
+                new GetUserUnitsQuery(command.UserId),
                 cancellationToken);
 
             if (units.Any(

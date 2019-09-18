@@ -44,7 +44,7 @@
             CreateClassroomCommand command,
             CancellationToken cancellationToken)
         {
-            var query = new GetUserClassroomsQuery();
+            var query = new GetUserClassroomsQuery(command.UserId);
             var list = await _processor.ExecuteAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>(query, cancellationToken);
 
             if (list.Any(c => c.Grade == command.Grade &&

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
 namespace TestOkur.Report
@@ -28,6 +29,7 @@ namespace TestOkur.Report
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Monitoring;
     using TestOkur.Infrastructure.Mvc;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
@@ -64,6 +66,7 @@ namespace TestOkur.Report
             AddHealthCheck(services);
             AddOptions(services);
             services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ProducesAttribute("application/json"));

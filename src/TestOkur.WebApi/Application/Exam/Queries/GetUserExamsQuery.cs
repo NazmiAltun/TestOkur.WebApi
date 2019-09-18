@@ -8,6 +8,15 @@
         QueryBase<IReadOnlyCollection<ExamReadModel>>,
         ICacheResult
     {
+        public GetUserExamsQuery()
+        {
+        }
+
+        public GetUserExamsQuery(int userId)
+            : base(userId)
+        {
+        }
+
         public string CacheKey => $"Exams_{UserId}";
 
         public TimeSpan CacheDuration => TimeSpan.FromHours(4);

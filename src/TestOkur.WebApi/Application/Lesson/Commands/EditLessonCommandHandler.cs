@@ -76,7 +76,7 @@
 
         private async Task EnsureNotExistsInUserLessons(EditLessonCommand command, CancellationToken cancellationToken)
         {
-            var lessonsByUserQuery = new GetUserLessonsQuery();
+            var lessonsByUserQuery = new GetUserLessonsQuery(command.UserId);
             var lessonsByUser = await _processor
                 .ExecuteAsync<GetUserLessonsQuery, IReadOnlyCollection<LessonReadModel>>(lessonsByUserQuery, cancellationToken);
 

@@ -23,6 +23,7 @@
     using RazorLight;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Monitoring;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Consumers;
     using TestOkur.Notification.Infrastructure;
@@ -72,6 +73,7 @@
                 .Build());
             services.AddTransient<ISmsRepository, SmsRepository>();
             services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddMvc();
             return services.BuildServiceProvider();
         }

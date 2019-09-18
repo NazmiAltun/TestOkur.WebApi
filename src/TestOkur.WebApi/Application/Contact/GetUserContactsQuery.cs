@@ -8,6 +8,15 @@
         QueryBase<IReadOnlyCollection<ContactReadModel>>,
         ICacheResult
     {
+        public GetUserContactsQuery(int userId)
+            : base(userId)
+        {
+        }
+
+        public GetUserContactsQuery()
+        {
+        }
+
         public string CacheKey => $"Contacts_{UserId}";
 
         public TimeSpan CacheDuration => TimeSpan.FromHours(4);

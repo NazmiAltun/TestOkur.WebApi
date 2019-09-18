@@ -46,7 +46,7 @@
             CreateContactCommand command,
             CancellationToken cancellationToken)
         {
-            var query = new GetUserContactsQuery();
+            var query = new GetUserContactsQuery(command.UserId);
             var list = await _processor.ExecuteAsync<GetUserContactsQuery, IReadOnlyCollection<ContactReadModel>>(query, cancellationToken);
 
             if (list.Any(c => c.Phone == command.Phone))

@@ -15,6 +15,7 @@
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.LicenseType;
     using TestOkur.WebApi.Application.User.Events;
+    using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Application.User.Services;
 
     public sealed class CreateUserCommandHandler : RequestHandlerAsync<CreateUserCommand>
@@ -48,7 +49,7 @@
             ValidateCaptcha(command);
             using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                await EnsureUserDoesNotExistAsync(dbContext, command, cancellationToken);
+                await EnsureUserDoesNotExistAsync(command, cancellationToken);
                 await SaveToDatabaseAsync(dbContext, command, cancellationToken);
             }
 
@@ -90,15 +91,12 @@
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        //TODO:Fix
         private async Task EnsureUserDoesNotExistAsync(
-            ApplicationDbContext dbContext,
             CreateUserCommand command,
             CancellationToken cancellationToken = default)
         {
-            if (await dbContext.Users.AnyAsync(
-                l => l.Email.Value == command.Email,
-                cancellationToken))
+            var users = await _queryProcessor.ExecuteAsync(new GetAllUsersQuery(), cancellationToken);
+            if (users.Any(l => l.Email == command.Email))
             {
                 throw new ValidationException(ErrorCodes.UserAlreadyExists);
             }

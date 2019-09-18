@@ -47,7 +47,7 @@
             }
 
             var contacts = await _processor.ExecuteAsync<GetUserContactsQuery, IReadOnlyCollection<ContactReadModel>>(
-                new GetUserContactsQuery(), cancellationToken);
+                new GetUserContactsQuery(query.UserId), cancellationToken);
 
             foreach (var student in students)
             {
