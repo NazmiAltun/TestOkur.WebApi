@@ -83,14 +83,10 @@
         private async Task AuditChangesAsync()
         {
             ChangeTracker.DetectChanges();
+            var entries = ChangeTracker.Entries().Where(e => e.IsAuditable()).ToList();
 
-            foreach (var entry in ChangeTracker.Entries().ToList())
+            foreach (var entry in entries)
             {
-                if (!entry.IsAuditable())
-                {
-                    continue;
-                }
-
                 await SetCreationAttributes(entry);
                 await SetUpdateAttributes(entry);
             }

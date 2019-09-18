@@ -49,9 +49,7 @@
             CancellationToken cancellationToken)
         {
             return await _dbContext.Classrooms
-                .FirstAsync(
-                    c => c.Id == classroomId,
-                    cancellationToken);
+                .FirstAsync(c => c.Id == classroomId, cancellationToken);
         }
     }
 }
