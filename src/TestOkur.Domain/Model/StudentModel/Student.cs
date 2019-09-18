@@ -15,7 +15,8 @@
             StudentNumber studentNumber,
             Classroom classroom,
             IEnumerable<Contact> contacts,
-            string notes)
+            string notes,
+            string source)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -23,6 +24,7 @@
             Classroom = classroom;
             _contacts.AddRange(contacts);
             Notes = notes;
+            Source = source;
         }
 
         protected Student()
@@ -38,6 +40,8 @@
         public Classroom Classroom { get; private set; }
 
         public string Notes { get; private set; }
+
+        public string Source { get; private set; }
 
         public IEnumerable<Contact> Contacts => _contacts.AsReadOnly();
 

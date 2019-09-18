@@ -21,6 +21,8 @@
 
         public string Notes { get; set; }
 
+        public string Source { get; set; }
+
         public List<ContactReadModel> Contacts { get; set; } = new List<ContactReadModel>();
     }
 }

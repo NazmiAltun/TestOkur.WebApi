@@ -89,6 +89,7 @@
                 Random.Next(StudentNumber.Min, StudentNumber.Max),
                 classroomId,
                 Random.RandomString(200),
+                "Single",
                 contacts);
         }
     }
