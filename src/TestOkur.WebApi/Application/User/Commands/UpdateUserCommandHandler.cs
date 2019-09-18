@@ -35,6 +35,12 @@
             using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var user = await GetUserAsync(dbContext, userId, cancellationToken);
+
+                if (user.Email == "demo@testokur.com")
+                {
+                    return;
+                }
+
                 var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
                 var district = city.Districts.First(d => d.Id == command.DistrictId);
                 user.Update(city, district, command.SchoolName, command.MobilePhone);
