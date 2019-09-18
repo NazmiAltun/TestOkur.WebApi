@@ -23,20 +23,20 @@
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IIdentityService _identityService;
         private readonly IQueryProcessor _queryProcessor;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
         public CreateUserCommandHandler(
             ICaptchaService captchaService,
-            ApplicationDbContext dbContext,
             IPublishEndpoint publishEndpoint,
             IIdentityService identityService,
-            IQueryProcessor queryProcessor)
+            IQueryProcessor queryProcessor,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _captchaService = captchaService ?? throw new ArgumentNullException(nameof(captchaService));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
             _queryProcessor = queryProcessor;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -46,8 +46,12 @@
             CancellationToken cancellationToken = default)
         {
             ValidateCaptcha(command);
-            await EnsureUserDoesNotExistAsync(command, cancellationToken);
-            await SaveToDatabaseAsync(command, cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                await EnsureUserDoesNotExistAsync(dbContext, command, cancellationToken);
+                await SaveToDatabaseAsync(dbContext, command, cancellationToken);
+            }
+
             await RegisterUserAsync(command, cancellationToken);
             await PublishEventAsync(command, cancellationToken);
 
@@ -72,22 +76,27 @@
             await _identityService.RegisterUserAsync(model, cancellationToken);
         }
 
-        private async Task SaveToDatabaseAsync(CreateUserCommand command, CancellationToken cancellationToken)
+        private async Task SaveToDatabaseAsync(
+            ApplicationDbContext dbContext,
+            CreateUserCommand command,
+            CancellationToken cancellationToken)
         {
-            var city = await _dbContext.Cities
+            var city = await dbContext.Cities
                 .Include(c => c.Districts)
                 .FirstAsync(c => c.Id == command.CityId, cancellationToken);
             var district = city.Districts.First(d => d.Id == command.DistrictId);
 
-            _dbContext.Users.Add(command.ToDomainModel(city, district));
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            dbContext.Users.Add(command.ToDomainModel(city, district));
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
 
+        //TODO:Fix
         private async Task EnsureUserDoesNotExistAsync(
+            ApplicationDbContext dbContext,
             CreateUserCommand command,
             CancellationToken cancellationToken = default)
         {
-            if (await _dbContext.Users.AnyAsync(
+            if (await dbContext.Users.AnyAsync(
                 l => l.Email.Value == command.Email,
                 cancellationToken))
             {

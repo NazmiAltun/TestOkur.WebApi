@@ -12,11 +12,11 @@
     public sealed class DeleteSubjectCommandHandler
         : RequestHandlerAsync<DeleteSubjectCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteSubjectCommandHandler(ApplicationDbContext dbContext)
+        public DeleteSubjectCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -24,23 +24,28 @@
             DeleteSubjectCommand command,
             CancellationToken cancellationToken = default)
         {
-            var unit = await GetAsync(command, cancellationToken);
-
-            if (unit != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                var subject = unit.RemoveSubject(command.SubjectId);
-                _dbContext.Remove(subject);
+                var unit = await GetAsync(dbContext, command, cancellationToken);
+
+                if (unit != null)
+                {
+                    var subject = unit.RemoveSubject(command.SubjectId);
+                    dbContext.Remove(subject);
+                }
+
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Unit> GetAsync(
+            ApplicationDbContext dbContext,
             DeleteSubjectCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Units
+            return await dbContext.Units
                 .Include(u => u.Subjects)
                 .FirstOrDefaultAsync(
                 l => l.Id == command.UnitId &&

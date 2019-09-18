@@ -16,15 +16,13 @@
 
     public sealed class CreateUnitCommandHandler : RequestHandlerAsync<CreateUnitCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
 
-        public CreateUnitCommandHandler(
-            ApplicationDbContext dbContext,
-            IProcessor processor)
+        public CreateUnitCommandHandler(IProcessor processor, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -34,9 +32,12 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureUnitDoesNotExistAsync(command, cancellationToken);
-            var lesson = await GetLessonAsync(command, cancellationToken);
-            _dbContext.Units.Add(command.ToDomainModel(lesson));
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var lesson = await GetLessonAsync(dbContext, command, cancellationToken);
+                dbContext.Units.Add(command.ToDomainModel(lesson));
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }
@@ -57,10 +58,11 @@
         }
 
         private async Task<Lesson> GetLessonAsync(
+            ApplicationDbContext dbContext,
             CreateUnitCommand command,
             CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Lessons.FirstAsync(
+            return await dbContext.Lessons.FirstAsync(
                 l => l.Id == command.LessonId &&
                      (EF.Property<int>(l, "CreatedBy") == command.UserId ||
                       EF.Property<int>(l, "CreatedBy") == default),

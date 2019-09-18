@@ -14,11 +14,11 @@
 
     public class BulkCreateStudentCommandHandler : RequestHandlerAsync<BulkCreateStudentCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public BulkCreateStudentCommandHandler(ApplicationDbContext dbContext)
+        public BulkCreateStudentCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -28,27 +28,30 @@
             CancellationToken cancellationToken = default)
         {
             var contactTypes = new List<ContactType>();
-
-            foreach (var subCommand in command.Commands)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                var classroom = await GetClassroomAsync(subCommand.ClassroomId, cancellationToken);
-                _dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
-                contactTypes.AddRange(subCommand
-                    .ToDomainModel(classroom, command.UserId)
-                    .Contacts.Select(c => c.ContactType));
-            }
+                foreach (var subCommand in command.Commands)
+                {
+                    var classroom = await GetClassroomAsync(dbContext, subCommand.ClassroomId, cancellationToken);
+                    dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
+                    contactTypes.AddRange(subCommand
+                        .ToDomainModel(classroom, command.UserId)
+                        .Contacts.Select(c => c.ContactType));
+                }
 
-            _dbContext.AttachRange(contactTypes.Distinct());
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                dbContext.AttachRange(contactTypes.Distinct());
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Classroom> GetClassroomAsync(
+            ApplicationDbContext dbContext,
             int classroomId,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Classrooms
+            return await dbContext.Classrooms
                 .FirstAsync(c => c.Id == classroomId, cancellationToken);
         }
     }

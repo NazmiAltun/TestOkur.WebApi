@@ -13,14 +13,14 @@
 
     public sealed class CreateClassroomCommandHandler : RequestHandlerAsync<CreateClassroomCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
 
         public CreateClassroomCommandHandler(
-            ApplicationDbContext dbContext,
+            IApplicationDbContextFactory dbContext,
             IProcessor processor)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
@@ -31,8 +31,11 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureClassroomDoesNotExistAsync(command, cancellationToken);
-            _dbContext.Classrooms.Add(command.ToDomainModel());
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                dbContext.Classrooms.Add(command.ToDomainModel());
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }

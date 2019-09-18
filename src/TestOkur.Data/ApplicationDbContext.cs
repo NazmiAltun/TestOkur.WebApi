@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Data
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using TestOkur.Data.Extensions;
     using TestOkur.Domain.Model.CityModel;
     using TestOkur.Domain.Model.ClassroomModel;
@@ -18,20 +18,17 @@
     using TestOkur.Domain.Model.SettingModel;
     using TestOkur.Domain.Model.StudentModel;
     using TestOkur.Domain.Model.UserModel;
-    using TestOkur.Infrastructure;
     using TestOkur.Infrastructure.Extensions;
 
     [ExcludeFromCodeCoverage]
     public class ApplicationDbContext : DbContext
     {
-        private readonly IUserIdProvider _userIdProvider;
+        private readonly int _currentUserId;
 
-        public ApplicationDbContext(
-            DbContextOptions<ApplicationDbContext> options,
-            IUserIdProvider userIdProvider)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, int currentUserId = default)
            : base(options)
         {
-            _userIdProvider = userIdProvider;
+            _currentUserId = currentUserId;
         }
 
         public DbSet<City> Cities { get; set; }
@@ -66,7 +63,7 @@
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            await AuditChangesAsync();
+            AuditChanges();
             return await base.SaveChangesAsync(cancellationToken);
         }
 
@@ -80,34 +77,34 @@
             modelBuilder.ToSnakeCase();
         }
 
-        private async Task AuditChangesAsync()
+        private void AuditChanges()
         {
             ChangeTracker.DetectChanges();
             var entries = ChangeTracker.Entries().Where(e => e.IsAuditable()).ToList();
 
             foreach (var entry in entries)
             {
-                await SetCreationAttributes(entry);
-                await SetUpdateAttributes(entry);
+                SetCreationAttributes(entry);
+                SetUpdateAttributes(entry);
             }
         }
 
-        private async Task SetUpdateAttributes(EntityEntry entry)
+        private void SetUpdateAttributes(EntityEntry entry)
         {
             if (entry.State == EntityState.Modified ||
                 entry.State == EntityState.Added)
             {
                 entry.Property("UpdatedOnUTC").CurrentValue = DateTime.UtcNow;
-                entry.Property("UpdatedBy").CurrentValue = await _userIdProvider.GetAsync();
+                entry.Property("UpdatedBy").CurrentValue = _currentUserId;
             }
         }
 
-        private async Task SetCreationAttributes(EntityEntry entry)
+        private void SetCreationAttributes(EntityEntry entry)
         {
             if (entry.State == EntityState.Added)
             {
                 entry.Property("CreatedOnUTC").CurrentValue = DateTime.UtcNow;
-                entry.Property("CreatedBy").CurrentValue = await _userIdProvider.GetAsync();
+                entry.Property("CreatedBy").CurrentValue = _currentUserId;
             }
         }
     }

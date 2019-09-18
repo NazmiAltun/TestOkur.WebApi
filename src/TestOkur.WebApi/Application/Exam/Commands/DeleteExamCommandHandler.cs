@@ -11,13 +11,13 @@
 
     public sealed class DeleteExamCommandHandler : RequestHandlerAsync<DeleteExamCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public DeleteExamCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        public DeleteExamCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -25,13 +25,16 @@
             DeleteExamCommand command,
             CancellationToken cancellationToken = default)
         {
-            var exam = await GetAsync(command, cancellationToken);
-
-            if (exam != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.Remove(exam);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                await PublishEventAsync(command.ExamId, cancellationToken);
+                var exam = await GetAsync(dbContext, command, cancellationToken);
+
+                if (exam != null)
+                {
+                    dbContext.Remove(exam);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await PublishEventAsync(command.ExamId, cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
@@ -45,10 +48,11 @@
         }
 
         private async Task<Domain.Model.ExamModel.Exam> GetAsync(
+            ApplicationDbContext dbContext,
             DeleteExamCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Exams.FirstOrDefaultAsync(
+            return await dbContext.Exams.FirstOrDefaultAsync(
                 l => l.Id == command.ExamId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

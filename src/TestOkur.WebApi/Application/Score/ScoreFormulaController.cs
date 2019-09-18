@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Infrastructure.Cqrs;
 

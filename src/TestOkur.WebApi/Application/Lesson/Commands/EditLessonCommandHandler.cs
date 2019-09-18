@@ -18,20 +18,20 @@
 
     public sealed class EditLessonCommandHandler : RequestHandlerAsync<EditLessonCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
         private readonly IProcessor _processor;
         private readonly IQueryProcessor _queryProcessor;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
         public EditLessonCommandHandler(
-            ApplicationDbContext dbContext,
             IPublishEndpoint publishEndpoint,
             IQueryProcessor queryProcessor,
-            IProcessor processor)
+            IProcessor processor,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _processor = processor;
+            _dbContextFactory = dbContextFactory;
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
 
@@ -42,12 +42,15 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureLessonDoesNotExistAsync(command, cancellationToken);
-            var lesson = await GetAsync(command, cancellationToken);
-
-            if (lesson != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                lesson.SetName(command.NewName);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var lesson = await GetAsync(dbContext, command, cancellationToken);
+
+                if (lesson != null)
+                {
+                    lesson.SetName(command.NewName);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             await PublishEventAsync(command, cancellationToken);
@@ -98,10 +101,11 @@
         }
 
         private async Task<Lesson> GetAsync(
+            ApplicationDbContext dbContext,
             EditLessonCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Lessons.FirstOrDefaultAsync(
+            return await dbContext.Lessons.FirstOrDefaultAsync(
                 l => l.Id == command.LessonId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

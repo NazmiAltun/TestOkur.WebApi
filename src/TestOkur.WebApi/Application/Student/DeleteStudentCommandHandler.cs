@@ -12,13 +12,13 @@
 
     public class DeleteStudentCommandHandler : RequestHandlerAsync<DeleteStudentCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public DeleteStudentCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        public DeleteStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _publishEndpoint = publishEndpoint;
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -26,13 +26,16 @@
             DeleteStudentCommand command,
             CancellationToken cancellationToken = default)
         {
-            var student = await GetStudentAsync(command, cancellationToken);
-
-            if (student != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.Remove(student);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                await PublishEventAsync(command.StudentId, cancellationToken);
+                var student = await GetStudentAsync(dbContext, command, cancellationToken);
+
+                if (student != null)
+                {
+                    dbContext.Remove(student);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await PublishEventAsync(command.StudentId, cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
@@ -46,10 +49,11 @@
         }
 
         private async Task<Student> GetStudentAsync(
+            ApplicationDbContext dbContext,
             DeleteStudentCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Students.FirstOrDefaultAsync(
+            return await dbContext.Students.FirstOrDefaultAsync(
                 l => l.Id == command.StudentId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

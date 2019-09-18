@@ -9,7 +9,6 @@
     using MassTransit;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.ExamModel;
@@ -23,17 +22,17 @@
         : RequestHandlerAsync<EditExamCommand>
     {
         private readonly IProcessor _processor;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
         public EditExamCommandHandler(
-            ApplicationDbContext dbContext,
             IPublishEndpoint publishEndpoint,
-            IProcessor processor)
+            IProcessor processor,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
             _processor = processor;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -43,30 +42,33 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureNotExistsAsync(command, cancellationToken);
-            var exam = await GetExamAsync(command, cancellationToken);
-
-            if (exam != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                await UpdateExamAsync(command, cancellationToken, exam);
-                _dbContext.Attach(exam.ExamBookletType);
-                _dbContext.Attach(exam.AnswerFormFormat);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                await PublishEventAsync(exam, command, cancellationToken);
+                var exam = await GetExamAsync(dbContext, command, cancellationToken);
+
+                if (exam != null)
+                {
+                    await UpdateExamAsync(dbContext, command, cancellationToken, exam);
+                    dbContext.Attach(exam.ExamBookletType);
+                    dbContext.Attach(exam.AnswerFormFormat);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await PublishEventAsync(exam, command, cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task UpdateExamAsync(EditExamCommand command, CancellationToken cancellationToken, Exam exam)
+        private async Task UpdateExamAsync(ApplicationDbContext dbContext, EditExamCommand command, CancellationToken cancellationToken, Exam exam)
         {
             exam.Update(
                 command.NewName,
-                await _dbContext.ExamTypes.FirstAsync(e => e.Id == command.NewExamTypeId, cancellationToken),
+                await dbContext.ExamTypes.FirstAsync(e => e.Id == command.NewExamTypeId, cancellationToken),
                 command.NewIncorrectEliminationRate,
                 command.NewExamDate,
                 command.NewApplicableFormTypeCode,
                 Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.NewAnswerFormFormat),
-                await GetLessonAsync(command.NewLessonId),
+                await GetLessonAsync(dbContext, command.NewLessonId),
                 Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.NewExamBookletTypeId),
                 command.NewNotes);
         }
@@ -81,18 +83,19 @@
                 cancellationToken);
         }
 
-        private async Task<Lesson> GetLessonAsync(int id)
+        private async Task<Lesson> GetLessonAsync(ApplicationDbContext dbContext, int id)
         {
             return id <= 0 ?
                 null :
-                await _dbContext.Lessons.FirstAsync(l => l.Id == id);
+                await dbContext.Lessons.FirstAsync(l => l.Id == id);
         }
 
         private async Task<Exam> GetExamAsync(
+            ApplicationDbContext dbContext,
             EditExamCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Exams
+            return await dbContext.Exams
                 .FirstOrDefaultAsync(
                     l => l.Id == command.ExamId,
                     cancellationToken);

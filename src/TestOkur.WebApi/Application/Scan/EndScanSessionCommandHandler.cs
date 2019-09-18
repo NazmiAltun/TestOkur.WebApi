@@ -11,11 +11,11 @@
     public class EndScanSessionCommandHandler
         : RequestHandlerAsync<EndScanSessionCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public EndScanSessionCommandHandler(ApplicationDbContext dbContext)
+        public EndScanSessionCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -23,11 +23,14 @@
             EndScanSessionCommand command,
             CancellationToken cancellationToken = default)
         {
-            var session = await _dbContext.ExamScanSessions.FirstAsync(
-                e => e.ReportId == command.Id,
-                cancellationToken);
-            session.End(command.ScannedStudentCount);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var session = await dbContext.ExamScanSessions.FirstAsync(
+                    e => e.ReportId == command.Id,
+                    cancellationToken);
+                session.End(command.ScannedStudentCount);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }

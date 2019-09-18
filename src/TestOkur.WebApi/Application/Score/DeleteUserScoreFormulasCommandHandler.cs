@@ -12,11 +12,11 @@
     public sealed class DeleteUserScoreFormulasCommandHandler
         : RequestHandlerAsync<DeleteUserScoreFormulasCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteUserScoreFormulasCommandHandler(ApplicationDbContext dbContext)
+        public DeleteUserScoreFormulasCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -24,15 +24,18 @@
             DeleteUserScoreFormulasCommand command,
             CancellationToken cancellationToken = default)
         {
-            var formulas = _dbContext.ScoreFormulas
-                .Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId &&
-                            EF.Property<int>(s, "CreatedBy") != default)
-                .ToList();
-
-            if (formulas.Any())
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.ScoreFormulas.RemoveRange(formulas);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var formulas = dbContext.ScoreFormulas
+                    .Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId &&
+                                EF.Property<int>(s, "CreatedBy") != default)
+                    .ToList();
+
+                if (formulas.Any())
+                {
+                    dbContext.ScoreFormulas.RemoveRange(formulas);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);

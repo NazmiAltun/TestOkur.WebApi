@@ -16,13 +16,13 @@
 
     public sealed class EditStudentCommandHandler : RequestHandlerAsync<EditStudentCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public EditStudentCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        public EditStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _publishEndpoint = publishEndpoint;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -31,22 +31,25 @@
             EditStudentCommand command,
             CancellationToken cancellationToken = default)
         {
-            await EnsureNotExistsAsync(command, cancellationToken);
-            var student = await GetStudentAsync(command, cancellationToken);
-
-            if (student != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.RemoveRange(student.Contacts);
-                student.Update(
-                    command.NewFirstName,
-                    command.NewLastName,
-                    command.NewStudentNumber,
-                    await GetClassroomAsync(command, cancellationToken),
-                    command.Contacts?.Select(c => c.ToDomainModel()),
-                    command.NewNotes);
-                _dbContext.AttachRange(student.Contacts.Select(c => c.ContactType));
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                await PublishEventAsync(command, cancellationToken);
+                await EnsureNotExistsAsync(dbContext, command, cancellationToken);
+                var student = await GetStudentAsync(dbContext, command, cancellationToken);
+
+                if (student != null)
+                {
+                    dbContext.RemoveRange(student.Contacts);
+                    student.Update(
+                        command.NewFirstName,
+                        command.NewLastName,
+                        command.NewStudentNumber,
+                        await GetClassroomAsync(dbContext, command, cancellationToken),
+                        command.Contacts?.Select(c => c.ToDomainModel()),
+                        command.NewNotes);
+                    dbContext.AttachRange(student.Contacts.Select(c => c.ContactType));
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await PublishEventAsync(command, cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
@@ -65,20 +68,22 @@
         }
 
         private async Task<Classroom> GetClassroomAsync(
+            ApplicationDbContext dbContext,
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Classrooms.FirstAsync(
+            return await dbContext.Classrooms.FirstAsync(
                 l => l.Id == command.NewClassroomId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }
 
         private async Task<Student> GetStudentAsync(
+            ApplicationDbContext dbContext,
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Students
+            return await dbContext.Students
                 .Include(s => s.Contacts)
                 .FirstOrDefaultAsync(
                     l => l.Id == command.StudentId &&
@@ -86,11 +91,13 @@
                     cancellationToken);
         }
 
+        //TODO:Use query processor instead
         private async Task EnsureNotExistsAsync(
+            ApplicationDbContext dbContext,
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            if (await _dbContext.Students.AnyAsync(
+            if (await dbContext.Students.AnyAsync(
                 c => c.StudentNumber.Value == command.NewStudentNumber &&
                      c.Id != command.StudentId &&
                      EF.Property<int>(c, "CreatedBy") == command.UserId,

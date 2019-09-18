@@ -11,11 +11,11 @@
 
     public class AddSubjectCommandHandler : RequestHandlerAsync<AddSubjectCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public AddSubjectCommandHandler(ApplicationDbContext dbContext)
+        public AddSubjectCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -24,17 +24,22 @@
             AddSubjectCommand command,
             CancellationToken cancellationToken = default)
         {
-            var unit = await GetUnitAsync(command, cancellationToken);
-            unit.AddSubject(command.Name);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var unit = await GetUnitAsync(dbContext, command, cancellationToken);
+                unit.AddSubject(command.Name);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Unit> GetUnitAsync(
+            ApplicationDbContext dbContext,
             AddSubjectCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Units
+            return await dbContext.Units
                 .Include(u => u.Subjects)
                 .FirstAsync(
                     u => u.Id == command.UnitId &&

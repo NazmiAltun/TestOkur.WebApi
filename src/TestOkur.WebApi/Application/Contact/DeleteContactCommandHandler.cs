@@ -12,11 +12,11 @@
 
     public sealed class DeleteContactCommandHandler : RequestHandlerAsync<DeleteContactCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteContactCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        public DeleteContactCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -24,22 +24,26 @@
             DeleteContactCommand command,
             CancellationToken cancellationToken = default)
         {
-            var contact = await GetContactAsync(command, cancellationToken);
-
-            if (contact != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.Remove(contact);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var contact = await GetContactAsync(dbContext, command, cancellationToken);
+
+                if (contact != null)
+                {
+                    dbContext.Remove(contact);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Contact> GetContactAsync(
+            ApplicationDbContext dbContext,
             DeleteContactCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Contacts.FirstOrDefaultAsync(
+            return await dbContext.Contacts.FirstOrDefaultAsync(
                 l => l.Id == command.ContactId && EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }

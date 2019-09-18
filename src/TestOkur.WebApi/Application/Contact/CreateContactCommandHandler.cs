@@ -14,14 +14,14 @@
     public sealed class CreateContactCommandHandler
         : RequestHandlerAsync<CreateContactCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
 
         public CreateContactCommandHandler(
-            ApplicationDbContext dbContext,
+            IApplicationDbContextFactory dbContextFactory,
             IProcessor processor)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
         }
 
@@ -32,9 +32,12 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureContactDoesNotExist(command, cancellationToken);
-            _dbContext.Contacts.Add(command.ToDomainModel());
-            _dbContext.Attach(command.ToDomainModel().ContactType);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                dbContext.Contacts.Add(command.ToDomainModel());
+                dbContext.Attach(command.ToDomainModel().ContactType);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }

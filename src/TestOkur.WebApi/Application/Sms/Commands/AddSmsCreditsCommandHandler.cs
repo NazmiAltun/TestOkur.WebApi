@@ -10,13 +10,13 @@
 
     public class AddSmsCreditsCommandHandler : RequestHandlerAsync<AddSmsCreditsCommand>
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public AddSmsCreditsCommandHandler(ApplicationDbContext applicationDbContext, IPublishEndpoint publishEndpoint)
+        public AddSmsCreditsCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
         {
-            _applicationDbContext = applicationDbContext;
             _publishEndpoint = publishEndpoint;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -25,20 +25,23 @@
             AddSmsCreditsCommand command,
             CancellationToken cancellationToken = default)
         {
-            var user = await _applicationDbContext.Users
-                .FirstAsync(
-                    u => u.Id == command.UserId,
-                    cancellationToken);
-            user.AddSmsBalance(command.Amount);
-            await _applicationDbContext.SaveChangesAsync(cancellationToken);
-            await _publishEndpoint.Publish(
-                new SmsCreditAdded(
-                    command.Amount,
-                    user.SmsBalance,
-                    user.FirstName.Value,
-                    user.LastName.Value,
-                    user.Email,
-                    user.Phone), cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var user = await dbContext.Users
+                    .FirstAsync(
+                        u => u.Id == command.UserId,
+                        cancellationToken);
+                user.AddSmsBalance(command.Amount);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                await _publishEndpoint.Publish(
+                    new SmsCreditAdded(
+                        command.Amount,
+                        user.SmsBalance,
+                        user.FirstName.Value,
+                        user.LastName.Value,
+                        user.Email,
+                        user.Phone), cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }

@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi
 {
     using System;
-    using System.Net;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

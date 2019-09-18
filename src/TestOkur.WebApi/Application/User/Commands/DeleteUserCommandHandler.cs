@@ -11,12 +11,12 @@
     public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>
     {
         private readonly IIdentityService _identityService;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteUserCommandHandler(IIdentityService identityService, ApplicationDbContext dbContext)
+        public DeleteUserCommandHandler(IIdentityService identityService, IApplicationDbContextFactory dbContextFactory)
         {
             _identityService = identityService;
-            _dbContext = dbContext;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -25,24 +25,20 @@
             DeleteUserCommand command,
             CancellationToken cancellationToken = default)
         {
-            var user = await GetUserAsync(command.DeleteUserId, cancellationToken);
-
-            if (user != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                await _identityService.DeleteUserAsync(user.SubjectId, cancellationToken);
-                _dbContext.Remove(user);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var user = await dbContext.Users.FirstOrDefaultAsync(
+                    l => l.Id == command.DeleteUserId, cancellationToken);
+
+                if (user != null)
+                {
+                    await _identityService.DeleteUserAsync(user.SubjectId, cancellationToken);
+                    dbContext.Remove(user);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
-        }
-
-        private async Task<Domain.Model.UserModel.User> GetUserAsync(
-            int id,
-            CancellationToken cancellationToken)
-        {
-            return await _dbContext.Users.FirstOrDefaultAsync(
-                l => l.Id == id, cancellationToken);
         }
     }
 }

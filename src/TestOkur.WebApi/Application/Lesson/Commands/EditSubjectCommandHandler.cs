@@ -14,15 +14,15 @@
     public sealed class EditSubjectCommandHandler
         : RequestHandlerAsync<EditSubjectCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
         public EditSubjectCommandHandler(
-            ApplicationDbContext dbContext,
-            IPublishEndpoint publishEndpoint)
+            IPublishEndpoint publishEndpoint,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -31,10 +31,14 @@
             EditSubjectCommand command,
             CancellationToken cancellationToken = default)
         {
-            var unit = await GetAsync(command, cancellationToken);
-            unit.Subjects.First(s => s.Id == command.SubjectId)
-                .SetName(command.NewName);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var unit = await GetAsync(dbContext, command, cancellationToken);
+                unit.Subjects.First(s => s.Id == command.SubjectId)
+                    .SetName(command.NewName);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+
             await PublishEventAsync(command, cancellationToken);
             return await base.HandleAsync(command, cancellationToken);
         }
@@ -49,10 +53,11 @@
         }
 
         private async Task<Unit> GetAsync(
+            ApplicationDbContext dbContext,
             EditSubjectCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Units
+            return await dbContext.Units
                 .Include(u => u.Subjects)
                 .FirstOrDefaultAsync(
                     u => u.Id == command.UnitId &&

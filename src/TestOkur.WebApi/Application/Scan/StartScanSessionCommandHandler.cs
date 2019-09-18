@@ -13,11 +13,11 @@
     public class StartScanSessionCommandHandler
         : RequestHandlerAsync<StartScanSessionCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public StartScanSessionCommandHandler(ApplicationDbContext dbContext)
+        public StartScanSessionCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -25,25 +25,29 @@
             StartScanSessionCommand command,
             CancellationToken cancellationToken = default)
         {
-            var exam = await GetExamAsync(command.ExamId, cancellationToken);
-            var session = new ExamScanSession(
-                exam,
-                command.Id,
-                command.ByCamera,
-                command.ByFile,
-                command.Source);
-            session.Start();
-            _dbContext.ExamScanSessions.Add(session);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var exam = await GetExamAsync(dbContext, command.ExamId, cancellationToken);
+                var session = new ExamScanSession(
+                    exam,
+                    command.Id,
+                    command.ByCamera,
+                    command.ByFile,
+                    command.Source);
+                session.Start();
+                dbContext.ExamScanSessions.Add(session);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Exam> GetExamAsync(
+            ApplicationDbContext dbContext,
             int examId,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Exams
+            return await dbContext.Exams
                 .FirstOrDefaultAsync(
                     l => l.Id == examId, cancellationToken);
         }

@@ -9,7 +9,6 @@
     using MassTransit;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.ExamModel;
@@ -24,16 +23,16 @@
     {
         private readonly IProcessor _processor;
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
         public CreateExamCommandHandler(
-            ApplicationDbContext dbContext,
             IProcessor processor,
-            IPublishEndpoint publishEndpoint)
+            IPublishEndpoint publishEndpoint,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor;
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(2)]
@@ -43,22 +42,27 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureNotExistsAsync(command.Name, cancellationToken);
+            Exam exam = null;
 
-            var exam = new Exam(
-                command.Name,
-                command.ExamDate,
-                await _dbContext.ExamTypes.FirstAsync(e => e.Id == command.ExamTypeId, cancellationToken),
-                Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.ExamBookletTypeId),
-                command.IncorrectEliminationRate,
-                Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.AnswerFormFormat),
-                await GetLessonAsync(command.LessonId),
-                command.ApplicableFormTypeCode,
-                command.Notes);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                exam = new Exam(
+                    command.Name,
+                    command.ExamDate,
+                    await dbContext.ExamTypes.FirstAsync(e => e.Id == command.ExamTypeId, cancellationToken),
+                    Enumeration.GetAll<ExamBookletType>().First(e => e.Id == command.ExamBookletTypeId),
+                    command.IncorrectEliminationRate,
+                    Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.AnswerFormFormat),
+                    await GetLessonAsync(dbContext, command.LessonId),
+                    command.ApplicableFormTypeCode,
+                    command.Notes);
 
-            _dbContext.Attach(exam.ExamBookletType);
-            _dbContext.Attach(exam.AnswerFormFormat);
-            _dbContext.Exams.Add(exam);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                dbContext.Attach(exam.ExamBookletType);
+                dbContext.Attach(exam.AnswerFormFormat);
+                dbContext.Exams.Add(exam);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+
             await PublishEventAsync(exam, command.AnswerKeyOpticalForms, cancellationToken);
             return await base.HandleAsync(command, cancellationToken);
         }
@@ -85,11 +89,11 @@
             }
         }
 
-        private async Task<Lesson> GetLessonAsync(int id)
+        private async Task<Lesson> GetLessonAsync(ApplicationDbContext dbContext, int id)
         {
             return id <= 0 ?
                 null :
-                await _dbContext.Lessons.FirstAsync(l => l.Id == id);
+                await dbContext.Lessons.FirstAsync(l => l.Id == id);
         }
     }
 }

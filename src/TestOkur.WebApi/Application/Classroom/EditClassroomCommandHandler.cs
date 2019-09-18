@@ -16,18 +16,18 @@
 
     public sealed class EditClassroomCommandHandler : RequestHandlerAsync<EditClassroomCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
         private readonly IPublishEndpoint _publishEndpoint;
 
         public EditClassroomCommandHandler(
-            ApplicationDbContext dbContext,
             IProcessor processor,
-            IPublishEndpoint publishEndpoint)
+            IPublishEndpoint publishEndpoint,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _publishEndpoint = publishEndpoint;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -37,13 +37,16 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureNotExistsAsync(command, cancellationToken);
-            var classroom = await GetClassroomAsync(command, cancellationToken);
-
-            if (classroom != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                classroom.Update(command.NewGrade, command.NewName);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                await PublishEventAsync(command, cancellationToken);
+                var classroom = await GetClassroomAsync(dbContext, command, cancellationToken);
+
+                if (classroom != null)
+                {
+                    classroom.Update(command.NewGrade, command.NewName);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await PublishEventAsync(command, cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
@@ -74,10 +77,11 @@
         }
 
         private async Task<Classroom> GetClassroomAsync(
+            ApplicationDbContext dbContext,
             EditClassroomCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Classrooms.FirstOrDefaultAsync(
+            return await dbContext.Classrooms.FirstOrDefaultAsync(
                 l => l.Id == command.ClassroomId && EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }

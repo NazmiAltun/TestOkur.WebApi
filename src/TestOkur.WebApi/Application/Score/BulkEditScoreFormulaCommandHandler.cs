@@ -12,11 +12,11 @@
     public sealed class BulkEditScoreFormulaCommandHandler
         : RequestHandlerAsync<BulkEditScoreFormulaCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public BulkEditScoreFormulaCommandHandler(ApplicationDbContext dbContext)
+        public BulkEditScoreFormulaCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -25,28 +25,35 @@
             BulkEditScoreFormulaCommand command,
             CancellationToken cancellationToken = default)
         {
-            foreach (var subCommand in command.Commands)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                var formula = await GetAsync(
-                    subCommand.ScoreFormulaId,
-                    command.UserId,
-                    cancellationToken);
+                foreach (var subCommand in command.Commands)
+                {
+                    var formula = await GetAsync(
+                        dbContext,
+                        subCommand.ScoreFormulaId,
+                        command.UserId,
+                        cancellationToken);
 
-                formula.Update(
-                    subCommand.BasePoint,
-                    subCommand.Coefficients);
+                    formula.Update(
+                        subCommand.BasePoint,
+                        subCommand.Coefficients);
+                }
+
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
             return await base.HandleAsync(command, cancellationToken);
         }
 
+        //TODO:Fix
         private async Task<ScoreFormula> GetAsync(
+            ApplicationDbContext dbContext,
             int id,
             int userId,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.ScoreFormulas
+            return await dbContext.ScoreFormulas
                 .Include(s => s.Coefficients)
                 .FirstAsync(
                     f => f.Id == id &&

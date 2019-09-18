@@ -10,15 +10,13 @@
 
     public sealed class DeductSmsCreditsCommandHandler : RequestHandlerAsync<DeductSmsCreditsCommand>
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly ISmsCreditCalculator _smsCreditCalculator;
 
-        public DeductSmsCreditsCommandHandler(
-            ApplicationDbContext applicationDbContext,
-            ISmsCreditCalculator smsCreditCalculator)
+        public DeductSmsCreditsCommandHandler(ISmsCreditCalculator smsCreditCalculator, IApplicationDbContextFactory dbContextFactory)
         {
-            _applicationDbContext = applicationDbContext;
             _smsCreditCalculator = smsCreditCalculator;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -27,10 +25,13 @@
             DeductSmsCreditsCommand command,
             CancellationToken cancellationToken = default)
         {
-            var user = await _applicationDbContext.Users
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var user = await dbContext.Users
                 .FirstAsync(u => u.Id == command.UserId, cancellationToken);
-            user.DeductSmsBalance(_smsCreditCalculator.Calculate(command.SmsBody));
-            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+                user.DeductSmsBalance(_smsCreditCalculator.Calculate(command.SmsBody));
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }

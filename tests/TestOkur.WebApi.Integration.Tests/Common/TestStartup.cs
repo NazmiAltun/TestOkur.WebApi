@@ -13,8 +13,8 @@
 
     public class TestStartup : Startup
     {
-        public TestStartup(IConfiguration configuration, ILoggerFactory loggerFactory)
-              : base(configuration, loggerFactory)
+        public TestStartup(IConfiguration configuration)
+              : base(configuration)
         {
         }
 

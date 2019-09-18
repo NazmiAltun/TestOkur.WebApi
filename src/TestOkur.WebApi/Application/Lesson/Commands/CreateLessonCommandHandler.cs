@@ -15,18 +15,18 @@
 
     public sealed class CreateLessonCommandHandler : RequestHandlerAsync<CreateLessonCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
         private readonly IQueryProcessor _queryProcessor;
 
         public CreateLessonCommandHandler(
-            ApplicationDbContext dbContext,
             IProcessor processor,
-            IQueryProcessor queryProcessor)
+            IQueryProcessor queryProcessor,
+            IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _queryProcessor = queryProcessor;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -36,8 +36,12 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureLessonDoesNotExistAsync(command.Name, cancellationToken);
-            _dbContext.Lessons.Add(command.ToDomainModel());
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                dbContext.Lessons.Add(command.ToDomainModel());
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+
             return await base.HandleAsync(command, cancellationToken);
         }
 

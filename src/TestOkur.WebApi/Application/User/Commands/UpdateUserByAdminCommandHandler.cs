@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
     using System;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Infrastructure.Cqrs;
     using TestOkur.WebApi.Application.User.Services;
@@ -14,15 +14,14 @@
     public sealed class UpdateUserByAdminCommandHandler
         : RequestHandlerAsync<UpdateUserByAdminCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IIdentityService _identityService;
 
         public UpdateUserByAdminCommandHandler(
-            IIdentityService identityService,
-            ApplicationDbContext dbContext)
+            IIdentityService identityService, IApplicationDbContextFactory dbContextFactory)
         {
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
-            _dbContext = dbContext;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -43,16 +42,19 @@
 
         private async Task UpdateWebApiUserAsync(UpdateUserByAdminCommand command, CancellationToken cancellationToken)
         {
-            var user = await GetUserAsync(command.UpdatedUserId, cancellationToken);
-            var city = await GetCityAsync(command.CityId, cancellationToken);
-            var district = city.Districts.First(d => d.Id == command.DistrictId);
-            user.Update(command.Email, command.FirstName, command.LastName, city, district, command.SchoolName, command.MobilePhone, command.Notes);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var user = await GetUserAsync(dbContext, command.UpdatedUserId, cancellationToken);
+                var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
+                var district = city.Districts.First(d => d.Id == command.DistrictId);
+                user.Update(command.Email, command.FirstName, command.LastName, city, district, command.SchoolName, command.MobilePhone, command.Notes);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
         }
 
-        private async Task<User> GetUserAsync(int userId, CancellationToken cancellationToken)
+        private async Task<User> GetUserAsync(ApplicationDbContext dbContext, int userId, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users
+            var user = await dbContext.Users
                 .FirstOrDefaultAsync(
                     u => u.Id == userId,
                     cancellationToken);
@@ -60,9 +62,9 @@
             return user ?? throw new ArgumentException("User does not exist", nameof(userId));
         }
 
-        private async Task<Domain.Model.CityModel.City> GetCityAsync(int cityId, CancellationToken cancellationToken)
+        private async Task<Domain.Model.CityModel.City> GetCityAsync(ApplicationDbContext dbContext, int cityId, CancellationToken cancellationToken)
         {
-            var city = await _dbContext.Cities
+            var city = await dbContext.Cities
                 .Include(c => c.Districts)
                 .FirstOrDefaultAsync(
                     u => u.Id == cityId,

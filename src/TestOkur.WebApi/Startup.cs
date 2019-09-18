@@ -54,17 +54,14 @@
     {
         private const string CorsPolicyName = "EnableCorsToAll";
 
-        public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
+        public Startup(IConfiguration configuration)
         {
-            LoggerFactory = loggerFactory;
             Configuration = configuration;
             Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
             Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
         }
 
         private IConfiguration Configuration { get; }
-
-        private ILoggerFactory LoggerFactory { get; }
 
         private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
@@ -165,6 +162,7 @@
                     sql => sql.MigrationsAssembly(migrationsAssembly));
                 options.EnableSensitiveDataLogging();
             });
+            services.AddSingleton<IApplicationDbContextFactory, ApplicationDbContextFactory>();
         }
 
         protected virtual void AddAuthentication(IServiceCollection services)

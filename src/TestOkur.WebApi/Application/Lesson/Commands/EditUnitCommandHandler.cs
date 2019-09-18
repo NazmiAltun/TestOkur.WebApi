@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
@@ -17,15 +16,13 @@
 
     public sealed class EditUnitCommandHandler : RequestHandlerAsync<EditUnitCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
 
-        public EditUnitCommandHandler(
-            ApplicationDbContext dbContext,
-            IProcessor processor)
+        public EditUnitCommandHandler(IProcessor processor, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(2)]
@@ -35,12 +32,15 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureNotExistsAsync(command, cancellationToken);
-            var unit = await GetAsync(command, cancellationToken);
-
-            if (unit != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                unit.SetName(command.NewName);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var unit = await GetAsync(dbContext, command, cancellationToken);
+
+                if (unit != null)
+                {
+                    unit.SetName(command.NewName);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
@@ -63,10 +63,11 @@
         }
 
         private async Task<Unit> GetAsync(
+            ApplicationDbContext dbContext,
             EditUnitCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Units.FirstOrDefaultAsync(
+            return await dbContext.Units.FirstOrDefaultAsync(
                 l => l.Id == command.UnitId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

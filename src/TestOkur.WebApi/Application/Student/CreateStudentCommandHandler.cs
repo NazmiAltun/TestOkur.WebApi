@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.Cqrs;
@@ -16,13 +15,13 @@
 
     public sealed class CreateStudentCommandHandler : RequestHandlerAsync<CreateStudentCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IProcessor _processor;
 
-        public CreateStudentCommandHandler(ApplicationDbContext dbContext, IProcessor processor)
+        public CreateStudentCommandHandler(IProcessor processor, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _processor = processor;
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -32,15 +31,18 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureStudentDoesNotExists(command, cancellationToken);
-            var classroom = await GetClassroomAsync(command.ClassroomId, cancellationToken);
-            _dbContext.Students.Add(command.ToDomainModel(classroom));
-            _dbContext.AttachRange(command
-                .ToDomainModel(classroom)
-                .Contacts
-                .Select(c => c.ContactType)
-                .Distinct());
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            {
+                var classroom = await dbContext.Classrooms.FirstAsync(c => c.Id == command.ClassroomId, cancellationToken);
+                dbContext.Students.Add(command.ToDomainModel(classroom));
+                dbContext.AttachRange(command
+                    .ToDomainModel(classroom)
+                    .Contacts
+                    .Select(c => c.ContactType)
+                    .Distinct());
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }
@@ -56,11 +58,6 @@
             {
                 throw new ValidationException(ErrorCodes.StudentExists);
             }
-        }
-
-        private async Task<Classroom> GetClassroomAsync(int id, CancellationToken cancellationToken)
-        {
-            return await _dbContext.Classrooms.FirstAsync(c => c.Id == id, cancellationToken);
         }
     }
 }

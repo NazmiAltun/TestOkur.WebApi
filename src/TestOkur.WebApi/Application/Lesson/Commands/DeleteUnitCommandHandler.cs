@@ -1,10 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Infrastructure.Cqrs;
@@ -12,11 +11,11 @@
     public sealed class DeleteUnitCommandHandler
         : RequestHandlerAsync<DeleteUnitCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteUnitCommandHandler(ApplicationDbContext dbContext)
+        public DeleteUnitCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -24,22 +23,26 @@
             DeleteUnitCommand command,
             CancellationToken cancellationToken = default)
         {
-            var unit = await GetAsync(command, cancellationToken);
-
-            if (unit != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.Remove(unit);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var unit = await GetAsync(dbContext, command, cancellationToken);
+
+                if (unit != null)
+                {
+                    dbContext.Remove(unit);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Unit> GetAsync(
+            ApplicationDbContext dbContext,
             DeleteUnitCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Units.FirstOrDefaultAsync(
+            return await dbContext.Units.FirstOrDefaultAsync(
                 l => l.Id == command.UnitId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

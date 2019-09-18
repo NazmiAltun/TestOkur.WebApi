@@ -1,21 +1,20 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestOkur.Data;
     using TestOkur.Infrastructure.Cqrs;
     using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
     public sealed class DeleteLessonCommandHandler : RequestHandlerAsync<DeleteLessonCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteLessonCommandHandler(ApplicationDbContext dbContext)
+        public DeleteLessonCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -23,22 +22,26 @@
             DeleteLessonCommand command,
             CancellationToken cancellationToken = default)
         {
-            var lesson = await GetAsync(command, cancellationToken);
-
-            if (lesson != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.Remove(lesson);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                var lesson = await GetAsync(dbContext, command, cancellationToken);
+
+                if (lesson != null)
+                {
+                    dbContext.Remove(lesson);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
         }
 
         private async Task<Lesson> GetAsync(
+            ApplicationDbContext dbContext,
             DeleteLessonCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Lessons.FirstOrDefaultAsync(
+            return await dbContext.Lessons.FirstOrDefaultAsync(
                 l => l.Id == command.LessonId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

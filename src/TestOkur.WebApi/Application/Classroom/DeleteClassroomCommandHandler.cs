@@ -12,13 +12,13 @@
 
     public sealed class DeleteClassroomCommandHandler : RequestHandlerAsync<DeleteClassroomCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public DeleteClassroomCommandHandler(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
+        public DeleteClassroomCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _dbContextFactory = dbContextFactory;
         }
 
         [ClearCache(2)]
@@ -26,13 +26,16 @@
             DeleteClassroomCommand command,
             CancellationToken cancellationToken = default)
         {
-            var classroom = await GetClassroomAsync(command, cancellationToken);
-
-            if (classroom != null)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                _dbContext.Remove(classroom);
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                await PublishEventAsync(command.ClassroomId, cancellationToken);
+                var classroom = await GetClassroomAsync(dbContext, command, cancellationToken);
+
+                if (classroom != null)
+                {
+                    dbContext.Remove(classroom);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                    await PublishEventAsync(command.ClassroomId, cancellationToken);
+                }
             }
 
             return await base.HandleAsync(command, cancellationToken);
@@ -46,10 +49,11 @@
         }
 
         private async Task<Classroom> GetClassroomAsync(
+            ApplicationDbContext dbContext,
             DeleteClassroomCommand command,
             CancellationToken cancellationToken)
         {
-            return await _dbContext.Classrooms.FirstOrDefaultAsync(
+            return await dbContext.Classrooms.FirstOrDefaultAsync(
                 l => l.Id == command.ClassroomId && EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }

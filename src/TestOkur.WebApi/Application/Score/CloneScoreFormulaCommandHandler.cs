@@ -14,12 +14,11 @@
     public sealed class CloneScoreFormulaCommandHandler
         : RequestHandlerAsync<CloneScoreFormulaCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public CloneScoreFormulaCommandHandler(ApplicationDbContext dbContext)
+        public CloneScoreFormulaCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ??
-                         throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -28,23 +27,26 @@
             CloneScoreFormulaCommand command,
             CancellationToken cancellationToken = default)
         {
-            var scoreFormulas = await _dbContext.ScoreFormulas
-                .Include(s => s.FormulaType)
-                .Include(s => s.Coefficients)
-                .ThenInclude(c => c.ExamLessonSection)
-                .ThenInclude(e => e.Lesson)
-                .Where(s => EF.Property<int>(s, "CreatedBy") == default)
-                .ToListAsync(cancellationToken);
-
-            var list = new List<ScoreFormula>();
-
-            foreach (var formula in scoreFormulas)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                list.Add(new ScoreFormula(formula));
-            }
+                var scoreFormulas = await dbContext.ScoreFormulas
+                    .Include(s => s.FormulaType)
+                    .Include(s => s.Coefficients)
+                    .ThenInclude(c => c.ExamLessonSection)
+                    .ThenInclude(e => e.Lesson)
+                    .Where(s => EF.Property<int>(s, "CreatedBy") == default)
+                    .ToListAsync(cancellationToken);
 
-            _dbContext.ScoreFormulas.AddRange(list);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                var list = new List<ScoreFormula>();
+
+                foreach (var formula in scoreFormulas)
+                {
+                    list.Add(new ScoreFormula(formula));
+                }
+
+                dbContext.ScoreFormulas.AddRange(list);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }

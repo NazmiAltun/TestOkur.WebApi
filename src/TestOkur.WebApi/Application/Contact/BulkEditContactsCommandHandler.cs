@@ -12,11 +12,11 @@
 
     public class BulkEditContactsCommandHandler : RequestHandlerAsync<BulkEditContactsCommand>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public BulkEditContactsCommandHandler(ApplicationDbContext dbContext)
+        public BulkEditContactsCommandHandler(IApplicationDbContextFactory dbContextFactory)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
         }
 
         [Idempotent(1)]
@@ -26,20 +26,23 @@
             CancellationToken cancellationToken = default)
         {
             var contactTypes = Domain.SeedWork.Enumeration.GetAll<ContactType>();
-            foreach (var subCommand in command.Commands)
+            using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                var contact = await _dbContext.Contacts
-                    .FirstAsync(c => c.Id == subCommand.ContactId, cancellationToken);
-                contact.Update(
-                    subCommand.FirstName,
-                    subCommand.LastName,
-                    subCommand.Phone,
-                    contactTypes.First(t => t.Id == subCommand.ContactType),
-                    subCommand.Labels);
-            }
+                foreach (var subCommand in command.Commands)
+                {
+                    var contact = await dbContext.Contacts
+                        .FirstAsync(c => c.Id == subCommand.ContactId, cancellationToken);
+                    contact.Update(
+                        subCommand.FirstName,
+                        subCommand.LastName,
+                        subCommand.Phone,
+                        contactTypes.First(t => t.Id == subCommand.ContactType),
+                        subCommand.Labels);
+                }
 
-            _dbContext.AttachRange(contactTypes);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                dbContext.AttachRange(contactTypes);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return await base.HandleAsync(command, cancellationToken);
         }
