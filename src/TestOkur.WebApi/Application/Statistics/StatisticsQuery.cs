@@ -2,8 +2,7 @@
 {
     using Paramore.Darker;
 
-    public class DailyReportStatisticsQuery
-        : IQuery<DailyReportStatisticsReadModel>
+    public class StatisticsQuery : IQuery<StatisticsReadModel>
     {
     }
 }
