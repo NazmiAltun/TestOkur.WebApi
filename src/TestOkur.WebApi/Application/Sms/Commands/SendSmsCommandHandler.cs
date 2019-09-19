@@ -52,7 +52,8 @@
             CancellationToken cancellationToken = default)
         {
             var messages = command.Messages
-                .Select(m => new SmsMessage(m, _smsCreditCalculator.Calculate(m.Body)));
+                .Select(m => new SmsMessage(m, _smsCreditCalculator.Calculate(m.Body)))
+                .ToList();
 
             await EnsureBalanceIsSufficient(messages, command.UserId);
             await PublishEventAsync(command.UserId, messages, cancellationToken);
@@ -60,7 +61,7 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task PublishEventAsync(int userId, IEnumerable<SmsMessage> messages, CancellationToken cancellationToken)
+        private async Task PublishEventAsync(int userId, IEnumerable<ISmsMessage> messages, CancellationToken cancellationToken)
         {
             var user = await GetUserAsync(userId, cancellationToken);
             var @event = new SendSmsRequestReceived(

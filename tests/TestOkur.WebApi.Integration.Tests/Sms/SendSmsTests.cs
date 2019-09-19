@@ -86,7 +86,7 @@
                 @event.UserId.Should().NotBe(default);
                 @event.SmsMessages.Should().HaveCount(2)
                     .And
-                    .Contain(m => m.Receiver == "5544567788");
+                    .Contain(m => m.Receiver == "5544567788" && m.Credit == 1);
             }
         }
     }

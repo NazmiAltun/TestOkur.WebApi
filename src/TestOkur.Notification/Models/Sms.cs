@@ -7,6 +7,7 @@
     {
         public Sms()
         {
+            CreatedOnDateTimeUtc = DateTime.UtcNow;
         }
 
         public Sms(ISendSmsRequestReceived @event, ISmsMessage smsMessage)
