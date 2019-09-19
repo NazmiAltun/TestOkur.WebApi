@@ -41,7 +41,7 @@
             if (_hostingEnvironment.IsProd())
             {
                 await _notificationFacade.SendEmailToSystemAdminsAsync(
-                    GetDailyReportAsync(),
+                    await GetDailyReportAsync(),
                     Template.DailyReportEmailAdmin);
             }
             else
