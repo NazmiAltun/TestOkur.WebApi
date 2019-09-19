@@ -11,5 +11,7 @@
         Task AddAsync(Sms sms);
 
         Task UpdateSmsAsync(Sms sms);
+
+        Task<IEnumerable<Sms>> GetTodaysSmsesAsync();
     }
 }

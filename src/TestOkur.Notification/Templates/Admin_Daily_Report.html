@@ -24,7 +24,7 @@
                 <strong>Kullanici Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
             </td>
             <td>
-                @Model.TotalUserSMSCountInDay
+                @Model.TotalUserSMSCountInDay ( Kredi Olarak : @Model.TotalSmsCredit)
             </td>
         </tr>       
 		<tr>
@@ -59,15 +59,7 @@
                 @Model.LongestSMSDuration  milisaniye
             </td>
         </tr>
-			<tr>
-            <td>
-                <strong>En Kisa SMS Gonderim Suresi</strong>
-            </td>
-            <td>
-                @Model.ShortestSMSDuration  milisaniye
-            </td>
-        </tr>
-		<tr>
+        <tr>
             <td>
                 <strong>Ortalama SMS Gonderim Suresi</strong>
             </td>
@@ -81,14 +73,6 @@
             </td>
             <td>
                 @Model.TopSMSSenderEmailAddressInDay   (@Model.TopSMSSenderCountInDay adet)
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Toplamda en cok SMS gonderen kullanici</strong>
-            </td>
-            <td>
-                @Model.TopSMSSenderEmailAddressForAllTime   (@Model.TopSMSSenderCountForAllTime adet)
             </td>
         </tr>
         <tr>
