@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
@@ -16,19 +17,23 @@
         private readonly INotificationFacade _notificationFacade;
         private readonly ISmsRepository _smsRepository;
         private readonly IWebApiClient _webApiClient;
+        private readonly IOAuthClient _oAuthClient;
         private readonly ILogger<DailyReport> _logger;
 
         public DailyReport(
             INotificationFacade notificationFacade,
             IHostingEnvironment hostingEnvironment,
             ILogger<DailyReport> logger,
-            ISmsRepository smsRepository, IWebApiClient webApiClient)
+            ISmsRepository smsRepository,
+            IWebApiClient webApiClient,
+            IOAuthClient oAuthClient)
         {
             _notificationFacade = notificationFacade;
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
             _smsRepository = smsRepository;
             _webApiClient = webApiClient;
+            _oAuthClient = oAuthClient;
         }
 
         public async Task SendAsync()
@@ -56,7 +61,12 @@
                         TotalCredit = smses.Sum(x => x.Credit),
                     }).OrderByDescending(x => x.TotalCredit)
                 .First();
-            var users = await _webApiClient.GetUsersAsync();
+            var apiUsers = await _webApiClient.GetUsersAsync();
+            var identityUsers = await _oAuthClient.GetUsersAsync();
+            var expiredUsersEmails = identityUsers.Where(u => u.ExpiryDateUtc != null &&
+                                     u.ExpiryDateUtc.Value.Date == DateTime.Today)
+                .Select(u => u.Email);
+
             return new DailyReportModel()
             {
                 TotalSuccessfulSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Successful),
@@ -67,7 +77,8 @@
                 TotalSystemSMSCountInDay = todaysSmsList.Count(s => s.UserId == default),
                 TotalFailedSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Failed),
                 TopSMSSenderCountInDay = topUserSmsStats.TotalCredit,
-                TopSMSSenderEmailAddressInDay = users.First(u => u.Id == topUserSmsStats.UserId).Email,
+                TopSMSSenderEmailAddressInDay = apiUsers.First(u => u.Id == topUserSmsStats.UserId).Email,
+                ExpiredLicensesToday = string.Join(", ", expiredUsersEmails),
             };
         }
     }
