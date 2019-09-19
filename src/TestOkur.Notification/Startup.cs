@@ -63,7 +63,6 @@
             services.AddSingleton<INotificationFacade, NotificationFacade>();
             services.AddScoped<ISendLicenseExpirationNotice, SendLicenseExpirationNotice>();
             services.AddScoped<IDailyReport, DailyReport>();
-
             AddHttpClients(services);
             AddMessageBus(services);
             AddHostedServices(services);
@@ -72,6 +71,7 @@
                 .UseMemoryCachingProvider()
                 .Build());
             services.AddTransient<ISmsRepository, SmsRepository>();
+            services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddMvc();
@@ -141,6 +141,7 @@
             if (!BsonClassMap.IsClassMapRegistered(typeof(Sms)))
             {
                 BsonClassMap.RegisterClassMap<Sms>();
+                BsonClassMap.RegisterClassMap<EMail>();
             }
         }
 

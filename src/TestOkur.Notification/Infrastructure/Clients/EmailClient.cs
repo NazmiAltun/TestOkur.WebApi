@@ -4,14 +4,18 @@
     using System.Net.Mail;
     using System.Threading.Tasks;
     using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Extensions;
+    using TestOkur.Notification.Infrastructure.Data;
 
     public class EmailClient : IEmailClient
     {
         private readonly SmtpConfiguration _smtpConfiguration;
+        private readonly IEMailRepository _emailRepository;
 
-        public EmailClient(SmtpConfiguration smtpConfiguration)
+        public EmailClient(SmtpConfiguration smtpConfiguration, IEMailRepository emailRepository)
         {
             _smtpConfiguration = smtpConfiguration;
+            _emailRepository = emailRepository;
         }
 
         public async Task SendAsync(MailMessage mailMessage)
@@ -27,6 +31,7 @@
                 mailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
                 await client.SendMailAsync(mailMessage);
+                await _emailRepository.AddAsync(mailMessage.ToEMail());
             }
         }
     }
