@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.User
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using TestOkur.Common;
     using TestOkur.Domain;
     using TestOkur.Infrastructure.Cqrs;
@@ -108,6 +108,7 @@
                 .ExecuteAsync<GetUserByEmailQuery, UserReadModel>(
                     new GetUserByEmailQuery());
 
+            OnlineUserTracker.Add(user.Email);
             return Ok(user);
         }
 
@@ -139,6 +140,13 @@
         {
             await _processor.SendAsync(command);
             return Ok();
+        }
+
+        [HttpGet("online")]
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+        public IActionResult GetOnlineUsers()
+        {
+            return Ok(OnlineUserTracker.GetOnlineUsers());
         }
     }
 }

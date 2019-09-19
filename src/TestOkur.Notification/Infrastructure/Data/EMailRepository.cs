@@ -18,9 +18,4 @@
             await _context.Emails.InsertOneAsync(email);
         }
     }
-
-    public interface IEMailRepository
-    {
-        Task AddAsync(EMail email);
-    }
 }

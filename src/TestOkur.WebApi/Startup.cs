@@ -17,7 +17,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
     using Paramore.Brighter.Extensions.DependencyInjection;
@@ -45,6 +44,7 @@
     using TestOkur.Infrastructure.Threading;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.City;
+    using TestOkur.WebApi.Application.User;
     using TestOkur.WebApi.Application.User.Services;
     using TestOkur.WebApi.Configuration;
     using TestOkur.WebApi.Extensions;
@@ -55,12 +55,15 @@
     {
         private const string CorsPolicyName = "EnableCorsToAll";
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
             Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
             Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
         }
+
+        public IHostingEnvironment Environment { get; }
 
         private IConfiguration Configuration { get; }
 
@@ -101,7 +104,7 @@
             AddMessageBus(services);
             AddHttpClients(services);
             RegisterServices(services);
-
+            AddHostedServices(services);
             return services.BuildServiceProvider();
         }
 
@@ -315,6 +318,14 @@
                     AuthorizationPolicies.Admin,
                     policy => policy.RequireRole(Roles.Admin));
             });
+        }
+
+        private void AddHostedServices(IServiceCollection services)
+        {
+            if (!Environment.IsDevelopment())
+            {
+                services.AddHostedService<OnlineUserTrackerCleanupService>();
+            }
         }
 
         private void AddHttpClients(IServiceCollection services)

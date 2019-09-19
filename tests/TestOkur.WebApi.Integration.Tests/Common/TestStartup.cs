@@ -1,20 +1,20 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Common
 {
-    using System;
-    using System.Security.Claims;
     using IdentityModel;
     using MassTransit;
     using MassTransit.RabbitMqTransport;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Security.Claims;
     using TestOkur.Common;
     using TestOkur.TestHelper;
 
     public class TestStartup : Startup
     {
-        public TestStartup(IConfiguration configuration)
-              : base(configuration)
+        public TestStartup(IConfiguration configuration, IHostingEnvironment environment)
+              : base(configuration, environment)
         {
         }
 

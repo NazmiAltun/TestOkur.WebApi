@@ -20,6 +20,7 @@
             {
                 var client = testServer.CreateClient();
                 var classroomId = await GetClassroomIdAsync(client);
+#pragma warning disable SA1118 // ParameterMustNotSpanMultipleLines
                 var command = new BulkCreateStudentCommand(
                     Guid.NewGuid(),
                     new[]
@@ -42,6 +43,7 @@
                                     2),
                             }),
                     });
+#pragma warning restore SA1118 // ParameterMustNotSpanMultipleLines
                 var response = await client.PostAsync($"{ApiPath}/bulk", command.ToJsonContent());
                 response.EnsureSuccessStatusCode();
                 var list = await GetListAsync(client);
