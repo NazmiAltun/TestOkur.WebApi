@@ -9,5 +9,7 @@
         Task<string> GetTokenAsync();
 
         Task<IEnumerable<IdentityUser>> GetUsersAsync();
+
+        Task<IEnumerable<string>> GetTodaysLogins();
     }
 }

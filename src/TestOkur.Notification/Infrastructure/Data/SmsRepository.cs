@@ -1,9 +1,10 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Data
 {
+    using MongoDB.Driver;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using MongoDB.Driver;
+    using MongoDB.Bson;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Models;
 
@@ -34,7 +35,8 @@
 
         public async Task<IEnumerable<Sms>> GetTodaysSmsesAsync()
         {
-            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc.ToLocalTime(), DateTime.Today);
+            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.Today);
+
             return await _context.Smses
                 .Find(filter)
                 .ToListAsync();

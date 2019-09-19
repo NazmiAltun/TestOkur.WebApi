@@ -79,6 +79,7 @@
                 TopSMSSenderCountInDay = topUserSmsStats.TotalCredit,
                 TopSMSSenderEmailAddressInDay = apiUsers.First(u => u.Id == topUserSmsStats.UserId).Email,
                 ExpiredLicensesToday = string.Join(", ", expiredUsersEmails),
+                TotalIndividualLoginCountInDay = (await _oAuthClient.GetTodaysLogins()).Count(),
             };
         }
     }

@@ -11,6 +11,7 @@
     public class OAuthClient : IOAuthClient
     {
         private const string GetUsersPath = "account/users";
+        private const string GetTodaysLoginsPath = "account/today-logins";
         private readonly HttpClient _httpClient;
         private readonly OAuthConfiguration _oAuthConfiguration;
 
@@ -38,10 +39,18 @@
         {
             _httpClient.SetBearerToken(await GetTokenAsync());
             var response = await _httpClient.GetAsync(GetUsersPath);
-            response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<IEnumerable<IdentityUser>>(json);
+        }
+
+        public async Task<IEnumerable<string>> GetTodaysLogins()
+        {
+            _httpClient.SetBearerToken(await GetTokenAsync());
+            var response = await _httpClient.GetAsync(GetTodaysLoginsPath);
+            var json = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<IEnumerable<string>>(json);
         }
     }
 }
