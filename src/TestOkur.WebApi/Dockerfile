@@ -20,6 +20,7 @@ FROM build as unittest
 WORKDIR /src/tests/TestOkur.WebApi.Unit.Tests
 
 FROM build as integrationtest
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 RUN apk add libgdiplus bash ttf-ubuntu-font-family --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ && \
     ln /usr/lib/libgdiplus.so.0 /usr/lib/libgdiplus.so && \
 	rm -rf /var/cache/apk/* && \
