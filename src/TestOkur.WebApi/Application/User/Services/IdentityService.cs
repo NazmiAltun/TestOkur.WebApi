@@ -50,6 +50,7 @@
         public async Task RegisterUserAsync(CreateCustomerUserModel model, CancellationToken cancellationToken = default)
         {
             await SetBearerToken();
+            model.MaxAllowedDeviceCount = 1000;
             var response = await _httpClient.PostAsync("/account/create", model.ToJsonContent(), cancellationToken);
             response.EnsureSuccessStatusCode();
         }
