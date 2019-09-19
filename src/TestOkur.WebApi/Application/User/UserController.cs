@@ -143,6 +143,7 @@
         }
 
         [HttpGet("online")]
+        [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
         public IActionResult GetOnlineUsers()
         {
