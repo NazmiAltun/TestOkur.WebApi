@@ -53,5 +53,7 @@
         public const string InvalidUserId = "InvalidUserId";
 
         public const string ContactExists = "ContactExists";
+
+        public const string PasswordResetUserNotFound = "PasswordResetUserNotFound";
     }
 }

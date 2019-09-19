@@ -1,6 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.User.Services
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Net;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -69,7 +71,11 @@
                 $"/account/generate-password-reset-token?email={email}",
                 null,
                 cancellationToken);
-            response.EnsureSuccessStatusCode();
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
+            }
 
             return await response.Content.ReadAsStringAsync();
         }
