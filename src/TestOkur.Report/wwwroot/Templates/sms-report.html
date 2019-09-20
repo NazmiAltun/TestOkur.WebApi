@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <title>SMS RAPORU</title>
+    <style type='text/css'>
+        body {
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 11px;
+        }
+
+        h1 {
+            text-align: center;
+            background: #1db1d6;
+            border: 1px solid;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .item {
+            flex-basis: auto;
+            flex-grow: 2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        table,
+        th,
+        td {
+            border: solid 1px black;
+            text-align: center;
+        }
+
+        th.rotate90 {
+            transform: rotate(-90deg);
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        thead tr {
+            background: #a5eeff;
+        }
+        td.body{ 
+            width:250px;
+        }
+        tr.pending{ 
+            color: #c99a00;
+        }
+        tr.error{ 
+            color: #e32d2d;
+        }
+    </style>
+</head>
+<body>
+    <h1>SMS RAPORU</h1>
+    <br>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Sıra</th>
+                <th>Alici Tel.</th>
+                <th>Konu</th>
+                <th>Mesaj</th>
+                <th>Kontor</th>
+                <th>Istek Tarihi/Zamani</th>
+                <th>Iletim Tarihi/Zamani</th>
+                <th>Kayit Adi</th>
+                <th>Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each list}}
+            <tr class='{{getStatusClass Status}}'>
+                <td>{{rowOrder}}</td>
+                <td>{{Phone}}</td>
+                <td>{{Subject}}</td>
+                <td class='body'>{{Body}}</td>
+                <td>{{Credit}}</td>
+                <td>{{RequestDateTime}}</td>
+                <td>{{ResponseDateTime}}</td>
+                <td>{{Contact}}</td>
+                <td>{{StatusDescription}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>

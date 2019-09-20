@@ -4,7 +4,9 @@
     using Hangfire;
     using Hangfire.Mongo;
     using HealthChecks.UI.Client;
+    using IdentityModel;
     using MassTransit;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
@@ -21,6 +23,7 @@
     using System.Linq;
     using System.Net.Http;
     using System.Reflection;
+    using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Extensions;
     using TestOkur.Infrastructure.Monitoring;
@@ -39,6 +42,7 @@
         {
             Configuration = configuration;
             Environment = environment;
+            configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
             Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
             Configuration.GetSection("ApplicationConfiguration").Bind(ApplicationConfiguration);
             Configuration.GetSection("HangfireConfiguration").Bind(HangfireConfiguration);
@@ -54,6 +58,8 @@
 
         private HangfireConfiguration HangfireConfiguration { get; } = new HangfireConfiguration();
 
+        private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
+
         public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
             RegisterMappings();
@@ -68,6 +74,8 @@
             AddMessageBus(services);
             AddHostedServices(services);
             AddHangfire(services);
+            AddAuthentication(services);
+            AddPolicies(services);
             services.AddSingleton<IRazorLightEngine>(new RazorLightEngineBuilder()
                 .UseMemoryCachingProvider()
                 .Build());
@@ -96,6 +104,18 @@
         protected virtual void AddHostedServices(IServiceCollection services)
         {
             services.AddHostedService<BusService>();
+        }
+
+        protected virtual void AddAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = OAuthConfiguration.Authority;
+                    options.RequireHttpsMetadata = OAuthConfiguration.RequireHttpsMetadata;
+                    options.ApiName = OAuthConfiguration.ApiName;
+                    options.JwtValidationClockSkew = TimeSpan.FromHours(24);
+                });
         }
 
         private void UseHangfire(IApplicationBuilder app)
@@ -168,11 +188,30 @@
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri)
+                .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
                     ApplicationConfiguration.Database,
                     "mongodb",
                     null);
+        }
+
+        private void AddPolicies(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    AuthorizationPolicies.Private,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) ||
+                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
+                                                   c.Value == Clients.Private)));
+                options.AddPolicy(
+                    AuthorizationPolicies.Customer,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) ||
+                        context.User.IsInRole(Roles.Customer)));
+            });
         }
 
         private void AddMessageBus(IServiceCollection services)

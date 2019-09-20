@@ -3,6 +3,7 @@
     using MongoDB.Driver;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Models;
@@ -39,6 +40,13 @@
             return await _context.Smses
                 .Find(filter)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Sms>> GetUserSmsesAsync(string userSubjectId)
+        {
+            var filter = Builders<Sms>.Filter.Eq(x => x.UserSubjectId, userSubjectId);
+
+            return (await _context.Smses.Find(filter).ToListAsync()).OrderByDescending(s => s.CreatedOnDateTimeUtc);
         }
     }
 }

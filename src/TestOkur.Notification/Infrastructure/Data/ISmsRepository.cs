@@ -13,5 +13,7 @@
         Task UpdateSmsAsync(Sms sms);
 
         Task<IEnumerable<Sms>> GetTodaysSmsesAsync();
+
+        Task<IEnumerable<Sms>> GetUserSmsesAsync(string userSubjectId);
     }
 }

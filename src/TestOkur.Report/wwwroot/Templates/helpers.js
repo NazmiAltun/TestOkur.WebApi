@@ -13,3 +13,12 @@ function formatTwoDecimalPlaces(number) {
 function formatOneDecimalPlace(number) {
     return number.toFixed(1);
 }
+function getStatusClass(status) {
+    if (status === 0) {
+        return 'pending';
+    }
+    if (status === 3 || status === 2) {
+        return 'error';
+    }
+    return '';
+}
