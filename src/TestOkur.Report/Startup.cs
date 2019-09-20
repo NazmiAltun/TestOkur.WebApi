@@ -6,6 +6,7 @@ namespace TestOkur.Report
 {
     using GreenPipes;
     using HealthChecks.UI.Client;
+    using IdentityModel;
     using MassTransit;
     using MassTransit.RabbitMqTransport;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -179,11 +180,20 @@ namespace TestOkur.Report
 
         private void AddPolicies(IServiceCollection services)
         {
-            services.AddAuthorization(options => options.AddPolicy(
-                AuthorizationPolicies.Customer,
-                policy => policy.RequireAssertion(context =>
-                    context.User.IsInRole(Roles.Admin) ||
-                    context.User.IsInRole(Roles.Customer))));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    AuthorizationPolicies.Private,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) ||
+                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
+                                                   c.Value == Clients.Private)));
+                options.AddPolicy(
+                    AuthorizationPolicies.Customer,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) ||
+                        context.User.IsInRole(Roles.Customer)));
+            });
         }
 
         private void AddHealthCheck(IServiceCollection services)

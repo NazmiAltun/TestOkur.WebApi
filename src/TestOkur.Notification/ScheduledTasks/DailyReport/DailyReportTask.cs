@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks.DailyReport
 {
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Logging;
     using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
@@ -18,6 +18,7 @@
         private readonly ISmsRepository _smsRepository;
         private readonly IWebApiClient _webApiClient;
         private readonly IOAuthClient _oAuthClient;
+        private readonly IReportClient _reportClient;
         private readonly ILogger<DailyReportTask> _logger;
 
         public DailyReportTask(
@@ -26,7 +27,8 @@
             ILogger<DailyReportTask> logger,
             ISmsRepository smsRepository,
             IWebApiClient webApiClient,
-            IOAuthClient oAuthClient)
+            IOAuthClient oAuthClient,
+            IReportClient reportClient)
         {
             _notificationFacade = notificationFacade;
             _hostingEnvironment = hostingEnvironment;
@@ -34,6 +36,7 @@
             _smsRepository = smsRepository;
             _webApiClient = webApiClient;
             _oAuthClient = oAuthClient;
+            _reportClient = reportClient;
         }
 
         public async Task SendAsync()
@@ -70,6 +73,7 @@
             return new DailyReportModel()
             {
                 Statistics = await _webApiClient.GetStatisticsAsync(),
+                ReportStatistics = await _reportClient.GetStatisticsAsync(),
                 TotalSuccessfulSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Successful),
                 AverageSMSDuration = (int)durations.Average(),
                 TotalSmsCredit = todaysSmsList.Sum(s => s.Credit),

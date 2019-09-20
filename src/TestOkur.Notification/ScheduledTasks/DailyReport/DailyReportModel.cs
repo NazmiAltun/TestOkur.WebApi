@@ -30,5 +30,7 @@
         public string ExpiredLicensesToday { get; set; }
 
         public StatisticsReadModel Statistics { get; set; }
+
+        public ReportStatisticsModel ReportStatistics { get; set; }
     }
 }

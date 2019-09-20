@@ -1,9 +1,5 @@
 ﻿namespace TestOkur.Notification
 {
-    using System;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Reflection;
     using GreenPipes;
     using Hangfire;
     using Hangfire.Mongo;
@@ -21,6 +17,10 @@
     using Polly.Extensions.Http;
     using Prometheus;
     using RazorLight;
+    using System;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Reflection;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Extensions;
     using TestOkur.Infrastructure.Monitoring;
@@ -31,6 +31,7 @@
     using TestOkur.Notification.Infrastructure.Data;
     using TestOkur.Notification.Models;
     using TestOkur.Notification.ScheduledTasks;
+    using TestOkur.Notification.ScheduledTasks.DailyReport;
 
     public class Startup : IStartup
     {
@@ -222,21 +223,31 @@
             services.AddHttpClient<IOAuthClient, OAuthClient>(client =>
                 {
                     client.BaseAddress = new Uri(Configuration.GetValue<string>("OAuthConfiguration:Authority"));
-                }).AddPolicyHandler(GetRetryPolicy())
+                })
+                .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IWebApiClient, WebApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration.GetValue<string>("WebApiUrl"));
-            }).AddPolicyHandler(GetRetryPolicy())
-            .AddPolicyHandler(GetCircuitBreakerPolicy());
+            })
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+            services.AddHttpClient<IReportClient, ReportClient>(client =>
+                {
+                    client.BaseAddress = new Uri(Configuration.GetValue<string>("ReportUrl"));
+                })
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<ISmsClient, SmsClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
-            }).AddPolicyHandler(GetRetryPolicy())
-            .AddHttpMessageHandler<SmsServiceLoggingHandler>()
-            .AddPolicyHandler(GetCircuitBreakerPolicy());
+            })
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddHttpMessageHandler<SmsServiceLoggingHandler>()
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 
         private IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()

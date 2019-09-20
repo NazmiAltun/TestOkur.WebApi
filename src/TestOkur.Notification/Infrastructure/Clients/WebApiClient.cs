@@ -16,14 +16,14 @@
         private const string StatisticsEndpoint = "api/v1/statistics";
 
         private readonly HttpClient _httpClient;
-        private readonly IOAuthClient _identityServerClient;
+        private readonly IOAuthClient _oAuthClient;
 
         public WebApiClient(
             HttpClient httpClient,
-            IOAuthClient identityServerClient)
+            IOAuthClient oAuthClient)
         {
             _httpClient = httpClient;
-            _identityServerClient = identityServerClient;
+            _oAuthClient = oAuthClient;
         }
 
         public async Task DeductSmsCreditsAsync(int userId, string smsBody)
@@ -68,7 +68,7 @@
 
         private async Task SetBearerToken()
         {
-            _httpClient.SetBearerToken(await _identityServerClient.GetTokenAsync());
+            _httpClient.SetBearerToken(await _oAuthClient.GetTokenAsync());
         }
     }
 }
