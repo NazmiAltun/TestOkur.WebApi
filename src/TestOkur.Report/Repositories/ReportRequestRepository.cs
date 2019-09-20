@@ -39,10 +39,10 @@
                 CountByReportTypeToday = CountGroupByAndJoin(
                     all.Where(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
                     x => x.ReportType),
-                AverageReportRenderTimeByReportType = string.Join(";", all.GroupBy(x => x.ReportType)
+                AverageReportRenderTimeByReportType = string.Join(" ; ", all.GroupBy(x => x.ReportType)
                     .ToDictionary(x => x.Key, x => x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
                     .Select(x => $"{x.Key}={x.Value:F}").ToArray()),
-                AverageReportRenderTimeByExportType = string.Join(";", all.GroupBy(x => x.ExportType)
+                AverageReportRenderTimeByExportType = string.Join(" ; ", all.GroupBy(x => x.ExportType)
                     .ToDictionary(x => x.Key, x => x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
                     .Select(x => $"{x.Key}={x.Value:F}").ToArray()),
             };
@@ -51,7 +51,7 @@
         private string CountGroupByAndJoin(IEnumerable<ReportRequest> all, Func<ReportRequest, string> selector)
         {
             return string.Join(
-                ";",
+                " ; ",
                 all.GroupBy(selector)
                     .ToDictionary(x => x.Key, x => x.Count())
                     .Select(x => $"{x.Key}={x.Value}").ToArray());
