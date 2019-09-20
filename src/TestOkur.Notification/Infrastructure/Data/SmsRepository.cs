@@ -4,7 +4,6 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using MongoDB.Bson;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Models;
 

@@ -1,7 +1,15 @@
-﻿namespace TestOkur.WebApi.Application.Statistics
+﻿namespace TestOkur.Notification.Models
 {
     public class StatisticsReadModel
     {
+        public int TotalStudentCount => TotalESchoolStudentCount + TotalBulkStudentCount + TotalSingleEntryStudentCount;
+
+        public int TodayStudentCount => TodayESchoolStudentCount + TodayBulkStudentCount + TodaySingleEntryStudentCount;
+
+        public int TodayScannedStudentFormCount => TodayScannedStudentFormCountByCamera + TodayScannedStudentFormCountByFile;
+
+        public int TotalScannedStudentFormCount => TotalScannedStudentFormCountByCamera + TotalScannedStudentFormCountByFile;
+
         public int TotalESchoolStudentCount { get; set; }
 
         public int TotalBulkStudentCount { get; set; }

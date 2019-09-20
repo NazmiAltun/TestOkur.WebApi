@@ -13,6 +13,7 @@
         private const string DeductSmsEndpoint = "/api/v1/sms/deduct-credits";
         private const string AppSettingsEndpoint = "/api/v1/settings/appsettings";
         private const string UsersEndpoint = "api/v1/users";
+        private const string StatisticsEndpoint = "api/v1/statistics";
 
         private readonly HttpClient _httpClient;
         private readonly IOAuthClient _identityServerClient;
@@ -37,6 +38,11 @@
 
             var response = await _httpClient.PostAsync(DeductSmsEndpoint, model.ToJsonContent());
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<StatisticsReadModel> GetStatisticsAsync()
+        {
+            return await GetAsync<StatisticsReadModel>(StatisticsEndpoint);
         }
 
         public async Task<AppSettingReadModel> GetAppSettingAsync(string name)

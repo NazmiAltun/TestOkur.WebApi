@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification.ScheduledTasks
+﻿namespace TestOkur.Notification.ScheduledTasks.DailyReport
 {
     using System;
     using System.Linq;
@@ -11,19 +11,19 @@
     using TestOkur.Notification.Infrastructure.Data;
     using TestOkur.Notification.Models;
 
-    internal class DailyReport : IDailyReport
+    internal class DailyReportTask : IDailyReportTask
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly INotificationFacade _notificationFacade;
         private readonly ISmsRepository _smsRepository;
         private readonly IWebApiClient _webApiClient;
         private readonly IOAuthClient _oAuthClient;
-        private readonly ILogger<DailyReport> _logger;
+        private readonly ILogger<DailyReportTask> _logger;
 
-        public DailyReport(
+        public DailyReportTask(
             INotificationFacade notificationFacade,
             IHostingEnvironment hostingEnvironment,
-            ILogger<DailyReport> logger,
+            ILogger<DailyReportTask> logger,
             ISmsRepository smsRepository,
             IWebApiClient webApiClient,
             IOAuthClient oAuthClient)
@@ -69,6 +69,7 @@
 
             return new DailyReportModel()
             {
+                Statistics = await _webApiClient.GetStatisticsAsync(),
                 TotalSuccessfulSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Successful),
                 AverageSMSDuration = (int)durations.Average(),
                 TotalSmsCredit = todaysSmsList.Sum(s => s.Credit),

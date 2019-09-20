@@ -62,7 +62,7 @@
             services.AddSingleton<ITemplateService, TemplateService>();
             services.AddSingleton<INotificationFacade, NotificationFacade>();
             services.AddScoped<ISendLicenseExpirationNotice, SendLicenseExpirationNotice>();
-            services.AddScoped<IDailyReport, DailyReport>();
+            services.AddScoped<IDailyReportTask, DailyReportTask>();
             AddHttpClients(services);
             AddMessageBus(services);
             AddHostedServices(services);
@@ -112,7 +112,7 @@
             });
             RecurringJob.AddOrUpdate<ISendLicenseExpirationNotice>(
                 notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
-            RecurringJob.AddOrUpdate<IDailyReport>(
+            RecurringJob.AddOrUpdate<IDailyReportTask>(
                 x => x.SendAsync(), Cron.Daily(20, 30));
         }
 

@@ -19,6 +19,9 @@
     <br />
     <br />
     <table border="1" style="font-size:20px;">
+		<tr>
+			<td align="center" colspan="2"><h2>SMS</h2></td>
+		</tr>
         <tr>
             <td>
                 <strong>Kullanici Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
@@ -26,8 +29,8 @@
             <td>
                 @Model.TotalUserSMSCountInDay ( Kredi Olarak : @Model.TotalSmsCredit)
             </td>
-        </tr>       
-		<tr>
+        </tr>
+        <tr>
             <td>
                 <strong>Sistem(Otomatik) Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
             </td>
@@ -35,7 +38,7 @@
                 @Model.TotalSystemSMSCountInDay
             </td>
         </tr>
-		<tr>
+        <tr>
             <td>
                 <strong>Gun Icinde Gonderilen Basarili SMS Sayisi</strong>
             </td>
@@ -43,7 +46,7 @@
                 @Model.TotalSuccessfulSMSCountInDay
             </td>
         </tr>
-		<tr>
+        <tr>
             <td>
                 <strong>Gun Icinde Hata Alinan SMS Sayisi</strong>
             </td>
@@ -51,7 +54,7 @@
                 @Model.TotalFailedSMSCountInDay
             </td>
         </tr>
-		<tr>
+        <tr>
             <td>
                 <strong>En Uzun SMS Gonderim Suresi</strong>
             </td>
@@ -67,7 +70,7 @@
                 @Model.AverageSMSDuration  milisaniye
             </td>
         </tr>
-		<tr>
+        <tr>
             <td>
                 <strong>Gun icinde en cok SMS gonderen kullanici</strong>
             </td>
@@ -75,20 +78,145 @@
                 @Model.TopSMSSenderEmailAddressInDay   (@Model.TopSMSSenderCountInDay adet)
             </td>
         </tr>
+		<tr>
+			<td align="center" colspan="2"><h2>OTURUM/LISANS</h2></td>
+		</tr>
         <tr>
             <td>
                 <strong>Gun icinde oturum acan kisi sayisi</strong>
             </td>
             <td>
-                @Model.TotalIndividualLoginCountInDay  
+                @Model.TotalIndividualLoginCountInDay
             </td>
         </tr>
-	    <tr>
+        <tr>
             <td>
                 <strong>Lisans suresi bugun biten kullanicilar</strong>
             </td>
             <td>
                 @Model.ExpiredLicensesToday
+            </td>
+        </tr>
+		<tr>
+			<td align="center" colspan="2"><h2>OPTIK OKUMA</h2></td>
+		</tr>
+        <tr>
+            <td>
+                <strong>Bugun/Toplam Okutulan Ogrenci Optik Form Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayScannedStudentFormCount / @Model.Statistics.TotalScannedStudentFormCount
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Bugun/Toplam Kameradan Okutulan Ogrenci Optik Form Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayScannedStudentFormCountByCamera / @Model.Statistics.TotalScannedStudentFormCountByCamera
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Bugun/Toplam Dosyadan Okutulan Ogrenci Optik Form Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayScannedStudentFormCountByFile / @Model.Statistics.TotalScannedStudentFormCountByFile
+            </td>
+        </tr>
+		<tr>
+			<td align="center" colspan="2"><h2>RAPORLAR</h2></td>
+		</tr>
+		<tr>
+            <td>
+                <strong>Bugun/Toplam Alinan Rapor Sayisi</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <strong>Turlerine Gore Bugun Rapor Sayisi</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <strong>Turlerine Gore Toplam Rapor Sayisi</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <strong>Cikti Turlerine Gore Bugun Rapor Sayisi</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <strong>Cikti Turlerine Gore Toplamda Rapor Sayisi</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <strong>Rapor Turlerine Gore Ortalama Sure</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <strong>Rapor Cikti Turlerine Gore Ortalama Sure</strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+		<tr>
+			<td align="center" colspan="2"><h2>TANIMLAR</h2></td>
+		</tr>
+        <tr>
+            <td>
+                <strong>Bugun/Toplam Sinav Tanim Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayExamCount / @Model.Statistics.TotalExamCount
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Bugun/Toplam Girilen Ogrenci Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayStudentCount / @Model.Statistics.TotalStudentCount
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>E-Okul'dan Aktarilan Bugun/Toplam Ogrenci Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayESchoolStudentCount / @Model.Statistics.TotalESchoolStudentCount
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Seri Ogrenci Girisinden Girilen  Bugun/Toplam Ogrenci Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodayBulkStudentCount / @Model.Statistics.TotalBulkStudentCount
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Tek tek Girilen Bugun/Toplam Ogrenci Sayisi</strong>
+            </td>
+            <td>
+                @Model.Statistics.TodaySingleEntryStudentCount / @Model.Statistics.TotalSingleEntryStudentCount
             </td>
         </tr>
     </table>

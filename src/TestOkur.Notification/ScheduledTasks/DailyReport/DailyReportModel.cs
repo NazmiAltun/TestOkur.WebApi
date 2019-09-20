@@ -1,6 +1,7 @@
-﻿namespace TestOkur.Notification.ScheduledTasks
+﻿namespace TestOkur.Notification.ScheduledTasks.DailyReport
 {
     using System;
+    using TestOkur.Notification.Models;
 
     public class DailyReportModel
     {
@@ -27,5 +28,7 @@
         public int TotalIndividualLoginCountInDay { get; set; }
 
         public string ExpiredLicensesToday { get; set; }
+
+        public StatisticsReadModel Statistics { get; set; }
     }
 }

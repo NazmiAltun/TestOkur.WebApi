@@ -11,5 +11,7 @@
         Task<AppSettingReadModel> GetAppSettingAsync(string name);
 
         Task DeductSmsCreditsAsync(int userId, string smsBody);
+
+        Task<StatisticsReadModel> GetStatisticsAsync();
     }
 }
