@@ -84,6 +84,7 @@
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddMvc();
+            services.AddHttpContextAccessor();
             return services.BuildServiceProvider();
         }
 
