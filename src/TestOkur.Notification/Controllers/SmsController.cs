@@ -11,7 +11,7 @@
     using TestOkur.Notification.Infrastructure.Data;
     using TestOkur.Notification.Models;
 
-    [Route("api/v1/smses")]
+    [Route("api/v1/sms")]
     [Authorize(AuthorizationPolicies.Customer)]
     public class SmsController : ControllerBase
     {
