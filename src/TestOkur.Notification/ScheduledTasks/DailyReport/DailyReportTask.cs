@@ -63,7 +63,7 @@
                         UserId = userId,
                         TotalCredit = smses.Sum(x => x.Credit),
                     }).OrderByDescending(x => x.TotalCredit)
-                .First();
+                .FirstOrDefault();
             var apiUsers = await _webApiClient.GetUsersAsync();
             var identityUsers = await _oAuthClient.GetUsersAsync();
             var expiredUsersEmails = identityUsers.Where(u => u.ExpiryDateUtc != null &&
@@ -81,8 +81,8 @@
                 TotalUserSMSCountInDay = todaysSmsList.Count(s => s.UserId != default),
                 TotalSystemSMSCountInDay = todaysSmsList.Count(s => s.UserId == default),
                 TotalFailedSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Failed),
-                TopSMSSenderCountInDay = topUserSmsStats.TotalCredit,
-                TopSMSSenderEmailAddressInDay = apiUsers.First(u => u.Id == topUserSmsStats.UserId).Email,
+                TopSMSSenderCountInDay = topUserSmsStats?.TotalCredit ?? 0,
+                TopSMSSenderEmailAddressInDay = apiUsers.FirstOrDefault(u => u.Id == topUserSmsStats?.UserId)?.Email,
                 ExpiredLicensesToday = string.Join(", ", expiredUsersEmails),
                 TotalIndividualLoginCountInDay = (await _oAuthClient.GetTodaysLogins()).Count(),
             };
