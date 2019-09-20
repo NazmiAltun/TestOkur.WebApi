@@ -98,6 +98,7 @@
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
             app.UseMetricServer("/metrics-core");
+            app.UseAuthentication();
             app.UseMvc();
             app.UseStaticFiles();
         }
