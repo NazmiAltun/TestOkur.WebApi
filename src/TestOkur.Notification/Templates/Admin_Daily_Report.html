@@ -59,7 +59,7 @@
                 <strong>En Uzun SMS Gonderim Suresi</strong>
             </td>
             <td>
-                @Model.LongestSMSDuration  milisaniye
+                @Model.LongestSMSDuration  <strong style="color:red">ms</strong>
             </td>
         </tr>
         <tr>
@@ -67,7 +67,7 @@
                 <strong>Ortalama SMS Gonderim Suresi</strong>
             </td>
             <td>
-                @Model.AverageSMSDuration  milisaniye
+                @Model.AverageSMSDuration  <strong style="color:red">ms</strong>
             </td>
         </tr>
         <tr>
@@ -172,7 +172,7 @@
                 <strong>Rapor Turlerine Gore Ortalama Sure</strong>
             </td>
             <td>
-                @Model.ReportStatistics.AverageReportRenderTimeByReportType
+                @Model.ReportStatistics.AverageReportRenderTimeByReportType <strong style="color:red">ms</strong>
             </td>
         </tr>
 		<tr>
@@ -180,7 +180,7 @@
                 <strong>Rapor Cikti Turlerine Gore Ortalama Sure</strong>
             </td>
             <td>
-                @Model.ReportStatistics.AverageReportRenderTimeByExportType
+                @Model.ReportStatistics.AverageReportRenderTimeByExportType <strong style="color:red">ms</strong>
             </td>
         </tr>
 		<tr>
