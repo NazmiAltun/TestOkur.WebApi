@@ -10,7 +10,7 @@
     public class CaptchaService : ICaptchaService
     {
         private const string Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const string FontFamily = "Ubuntu";
+        private const string FontFamily = "DejaVuSans";
         private const int Length = 4;
         private const int Distortion = 10;
         private const int FontSize = 20;

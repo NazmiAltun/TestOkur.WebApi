@@ -1,7 +1,7 @@
-FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine as base
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 as base
 LABEL "Maintainer"="Nazmi Altun <nazmialtun@windowslive.com>"
 
-FROM microsoft/dotnet:2.2-sdk-alpine AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /src
 COPY ./*.sln ./
 COPY src/*/*.csproj ./  
@@ -20,10 +20,7 @@ FROM build as unittest
 WORKDIR /src/tests/TestOkur.WebApi.Unit.Tests
 
 FROM build as integrationtest
-RUN apk add libgdiplus bash ttf-ubuntu-font-family --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ && \
-    ln /usr/lib/libgdiplus.so.0 /usr/lib/libgdiplus.so && \
-	rm -rf /var/cache/apk/* && \
-	fc-cache -f
+RUN apt-get update && apt-get install fonts-dejavu-core && apt-get install -y libgdiplus && rm -rf /var/lib/apt/lists/* && ln -s /lib/x86_64-linux-gnu/libdl.so.2 /lib/x86_64-linux-gnu/libdl.so && ln -s /usr/lib/libgdiplus.so /lib/x86_64-linux-gnu/libgdiplus.so
 WORKDIR /src/tests/TestOkur.WebApi.Integration.Tests
 
 FROM build AS publish
@@ -32,10 +29,7 @@ RUN dotnet publish "./src/TestOkur.WebApi/TestOkur.WebApi.csproj" --no-restore -
 
 FROM base as final
 WORKDIR /app
-RUN apk add libgdiplus bash ttf-ubuntu-font-family --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ && \
-    ln /usr/lib/libgdiplus.so.0 /usr/lib/libgdiplus.so && \
-	rm -rf /var/cache/apk/* && \
-	fc-cache -f
+RUN apt-get update && apt-get install fonts-dejavu-core && apt-get install -y libgdiplus && rm -rf /var/lib/apt/lists/* && ln -s /lib/x86_64-linux-gnu/libdl.so.2 /lib/x86_64-linux-gnu/libdl.so && ln -s /usr/lib/libgdiplus.so /lib/x86_64-linux-gnu/libgdiplus.so
 EXPOSE 80
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "TestOkur.WebApi.dll"]
