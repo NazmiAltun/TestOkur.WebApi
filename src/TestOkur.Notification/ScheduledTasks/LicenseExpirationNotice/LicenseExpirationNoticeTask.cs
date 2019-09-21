@@ -1,33 +1,33 @@
-﻿namespace TestOkur.Notification.ScheduledTasks
+﻿namespace TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice
 {
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Logging;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Models;
 
-    internal class SendLicenseExpirationNotice : ISendLicenseExpirationNotice
+    internal class LicenseExpirationNoticeTask : ILicenseExpirationNoticeTask
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IOAuthClient _oAuthClient;
         private readonly IWebApiClient _webApiClient;
         private readonly INotificationFacade _notificationFacade;
         private readonly ApplicationConfiguration _applicationConfiguration;
-        private readonly ILogger<SendLicenseExpirationNotice> _logger;
+        private readonly ILogger<LicenseExpirationNoticeTask> _logger;
 
-        public SendLicenseExpirationNotice(
+        public LicenseExpirationNoticeTask(
             INotificationFacade notificationFacade,
             IOAuthClient oAuthClient,
             IWebApiClient webApiClient,
             ApplicationConfiguration applicationConfiguration,
             IHostingEnvironment hostingEnvironment,
-            ILogger<SendLicenseExpirationNotice> logger)
+            ILogger<LicenseExpirationNoticeTask> logger)
         {
             _notificationFacade = notificationFacade;
             _oAuthClient = oAuthClient;

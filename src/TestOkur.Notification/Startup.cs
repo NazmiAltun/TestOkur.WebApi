@@ -33,8 +33,8 @@
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Infrastructure.Data;
     using TestOkur.Notification.Models;
-    using TestOkur.Notification.ScheduledTasks;
     using TestOkur.Notification.ScheduledTasks.DailyReport;
+    using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
 
     public class Startup : IStartup
     {
@@ -68,7 +68,7 @@
             services.AddSingleton<IEmailClient, EmailClient>();
             services.AddSingleton<ITemplateService, TemplateService>();
             services.AddSingleton<INotificationFacade, NotificationFacade>();
-            services.AddScoped<ISendLicenseExpirationNotice, SendLicenseExpirationNotice>();
+            services.AddScoped<ILicenseExpirationNoticeTask, LicenseExpirationNoticeTask>();
             services.AddScoped<IDailyReportTask, DailyReportTask>();
             AddHttpClients(services);
             AddMessageBus(services);
@@ -133,7 +133,7 @@
             {
                 WorkerCount = 1,
             });
-            RecurringJob.AddOrUpdate<ISendLicenseExpirationNotice>(
+            RecurringJob.AddOrUpdate<ILicenseExpirationNoticeTask>(
                 notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
             RecurringJob.AddOrUpdate<IDailyReportTask>(
                 x => x.SendAsync(), Cron.Daily(20, 30));
