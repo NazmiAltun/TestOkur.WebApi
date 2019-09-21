@@ -31,21 +31,21 @@
         public async Task DeleteUserAsync(string id, CancellationToken cancellationToken)
         {
             await SetBearerToken();
-            var response = await _httpClient.DeleteAsync($"/account/{id}", cancellationToken);
+            var response = await _httpClient.DeleteAsync($"/api/v1/users/{id}", cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task ExtendUserSubscriptionAsync(string id, CancellationToken cancellationToken)
         {
             await SetBearerToken();
-            var response = await _httpClient.PostAsync($"/account/extend?id={id}", null, cancellationToken);
+            var response = await _httpClient.PostAsync($"/api/v1/users/extend?id={id}", null, cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task ActivateUserAsync(string email, CancellationToken cancellationToken)
         {
             await SetBearerToken();
-            var response = await _httpClient.PostAsync($"/account/activate?email={email}", null, cancellationToken);
+            var response = await _httpClient.PostAsync($"/api/v1/users/activate?email={email}", null, cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
@@ -53,14 +53,14 @@
         {
             await SetBearerToken();
             model.MaxAllowedDeviceCount = 1000;
-            var response = await _httpClient.PostAsync("/account/create", model.ToJsonContent(), cancellationToken);
+            var response = await _httpClient.PostAsync("/api/v1/users/create", model.ToJsonContent(), cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateUserAsync(UpdateUserModel model, CancellationToken cancellationToken = default)
         {
             await SetBearerToken();
-            var response = await _httpClient.PostAsync("/account/update", model.ToJsonContent(), cancellationToken);
+            var response = await _httpClient.PostAsync("/api/v1/users/update", model.ToJsonContent(), cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
@@ -68,7 +68,7 @@
         {
             await SetBearerToken();
             var response = await _httpClient.PostAsync(
-                $"/account/generate-password-reset-token?email={email}",
+                $"/api/v1/users/generate-password-reset-token?email={email}",
                 null,
                 cancellationToken);
 

@@ -10,8 +10,8 @@
 
     public class OAuthClient : IOAuthClient
     {
-        private const string GetUsersPath = "account/users";
-        private const string GetTodaysLoginsPath = "account/today-logins";
+        private const string GetUsersPath = "api/v1/users";
+        private const string GetTodaysLoginsPath = "api/v1/user-activities/today-logins";
         private readonly HttpClient _httpClient;
         private readonly OAuthConfiguration _oAuthConfiguration;
 

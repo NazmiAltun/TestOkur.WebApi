@@ -8,29 +8,29 @@
     "/connect/token": {
       "post": "token.js"
     },
-    "/account/users": {
+    "/api/v1/users": {
       "options": 204,
       "get": "users.json"
     },
-    "/account/create": {
+    "/api/v1/users/create": {
       "options": 204,
       "post": 204
     },
-    "/account/:id": {
+    "/api/v1/users/:id": {
       "options": 204,
       "delete": 204
     },
-    "/account/update": {
+    "/api/v1/users/update": {
       "options": 204,
       "post": 204
     },
-    "/account/activate": {
+    "/api/v1/users/activate": {
       "post": 200
     },
-    "/account/extend:": {
+    "/api/v1/users/extend:": {
       "post": 200
     },
-    "/account/generate-password-reset-token": {
+    "/api/v1/users/generate-password-reset-token": {
       "post": "password-reset-token.html"
     },
     "/api/v1/settings/appsettings": {
