@@ -41,9 +41,11 @@
                     x => x.ReportType),
                 AverageReportRenderTimeByReportType = all.GroupBy(x => x.ReportType)
                     .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
+                    .OrderByDescending(x => x.Value)
                     .ToList(),
                 AverageReportRenderTimeByExportType = all.GroupBy(x => x.ExportType)
                     .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
+                    .OrderByDescending(x => x.Value)
                     .ToList(),
             };
         }
@@ -52,6 +54,7 @@
         {
             return all.GroupBy(selector)
                 .ToDictionary(x => x.Key, x => x.Count())
+                .OrderByDescending(x => x.Value)
                 .ToList();
         }
     }
