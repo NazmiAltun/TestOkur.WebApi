@@ -81,7 +81,7 @@
                 TotalUserSMSCountInDay = todaysSmsList.Count(s => s.UserId != default),
                 TotalSystemSMSCountInDay = todaysSmsList.Count(s => s.UserId == default),
                 TotalFailedSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Failed),
-                TopSMSSenderCountInDay = topUserSmsStats?.TotalCredit ?? 0,
+                TopSMSSenderCreditInDay = topUserSmsStats?.TotalCredit ?? 0,
                 TopSMSSenderEmailAddressInDay = apiUsers.FirstOrDefault(u => u.Id == topUserSmsStats?.UserId)?.Email,
                 ExpiredLicensesToday = string.Join(", ", expiredUsersEmails),
                 TotalIndividualLoginCountInDay = (await _oAuthClient.GetTodaysLogins()).Count(),
