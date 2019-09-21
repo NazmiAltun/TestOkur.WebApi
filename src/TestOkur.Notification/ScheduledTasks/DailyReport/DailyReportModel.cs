@@ -23,7 +23,7 @@
 
         public string TopSMSSenderEmailAddressInDay { get; set; }
 
-        public int TopSMSSenderCountInDay { get; set; }
+        public int TopSMSSenderCreditInDay { get; set; }
 
         public int TotalIndividualLoginCountInDay { get; set; }
 

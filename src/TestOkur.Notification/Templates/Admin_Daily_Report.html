@@ -1,231 +1,274 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>TestOkur Gunluk Veriler</title>
+    <head>
+        <meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TestOkur Gunluk Veriler</title>
 
-    <style type="text/css">
-        table tr td {
-            padding:10px;
-            padding-left:30px;
-        }
-    </style>
-</head>
-<body>
-    <p>
-        @Model.Today.ToString("dd.MM.yyyy") tarihine ait gunluk veriler asagidaki gibidir ;
-    </p>
-    <br />
-    <br />
-    <table border="1" style="font-size:20px;">
-		<tr>
-			<td align="center" colspan="2"><h2>SMS</h2></td>
-		</tr>
-        <tr>
-            <td>
-                <strong>Kullanici Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
-            </td>
-            <td>
-                @Model.TotalUserSMSCountInDay ( Kredi Olarak : @Model.TotalSmsCredit)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Sistem(Otomatik) Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
-            </td>
-            <td>
-                @Model.TotalSystemSMSCountInDay
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Gun Icinde Gonderilen Basarili SMS Sayisi</strong>
-            </td>
-            <td>
-                @Model.TotalSuccessfulSMSCountInDay
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Gun Icinde Hata Alinan SMS Sayisi</strong>
-            </td>
-            <td>
-                @Model.TotalFailedSMSCountInDay
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>En Uzun SMS Gonderim Suresi</strong>
-            </td>
-            <td>
-                @Model.LongestSMSDuration  <strong style="color:red">ms</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Ortalama SMS Gonderim Suresi</strong>
-            </td>
-            <td>
-                @Model.AverageSMSDuration  <strong style="color:red">ms</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Gun icinde en cok SMS gonderen kullanici</strong>
-            </td>
-            <td>
-                @Model.TopSMSSenderEmailAddressInDay   (@Model.TopSMSSenderCountInDay adet)
-            </td>
-        </tr>
-		<tr>
-			<td align="center" colspan="2"><h2>OTURUM/LISANS</h2></td>
-		</tr>
-        <tr>
-            <td>
-                <strong>Gun icinde oturum acan kisi sayisi</strong>
-            </td>
-            <td>
-                @Model.TotalIndividualLoginCountInDay
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Lisans suresi bugun biten kullanicilar</strong>
-            </td>
-            <td>
-                @Model.ExpiredLicensesToday
-            </td>
-        </tr>
-		<tr>
-			<td align="center" colspan="2"><h2>OPTIK OKUMA</h2></td>
-		</tr>
-        <tr>
-            <td>
-                <strong>Bugun/Toplam Okutulan Ogrenci Optik Form Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayScannedStudentFormCount / @Model.Statistics.TotalScannedStudentFormCount
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Bugun/Toplam Kameradan Okutulan Ogrenci Optik Form Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayScannedStudentFormCountByCamera / @Model.Statistics.TotalScannedStudentFormCountByCamera
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Bugun/Toplam Dosyadan Okutulan Ogrenci Optik Form Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayScannedStudentFormCountByFile / @Model.Statistics.TotalScannedStudentFormCountByFile
-            </td>
-        </tr>
-		<tr>
-			<td align="center" colspan="2"><h2>RAPORLAR</h2></td>
-		</tr>
-		<tr>
-            <td>
-                <strong>Bugun/Toplam Alinan Rapor Sayisi</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.TodayCount /  @Model.ReportStatistics.TotalCount
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Turlerine Gore Bugun Alinan Rapor Sayisi</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.CountByReportTypeToday
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Turlerine Gore Toplam Rapor Sayisi</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.CountByReportTypeTotal
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Cikti Turlerine Gore Bugun Rapor Sayisi</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.CountByExportTypeToday
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Cikti Turlerine Gore Toplamda Rapor Sayisi</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.CountByExportTypeTotal
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Rapor Turlerine Gore Ortalama Sure</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.AverageReportRenderTimeByReportType <strong style="color:red">ms</strong>
-            </td>
-        </tr>
-		<tr>
-            <td>
-                <strong>Rapor Cikti Turlerine Gore Ortalama Sure</strong>
-            </td>
-            <td>
-                @Model.ReportStatistics.AverageReportRenderTimeByExportType <strong style="color:red">ms</strong>
-            </td>
-        </tr>
-		<tr>
-			<td align="center" colspan="2"><h2>TANIMLAR</h2></td>
-		</tr>
-        <tr>
-            <td>
-                <strong>Bugun/Toplam Sinav Tanim Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayExamCount / @Model.Statistics.TotalExamCount
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Bugun/Toplam Girilen Ogrenci Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayStudentCount / @Model.Statistics.TotalStudentCount
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>E-Okul'dan Aktarilan Bugun/Toplam Ogrenci Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayESchoolStudentCount / @Model.Statistics.TotalESchoolStudentCount
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Seri Ogrenci Girisinden Girilen  Bugun/Toplam Ogrenci Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodayBulkStudentCount / @Model.Statistics.TotalBulkStudentCount
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <strong>Tek tek Girilen Bugun/Toplam Ogrenci Sayisi</strong>
-            </td>
-            <td>
-                @Model.Statistics.TodaySingleEntryStudentCount / @Model.Statistics.TotalSingleEntryStudentCount
-            </td>
-        </tr>
-    </table>
-</body>
+        <style type="text/css">
+        </style>
+	    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+    </head>
+    <body>
+        <table style="max-height:10000px;" class="striped">
+		    <caption>@Model.Today.ToString("dd.MM.yyyy") tarihine ait gunluk veriler</caption>
+
+		    <tr>
+			    <td align="center" colspan="2"><h2>SMS</h2></td>
+		    </tr>
+            <tr>
+                <td>
+                    <strong>Kullanici Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
+                </td>
+                <td>
+                    @Model.TotalUserSMSCountInDay ( Kontor Olarak : @Model.TotalSmsCredit)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Sistem(Otomatik) Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
+                </td>
+                <td>
+                    @Model.TotalSystemSMSCountInDay
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Gun Icinde Gonderilen Basarili SMS Sayisi</strong>
+                </td>
+                <td>
+                    @Model.TotalSuccessfulSMSCountInDay
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Gun Icinde Hata Alinan SMS Sayisi</strong>
+                </td>
+                <td>
+                    @Model.TotalFailedSMSCountInDay
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>En Uzun SMS Gonderim Suresi</strong>
+                </td>
+                <td>
+                    @Model.LongestSMSDuration  <strong style="color:red">ms</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Ortalama SMS Gonderim Suresi</strong>
+                </td>
+                <td>
+                    @Model.AverageSMSDuration  <strong style="color:red">ms</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Gun icinde en cok SMS gonderen kullanici</strong>
+                </td>
+                <td>
+                    @Model.TopSMSSenderEmailAddressInDay   (@Model.TopSMSSenderCreditInDay kontor)
+                </td>
+            </tr>
+		    <tr>
+			    <td align="center" colspan="2"><h2>OTURUM/LISANS</h2></td>
+		    </tr>
+            <tr>
+                <td>
+                    <strong>Gun icinde oturum acan kisi sayisi</strong>
+                </td>
+                <td>
+                    @Model.TotalIndividualLoginCountInDay
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Lisans suresi bugun biten kullanicilar</strong>
+                </td>
+                <td>
+                    @Model.ExpiredLicensesToday
+                </td>
+            </tr>
+		    <tr>
+			    <td align="center" colspan="2"><h2>OPTIK OKUMA</h2></td>
+		    </tr>
+            <tr>
+                <td>
+                    <strong>Bugun/Toplam Okutulan Ogrenci Optik Form Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayScannedStudentFormCount / @Model.Statistics.TotalScannedStudentFormCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Bugun/Toplam Kameradan Okutulan Ogrenci Optik Form Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayScannedStudentFormCountByCamera / @Model.Statistics.TotalScannedStudentFormCountByCamera
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Bugun/Toplam Dosyadan Okutulan Ogrenci Optik Form Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayScannedStudentFormCountByFile / @Model.Statistics.TotalScannedStudentFormCountByFile
+                </td>
+            </tr>
+		    <tr>
+			    <td align="center" colspan="2"><h2>RAPORLAR</h2></td>
+		    </tr>
+		    <tr>
+                <td>
+                    <strong>Bugun/Toplam Alinan Rapor Sayisi</strong>
+                </td>
+                <td>
+                    @Model.ReportStatistics.TodayCount /  @Model.ReportStatistics.TotalCount
+                </td>
+            </tr>
+		    <tr>
+                <td>
+                    <strong>Turlerine Gore Bugun Alinan Rapor Sayisi</strong>
+                </td>
+                <td>
+				    <table>
+					    @foreach (var item in Model.ReportStatistics.CountByReportTypeToday)
+					    {
+						    <tr>
+							    <td>@item.key</td>
+							    <td>@item.value</td>
+						    </tr>
+					    }
+				    </table>
+                </td>
+            </tr>
+		    <tr>
+                <td>
+                    <strong>Turlerine Gore Toplam Rapor Sayisi</strong>
+                </td>
+                <td>
+		    	    <table>
+					    @foreach (var item in Model.ReportStatistics.CountByReportTypeTotal)
+					    {
+						    <tr>
+							    <td>@item.key</td>
+							    <td>@item.value</td>
+						    </tr>
+					    }
+                    </table>
+                </td>
+            </tr>
+		    <tr>
+                <td>
+                    <strong>Cikti Turlerine Gore Bugun Rapor Sayisi</strong>
+                </td>
+                <td>
+			        <table>
+					    @foreach (var item in Model.ReportStatistics.CountByExportTypeToday)
+					    {
+						    <tr>
+							    <td>@item.key</td>
+							    <td>@item.value</td>
+						    </tr>
+					    }
+				    </table>
+                </td>
+            </tr>
+		    <tr>
+                <td>
+                    <strong>Cikti Turlerine Gore Toplamda Rapor Sayisi</strong>
+                </td>
+                <td>
+			        <table>
+					    @foreach (var item in Model.ReportStatistics.CountByExportTypeTotal)
+					    {
+						    <tr>
+							    <td>@item.key</td>
+							    <td>@item.value</td>
+						    </tr>
+					    }
+                    </table>
+                </td>
+            </tr>
+		    <tr>
+                <td>
+                    <strong>Rapor Turlerine Gore Ortalama Sure</strong>
+                </td>
+                <td>
+			        <table>
+					    @foreach (var item in Model.ReportStatistics.AverageReportRenderTimeByReportType)
+					    {
+						    <tr>
+							    <td>@item.key</td>
+							    <td>@item.value <strong style="color:red">ms</strong></td>
+						    </tr>
+					    }
+                    </table>
+                </td>
+            </tr>
+		    <tr>
+                <td>
+                    <strong>Rapor Cikti Turlerine Gore Ortalama Sure</strong>
+                </td>
+                <td>
+			        <table>
+					    @foreach (var item in Model.ReportStatistics.AverageReportRenderTimeByExportType)
+					    {
+						    <tr>
+							    <td>@item.key</td>
+							    <td>@item.value <strong style="color:red">ms</strong></td>
+						    </tr>
+					    }
+                    </table>
+                </td>
+            </tr>
+		    <tr>
+			    <td align="center" colspan="2"><h2>TANIMLAR</h2></td>
+		    </tr>
+            <tr>
+                <td>
+                    <strong>Bugun/Toplam Sinav Tanim Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayExamCount / @Model.Statistics.TotalExamCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Bugun/Toplam Girilen Ogrenci Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayStudentCount / @Model.Statistics.TotalStudentCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>E-Okul'dan Aktarilan Bugun/Toplam Ogrenci Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayESchoolStudentCount / @Model.Statistics.TotalESchoolStudentCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Seri Ogrenci Girisinden Girilen  Bugun/Toplam Ogrenci Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodayBulkStudentCount / @Model.Statistics.TotalBulkStudentCount
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Tek tek Girilen Bugun/Toplam Ogrenci Sayisi</strong>
+                </td>
+                <td>
+                    @Model.Statistics.TodaySingleEntryStudentCount / @Model.Statistics.TotalSingleEntryStudentCount
+                </td>
+            </tr>
+        </table>
+    </body>
 </html>

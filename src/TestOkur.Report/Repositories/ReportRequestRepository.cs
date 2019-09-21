@@ -31,30 +31,24 @@
             {
                 TotalCount = all.Count,
                 TodayCount = all.Count(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
-                CountByReportTypeTotal = CountGroupByAndJoin(all, x => x.ReportType),
-                CountByExportTypeTotal = CountGroupByAndJoin(all, x => x.ExportType),
-                CountByExportTypeToday = CountGroupByAndJoin(
+                CountByReportTypeTotal = ByCount(all, x => x.ReportType),
+                CountByExportTypeTotal = ByCount(all, x => x.ExportType),
+                CountByExportTypeToday = ByCount(
                     all.Where(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
                     x => x.ExportType),
-                CountByReportTypeToday = CountGroupByAndJoin(
+                CountByReportTypeToday = ByCount(
                     all.Where(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
                     x => x.ReportType),
-                AverageReportRenderTimeByReportType = string.Join(" ; ", all.GroupBy(x => x.ReportType)
-                    .ToDictionary(x => x.Key, x => x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
-                    .Select(x => $"{x.Key}={x.Value:F}").ToArray()),
-                AverageReportRenderTimeByExportType = string.Join(" ; ", all.GroupBy(x => x.ExportType)
-                    .ToDictionary(x => x.Key, x => x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
-                    .Select(x => $"{x.Key}={x.Value:F}").ToArray()),
+                AverageReportRenderTimeByReportType = all.GroupBy(x => x.ReportType)
+                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds)),
+                AverageReportRenderTimeByExportType = all.GroupBy(x => x.ExportType)
+                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds)),
             };
         }
 
-        private string CountGroupByAndJoin(IEnumerable<ReportRequest> all, Func<ReportRequest, string> selector)
+        private IEnumerable<KeyValuePair<string, int>> ByCount(IEnumerable<ReportRequest> all, Func<ReportRequest, string> selector)
         {
-            return string.Join(
-                " ; ",
-                all.GroupBy(selector)
-                    .ToDictionary(x => x.Key, x => x.Count())
-                    .Select(x => $"{x.Key}={x.Value}").ToArray());
+            return all.GroupBy(selector).ToDictionary(x => x.Key, x => x.Count());
         }
     }
 }
