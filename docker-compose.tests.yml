@@ -95,7 +95,6 @@ services:
       - mockserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DOTNET_USE_POLLING_FILE_WATCHER=true
       - ConnectionStrings__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
       - ConnectionStrings__Redis=redis,allowAdmin=true,defaultDatabase=1
       - ApplicationConfiguration__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
