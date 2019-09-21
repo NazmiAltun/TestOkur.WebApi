@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.Notification.Unit.Tests.ScheduledTasks
 {
+    using Microsoft.AspNetCore.Hosting;
+    using NSubstitute;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Hosting;
-    using NSubstitute;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Models;
-    using TestOkur.Notification.ScheduledTasks;
+    using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
     using Xunit;
 
     public class SendLicenseExpirationNoticeShould
@@ -86,7 +86,7 @@
             webApiClient.GetUsersAsync().Returns(webapiUsers);
             var hostingEnvironment = Substitute.For<IHostingEnvironment>();
             hostingEnvironment.EnvironmentName.Returns("prod");
-            var task = new SendLicenseExpirationNotice(
+            var task = new LicenseExpirationNoticeTask(
                 notificationFacade,
                 oauthClient,
                 webApiClient,
