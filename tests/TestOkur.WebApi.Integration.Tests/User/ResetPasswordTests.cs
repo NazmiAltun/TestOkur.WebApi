@@ -17,40 +17,36 @@
         [InlineData("nope")]
         public async Task WhenInvalidEmailPosted_ThenInvalidEmailError_Should_Return(string email)
         {
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
+            var testServer = await GetTestServer();
+            var client = testServer.CreateClient();
+            var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
 
-                var command = new SendResetPasswordLinkCommand(
-                    Guid.NewGuid(), email, captcha.Id, captcha.Code);
+            var command = new SendResetPasswordLinkCommand(
+                Guid.NewGuid(), email, captcha.Id, captcha.Code);
 
-                var response = await client.PostAsync($"{ApiPath}/send-reset-password-link", command.ToJsonContent());
-                await response.Should().BeBadRequestAsync(ErrorCodes.InvalidEmailAddress);
-            }
+            var response = await client.PostAsync($"{ApiPath}/send-reset-password-link", command.ToJsonContent());
+            await response.Should().BeBadRequestAsync(ErrorCodes.InvalidEmailAddress);
         }
 
         [Fact]
         public async Task WhenValidEmailPosted_Then_LinkShouldBeSentToUser()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                var model = await CreateUserAsync(client, testServer.Host.Services);
-                var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
+            var testServer = await GetTestServer();
+            var client = testServer.CreateClient();
+            var model = await CreateUserAsync(client, testServer.Host.Services);
+            var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
 
-                var command = new SendResetPasswordLinkCommand(
-                    Guid.NewGuid(), model.Email, captcha.Id, captcha.Code);
+            var command = new SendResetPasswordLinkCommand(
+                Guid.NewGuid(), model.Email, captcha.Id, captcha.Code);
 
-                var response = await client.PostAsync($"{ApiPath}/send-reset-password-link", command.ToJsonContent());
-                response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync($"{ApiPath}/send-reset-password-link", command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-                var events = Consumer.Instance.GetAll<IResetPasswordTokenGenerated>();
-                events.Should().Contain(e => e.Email == command.Email &&
-                                             e.FirstName == model.UserFirstName &&
-                                             e.LastName == model.UserLastName &&
-                                             !string.IsNullOrEmpty(e.Link));
-            }
+            var events = Consumer.Instance.GetAll<IResetPasswordTokenGenerated>();
+            events.Should().Contain(e => e.Email == command.Email &&
+                                         e.FirstName == model.UserFirstName &&
+                                         e.LastName == model.UserLastName &&
+                                         !string.IsNullOrEmpty(e.Link));
         }
     }
 }

@@ -17,24 +17,15 @@
     {
         private const string ApiPath = "api/v1/optical-forms";
 
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public OpticalFormControllerTests(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         public async Task Given_Get_When_Requested_Then_OpticalForms_Shall_Return()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                var response = await client.GetAsync(ApiPath);
-                var list = await response.ReadAsync<IEnumerable<OpticalFormTypeReadModel>>();
+            var client = (await GetTestServer()).CreateClient();
+            var response = await client.GetAsync(ApiPath);
+            var list = await response.ReadAsync<IEnumerable<OpticalFormTypeReadModel>>();
 
-                var formTypeCodes = new[]
-                {
+            var formTypeCodes = new[]
+            {
                     OpticalFormTypes.Codes.Frm2ndGradeTrial,
                     OpticalFormTypes.Codes.Frm3rdGradeTrial,
                     OpticalFormTypes.Codes.Frm4thGradeTrial,
@@ -56,26 +47,24 @@
                     OpticalFormTypes.Codes.FrmAytLang,
                     OpticalFormTypes.Codes.FrmScholarshipHigh,
                     OpticalFormTypes.Codes.FrmSrc,
-                };
+            };
 
-                list.Select(f => f.Code)
-                    .Should().BeEquivalentTo(formTypeCodes);
-                ShouldContainLgsExam(list);
-                var random = list.Random();
-                list.Should().NotContain(
-                    f => f.OpticalFormDefinitions == null ||
-                         f.OpticalFormDefinitions.Count == 0 ||
-                         f.MaxQuestionCount == 0);
+            list.Select(f => f.Code)
+                .Should().BeEquivalentTo(formTypeCodes);
+            ShouldContainLgsExam(list);
+            var random = list.Random();
+            list.Should().NotContain(
+                f => f.OpticalFormDefinitions == null ||
+                     f.OpticalFormDefinitions.Count == 0 ||
+                     f.MaxQuestionCount == 0);
 
-                list.First(f => f.Code == OpticalFormTypes.Codes.FrmTyt)
-                    .FormLessonSections
-                    .Should().NotContain(f => f.FormPart == default);
+            list.First(f => f.Code == OpticalFormTypes.Codes.FrmTyt)
+                .FormLessonSections
+                .Should().NotContain(f => f.FormPart == default);
 
-                var path = random.OpticalFormDefinitions.Random().Path;
-                _testOutputHelper.WriteLine($"path: {path}");
-                var newPath = await client.DownloadAsync(path);
-                Image.FromFile(newPath).Should().BeOfType<Bitmap>();
-            }
+            var path = random.OpticalFormDefinitions.Random().Path;
+            var newPath = await client.DownloadAsync(path);
+            Image.FromFile(newPath).Should().BeOfType<Bitmap>();
         }
 
         private void ShouldContainLgsExam(IEnumerable<OpticalFormTypeReadModel> list)

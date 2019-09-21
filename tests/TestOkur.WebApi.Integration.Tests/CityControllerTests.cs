@@ -17,15 +17,12 @@
         [Fact]
         public async Task Given_GetCities_Should_Return_AllCities_WithDistrictsInAlphabeticalOrder()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                var response = await client.GetAsync(ApiPath);
-                var cities = await response.ReadAsync<IEnumerable<CityReadModel>>();
-                CitiesAndDistrictsShouldNotBeEmpty(cities);
-                CitiesShouldBeOrdered(cities);
-                DistrictsShouldBeOrdered(cities);
-            }
+            var client = (await GetTestServer()).CreateClient();
+            var response = await client.GetAsync(ApiPath);
+            var cities = await response.ReadAsync<IEnumerable<CityReadModel>>();
+            CitiesAndDistrictsShouldNotBeEmpty(cities);
+            CitiesShouldBeOrdered(cities);
+            DistrictsShouldBeOrdered(cities);
         }
 
         private void CitiesAndDistrictsShouldNotBeEmpty(IEnumerable<CityReadModel> cities)

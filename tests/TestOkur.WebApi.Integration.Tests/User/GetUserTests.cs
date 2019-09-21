@@ -45,16 +45,13 @@
         [Fact]
         public async Task GivenGetUsers_ShouldReturnSeededUsers()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                var response = await client.GetAsync(ApiPath);
-                var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
-                users.Should().NotBeEmpty();
-            }
+            var client = (await GetTestServer()).CreateClient();
+            var response = await client.GetAsync(ApiPath);
+            var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
+            users.Should().NotBeEmpty();
         }
 
-        private async Task<CreateClassroomCommand> CreateClassroomAsync(HttpClient client)
+        private async Task CreateClassroomAsync(HttpClient client)
         {
             const string ApiPath = "api/v1/classrooms";
             var command = new CreateClassroomCommand(
@@ -64,11 +61,9 @@
 
             var response = await client.PostAsync(ApiPath, command.ToJsonContent());
             response.EnsureSuccessStatusCode();
-
-            return command;
         }
 
-        private async Task<CreateStudentCommand> CreateStudentAsync(HttpClient client)
+        private async Task CreateStudentAsync(HttpClient client)
         {
             const string ApiPath = "api/v1/students";
             const string ClassroomApiPath = "api/v1/classrooms";
@@ -77,8 +72,6 @@
             var list = await response.ReadAsync<IEnumerable<ClassroomReadModel>>();
             var command = GenerateCommand(list.Random().Id);
             await client.PostAsync(ApiPath, command.ToJsonContent());
-
-            return command;
         }
 
         private CreateStudentCommand GenerateCommand(int classroomId)

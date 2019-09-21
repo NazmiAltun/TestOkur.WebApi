@@ -11,12 +11,9 @@
         [Fact]
         public async Task PrometheusMetricEndpointShouldReturnResult()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var response = await testServer.CreateClient().GetAsync("metrics-core");
-                response.StatusCode.Should().Be(HttpStatusCode.OK);
-                response.Content.Headers.ContentType.MediaType.Should().Be("text/plain");
-            }
+            var response = await (await GetTestServer()).CreateClient().GetAsync("metrics-core");
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Content.Headers.ContentType.MediaType.Should().Be("text/plain");
         }
     }
 }

@@ -11,12 +11,9 @@
         [Fact]
         public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var response = await testServer.CreateClient().GetAsync("hc");
-                response.StatusCode.Should().Be(HttpStatusCode.OK);
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
-            }
+            var response = await (await GetTestServer()).CreateClient().GetAsync("hc");
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
         }
     }
 }

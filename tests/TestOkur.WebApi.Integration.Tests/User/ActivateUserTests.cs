@@ -12,16 +12,13 @@
         [Fact]
         public async Task When_ValidValues_Are_Posted_Then_User_Should_Be_Activated_And_Event_Published()
         {
-            var command = await CreateUserAsync(CreateAsync);
-
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                await client.PostAsync($"{ApiPath}/activate?email={command.Email}", null);
-                var user = (await GetUsersAsync(client)).First(u => u.Email == command.Email);
-                var @event = Consumer.Instance.GetFirst<IUserActivated>();
-                @event.Email.Should().Be(user.Email);
-            }
+            var testServer = await GetTestServer();
+            var client = testServer.CreateClient();
+            var command = await CreateUserAsync(client, testServer.Host.Services);
+            await client.PostAsync($"{ApiPath}/activate?email={command.Email}", null);
+            var user = (await GetUsersAsync(client)).First(u => u.Email == command.Email);
+            var @event = Consumer.Instance.GetFirst<IUserActivated>();
+            @event.Email.Should().Be(user.Email);
         }
     }
 }

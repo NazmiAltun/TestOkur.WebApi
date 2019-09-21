@@ -19,19 +19,14 @@
     public abstract class Test
     {
         protected static readonly Random Random = new Random();
+        protected static readonly TestServerFactory TestServerFactory = new TestServerFactory();
 
         private const string UserApiPath = "api/v1/users";
         private const string CitiesApiPath = "api/v1/cities";
         private const string CaptchaApiPath = "api/v1/captcha";
         private const string LicenseTypesApiPath = "api/v1/license-types";
-
-        private static readonly TestServerFactory TestServerFactory = new TestServerFactory();
+        private static TestServer _testServer;
         private TestServer _testServerWithUser;
-
-        public async Task<TestServer> CreateAsync()
-        {
-            return await TestServerFactory.CreateAsync();
-        }
 
         public async Task<TestServer> CreateAsync(Action<IServiceCollection> configureServices)
             => await TestServerFactory.CreateAsync(configureServices);
@@ -51,6 +46,17 @@
             }
 
             return _testServerWithUser;
+        }
+
+        protected static async Task<TestServer> GetTestServer()
+        {
+            if (_testServer != null)
+            {
+                return _testServer;
+            }
+
+            _testServer = await TestServerFactory.CreateAsync();
+            return _testServer;
         }
 
         protected async Task<CreateUserCommand> CreateUserAsync(Func<Task<TestServer>> testServerFactory)
@@ -121,6 +127,11 @@
                 district?.Name ?? "test",
                 captcha?.Id ?? Guid.Empty,
                 captcha?.Code ?? "NONONO");
+        }
+
+        private async Task<TestServer> CreateAsync()
+        {
+            return await TestServerFactory.CreateAsync();
         }
     }
 }

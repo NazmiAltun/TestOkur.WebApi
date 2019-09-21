@@ -15,13 +15,10 @@
         [Fact]
         public async Task Should_Return_LocalStrings_When_CultureCodeProvided()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var client = testServer.CreateClient();
-                var response = await client.GetAsync($"{ApiPath}/tr");
-                var strings = await response.ReadAsync<IEnumerable<LocalString>>();
-                strings.Should().NotBeEmpty();
-            }
+            var client = (await GetTestServer()).CreateClient();
+            var response = await client.GetAsync($"{ApiPath}/tr");
+            var strings = await response.ReadAsync<IEnumerable<LocalString>>();
+            strings.Should().NotBeEmpty();
         }
     }
 }

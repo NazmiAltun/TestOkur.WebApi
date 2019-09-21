@@ -15,14 +15,11 @@
         [Fact]
         public async Task Given_Get_When_Requested_Then_ShouldReturn_Seeded_AppSettings()
         {
-            using (var testServer = await CreateAsync())
-            {
-                var response = await testServer.CreateClient().GetAsync($"{ApiPath}/appsettings");
-                var settings = await response.ReadAsync<IEnumerable<AppSettingReadModel>>();
-                settings.Should().NotBeEmpty();
-                settings.Should().NotContain(t => string.IsNullOrEmpty(t.Name) ||
+            var response = await (await GetTestServer()).CreateClient().GetAsync($"{ApiPath}/appsettings");
+            var settings = await response.ReadAsync<IEnumerable<AppSettingReadModel>>();
+            settings.Should().NotBeEmpty();
+            settings.Should().NotContain(t => string.IsNullOrEmpty(t.Name) ||
                                                    string.IsNullOrEmpty(t.Value));
-            }
         }
     }
 }

@@ -15,17 +15,14 @@
         [Fact]
         public async Task When_Requested_CaptchaService_Should_Generate_Captcha()
         {
-            using (var testServer = await CreateAsync())
+            var id = Guid.NewGuid();
+            var client = (await GetTestServer()).CreateClient();
+            var response = await client.GetAsync($"{ApiPath}/{id}");
+            response.EnsureSuccessStatusCode();
+            var stream = await response.Content.ReadAsStreamAsync();
+            using (var image = Image.FromStream(stream))
             {
-                var id = Guid.NewGuid();
-                var client = testServer.CreateClient();
-                var response = await client.GetAsync($"{ApiPath}/{id}");
-                response.EnsureSuccessStatusCode();
-                var stream = await response.Content.ReadAsStreamAsync();
-                using (var image = Image.FromStream(stream))
-                {
-                    image.RawFormat.Should().Be(ImageFormat.Png);
-                }
+                image.RawFormat.Should().Be(ImageFormat.Png);
             }
         }
     }
