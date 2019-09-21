@@ -12,7 +12,6 @@ RUN dotnet restore
 COPY . .
 RUN dotnet build "./src/TestOkur.WebApi/TestOkur.WebApi.csproj" -c Release --no-restore -o /app
 
-
 FROM build as domaintest
 WORKDIR /src/tests/TestOkur.Domain.Unit.Tests
 
@@ -20,7 +19,6 @@ FROM build as unittest
 WORKDIR /src/tests/TestOkur.WebApi.Unit.Tests
 
 FROM build as integrationtest
-ENV DOTNET_USE_POLLING_FILE_WATCHER true
 RUN apt-get update && apt-get install fonts-dejavu-core && apt-get install -y libgdiplus && rm -rf /var/lib/apt/lists/* && ln -s /lib/x86_64-linux-gnu/libdl.so.2 /lib/x86_64-linux-gnu/libdl.so && ln -s /usr/lib/libgdiplus.so /lib/x86_64-linux-gnu/libgdiplus.so
 WORKDIR /src/tests/TestOkur.WebApi.Integration.Tests
 

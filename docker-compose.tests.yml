@@ -93,6 +93,8 @@ services:
       - redis
       - postgres
       - mockserver
+    sysctls:
+      - fs.inotify.max_user_instances=524288
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
