@@ -40,15 +40,19 @@
                     all.Where(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
                     x => x.ReportType),
                 AverageReportRenderTimeByReportType = all.GroupBy(x => x.ReportType)
-                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds)),
+                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
+                    .ToList(),
                 AverageReportRenderTimeByExportType = all.GroupBy(x => x.ExportType)
-                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds)),
+                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
+                    .ToList(),
             };
         }
 
         private IEnumerable<KeyValuePair<string, int>> ByCount(IEnumerable<ReportRequest> all, Func<ReportRequest, string> selector)
         {
-            return all.GroupBy(selector).ToDictionary(x => x.Key, x => x.Count());
+            return all.GroupBy(selector)
+                .ToDictionary(x => x.Key, x => x.Count())
+                .ToList();
         }
     }
 }

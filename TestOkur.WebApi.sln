@@ -56,6 +56,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Notification.Integ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Report.Unit.Tests", "tests\TestOkur.Report.Unit.Tests\TestOkur.Report.Unit.Tests.csproj", "{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{F2A3E842-195F-4313-B417-A57353A05112}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\notification-prod.sh = deploy\notification-prod.sh
+		deploy\notification-qa.sh = deploy\notification-qa.sh
+		deploy\report-prod.sh = deploy\report-prod.sh
+		deploy\report-qa.sh = deploy\report-qa.sh
+		deploy\retry.sh = deploy\retry.sh
+		deploy\webapi-prod.sh = deploy\webapi-prod.sh
+		deploy\webapi-qa.sh = deploy\webapi-qa.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +149,7 @@ Global
 		{8F2D74B1-7D58-43FB-8A43-3E2EFFA91EA4} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 		{7EBAF429-0759-4831-99C4-70AB9E3B4F48} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 		{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
+		{F2A3E842-195F-4313-B417-A57353A05112} = {4DC8C14D-84F4-42CC-913F-D45CB12CA317}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D101CF9D-F29C-49EC-A59E-021C88B68A94}
