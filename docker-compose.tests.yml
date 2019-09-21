@@ -93,6 +93,8 @@ services:
       - redis
       - postgres
       - mockserver
+    sysctls:
+      - fs.inotify.max_user_instances=524288
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_USE_POLLING_FILE_WATCHER=true
