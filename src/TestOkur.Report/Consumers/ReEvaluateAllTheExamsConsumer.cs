@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Report.Consumers
 {
+    using System;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
@@ -25,7 +26,14 @@
             var stopwatch = Stopwatch.StartNew();
             foreach (var examId in context.Message.ExamIds)
             {
-                await _evaluateExamConsumer.ConsumeAsync(examId);
+                try
+                {
+                    await _evaluateExamConsumer.ConsumeAsync(examId);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Exception while evaluating exam with ID:{examId} : {ex}");
+                }
             }
 
             stopwatch.Stop();

@@ -27,6 +27,11 @@ namespace TestOkur.Report.Domain
 
         public List<StudentOpticalForm> Evaluate(List<AnswerKeyOpticalForm> answerKeyOpticalForms, List<StudentOpticalForm> forms)
         {
+            if (forms == null || forms.Count == 0)
+            {
+                return forms;
+            }
+
             if (answerKeyOpticalForms.Count == 1)
             {
                 answerKeyOpticalForms = answerKeyOpticalForms.First().Expand();
