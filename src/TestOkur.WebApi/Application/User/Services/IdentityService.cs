@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using CacheManager.Core;
     using IdentityModel.Client;
+    using Newtonsoft.Json;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
 
@@ -77,7 +78,7 @@
                 throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
             }
 
-            return await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
         }
 
         private async Task SetBearerToken()
