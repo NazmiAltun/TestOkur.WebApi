@@ -33,6 +33,16 @@
                 foreach (var subCommand in command.Commands)
                 {
                     var classroom = await GetClassroomAsync(dbContext, subCommand.ClassroomId, cancellationToken);
+                    var existingStudent = await dbContext.Students
+                        .FirstOrDefaultAsync(
+                            s => s.StudentNumber.Value == subCommand.StudentNumber &&
+                                 EF.Property<int>(s, "CreatedBy") == command.UserId,
+                            cancellationToken);
+                    if (existingStudent != null)
+                    {
+                        dbContext.Remove(existingStudent);
+                    }
+
                     dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
                     contactTypes.AddRange(subCommand
                         .ToDomainModel(classroom, command.UserId)
