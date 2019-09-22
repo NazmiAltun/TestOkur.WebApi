@@ -1,316 +1,351 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-	<title>ÖĞRENCİ KARNESİ</title>
-	<style type='text/css'>
-		body {
-			font-family: Arial Narrow, Arial, sans-serif;
-			font-size: 11px;
-		}
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <title>ÖĞRENCİ KARNESİ</title>
+    <style type='text/css'>
+        body {
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 11px;
+        }
 
-		h2 {
-			text-align: center;
-			background: #1db1d6;
-			border: 1px solid;
-			margin-top: 20px;
-		}
+        h2 {
+            text-align: center;
+            background: #1db1d6;
+            border: 1px solid;
+            margin-top: 20px;
+        }
 
-		.grid-container {
-			display: grid;
-			grid-template-columns: 1fr 3fr 1fr 3fr
-		}
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr 3fr
+        }
 
-		.grid-item {
-			border: 1px solid;
-			padding: 2px;
-		}
+        .grid-item {
+            border: 1px solid;
+            padding: 2px;
+        }
 
-		.container {
-			display: flex;
-		}
+        .container {
+            display: flex;
+        }
 
-		.item {
-			flex-basis: auto;
-			flex-grow: 2;
-		}
+        .item {
+            flex-basis: auto;
+            flex-grow: 2;
+        }
 
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			font-family: Arial Narrow, Arial, sans-serif;
-			font-size: 12px;
-		}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 12px;
+        }
 
-		table,
-		th,
-		td {
-			border: solid 1px black;
-			text-align: center;
-		}
+            table.answer-table {
+                max-width: 400px;
+            }
 
-		th,
-		td {
-			padding-right: 2px;
-			padding-left: 2px;
-		}
+        table,
+        th,
+        td {
+            border: solid 1px black;
+            text-align: center;
+        }
 
-		thead tr {
-			background: #a5eeff;
-		}
+        th,
+        td {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
 
-		td.wrong {
-			background: #ff0f0f;
-		}
+        thead tr {
+            background: #a5eeff;
+        }
 
-		td.empty {
-			background: #bababa;
-		}
+        td.wrong {
+            background: #ff0f0f;
+        }
 
-		td.correct {
-		}
+        td.empty {
+            background: #bababa;
+        }
 
-		.ml10px {
-			margin-left: 10px;
-		}		
-	</style>
-	<script src="{#asset assets/Chart.min.js @encoding=link}"></script>
+        td.correct {
+        }
+
+        .ml10px {
+            margin-left: 10px;
+        }
+    </style>
+    <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
 </head>
 
 <body>
-	{{#each list}}
-	<h2>ÖĞRENCİ KARNESİ</h2>
-	<div class='grid-container'>
-		<div class='grid-item'>
-			<strong>Öğrenci No</strong>
-		</div>
-		<div class='grid-item'>{{studentNumber}}</div>
-		<div class='grid-item'>
-			<strong>Sınav Adı</strong>
-		</div>
-		<div class='grid-item'>{{examName}}</div>
-	</div>
-	<div class='grid-container'>
-		<div class='grid-item'>
-			<strong>Adı - Soyadı</strong>
-		</div>
-		<div class='grid-item'>{{studentFirstName}} {{studentLastName}}</div>
-		<div class='grid-item'>
-			<strong>Sınav Tarihi</strong>
-		</div>
-		<div class='grid-item'>{{examDate}}</div>
-	</div>
-	<div class='grid-container'>
-		<div class='grid-item'>
-			<strong>Okul Adı</strong>
-		</div>
-		<div class='grid-item'>{{schoolName}}</div>
-		<div class='grid-item'>
-			<strong>Sınıf / Şube</strong>
-		</div>
-		<div class='grid-item'>{{classroom}}</div>
-	</div>
-	<div class='grid-container'>
-		<div class='grid-item'>
-			<strong>İl / İlçe</strong>
-		</div>
-		<div class='grid-item'>{{cityName}} / {{districtName}}</div>
-		<div class='grid-item'>
-			<strong>Kitapçık Türü</strong>
-		</div>
-		<div class='grid-item'>{{booklet}}</div>
-	</div>
-	<br />
-	<div class='container'>
-		<div class='item'>
-			<table>
-				<thead>
-					<tr>
-						<th rowspan='2'>DERSLER</th>
-						<th colspan='6'>Sınav Bilgileri</th>
-						<th colspan='5'>Ortalama Bilgileri</th>
-					</tr>
-					<tr>
-						<th>Soru</th>
-						<th>Doğru</th>
-						<th>Yanlış</th>
-						<th>Boş</th>
-						<th>NET</th>
-						<th>Başarı</th>
-						<th>Sınıf</th>
-						<th>Okul</th>
-						<th>İlçe</th>
-						<th>İl</th>
-						<th>Genel</th>
-					</tr>
-				</thead>
-				<tbody>
-					{{#each sections}}
-					<tr>
-						<td>
-							<strong>{{lessonName}}</strong>
-						</td>
-						<td>{{questionCount}}</td>
-						<td>{{correctCount}}</td>
-						<td>{{wrongCount}}</td>
-						<td>{{emptyCount}}</td>
-						<td>{{formatTwoDecimalPlaces net}}</td>
-						<td>%{{formatOneDecimalPlace successPercent}}</td>
-						<td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
-					</tr>
-					{{/each}}
-					<tr>
-						<td>
-							<strong>TOPLAM</strong>
-						</td>
-						<td>{{questionCount}}</td>
-						<td>{{correctCount}}</td>
-						<td>{{wrongCount}}</td>
-						<td>{{emptyCount}}</td>
-						<td>{{formatTwoDecimalPlaces net}}</td>
-						<td>%{{formatOneDecimalPlace successPercent}}</td>
-						<td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
-						<td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class='item ml10px'>
-			<table>
-				<tr>
-					<td>
-						<strong>PUAN</strong>
-					</td>
-					<td>{{formatTwoDecimalPlaces score}}</td>
-				</tr>
-				<tr>
-					<td>
-						<strong>BAŞARI (%)</strong>
-					</td>
-					<td>%{{formatOneDecimalPlace successPercent}}</td>
-				</tr>
-			</table>
-			<table>
-				<thead>
-					<tr>
-						<th colspan='6'>Puan Ortalamaları ve Sıralama Bilgileri</th>
-					</tr>
-					<tr>
-						<th>Bilgi</th>
-						<th>Sınıf</th>
-						<th>Okul</th>
-						<th>İlçe</th>
-						<th>İl</th>
-						<th>Genel</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<strong>Puan Ort.</strong>
-						</td>
-						<td>
-							{{formatTwoDecimalPlaces classScoreAverage}}
-						</td>
-						<td>
-							{{formatTwoDecimalPlaces schoolScoreAverage}}
-						</td>
-						<td>
-							{{formatTwoDecimalPlaces districtScoreAverage}}
-						</td>
-						<td>
-							{{formatTwoDecimalPlaces cityScoreAverage}}
-						</td>
-						<td>
-							{{formatTwoDecimalPlaces generalScoreAverage}}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Katılım</strong>
-						</td>
-						<td>
-							{{classroomAttendanceCount}}
-						</td>
-						<td>
-							{{schoolAttendanceCount}}
-						</td>
-						<td>
-							{{districtAttendanceCount}}
-						</td>
-						<td>
-							{{cityAttendanceCount}}
-						</td>
-						<td>
-							{{generalAttendanceCount}}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Derece</strong>
-						</td>
-						<td>
-							{{classOrder}}
-						</td>
-						<td>
-							{{schoolOrder}}
-						</td>
-						<td>
-							{{districtOrder}}
-						</td>
-						<td>
-							{{cityOrder}}
-						</td>
-						<td>
-							{{generalOrder}}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<br />
-	<div class='container'>
-		<div class='item'>
-			<table>
-				<thead>
-					<tr>
-						<th>SORULAR</th>
-						 {{#each ../sectionQuestionNos}}
-						<th>{{this}}</th>
-						{{/each}}
-					</tr>
-				</thead>
-				<tbody>
-					{{#each sections}}
-					<tr>
-						<td>
-							<strong>{{lessonName}} Cevap</strong>
-						</td>
-						{{#each answers}}
-						<td class='{{getQuestionClass result}}'>{{correctAnswer}}</td>
-						{{/each}}
-					</tr>
-					<tr>
-						<td>Öğr. Cevapları</td>
-						{{#each answers}}
-						<td class='{{getQuestionClass result}}'>{{answer}}</td>
-						{{/each}}
-					</tr>
-					{{/each}}
-				</tbody>
-			</table>
-		</div>
-		<div class='item ml10px'>
-			<canvas id='canvas{{@index}}'></canvas>
-			<script>
+    {{#each list}}
+    <h2>ÖĞRENCİ KARNESİ</h2>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Öğrenci No</strong>
+        </div>
+        <div class='grid-item'>{{studentNumber}}</div>
+        <div class='grid-item'>
+            <strong>Sınav Adı</strong>
+        </div>
+        <div class='grid-item'>{{examName}}</div>
+    </div>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Adı - Soyadı</strong>
+        </div>
+        <div class='grid-item'>{{studentFirstName}} {{studentLastName}}</div>
+        <div class='grid-item'>
+            <strong>Sınav Tarihi</strong>
+        </div>
+        <div class='grid-item'>{{examDate}}</div>
+    </div>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Okul Adı</strong>
+        </div>
+        <div class='grid-item'>{{schoolName}}</div>
+        <div class='grid-item'>
+            <strong>Sınıf / Şube</strong>
+        </div>
+        <div class='grid-item'>{{classroom}}</div>
+    </div>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>İl / İlçe</strong>
+        </div>
+        <div class='grid-item'>{{cityName}} / {{districtName}}</div>
+        <div class='grid-item'>
+            <strong>Kitapçık Türü</strong>
+        </div>
+        <div class='grid-item'>{{booklet}}</div>
+    </div>
+    <br />
+    <div class='container'>
+        <div class='item'>
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan='2'>DERSLER</th>
+                        <th colspan='6'>Sınav Bilgileri</th>
+                        <th colspan='5'>Ortalama Bilgileri</th>
+                    </tr>
+                    <tr>
+                        <th>Soru</th>
+                        <th>Doğru</th>
+                        <th>Yanlış</th>
+                        <th>Boş</th>
+                        <th>NET</th>
+                        <th>Başarı</th>
+                        <th>Sınıf</th>
+                        <th>Okul</th>
+                        <th>İlçe</th>
+                        <th>İl</th>
+                        <th>Genel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each sections}}
+                    <tr>
+                        <td>
+                            <strong>{{lessonName}}</strong>
+                        </td>
+                        <td>{{questionCount}}</td>
+                        <td>{{correctCount}}</td>
+                        <td>{{wrongCount}}</td>
+                        <td>{{emptyCount}}</td>
+                        <td>{{formatTwoDecimalPlaces net}}</td>
+                        <td>%{{formatOneDecimalPlace successPercent}}</td>
+                        <td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr>
+                        <td>
+                            <strong>TOPLAM</strong>
+                        </td>
+                        <td>{{questionCount}}</td>
+                        <td>{{correctCount}}</td>
+                        <td>{{wrongCount}}</td>
+                        <td>{{emptyCount}}</td>
+                        <td>{{formatTwoDecimalPlaces net}}</td>
+                        <td>%{{formatOneDecimalPlace successPercent}}</td>
+                        <td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class='item ml10px'>
+            <table>
+                <tr>
+                    <td>
+                        <strong>PUAN</strong>
+                    </td>
+                    <td>{{formatTwoDecimalPlaces score}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>BAŞARI (%)</strong>
+                    </td>
+                    <td>%{{formatOneDecimalPlace successPercent}}</td>
+                </tr>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan='6'>Puan Ortalamaları ve Sıralama Bilgileri</th>
+                    </tr>
+                    <tr>
+                        <th>Bilgi</th>
+                        <th>Sınıf</th>
+                        <th>Okul</th>
+                        <th>İlçe</th>
+                        <th>İl</th>
+                        <th>Genel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Puan Ort.</strong>
+                        </td>
+                        <td>
+                            {{formatTwoDecimalPlaces classScoreAverage}}
+                        </td>
+                        <td>
+                            {{formatTwoDecimalPlaces schoolScoreAverage}}
+                        </td>
+                        <td>
+                            {{formatTwoDecimalPlaces districtScoreAverage}}
+                        </td>
+                        <td>
+                            {{formatTwoDecimalPlaces cityScoreAverage}}
+                        </td>
+                        <td>
+                            {{formatTwoDecimalPlaces generalScoreAverage}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Katılım</strong>
+                        </td>
+                        <td>
+                            {{classroomAttendanceCount}}
+                        </td>
+                        <td>
+                            {{schoolAttendanceCount}}
+                        </td>
+                        <td>
+                            {{districtAttendanceCount}}
+                        </td>
+                        <td>
+                            {{cityAttendanceCount}}
+                        </td>
+                        <td>
+                            {{generalAttendanceCount}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Derece</strong>
+                        </td>
+                        <td>
+                            {{classOrder}}
+                        </td>
+                        <td>
+                            {{schoolOrder}}
+                        </td>
+                        <td>
+                            {{districtOrder}}
+                        </td>
+                        <td>
+                            {{cityOrder}}
+                        </td>
+                        <td>
+                            {{generalOrder}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class='container'>
+        <div class='item'>
+            <table class='answer-table'>
+                <thead>
+                    <tr>
+                        <th>SORULAR</th>
+                        {{#each ../sectionQuestionNos}}
+                        <th>{{this}}</th>
+                        {{/each}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each sections}}
+                    <tr>
+                        <td>
+                            <strong>{{lessonName}} Cevap</strong>
+                        </td>
+                        {{#eachWitIndex answers 0 41}}
+                        <td class='{{getQuestionClass result}}'>{{correctAnswer}}</td>
+                        {{/eachWitIndex}}
+                    </tr>
+                    <tr>
+                        <td>Öğr. Cevapları</td>
+                        {{#eachWitIndex answers 0 41}}
+                        <td class='{{getQuestionClass result}}'>{{answer}}</td>
+                        {{/eachWitIndex}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br /> {{#if ../secondTableSectionQuestionNos}}
+            <table class='answer-table'>
+                <thead>
+                    <tr>
+                        <th>SORULAR</th>
+                        {{#each ../secondTableSectionQuestionNos}}
+                        <th>{{this}}</th>
+                        {{/each}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each sections}}
+                    <tr>
+                        <td>
+                            <strong>{{lessonName}} Cevap</strong>
+                        </td>
+                        {{#eachWitIndex answers 41 80}}
+                        <td class='{{getQuestionClass result}}'>{{correctAnswer}}</td>
+                        {{/eachWitIndex}}
+                    </tr>
+                    <tr>
+                        <td>Öğr. Cevapları</td>
+                        {{#eachWitIndex answers 41 80}}
+                        <td class='{{getQuestionClass result}}'>{{answer}}</td>
+                        {{/eachWitIndex}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{/if}}
+        </div>
+        <div class='item ml10px'>
+            <canvas id='canvas{{@index}}'></canvas>
+            <script>
                 new Chart(document.getElementById('canvas{{@index}}'), {
     				type: 'bar',
     				data: {
@@ -335,11 +370,45 @@
     						text: 'Öğrenci Puanının Ortalamalar ile Karşılaştırması'
     					}
 				}});
-			</script>
-		</div>
-	</div>
-	<div style='page-break-before: always;'></div>
-	{{/each}}
+            </script>
+        </div>
+    </div>
+    <br />
+    <div class='container'>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sıra</th>
+                    <th>Ders</th>
+                    <th>Konu/Kazanım/Soru</th>
+                    <th>D</th>
+                    <th>Y</th>
+                    <th>B</th>
+                    <th>Başarı %</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each subjectDetails}}
+                <tr>
+                    <td>{{rowOrder}}</td>
+                    <td>{{lesson}}</td>
+                    <td>
+                        <div style='flex-flow: column wrap;' class='container'>
+                            <div>{{subject}}</div>
+                            <div>{{questionNos}}</div>
+                        </div>
+                    </td>
+                    <td>{{correctCount}}</td>
+                    <td>{{wrongCount}}</td>
+                    <td>{{emptyCount}}</td>
+                    <td>% {{successPercent}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div style='page-break-before: always;'></div>
+    {{/each}}
 </body>
 
 </html>

@@ -23,16 +23,16 @@
             <td>
                 <strong>Kullanici</strong>
             </td>
-			<td>
-				@Model.UserEmail (@Model.ReporterUserId) - @Model.UserPhone
-			</td>
+            <td>
+                @Model.UserEmail (ID: @Model.ReporterUserId) - @Model.UserPhone
+            </td>
         </tr> 
         <tr>
             <td>
                 <strong>Sinav</strong>
             </td>
             <td>
-                @Model.ExamName ( @Model.ExamId )
+                @Model.ExamName ( ID: @Model.ExamId )
             </td>
         </tr>
         <tr>
@@ -48,9 +48,9 @@
                 <strong>Ekran Goruntusu</strong>
             </td>
 			<td>
-				<img src="@Model.Image1FilePath" alt="@Model.Description" />
-				<img src="@Model.Image2FilePath" alt="@Model.Description" />
-				<img src="@Model.Image3FilePath" alt="@Model.Description" />
+				<img src="@Model.Image1FilePath" />
+				<img src="@Model.Image2FilePath" />
+				<img src="@Model.Image3FilePath" />
 			</td>
         </tr>
     </table>
