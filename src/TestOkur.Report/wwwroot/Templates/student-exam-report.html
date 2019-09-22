@@ -74,7 +74,9 @@
 
         td.correct {
         }
-
+        .subject-detail-container {
+            flex-flow: column wrap;
+        }
         .ml10px {
             margin-left: 10px;
         }
@@ -393,7 +395,7 @@
                     <td>{{rowNo}}</td>
                     <td>{{lesson}}</td>
                     <td>
-                        <div style='flex-flow: column wrap;' class='container'>
+                        <div class='container subject-detail-container'>
                             <div>{{subject}}</div>
                             <div>{{questionNos}}</div>
                         </div>
