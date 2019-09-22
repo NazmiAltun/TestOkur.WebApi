@@ -24,6 +24,7 @@
             configurator.Consumer<StudentDeletedConsumer>(provider);
             configurator.Consumer<StudentUpdatedConsumer>(provider);
             configurator.Consumer<EvaluateExamConsumer>(provider);
+            configurator.Consumer<ReEvaluateAllTheExamsConsumer>(provider);
         }
     }
 }
