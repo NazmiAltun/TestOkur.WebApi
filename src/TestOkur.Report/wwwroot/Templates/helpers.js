@@ -1,7 +1,7 @@
 function eachWitIndex(context, start, end, options) {
     var ret = "";
 
-    for (var i = start, j = end; i < j; i++) {
+    for (var i = start, j = end; i < j && i < options.length; i++) {
         ret = ret + options.fn(context[i]);
     }
     return ret;
