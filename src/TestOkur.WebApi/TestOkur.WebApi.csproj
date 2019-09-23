@@ -72,7 +72,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataProtection-Keys\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 </Project>

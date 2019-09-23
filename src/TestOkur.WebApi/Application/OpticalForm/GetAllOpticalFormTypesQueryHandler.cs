@@ -32,13 +32,7 @@
 								ORDER BY code,form_part,fls.list_order";
 
         private const string FormDefinitionSelectSql = @"
-                                SELECT opt.*, 
-                                tl.name_x as X,tl.name_y as Y,
-                                tl.surname_x as X, tl.surname_y as Y,
-                                tl.class_x as X, tl.class_y as Y,
-                                tl.student_no_x as X, tl.student_no_y as Y,
-                                tl.exam_name_x as X, tl.exam_name_y as Y,
-                                tl.student_no_filling_part_x as X, tl.student_no_filling_part_y as Y
+                                SELECT *
                                 FROM optical_form_definitions opt
 								INNER JOIN optical_form_types oft ON oft.id=opt.optical_form_type_id
                                 INNER JOIN optical_form_text_locations tl on tl.optical_form_definition_id = opt.Id
@@ -118,10 +112,9 @@
             var formDictionary = new Dictionary<int, OpticalFormDefinitionReadModel>();
 
             return (await connection
-                    .QueryAsync<OpticalFormDefinitionReadModel, Location, Location, Location, Location, Location, Location,
-                        OpticalFormDefinitionReadModel>(
+                    .QueryAsync<OpticalFormDefinitionReadModel, dynamic, OpticalFormDefinitionReadModel>(
                         FormDefinitionSelectSql,
-                        (form, nameLoc, surnameLoc, classLoc, studentNoLoc, examNameLoc, studentNoFillingPartLoc) =>
+                        (form, locations) =>
                         {
                             if (!formDictionary.TryGetValue(form.Id, out var formEntry))
                             {
@@ -131,17 +124,20 @@
 
                             formEntry.TextLocations.Add(new OpticalFormTextLocationReadModel
                             {
-                                Name = nameLoc,
-                                Class = classLoc,
-                                ExamName = examNameLoc,
-                                StudentNo = studentNoLoc,
-                                StudentNoFillingPart = studentNoFillingPartLoc,
-                                Surname = surnameLoc,
+                                Name = new Location(locations.name_x, locations.name_y),
+                                Class = new Location(locations.class_x, locations.class_y),
+                                ExamName = new Location(locations.exam_name_x, locations.exam_name_y),
+                                StudentNo = new Location(locations.student_no_x, locations.student_no_y),
+                                StudentNoFillingPart = new Location(locations.student_no_filling_part_x, locations.student_no_filling_part_y),
+                                CourseName = new Location(locations.course_name_x, locations.course_name_y),
+                                Title1 = new Location(locations.title1_x, locations.title1_y),
+                                Title2 = new Location(locations.title2_x, locations.title2_y),
+                                Surname = new Location(locations.surname_x, locations.surname_y),
                             });
 
                             return formEntry;
                         },
-                        splitOn: "X,X,X,X,X,X"))
+                        splitOn: "name_x"))
                 .Distinct()
                 .ToList();
         }

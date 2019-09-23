@@ -1035,7 +1035,7 @@
                     new FormLessonSection(litLesson, 40, FormTypeLessonTags.AytLiterature, 1),
                     new FormLessonSection(socLesson, 40, FormTypeLessonTags.AytSocialScience, 1),
                     new FormLessonSection(matLesson, 40, 2),
-                    new FormLessonSection(scienceLesson, 40, 2),
+                    new FormLessonSection(scienceLesson, 40, FormTypeLessonTags.AytScience, 2),
                 },
                 160));
             formTypes.Last().AddOpticalFormDefinition(

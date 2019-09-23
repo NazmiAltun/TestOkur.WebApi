@@ -32,7 +32,7 @@
                 }
             }
 
-            return dict.Values;
+            return dict.Values.ToList();
         }
 
         private LocalString ParseLocalString(ExcelWorksheet workSheet, int rowIndex)

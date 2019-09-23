@@ -13,5 +13,11 @@
         public Location ExamName { get; set; }
 
         public Location StudentNoFillingPart { get; set; }
+
+        public Location CourseName { get; set; }
+
+        public Location Title1 { get; set; }
+
+        public Location Title2 { get; set; }
     }
 }
