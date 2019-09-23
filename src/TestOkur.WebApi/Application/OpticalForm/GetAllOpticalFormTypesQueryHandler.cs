@@ -32,7 +32,7 @@
 								ORDER BY code,form_part,fls.list_order";
 
         private const string FormDefinitionSelectSql = @"
-                                SELECT *
+                                SELECT opt.id opt_id, opt.*,tl.*
                                 FROM optical_form_definitions opt
 								INNER JOIN optical_form_types oft ON oft.id=opt.optical_form_type_id
                                 INNER JOIN optical_form_text_locations tl on tl.optical_form_definition_id = opt.Id
