@@ -102,13 +102,13 @@
 
         [HttpGet("me")]
         [ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetRequesterUserInfoAsync([FromQuery]string version)
+        public async Task<IActionResult> GetUserAsync()
         {
             var user = await _processor
                 .ExecuteAsync<GetUserByEmailQuery, UserReadModel>(
                     new GetUserByEmailQuery());
 
-            OnlineUserTracker.Add($"{user.Email} ({version ?? string.Empty})");
+            OnlineUserTracker.Add(user.Email);
             return Ok(user);
         }
 
