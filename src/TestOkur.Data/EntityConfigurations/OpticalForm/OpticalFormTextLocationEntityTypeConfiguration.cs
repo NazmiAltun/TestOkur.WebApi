@@ -17,6 +17,9 @@
             builder.OwnsOne(_ => _.ExamName);
             builder.OwnsOne(_ => _.StudentNo);
             builder.OwnsOne(_ => _.StudentNoFillingPart);
+            builder.OwnsOne(_ => _.CourseName);
+            builder.OwnsOne(_ => _.Title1);
+            builder.OwnsOne(_ => _.Title2);
         }
     }
 }

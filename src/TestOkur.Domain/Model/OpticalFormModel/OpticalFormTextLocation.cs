@@ -10,7 +10,10 @@
             Location @class,
             Location studentNo,
             Location examName,
-            Location studentNoFillingPart)
+            Location studentNoFillingPart,
+            Location title1,
+            Location title2,
+            Location courseName)
         {
             Name = name;
             Surname = surname;
@@ -18,6 +21,9 @@
             StudentNo = studentNo;
             ExamName = examName;
             StudentNoFillingPart = studentNoFillingPart;
+            Title1 = title1;
+            Title2 = title2;
+            CourseName = courseName;
         }
 
         protected OpticalFormTextLocation()
@@ -35,5 +41,11 @@
         public Location ExamName { get; private set; }
 
         public Location StudentNoFillingPart { get; private set; }
+
+        public Location Title1 { get; private set; }
+
+        public Location Title2 { get; private set; }
+
+        public Location CourseName { get; private set; }
     }
 }

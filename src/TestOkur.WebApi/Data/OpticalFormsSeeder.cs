@@ -636,6 +636,9 @@
                     .SetSurnameLocation(620, 2220)
                     .SetStudentNoFillingPartLocation(500, 623)
                     .SetExamNameLocation(620, 2295)
+                    .SetCourseNameLocation(620, 2370)
+                    .SetTitle1Location(1240, 195)
+                    .SetTitle2Location(1240, 280)
                     .Build())
                 .Build();
 
