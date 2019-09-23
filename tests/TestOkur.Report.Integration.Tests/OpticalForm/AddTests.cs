@@ -16,7 +16,7 @@
         [Fact]
         public async Task FormWithScoreShouldBeAdded()
         {
-            var scoreFormula = new ScoreFormula(100, "5. Grade");
+            var scoreFormula = new ScoreFormula(100, "5. Grade", 5);
             scoreFormula.Coefficients.Add(new LessonCoefficient("Turkish", 3.333f));
             scoreFormula.Coefficients.Add(new LessonCoefficient("Social Science", 3.333f));
             scoreFormula.Coefficients.Add(new LessonCoefficient("Basic Mathematics", 3.334f));

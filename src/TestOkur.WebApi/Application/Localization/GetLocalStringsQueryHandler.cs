@@ -19,7 +19,7 @@
 
         private IReadOnlyCollection<LocalString> ReadFromExcel(string cultureCode)
         {
-            var dict = new Dictionary<string,LocalString>();
+            var dict = new Dictionary<string, LocalString>();
 
             using (var package = GetExcelPackage($"{cultureCode}.xlsx"))
             {
