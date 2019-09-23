@@ -19,7 +19,7 @@
 
         private IReadOnlyCollection<LocalString> ReadFromExcel(string cultureCode)
         {
-            var list = new List<LocalString>();
+            var dict = new Dictionary<string,LocalString>();
 
             using (var package = GetExcelPackage($"{cultureCode}.xlsx"))
             {
@@ -27,11 +27,12 @@
 
                 for (var i = 2; i < workSheet.Dimension.Rows + 1; i++)
                 {
-                    list.Add(ParseLocalString(workSheet, i));
+                    var localString = ParseLocalString(workSheet, i);
+                    dict.TryAdd(localString.Name, localString);
                 }
             }
 
-            return list;
+            return dict.Values;
         }
 
         private LocalString ParseLocalString(ExcelWorksheet workSheet, int rowIndex)
