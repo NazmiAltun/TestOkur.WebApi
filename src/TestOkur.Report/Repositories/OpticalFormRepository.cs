@@ -113,55 +113,23 @@
 
         public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId)
         {
-            var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId);
-            var list = await _context.StudentOpticalForms
-                .Find(filter)
+            return await _context.StudentOpticalForms
+                .Find(Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId))
                 .ToListAsync();
-
-            foreach (var item in list)
-            {
-                item.Sections = item.Sections.OrderBy(s => s.FormPart)
-                    .ThenBy(s => s.ListOrder)
-                    .ToList();
-            }
-
-            return list;
         }
 
         public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId)
         {
-            var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId);
-
-            var list = await _context.StudentOpticalForms
-                .Find(filter)
+            return await _context.StudentOpticalForms
+                .Find(Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId))
                 .ToListAsync();
-
-            foreach (var item in list)
-            {
-                item.Sections = item.Sections.OrderBy(s => s.FormPart)
-                    .ThenBy(s => s.ListOrder)
-                    .ToList();
-            }
-
-            return list;
         }
 
         public async Task<IEnumerable<AnswerKeyOpticalForm>> GetAnswerKeyOpticalForms(int examId)
         {
-            var filter = Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.ExamId, examId);
-
-            var list = await _context.AnswerKeyOpticalForms
-                .Find(filter)
+            return await _context.AnswerKeyOpticalForms
+                .Find(Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.ExamId, examId))
                 .ToListAsync();
-
-            foreach (var item in list)
-            {
-                item.Sections = item.Sections.OrderBy(s => s.FormPart)
-                    .ThenBy(s => s.ListOrder)
-                    .ToList();
-            }
-
-            return list;
         }
 
         public async Task DeleteByStudentIdAsync(int studentId)

@@ -102,7 +102,7 @@
 
         [HttpGet("me")]
         [ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetUserAsync()
+        public async Task<IActionResult> GetRequestedUserInfoAsync([FromQuery]string version)
         {
             var user = await _processor
                 .ExecuteAsync<GetUserByEmailQuery, UserReadModel>(
