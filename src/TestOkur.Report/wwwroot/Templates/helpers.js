@@ -1,11 +1,12 @@
 function eachWitIndex(context, start, end, options) {
     var ret = "";
 
-    for (var i = start, j = end; i < j && i < options.length; i++) {
+    for (var i = start, j = end; i < j && i < context.length; i++) {
         ret = ret + options.fn(context[i]);
     }
     return ret;
 }
+
 
 function formatTwoDecimalPlaces(number) {
     return number.toFixed(2);
