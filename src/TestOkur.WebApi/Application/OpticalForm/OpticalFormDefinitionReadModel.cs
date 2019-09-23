@@ -1,7 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("{Name}")]
     public class OpticalFormDefinitionReadModel
     {
         public int Id { get; set; }

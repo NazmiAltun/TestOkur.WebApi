@@ -6,9 +6,6 @@
     {
         public OpticalFormDefinitionReadModelMap()
         {
-            Map(p => p.Id)
-                .ToColumn("opt_id");
-
             Map(p => p.SchoolType)
                 .ToColumn("school_type_id");
 
