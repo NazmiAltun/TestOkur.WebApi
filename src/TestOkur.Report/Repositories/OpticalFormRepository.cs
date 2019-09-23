@@ -22,6 +22,11 @@
 
         public async Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms)
         {
+            if (forms == null || !forms.Any())
+            {
+                return;
+            }
+
             var writeModels = new List<WriteModel<StudentOpticalForm>>();
 
             foreach (var form in forms)
