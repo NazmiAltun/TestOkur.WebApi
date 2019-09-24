@@ -35,6 +35,7 @@
     using TestOkur.Notification.Models;
     using TestOkur.Notification.ScheduledTasks.DailyReport;
     using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
+    using TestOkur.Notification.ScheduledTasks.ReEvaluateAllExams;
 
     public class Startup : IStartup
     {
@@ -70,6 +71,7 @@
             services.AddSingleton<INotificationFacade, NotificationFacade>();
             services.AddScoped<ILicenseExpirationNoticeTask, LicenseExpirationNoticeTask>();
             services.AddScoped<IDailyReportTask, DailyReportTask>();
+            services.AddScoped<IReEvaluateAllExamsTask, ReEvaluateAllExamsTask>();
             AddHttpClients(services);
             AddMessageBus(services);
             AddHostedServices(services);
@@ -137,6 +139,8 @@
                 notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
             RecurringJob.AddOrUpdate<IDailyReportTask>(
                 x => x.SendAsync(), Cron.Daily(20, 30));
+            RecurringJob.AddOrUpdate<IReEvaluateAllExamsTask>(
+                x => x.SendRequestAsync(), Cron.Never);
         }
 
         private void AddHangfire(IServiceCollection services)

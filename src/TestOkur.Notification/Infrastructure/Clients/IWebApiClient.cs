@@ -13,5 +13,7 @@
         Task DeductSmsCreditsAsync(int userId, string smsBody);
 
         Task<StatisticsReadModel> GetStatisticsAsync();
+
+        Task ReEvaluateAllExamsAsync();
     }
 }

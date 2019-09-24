@@ -130,7 +130,11 @@ namespace TestOkur.Report.Domain
         private List<StudentOrderList> CreateOrderLists(IReadOnlyCollection<StudentOpticalForm> forms)
         {
             var examGrade = forms
-                .GroupBy(f => f.Grade, (k, v) => new {grade = k, count = v.Count()})
+                .GroupBy(f => f.Grade, (k, v) => new
+                {
+                    grade = k,
+                    count = v.Count(),
+                })
                 .OrderByDescending(x => x.count)
                 .First().grade;
 
@@ -140,7 +144,9 @@ namespace TestOkur.Report.Domain
                 .Distinct();
 
             return scoreNames
-                .Select(sf => new StudentOrderList(sf.ToUpper(), forms,
+                .Select(sf => new StudentOrderList(
+                    sf.ToUpper(),
+                    forms,
                     s => s.Scores.TryGetValue(sf.ToUpper(), out var val) ? val : 0))
                 .Concat(new[] { new StudentOrderList("NET", forms, f => f.Net) })
                 .ToList();

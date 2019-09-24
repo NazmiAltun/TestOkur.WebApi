@@ -45,6 +45,12 @@
             return await GetAsync<StatisticsReadModel>(StatisticsEndpoint);
         }
 
+        public async Task ReEvaluateAllExamsAsync()
+        {
+            var response = await _httpClient.PostAsync("api/v1/exams/re-evaluate", null);
+            response.EnsureSuccessStatusCode();
+        }
+
         public async Task<AppSettingReadModel> GetAppSettingAsync(string name)
         {
             return (await GetAsync<IEnumerable<AppSettingReadModel>>(AppSettingsEndpoint))
