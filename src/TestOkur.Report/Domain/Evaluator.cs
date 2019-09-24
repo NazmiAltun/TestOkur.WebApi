@@ -127,14 +127,21 @@ namespace TestOkur.Report.Domain
             }
         }
 
-        private List<StudentOrderList> CreateOrderLists(
-            IReadOnlyCollection<StudentOpticalForm> forms)
+        private List<StudentOrderList> CreateOrderLists(IReadOnlyCollection<StudentOpticalForm> forms)
         {
-            var scoreNames = forms.SelectMany(f => f.Scores.Keys)
+            var examGrade = forms
+                .GroupBy(f => f.Grade, (k, v) => new {grade = k, count = v.Count()})
+                .OrderByDescending(x => x.count)
+                .First().grade;
+
+            var scoreNames = forms
+                .Where(f => f.Grade == examGrade)
+                .SelectMany(f => f.Scores.Keys)
                 .Distinct();
 
             return scoreNames
-                .Select(sf => new StudentOrderList(sf.ToUpper(), forms, s => s.Scores[sf.ToUpper()]))
+                .Select(sf => new StudentOrderList(sf.ToUpper(), forms,
+                    s => s.Scores.TryGetValue(sf.ToUpper(), out var val) ? val : 0))
                 .Concat(new[] { new StudentOrderList("NET", forms, f => f.Net) })
                 .ToList();
         }
