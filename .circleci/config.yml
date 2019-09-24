@@ -284,13 +284,19 @@ workflows:
             - webapi-integration-tests
       - build-webapi:
           requires:
-            - code-coverage
+            - webapi-integration-tests
+            - unit-tests
+            - static-code-analysis
       - build-notification:
           requires:
-            - code-coverage
+            - unit-tests
+            - static-code-analysis
+            - notification-report-integration-tests
       - build-report:
           requires:
-            - code-coverage
+            - unit-tests
+            - static-code-analysis
+            - notification-report-integration-tests
       - deploy-webapi-qa:
           requires:
             - build-webapi

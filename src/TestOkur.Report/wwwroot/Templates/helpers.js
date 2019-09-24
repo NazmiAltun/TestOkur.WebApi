@@ -25,3 +25,13 @@ function getQuestionClass(result) {
     }
     return 'correct';
 }
+
+function getStatusClass(status) {
+    if (status === 0) {
+        return 'pending';
+    }
+    if (status === 3 || status === 2) {
+        return 'error';
+    }
+    return '';
+}
