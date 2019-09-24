@@ -37,11 +37,9 @@ namespace TestOkur.Report.Domain
                 answerKeyOpticalForms = answerKeyOpticalForms.First().Expand();
             }
 
-            var scoreNames = answerKeyOpticalForms.First().ScoreFormulas
-                .Select(s => s.ScoreName).ToList();
             FillMissingSections(answerKeyOpticalForms, forms);
             EvaluateForms(answerKeyOpticalForms, forms);
-            SetOrdersAndAverages(scoreNames, forms);
+            SetOrdersAndAverages(forms);
             SetAttendance(forms);
 
             return forms;
@@ -80,9 +78,9 @@ namespace TestOkur.Report.Domain
             }
         }
 
-        private void SetOrdersAndAverages(List<string> scoreNames, IReadOnlyCollection<StudentOpticalForm> forms)
+        private void SetOrdersAndAverages(IReadOnlyCollection<StudentOpticalForm> forms)
         {
-            var orderLists = CreateOrderLists(scoreNames, forms);
+            var orderLists = CreateOrderLists(forms);
             var netAverageList = new AverageList("NET", forms, s => s.Net);
             var successPercentAverageList = new AverageList("SuccessPercent", forms, s => s.SuccessPercent);
 
@@ -130,9 +128,11 @@ namespace TestOkur.Report.Domain
         }
 
         private List<StudentOrderList> CreateOrderLists(
-            List<string> scoreNames,
             IReadOnlyCollection<StudentOpticalForm> forms)
         {
+            var scoreNames = forms.SelectMany(f => f.Scores.Keys)
+                .Distinct();
+
             return scoreNames
                 .Select(sf => new StudentOrderList(sf.ToUpper(), forms, s => s.Scores[sf.ToUpper()]))
                 .Concat(new[] { new StudentOrderList("NET", forms, f => f.Net) })
