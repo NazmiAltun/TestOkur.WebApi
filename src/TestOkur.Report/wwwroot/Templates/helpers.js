@@ -7,20 +7,19 @@ function eachWitIndex(context, start, end, options) {
     return ret;
 }
 
-
 function formatTwoDecimalPlaces(number) {
-    return number.toFixed(2);
+    return Number(number).toFixed(2);
 }
 
 function formatOneDecimalPlace(number) {
-    return number.toFixed(1);
+    return Number(number).toFixed(1);
 }
 
 function getQuestionClass(result) {
-    if (result == 1 || result == 4) {
+    if (result === 1 || result === 4) {
         return 'wrong';
     }
-    if (result == 3) {
+    if (result === 3) {
         return 'empty';
     }
     return 'correct';
