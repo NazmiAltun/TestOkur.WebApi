@@ -62,7 +62,7 @@
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm4thGradeTrial))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmTeog))
                     .WithOrder(30)
-                    .AvailableForAllSchoolTypes()
+                    .AvailableForPrimarySchool()
                     .Build();
 
         private ExamType ScholarshipExam => new ExamTypeBuilder(ExamTypes.Scholarship)
