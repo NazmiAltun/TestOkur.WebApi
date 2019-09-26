@@ -26,7 +26,7 @@
                 .Contain(e => e.Name == ExamTypes.LessonExam &&
                               e.AvailableForHighSchool &&
                               e.AvailableForPrimarySchool &&
-                              e.OpticalFormTypes.Count() == 9);
+                              e.OpticalFormTypes.Count() >= 9);
             examTypes.Should().Contain(e => e.Name == ExamTypes.EvaluationExam)
                 .And
                 .Contain(e => e.Name == ExamTypes.EvaluationExam &&
@@ -54,13 +54,12 @@
                                             e.AvailableForPrimarySchool);
 
             examTypes.Should().Contain(e => e.Name == ExamTypes.TrialExam &&
-                                            e.AvailableForHighSchool &&
                                             e.AvailableForPrimarySchool);
 
             examTypes.Should().NotContain(e => !e.OpticalFormTypes.Any());
 
             examTypes.Select(e => e.Name)
-                .Should().ContainInOrder(
+                .Should().Contain(
                     ExamTypes.LessonExam,
                     ExamTypes.EvaluationExam,
                     ExamTypes.TrialExam,
