@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using CacheManager.Core;
     using Dapper;
@@ -17,7 +18,8 @@
     {
         private const string CacheKey = "UserIdMap";
 
-        private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(4);
+        private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(24);
+        private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager<Dictionary<string, int>> _cacheManager;
@@ -48,8 +50,16 @@
 
             if (idDictionary == null)
             {
-                idDictionary = await ReadIdsFromDbAsync();
-                StoreToCache(idDictionary);
+                await SemaphoreSlim.WaitAsync();
+                try
+                {
+                    idDictionary = await ReadIdsFromDbAsync();
+                    StoreToCache(idDictionary);
+                }
+                finally
+                {
+                    SemaphoreSlim.Release();
+                }
             }
 
             return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
