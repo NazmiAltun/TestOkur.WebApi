@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <title>{{examName}} MADDE ANALİZİ</title>
+    <style type='text/css'>
+        h1,
+        h3,
+        h5 {
+            text-align: center;
+        }
+
+        h3 {
+            background: #1db1d6;
+            border: 1px solid;
+            margin-top: 20px;
+        }
+
+        .question-container {
+            border: 1px solid;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        .chart-container {
+            display: grid;
+            grid-row-gap: 20px;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    </style>
+    <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
+    <script>
+        Chart.defaults.global.defaultFontSize = 10;
+        var theHelp = Chart.helpers;
+    </script>
+</head>
+
+<body>
+    <h1>
+        {{examName}} MADDE ANALİZİ
+    </h1>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Adı :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examName}}
+        </div>
+        <div class='grid-item'>
+            <strong>Sınıf :</strong>
+        </div>
+        <div class='grid-item'>
+            {{classroom}}
+        </div>
+    </div>
+    <br />
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Tarihi :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examDate}}
+        </div>
+        <div class='grid-item'>
+            <strong>Kitapcik:</strong>
+        </div>
+        <div class='grid-item'>
+            {{booklet}}
+        </div>
+    </div>
+    {{#each sections}}
+    <h3>{{lessonName}}</h3>
+    <div class='chart-container'>
+        {{#each questions}}
+        <div class='question-container'>
+            <table>
+                <tr>
+                    <td>
+                        <canvas id='canvas{{../lessonName}}{{questionNo}}' />
+                        <script>
+    	            var data = {
+                	    labels: [{{#each options}}'{{this}}', {{/each}}],
+                        datasets: [{
+                			data: [{{#each percentages}}'{{this}}', {{/each}}],
+                			backgroundColor: [
+        						"#55A120",
+        						'#a294ff',
+        						'#ce9cd9',
+        						'#ced18a',
+        						'#FD7474',
+        						"#6575B8",
+        					],
+        			}]};
+    	            var ctx = document.getElementById('canvas{{../lessonName}}{{questionNo}}').getContext('2d');
+    	            var chart{{../lessonName}}{{questionNo}} = new Chart(ctx, {
+            				type: 'pie',
+            				data: data,
+        			    	options: {
+        			    	    responsive: true,
+                				legend: {
+                					display:true,
+                					position:'right',
+                					 labels: {
+                                          generateLabels: function(chart) {
+                                            var data = chart.data;
+                                            if (data.labels.length && data.datasets.length) {
+                                              return data.labels.map(function(label, i) {
+                                                var meta = chart.getDatasetMeta(0);
+                                                var ds = data.datasets[0];
+                                                var arc = meta.data[i];
+                                                var custom = arc && arc.custom || {};
+                                                var getValueAtIndexOrDefault = theHelp.getValueAtIndexOrDefault;
+                                                var arcOpts = chart.options.elements.arc;
+                                                var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                                var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                                if(label === "{{correctAnswer}}"){
+                                                    bw = 5;
+                                                }
+
+                                                return {
+                                                  text: label +  "(%"+ ds.data[i]  + ")" ,
+                                                  fillStyle: fill,
+                                                  strokeStyle: 'black',
+                                                  lineWidth: bw,
+                                                  hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                                  index: i
+                                                };
+                                              });
+                                            }
+                                            return [];
+                                          }
+                                     }
+                				},
+                				title: {
+                				    text: 'SORU {{questionNo}}    ( Basari Yuzdesi : %{{successPercent}})',
+                					display: true
+                				},
+                			}
+    	                });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>{{subject}}</h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {{/each}}
+    </div>
+    {{/each}}
+</body>
+
+</html>
