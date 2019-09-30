@@ -60,7 +60,7 @@
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {
-                return await connection.QuerySingleAsync<int>(
+                return await connection.QueryFirstOrDefaultAsync<int>(
                     sql,
                     new { subjectId });
             }
