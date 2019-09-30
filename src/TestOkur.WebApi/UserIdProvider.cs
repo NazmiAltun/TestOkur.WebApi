@@ -19,7 +19,6 @@
         private const string CacheKey = "UserIdMap";
 
         private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(4);
-        private static readonly SemaphoreSlim WriteSemaphore = new SemaphoreSlim(1, 1);
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager<Dictionary<string, int>> _cacheManager;
         private readonly string _connectionString;
@@ -45,18 +44,26 @@
                 return default;
             }
 
-            var idDictionary = _cacheManager.Get(CacheKey);
+            return await GetIdFromDbAsync(subjectId);
+            //var idDictionary = _cacheManager.Get(CacheKey);
+            //if (idDictionary == null)
+            //{
+            //    idDictionary = await ReadIdsFromDbAsync();
+            //    StoreToCache(idDictionary);
+            //}
+            //return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
+        }
 
-            await WriteSemaphore.WaitAsync();
-            if (idDictionary == null)
+        private async Task<int> GetIdFromDbAsync(string subjectId)
+        {
+            const string sql = "SELECT id FROM users WHERE subject_id=@subjectId";
+
+            using (var connection = new NpgsqlConnection(_connectionString))
             {
-                idDictionary = await ReadIdsFromDbAsync();
-                StoreToCache(idDictionary);
+                return await connection.QuerySingleAsync<int>(
+                    sql,
+                    new { subjectId });
             }
-
-            WriteSemaphore.Release(1);
-
-            return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
         }
 
         private async Task<Dictionary<string, int>> ReadIdsFromDbAsync()
