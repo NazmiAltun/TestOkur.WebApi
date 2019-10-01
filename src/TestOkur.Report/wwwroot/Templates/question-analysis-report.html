@@ -19,6 +19,7 @@
 
         .question-container {
             border: 1px solid;
+            display: block;
         }
 
         .grid-container {
@@ -43,18 +44,19 @@
     <h1>
         {{examName}} MADDE ANALİZİ
     </h1>
+    {{#each booklets}}
     <div class='grid-container'>
         <div class='grid-item'>
             <strong>Sınav Adı :</strong>
         </div>
         <div class='grid-item'>
-            {{examName}}
+            {{../examName}}
         </div>
         <div class='grid-item'>
             <strong>Sınıf :</strong>
         </div>
         <div class='grid-item'>
-            {{classroom}}
+            {{../classroom}}
         </div>
     </div>
     <br />
@@ -63,10 +65,10 @@
             <strong>Sınav Tarihi :</strong>
         </div>
         <div class='grid-item'>
-            {{examDate}}
+            {{../examDate}}
         </div>
         <div class='grid-item'>
-            <strong>Kitapcik:</strong>
+            <strong>Kitapcik</strong>
         </div>
         <div class='grid-item'>
             {{booklet}}
@@ -80,7 +82,7 @@
             <table>
                 <tr>
                     <td>
-                        <canvas id='canvas{{../lessonName}}{{questionNo}}' />
+                        <canvas id='canvas{{canvasId}}' />
                         <script>
     	            var data = {
                 	    labels: [{{#each options}}'{{this}}', {{/each}}],
@@ -89,14 +91,14 @@
                 			backgroundColor: [
         						"#55A120",
         						'#a294ff',
-        						'#ce9cd9',
-        						'#ced18a',
+        						'#b39a72',
+        						'#70aed4',
         						'#FD7474',
-        						"#6575B8",
+        						"#ecf2d8",
         					],
         			}]};
-    	            var ctx = document.getElementById('canvas{{../lessonName}}{{questionNo}}').getContext('2d');
-    	            var chart{{../lessonName}}{{questionNo}} = new Chart(ctx, {
+    	            var ctx = document.getElementById('canvas{{canvasId}}').getContext('2d');
+    	            var chart{{canvasId}} = new Chart(ctx, {
             				type: 'pie',
             				data: data,
         			    	options: {
@@ -117,15 +119,17 @@
                                                 var arcOpts = chart.options.elements.arc;
                                                 var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
                                                 var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+                                                var strokeStyleColor = '#cdd1cd';
 
                                                 if(label === "{{correctAnswer}}"){
-                                                    bw = 5;
+                                                    bw = 7;
+                                                    strokeStyleColor = 'black';
                                                 }
 
                                                 return {
                                                   text: label +  "(%"+ ds.data[i]  + ")" ,
                                                   fillStyle: fill,
-                                                  strokeStyle: 'black',
+                                                  strokeStyle: strokeStyleColor,
                                                   lineWidth: bw,
                                                   hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
                                                   index: i
@@ -154,7 +158,8 @@
         </div>
         {{/each}}
     </div>
-    {{/each}}
+    <div style='page-break-before: always;'></div>
+    {{/each}} {{/each}}
 </body>
 
 </html>
