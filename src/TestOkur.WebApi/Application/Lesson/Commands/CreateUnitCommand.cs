@@ -29,6 +29,6 @@
         [DataMember]
         public int LessonId { get; private set; }
 
-        public Unit ToDomainModel(Lesson lesson) => new Unit(Name, lesson, Grade);
+        public Unit ToDomainModel(Lesson lesson) => new Unit(Name, lesson, Grade, false);
     }
 }

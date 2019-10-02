@@ -9,11 +9,12 @@
     {
         private readonly List<Subject> _subjects;
 
-        public Unit(Name name, Lesson lesson, Grade grade)
+        public Unit(Name name, Lesson lesson, Grade grade, bool shared)
             : this()
         {
             Name = name;
             Grade = grade;
+            Shared = shared;
             Lesson = lesson ?? throw new ArgumentNullException(nameof(lesson));
         }
 
@@ -27,6 +28,8 @@
         public Lesson Lesson { get; private set; }
 
         public Grade Grade { get; private set; }
+
+        public bool Shared { get; private set; }
 
         public IReadOnlyCollection<Subject> Subjects => _subjects.AsReadOnly();
 
@@ -48,14 +51,16 @@
             return null;
         }
 
-        public void AddSubject(Name subjectName)
+        public void AddSubject(Name subjectName) => AddSubject(subjectName, false);
+
+        public void AddSubject(Name subjectName, bool shared)
         {
             if (Subjects.Any(s => s.Name == subjectName))
             {
                 throw DomainException.With($"SubjectName '{subjectName}' already exists in this unit.");
             }
 
-            _subjects.Add(new Subject(subjectName));
+            _subjects.Add(new Subject(subjectName, shared));
         }
     }
 }

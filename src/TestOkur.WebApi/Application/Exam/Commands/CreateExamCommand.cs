@@ -20,7 +20,8 @@
             int lessonId,
             int examBookletTypeId,
             IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms,
-            string notes)
+            string notes,
+            bool shared = false)
             : base(id)
         {
             Name = name;
@@ -33,6 +34,7 @@
             ExamBookletTypeId = examBookletTypeId;
             AnswerKeyOpticalForms = answerKeyOpticalForms;
             Notes = notes;
+            Shared = shared;
         }
 
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
@@ -66,5 +68,8 @@
 
         [DataMember]
         public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; private set; }
+
+        [DataMember]
+        public bool Shared { get; private set; }
     }
 }

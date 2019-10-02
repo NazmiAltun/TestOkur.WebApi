@@ -15,7 +15,8 @@
             AnswerFormFormat answerFormFormat,
             Lesson lesson,
             string applicableFormTypeCode,
-            string notes)
+            string notes,
+            bool shared)
          : this()
         {
             AnswerFormFormat = answerFormFormat;
@@ -27,6 +28,7 @@
             Notes = notes;
             ApplicableFormTypeCode = applicableFormTypeCode;
             Lesson = lesson;
+            Shared = shared;
         }
 
         protected Exam()
@@ -50,6 +52,8 @@
         public ExamBookletType ExamBookletType { get; private set; }
 
         public Lesson Lesson { get; private set; }
+
+        public bool Shared { get; private set; }
 
         public void Update(
             string newName,

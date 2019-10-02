@@ -1,15 +1,14 @@
-﻿namespace TestOkur.WebApi
+﻿namespace TestOkur.WebApi.Infrastructure
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using CacheManager.Core;
     using Dapper;
     using IdentityModel;
     using Microsoft.AspNetCore.Http;
     using Npgsql;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using TestOkur.Infrastructure;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Configuration;
@@ -39,19 +38,7 @@
             var subjectId = _httpContextAccessor.HttpContext?.User?
                 .FindFirst(JwtClaimTypes.Subject)?.Value;
 
-            if (subjectId == null)
-            {
-                return default;
-            }
-
-            return await GetIdFromDbAsync(subjectId);
-            //var idDictionary = _cacheManager.Get(CacheKey);
-            //if (idDictionary == null)
-            //{
-            //    idDictionary = await ReadIdsFromDbAsync();
-            //    StoreToCache(idDictionary);
-            //}
-            //return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
+            return subjectId == null ? default : await GetIdFromDbAsync(subjectId);
         }
 
         private async Task<int> GetIdFromDbAsync(string subjectId)

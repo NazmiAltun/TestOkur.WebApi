@@ -249,6 +249,7 @@
                     e.Consumer<SmsCreditAddedConsumer>(provider);
                     e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
                     e.Consumer<UserErrorReceivedConsumer>(provider);
+                    e.Consumer<CommandQueryLogEventConsumer>(provider);
                 });
                 cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
             }));

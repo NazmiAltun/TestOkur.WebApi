@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Data
 {
+    using System;
     using System.Net.Mail;
     using MongoDB.Driver;
     using TestOkur.Notification.Configuration;
@@ -18,5 +19,7 @@
         public IMongoCollection<Sms> Smses => _database.GetCollection<Sms>("Smses");
 
         public IMongoCollection<EMail> Emails => _database.GetCollection<EMail>("Emails");
+
+        public IMongoCollection<CommandQueryLog> CommandQueryLogs => _database.GetCollection<CommandQueryLog>("CommandQueryLogs");
     }
 }

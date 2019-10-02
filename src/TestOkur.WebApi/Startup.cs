@@ -48,6 +48,7 @@
     using TestOkur.WebApi.Application.User.Services;
     using TestOkur.WebApi.Configuration;
     using TestOkur.WebApi.Extensions;
+    using TestOkur.WebApi.Infrastructure;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     [ExcludeFromCodeCoverage]
@@ -222,6 +223,7 @@
             services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
             services.AddScoped<IUserIdProvider, UserIdProvider>();
             services.AddScoped<IProcessor, Processor>();
+            services.AddScoped<ICommandQueryLogger, CommandQueryLogger>();
             services.AddHttpContextAccessor();
         }
 

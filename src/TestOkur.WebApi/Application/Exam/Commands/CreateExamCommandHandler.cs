@@ -55,7 +55,8 @@
                     Enumeration.GetAll<AnswerFormFormat>().First(a => a.Id == command.AnswerFormFormat),
                     await GetLessonAsync(dbContext, command.LessonId),
                     command.ApplicableFormTypeCode,
-                    command.Notes);
+                    command.Notes,
+                    command.Shared);
 
                 dbContext.Attach(exam.ExamBookletType);
                 dbContext.Attach(exam.AnswerFormFormat);
