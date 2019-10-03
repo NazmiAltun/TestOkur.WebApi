@@ -19,12 +19,14 @@
 								u.lesson_id,
 								l.name_value as lesson,
 								u.grade_value as grade,
+                                u.shared,
 								s.id as subject_id,
-								s.name_value as subject_name
+								s.name_value as subject_name,
+                                s.shared as shared_subject
 								FROM units u
 								INNER JOIN lessons l on l.id=u.lesson_id
 								LEFT JOIN subjects s on s.unit_id=u.id
-								WHERE u.created_by=@userId
+								WHERE u.created_by=@userId OR u.shared=true
 								ORDER BY u.name_value,s.name_value";
 
         private readonly string _connectionString;

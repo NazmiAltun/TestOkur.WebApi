@@ -39,7 +39,8 @@
 								e.applicable_form_type_code,
 								et.name_value as exam_type_name,
 								COALESCE(l.name_value,fls.lesson_name) as lesson_name,
-								l.id as lesson_id
+								l.id as lesson_id,
+                                e.shared
 								FROM exams e
 								INNER JOIN exam_types et ON et.id=e.exam_type_id
 								LEFT JOIN lessons l ON l.id=e.lesson_id
@@ -50,7 +51,7 @@
 								INNER JOIN lessons le ON le.id=fls.lesson_id
 								GROUP BY oft.code
 								)fls ON e.applicable_form_type_code=fls.code
-								WHERE e.created_by=@userId
+								WHERE e.created_by=@userId OR e.shared=true
 								ORDER BY e.created_on_utc DESC";
 
             using (var connection = new NpgsqlConnection(_connectionString))

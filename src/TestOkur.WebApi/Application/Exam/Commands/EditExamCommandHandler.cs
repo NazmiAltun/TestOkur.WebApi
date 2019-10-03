@@ -97,7 +97,8 @@
         {
             return await dbContext.Exams
                 .FirstOrDefaultAsync(
-                    l => l.Id == command.ExamId,
+                    l => l.Id == command.ExamId && 
+                         EF.Property<int>(l, "CreatedBy") == command.UserId,
                     cancellationToken);
         }
 

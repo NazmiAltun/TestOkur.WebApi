@@ -31,6 +31,11 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync([FromBody, Required]CreateExamCommand command)
         {
+            if (!User.IsInRole(Roles.Admin))
+            {
+                command.Shared = false;
+            }
+
             await _processor.SendAsync(command);
             return Ok();
         }

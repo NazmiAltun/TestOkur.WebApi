@@ -27,5 +27,7 @@
         public string LessonName { get; set; }
 
         public int ExamBookletTypeId { get; set; }
+
+        public bool Shared { get; set; }
     }
 }

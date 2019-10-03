@@ -70,6 +70,6 @@
         public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; private set; }
 
         [DataMember]
-        public bool Shared { get; private set; }
+        public bool Shared { get; set; }
     }
 }

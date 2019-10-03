@@ -14,6 +14,8 @@
 
         public int Grade { get; set; }
 
+        public bool Shared { get; set; }
+
         public List<SubjectReadModel> Subjects { get; set; }
             = new List<SubjectReadModel>();
     }
