@@ -2,7 +2,7 @@
 {
     using TestOkur.Infrastructure.Cqrs;
 
-    public class GetUserByEmailQuery : QueryBase<UserReadModel>
+    public class GetUserByEmailQuery : QueryBase<UserReadModel>, ISkipLogging
     {
         public GetUserByEmailQuery()
         {

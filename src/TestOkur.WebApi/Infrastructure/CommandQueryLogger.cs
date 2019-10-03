@@ -23,7 +23,7 @@
             try
             {
                 await _publishEndpoint.Publish(new CommandQueryLogEvent(
-                    JsonConvert.SerializeObject(message)));
+                    JsonConvert.SerializeObject(message), message.GetType().ToString()));
             }
             catch (Exception ex)
             {
