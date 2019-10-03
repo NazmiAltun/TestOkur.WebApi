@@ -317,14 +317,6 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - clear-cache-prod:
-          requires:
-            - deploy-webapi-prod
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - clean-up-prod:
           requires:
             - deploy-webapi-prod
