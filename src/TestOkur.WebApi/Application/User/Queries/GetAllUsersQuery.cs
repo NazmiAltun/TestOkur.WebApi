@@ -6,7 +6,8 @@
 
     public class GetAllUsersQuery :
         QueryBase<IReadOnlyCollection<UserReadModel>>,
-        ICacheResult
+        ICacheResult,
+        ISkipLogging
     {
         public string CacheKey => "Users";
 
