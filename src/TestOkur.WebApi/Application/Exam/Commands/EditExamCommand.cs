@@ -70,6 +70,9 @@
         public int NewExamBookletTypeId { get; private set; }
 
         [DataMember]
+        public bool Shared { get; set; }
+
+        [DataMember]
         public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; private set; }
     }
 }

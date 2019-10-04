@@ -74,6 +74,11 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditAsync([FromBody, Required]EditExamCommand command)
         {
+            if (!User.IsInRole(Roles.Admin))
+            {
+                command.Shared = false;
+            }
+
             await _processor.SendAsync(command);
             return Ok();
         }
