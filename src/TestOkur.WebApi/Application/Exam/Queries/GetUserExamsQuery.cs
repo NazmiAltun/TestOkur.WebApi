@@ -6,7 +6,7 @@
 
     public class GetUserExamsQuery :
         QueryBase<IReadOnlyCollection<ExamReadModel>>,
-        ICacheResult
+        ICacheResultWithRegion
     {
         public GetUserExamsQuery()
         {
@@ -16,6 +16,8 @@
             : base(userId)
         {
         }
+
+        public string Region => "Exams";
 
         public string CacheKey => $"Exams_{UserId}";
 

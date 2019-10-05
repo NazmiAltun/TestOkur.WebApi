@@ -37,6 +37,8 @@
             AnswerKeyOpticalForms = answerKeyOpticalForms;
         }
 
+        public string Region => "Exams";
+
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
         [DataMember]

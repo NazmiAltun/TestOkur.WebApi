@@ -1,30 +1,25 @@
 ﻿namespace TestOkur.WebApi.Application.Cache
 {
-    using System.Threading.Tasks;
+    using CacheManager.Core;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using StackExchange.Redis;
+    using System.Threading.Tasks;
 
     [Route("api/cache")]
     [AllowAnonymous]
     public class CacheController : ControllerBase
     {
-        private readonly IConnectionMultiplexer _connectionMultiplexer;
+        private readonly ICacheManager<object> _cacheManager;
 
-        public CacheController(IConnectionMultiplexer connectionMultiplexer)
+        public CacheController(ICacheManager<object> cacheManager)
         {
-            _connectionMultiplexer = connectionMultiplexer;
+            _cacheManager = cacheManager;
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteAsync()
+        public async Task<IActionResult> ClearAsync()
         {
-            foreach (var endPoint in _connectionMultiplexer.GetEndPoints())
-            {
-                var server = _connectionMultiplexer.GetServer(endPoint);
-                await server.FlushAllDatabasesAsync();
-            }
-
+            _cacheManager.Clear();
             return NoContent();
         }
     }

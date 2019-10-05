@@ -7,7 +7,7 @@
     using TestOkur.Optic.Form;
 
     [DataContract]
-    public class CreateExamCommand : CommandBase, IClearCache
+    public class CreateExamCommand : CommandBase, IClearCacheWithRegion
     {
         public CreateExamCommand(
             Guid id,
@@ -38,6 +38,8 @@
         }
 
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
+
+        public string Region => "Exams";
 
         [DataMember]
         public DateTime ExamDate { get; private set; }

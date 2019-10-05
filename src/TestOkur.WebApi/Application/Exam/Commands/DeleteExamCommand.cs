@@ -10,6 +10,8 @@
             ExamId = examId;
         }
 
+        public string Region => "Exams";
+
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
         public int ExamId { get; private set; }
