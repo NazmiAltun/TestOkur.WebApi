@@ -39,7 +39,7 @@
 
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
-        public string Region => "Exams";
+        public string Region => Shared ? "Exams" : string.Empty;
 
         [DataMember]
         public DateTime ExamDate { get; private set; }

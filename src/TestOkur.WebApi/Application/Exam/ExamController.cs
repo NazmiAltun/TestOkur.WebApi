@@ -64,7 +64,16 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _processor.SendAsync(new DeleteExamCommand(id));
+            await _processor.SendAsync(new DeleteExamCommand(id, false));
+            return Ok();
+        }
+
+        [HttpDelete("shared/{id}")]
+        [Authorize(AuthorizationPolicies.Admin)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteSharedAsync(int id)
+        {
+            await _processor.SendAsync(new DeleteExamCommand(id, true));
             return Ok();
         }
 

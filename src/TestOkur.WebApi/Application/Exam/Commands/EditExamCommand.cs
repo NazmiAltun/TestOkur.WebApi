@@ -7,7 +7,7 @@
     using TestOkur.Optic.Form;
 
     [DataContract]
-    public class EditExamCommand : CommandBase, IClearCache
+    public class EditExamCommand : CommandBase, IClearCacheWithRegion
     {
         public EditExamCommand(
             Guid id,
@@ -37,7 +37,7 @@
             AnswerKeyOpticalForms = answerKeyOpticalForms;
         }
 
-        public string Region => "Exams";
+        public string Region => Shared ? "Exams" : string.Empty;
 
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
