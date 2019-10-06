@@ -10,7 +10,7 @@ namespace TestOkur.Report.Domain
 
     public class Evaluator : IEvaluator
     {
-        public List<StudentOpticalForm> JoinSets(List<StudentOpticalForm> firstSet, List<StudentOpticalForm> secondSet)
+        public IEnumerable<StudentOpticalForm> JoinSets(IEnumerable<StudentOpticalForm> firstSet, IEnumerable<StudentOpticalForm> secondSet)
         {
             foreach (var form in firstSet)
             {
@@ -25,14 +25,14 @@ namespace TestOkur.Report.Domain
             return firstSet;
         }
 
-        public List<StudentOpticalForm> Evaluate(List<AnswerKeyOpticalForm> answerKeyOpticalForms, List<StudentOpticalForm> forms)
+        public IEnumerable<StudentOpticalForm> Evaluate(IReadOnlyCollection<AnswerKeyOpticalForm> answerKeyOpticalForms, IReadOnlyCollection<StudentOpticalForm> forms)
         {
             if (forms == null || forms.Count == 0)
             {
                 return forms;
             }
 
-            if (answerKeyOpticalForms.Count == 1)
+            if (answerKeyOpticalForms.Count() == 1)
             {
                 answerKeyOpticalForms = answerKeyOpticalForms.First().Expand();
             }
@@ -56,7 +56,7 @@ namespace TestOkur.Report.Domain
             }
         }
 
-        private void FillMissingSections(List<AnswerKeyOpticalForm> answerKeyOpticalForms, List<StudentOpticalForm> forms)
+        private void FillMissingSections(IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms, IEnumerable<StudentOpticalForm> forms)
         {
             var answerFormKeyDict = answerKeyOpticalForms
                 .ToDictionary(x => x.Booklet, x => x);
@@ -106,7 +106,7 @@ namespace TestOkur.Report.Domain
             }
         }
 
-        private void EvaluateForms(List<AnswerKeyOpticalForm> answerKeyOpticalForms, IEnumerable<StudentOpticalForm> forms)
+        private void EvaluateForms(IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms, IEnumerable<StudentOpticalForm> forms)
         {
             var answerFormKeyDict = answerKeyOpticalForms
                 .ToDictionary(x => x.Booklet, x => x);

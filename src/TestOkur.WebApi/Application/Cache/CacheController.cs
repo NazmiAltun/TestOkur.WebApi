@@ -3,7 +3,6 @@
     using CacheManager.Core;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks;
 
     [Route("api/cache")]
     [AllowAnonymous]
@@ -17,7 +16,7 @@
         }
 
         [HttpDelete]
-        public async Task<IActionResult> ClearAsync()
+        public IActionResult Clear()
         {
             _cacheManager.Clear();
             return NoContent();

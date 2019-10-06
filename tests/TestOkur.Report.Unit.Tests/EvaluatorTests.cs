@@ -103,7 +103,7 @@
             studentForm.SetFromScanOutput(new ScanOutput("AAECEDBECC BD A       AB                                    ", 2), answerKeyForms.Last());
             studentForms.Add(studentForm);
 
-            studentForms = evaluator.Evaluate(answerKeyForms, studentForms);
+            studentForms = evaluator.Evaluate(answerKeyForms, studentForms).ToList();
             studentForms.First().Should().Match<StudentOpticalForm>(
                 x => x.Net == 95 &&
                      x.Score == 416.68f &&

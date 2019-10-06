@@ -37,7 +37,7 @@
                     .GetStudentOpticalFormsByExamIdAsync(examId))
                 .ToList();
             _logger.LogInformation($"Student forms count {studentForms.Count}");
-            studentForms = _evaluator.Evaluate(answerKeyForms, studentForms);
+            studentForms = _evaluator.Evaluate(answerKeyForms, studentForms).ToList();
 
             await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
             _logger.LogInformation($"Evaluation for exam {examId} ended...");
