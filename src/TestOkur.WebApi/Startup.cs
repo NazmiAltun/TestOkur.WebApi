@@ -8,6 +8,7 @@
     using IdentityModel;
     using MassTransit;
     using MassTransit.RabbitMqTransport;
+    using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.DataProtection;
@@ -32,7 +33,6 @@
     using System.IO;
     using System.Net.Http;
     using System.Reflection;
-    using Microsoft.ApplicationInsights.Extensibility;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Data;
