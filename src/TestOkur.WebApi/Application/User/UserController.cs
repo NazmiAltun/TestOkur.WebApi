@@ -101,6 +101,7 @@
         }
 
         [HttpGet("me")]
+        [Authorize(AuthorizationPolicies.Customer)]
         [ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRequestedUserInfoAsync([FromQuery]string version)
         {
