@@ -4,13 +4,11 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Domain;
-    using TestOkur.Report.Models;
     using TestOkur.Report.Repositories;
 
     [Route("api/v1/evaluate")]

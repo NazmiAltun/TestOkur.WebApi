@@ -1,211 +1,239 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-	<title>SINAV SONUÇ LİSTESİ</title>
-	<style type='text/css'>
-		h1 {
-			text-align: center;
-		}
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <title>SINAV SONUÇ LİSTESİ</title>
+    <style type='text/css'>
+        html {
+            font-size: 100%;
+        }
+        {{#if secondaryLessons}}
+            html {
+                font-size: 75%;
+            }
+        {{/if}}
+        h1 {
+            text-align: center;
+        }
 
-		.grid-container {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-		}
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
 
-		.grid-item {
-		}
+        .grid-item {}
 
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			font-family: Arial Narrow,Arial,sans-serif;
-			font-size: 12px;
-		}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 1rem;
+        }
 
-		table,
-		th,
-		td {
-			border: solid 1px black;
-			text-align: center;
-		}
-		
-		th.rotate90{
-		    transform: rotate(-90deg);
-			padding-top:20px;
-			padding-bottom:20px;
-		}
+        table,
+        th,
+        td {
+            border: solid 1px black;
+            text-align: center;
+        }
 
-		th,
-		td {
-			padding-right: 2px;
-			padding-left: 2px;
-		}
+        th.rotate90 {
+            transform: rotate(-90deg);
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
 
-		tbody tr:nth-child(even) {
-			background: #f2ed98;
-		}
+        th,
+        td {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
 
-		thead tr,tfoot tr {
-			background: #f79307;
-		}
-	</style>
+        tbody tr:nth-child(even) {
+            background: #f2ed98;
+        }
+
+        thead tr,
+        tfoot tr {
+            background: #f79307;
+        }
+    </style>
 </head>
 
 <body>
-	<h1>
-		{{examName}} SINAV SONUÇ LİSTESİ
-	</h1>
-	<div class='grid-container'>
-		<div class='grid-item'>
-			<strong>Sınav Adı :</strong>
-		</div>
-		<div class='grid-item'>
-			{{examName}}
-		</div>
-		<div class='grid-item'>
-			<strong>Sınıf :</strong>
-		</div>
-		<div class='grid-item'>
-			{{classroom}}
-		</div>
-	</div>
-	<br />
-	<div class='grid-container'>
-		<div class='grid-item'>
-			<strong>Sınav Tarihi :</strong>
-		</div>
-		<div class='grid-item'>
-			{{examDate}}
-		</div>
-		<div class='grid-item'>
-		</div>
-		<div class='grid-item'>
-		</div>
-	</div>
-	<br>
-	<table>
-		<thead>
-			<tr>
-				<th class='rotate90' rowspan='2'>Sıra</th>
-				<th rowspan='2'>Öğrenci No </th>
-				<th rowspan='2'>Adı Soyadı</th>
-				<th class='rotate90' rowspan='2'>Sınıf</th>
-				<th class='rotate90' rowspan='2'>Kitapcik</th>
-				{{#each lessons}}
-				<th colspan='4'>{{this}}</th>
-				{{/each}}
-				<th colspan='4'>Toplam</th>
-				<th rowspan='2'>Puan</th>
-				<th rowspan='2'>Başarı</th>
-				<th rowspan='2'>Sınıf Sıra</th>
-				<th rowspan='2'>Okul Sıra</th>
-			</tr>
-			<tr>
-				{{#each lessons}}
-				<th>D</th>
-				<th>Y</th>
-				<th>B</th>
-				<th>N</th>
-				{{/each}}
-				<th>D</th>
-				<th>Y</th>
-				<th>B</th>
-				<th>N</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each list}}
-			<tr>
-				<td>
-					{{rowOrder}}
-				</td>
-				<td>
-					{{studentNumber}}
-				</td>
-				<td>
-					{{studentFirstName}} {{studentLastName}}
-				</td>
-				<td>
-					{{classroom}}
-				</td>
-				<td>
-					{{booklet}}
-				</td>
-				{{#each sections}}
-				<td>{{correctCount}}</td>
-				<td>{{wrongCount}}</td>
-				<td>{{emptyCount}}</td>
-				<td>{{formatTwoDecimalPlaces net}}</td>
-				{{/each}}
-				<td>{{correctCount}}</td>
-				<td>{{wrongCount}}</td>
-				<td>{{emptyCount}}</td>
-				<td>{{formatTwoDecimalPlaces net}}</td>
-				<td>{{formatTwoDecimalPlaces score}}</td>
-				<td>%{{formatOneDecimalPlace successPercent}}</td>
-				<td>{{classroomOrder}}</td>
-				<td>{{schoolOrder}}</td>
-			</tr>
-			{{/each}}
-			<tr height="40">
-			    <td colspan="5">
-			        Ortalama
-			    </td>
-			    {{#each averageList.sections}}
-			    <td>{{formatTwoDecimalPlaces correct}}</td>
-			    <td>{{formatTwoDecimalPlaces wrong}}</td>
-			    <td>{{formatTwoDecimalPlaces empty}}</td>
-			    <td>{{formatTwoDecimalPlaces net}}</td>
-			    {{/each}}
-			    <td>{{formatTwoDecimalPlaces averageList.correct}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.wrong}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.empty}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.net}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.averageScore}}</td>
-			    <td>%{{formatOneDecimalPlace averageList.averageSuccessPercent}}</td>
-			</tr>
-				<tr height="40">
-			    <td colspan="5">
-			        Basari(%)
-			    </td>
-			    {{#each averageList.sections}}
-			    <td>{{formatTwoDecimalPlaces correctPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces wrongPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces emptyPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces netPercent}}</td>
-			    {{/each}}
-			    <td>{{formatTwoDecimalPlaces averageList.correctPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.wrongPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.emptyPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.netPercent}}</td>
-			    <td>{{formatTwoDecimalPlaces averageList.averageScorePercent}}</td>
-			</tr>
-		</tbody>
-		<tfoot>
-		    <tr>
-		         <td colspan="5">
-			    </td>
-			     {{#each averageList.sections}}
-			    <td>D</td>
-			    <td>Y</td>
-			    <td>B</td>
-			    <td>N</td>
-			    {{/each}}
-			    <td>D</td>
-			    <td>Y</td>
-			    <td>B</td>
-			    <td>N</td>
-		    </tr>
-		    <tr>
-				<th colspan='5'></th>
-				{{#each lessons}}
-				<th colspan='4'>{{this}}</th>
-				{{/each}}
-				<th colspan='4'>Toplam</th>
-			</tr>
-		</tfoot>
-	</table>
+    <h1>
+        {{examName}} SINAV SONUÇ LİSTESİ
+    </h1>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Adı :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examName}}
+        </div>
+        <div class='grid-item'>
+            <strong>Sınıf :</strong>
+        </div>
+        <div class='grid-item'>
+            {{classroom}}
+        </div>
+    </div>
+    <br />
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Tarihi :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examDate}}
+        </div>
+        <div class='grid-item'>
+        </div>
+        <div class='grid-item'>
+        </div>
+    </div>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th class='rotate90' rowspan='2'>Sıra</th>
+                <th rowspan='2'>Öğrenci No </th>
+                <th rowspan='2'>Adı Soyadı</th>
+                <th class='rotate90' rowspan='2'>Sınıf</th>
+                <th class='rotate90' rowspan='2'>Kitapcik</th>
+                {{#each lessons}}
+                <th colspan='4'>{{this}}</th>
+                {{/each}} {{#each secondaryLessons}}
+                <th>{{this}}</th>
+                {{/each}}
+                <th colspan='4'>Toplam</th>
+                {{#each scoreNames}}
+                <th rowspan='2'>{{this}}</th>
+                {{/each}}
+                <th rowspan='2'>Başarı</th>
+                <th rowspan='2'>Sınıf Sıra</th>
+                <th rowspan='2'>Okul Sıra</th>
+            </tr>
+            <tr>
+                {{#each lessons}}
+                <th>D</th>
+                <th>Y</th>
+                <th>B</th>
+                <th>N</th>
+                {{/each}} {{#each secondaryLessons}}
+                <th>N</th>
+                {{/each}}
+                <th>D</th>
+                <th>Y</th>
+                <th>B</th>
+                <th>N</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each list}}
+            <tr>
+                <td>
+                    {{rowOrder}}
+                </td>
+                <td>
+                    {{studentNumber}}
+                </td>
+                <td>
+                    {{studentFirstName}} {{studentLastName}}
+                </td>
+                <td>
+                    {{classroom}}
+                </td>
+                <td>
+                    {{booklet}}
+                </td>
+                {{#each sections}}
+                <td>{{correctCount}}</td>
+                <td>{{wrongCount}}</td>
+                <td>{{emptyCount}}</td>
+                <td>{{formatTwoDecimalPlaces net}}</td>
+                {{/each}} {{#each secondarySections}}
+                <td>{{formatTwoDecimalPlaces net}}</td>
+                {{/each}}
+                <td>{{correctCount}}</td>
+                <td>{{wrongCount}}</td>
+                <td>{{emptyCount}}</td>
+                <td>{{formatTwoDecimalPlaces net}}</td>
+                {{#each scores}}
+                <td>{{formatTwoDecimalPlaces this}}</td>
+                {{/each}}
+                <td>%{{formatOneDecimalPlace successPercent}}</td>
+                <td>{{classroomOrder}}</td>
+                <td>{{schoolOrder}}</td>
+            </tr>
+            {{/each}}
+            <tr height="40">
+                <td colspan="5">
+                    Ortalama
+                </td>
+                {{#each averageList.sections}}
+                <td>{{formatTwoDecimalPlaces correct}}</td>
+                <td>{{formatTwoDecimalPlaces wrong}}</td>
+                <td>{{formatTwoDecimalPlaces empty}}</td>
+                <td>{{formatTwoDecimalPlaces net}}</td>
+                {{/each}} {{#each averageList.secondarySections}}
+                <td>{{formatTwoDecimalPlaces net}}</td>
+                {{/each}}
+                <td>{{formatTwoDecimalPlaces averageList.correct}}</td>
+                <td>{{formatTwoDecimalPlaces averageList.wrong}}</td>
+                <td>{{formatTwoDecimalPlaces averageList.empty}}</td>
+                <td>{{formatTwoDecimalPlaces averageList.net}}</td>
+                {{#each averageList.averageScores}}
+                <td>{{formatTwoDecimalPlaces this}}</td>
+                {{/each}}
+                <td>%{{formatOneDecimalPlace averageList.averageSuccessPercent}}</td>
+            </tr>
+            <tr height="40">
+                <td colspan="5">
+                    Basari(%)
+                </td>
+                {{#each averageList.sections}}
+                <td>{{formatTwoDecimalPlaces correctPercent}}</td>
+                <td>{{formatTwoDecimalPlaces wrongPercent}}</td>
+                <td>{{formatTwoDecimalPlaces emptyPercent}}</td>
+                <td>{{formatTwoDecimalPlaces netPercent}}</td>
+                {{/each}} {{#each averageList.secondarySections}}
+                <td>{{formatTwoDecimalPlaces netPercent}}</td>
+                {{/each}}
+                <td>{{formatTwoDecimalPlaces averageList.correctPercent}}</td>
+                <td>{{formatTwoDecimalPlaces averageList.wrongPercent}}</td>
+                <td>{{formatTwoDecimalPlaces averageList.emptyPercent}}</td>
+                <td>{{formatTwoDecimalPlaces averageList.netPercent}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                </td>
+                {{#each averageList.sections}}
+                <td>D</td>
+                <td>Y</td>
+                <td>B</td>
+                <td>N</td>
+                {{/each}} {{#each averageList.secondarySections}}
+                <td>N</td>
+                {{/each}}
+                <td>D</td>
+                <td>Y</td>
+                <td>B</td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <th colspan='5'></th>
+                {{#each lessons}}
+                <th colspan='4'>{{this}}</th>
+                {{/each}} {{#each secondaryLessons}}
+                <th>{{this}}</th>
+                {{/each}}
+                <th colspan='4'>Toplam</th>
+            </tr>
+        </tfoot>
+    </table>
 </body>
 
 </html>
