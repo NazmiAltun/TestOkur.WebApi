@@ -26,14 +26,16 @@
             _opticalFormRepository = opticalFormRepository;
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<StudentOpticalForm>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> JoinAndEvaluateAsync([FromBody, Required]CombineExamResultsModel model)
+        public async Task<IActionResult> JoinAndEvaluateAsync(
+            [FromQuery] int primaryExamId,
+            [FromQuery] int secondaryExamId)
         {
-            var primaryExamForms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(model.PrimaryExamId);
-            var secondaryExamForms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(model.SecondaryExamId);
+            var primaryExamForms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(primaryExamId);
+            var secondaryExamForms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(secondaryExamId);
             var combinedExamForms = _evaluator.JoinSets(primaryExamForms, secondaryExamForms);
-            var answerKeyOpticalForms = await _opticalFormRepository.GetAnswerKeyOpticalForms(model.PrimaryExamId);
+            var answerKeyOpticalForms = await _opticalFormRepository.GetAnswerKeyOpticalForms(primaryExamId);
 
             return Ok(_evaluator.Evaluate(answerKeyOpticalForms.ToList(), combinedExamForms.ToList()));
         }
