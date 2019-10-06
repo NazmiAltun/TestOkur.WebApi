@@ -32,6 +32,7 @@
     using System.IO;
     using System.Net.Http;
     using System.Reflection;
+    using Microsoft.ApplicationInsights.Extensibility;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Data;
@@ -224,6 +225,7 @@
             services.AddScoped<IUserIdProvider, UserIdProvider>();
             services.AddScoped<IProcessor, Processor>();
             services.AddScoped<ICommandQueryLogger, CommandQueryLogger>();
+            services.AddSingleton<ITelemetryInitializer, HeaderTelemetryInitializer>();
             services.AddHttpContextAccessor();
         }
 
