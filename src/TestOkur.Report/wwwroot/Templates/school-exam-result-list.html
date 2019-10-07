@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <title>OKUL SINAV SONUÇ LİSTESİ</title>
+    <style type='text/css'>
+        h1 {
+            text-align: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 1rem;
+        }
+
+        table,
+        th,
+        td {
+            border: solid 1px black;
+            text-align: center;
+        }
+
+        th.rotate90 {
+            transform: rotate(-90deg);
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f2ed98;
+        }
+
+        thead tr,
+        tfoot tr {
+            background: #f79307;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        OKUL SINAV SONUÇ LİSTESİ
+    </h1>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Adı :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examName}}
+        </div>
+        <div class='grid-item'>
+            <strong>İl :</strong>
+        </div>
+        <div class='grid-item'>
+            {{city}}
+        </div>
+    </div>
+    <br />
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Tarihi :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examDate}}
+        </div>
+        <div class='grid-item'>
+            <strong>İlçe :</strong>
+        </div>
+        <div class='grid-item'>
+            {{district}}
+        </div>
+    </div>
+    <br />
+    <table>
+        <thead>
+            <tr>
+                <th colspan='6'>OKUL BİLGİLERİ</th>
+                <th colspan='{{netsSpanLength}}'>NET ORTALAMALARI</th>
+                <th colspan='5'>ORTALAMA PUAN ve DERECE</th>
+            </tr>
+            <tr>
+                <th class='rotate90'>Sıra</th>
+                <th>OKUL ADI</th>
+                <th>İL</th>
+                <th>İLÇE</th>
+                <th>SINIF SAYISI</th>
+                <th>ÖĞRENCİ SAYISI</th>
+                {{#each lessonNames}}
+                <th>{{this}}</th>
+                {{/each}}
+                <th>TOPLAM</th>
+                <th>Puan Ort.</th>
+                <th>Başarı (%)</th>
+                <th>İlçe Sıra</th>
+                <th>İl Sıra</th>
+                <th>Genel Sıra</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each list}}
+            <tr>
+                <td>{{rowNo}}</td>
+                <td>{{schoolName}}</td>
+                <td>{{city}}</td>
+                <td>{{district}}</td>
+                <td>{{classroomCount}}</td>
+                <td>{{studentCount}}</td>
+                {{#each lessonNets}}
+                <td>{{formatTwoDecimalPlaces this}}</td>
+                {{/each}}
+                <td>{{totalNets}}</td>
+                <td>{{scoreAverage}}</td>
+                <td>{{successPercent}}%</td>
+                <td>{{districtOrder}}</td>
+                <td>{{cityOrder}}</td>
+                <td>{{generalOrder}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan='4'>ORTALAMALAR</th>
+                <th>{{averages.classroomCount}}</th>
+                <th>{{averages.studentCount}}</th>
+                {{#each averages.lessonNets}}
+                <th>{{formatTwoDecimalPlaces this}}</th>
+                {{/each}}
+                <th>{{formatTwoDecimalPlaces averages.totalNets}}</th>
+                <th>{{formatOneDecimalPlace averages.averageScore}}</th>
+                <th>{{formatOneDecimalPlace averages.successPercent}}%</th>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>
