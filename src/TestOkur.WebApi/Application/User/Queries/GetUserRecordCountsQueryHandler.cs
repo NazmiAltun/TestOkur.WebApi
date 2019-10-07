@@ -26,7 +26,7 @@
             const string sql = @"SELECT  (SELECT COUNT(*) from classrooms WHERE created_by=@userId) as classroom_count,
   								(SELECT COUNT(*) from lessons WHERE created_by=@userId) as lesson_count,
 								(SELECT COUNT(*) from students WHERE created_by=@userId) as student_count,
-								0 as exam_count
+								(SELECT COUNT(*) from exams WHERE created_by=@userId) as exam_count
 								";
             using (var connection = new NpgsqlConnection(_connectionString))
             {
