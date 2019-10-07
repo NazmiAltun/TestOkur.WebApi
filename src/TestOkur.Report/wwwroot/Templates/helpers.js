@@ -34,3 +34,11 @@ function getStatusClass(status) {
     }
     return '';
 }
+function ifTooManySections(secondaryLessons, lessons, opts) {
+    if(secondaryLessons || lessons.length > 5  ){
+        return opts.fn(this);
+    }
+    else {
+        return opts.inverse(this);
+    }
+}
