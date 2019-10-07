@@ -45,7 +45,8 @@
         {
             var forms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId);
 
-            return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId()));
+            return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId() ||
+                                       _httpContextAccessor.CheckIfAdmin()));
         }
 
         [HttpGet("student/{studentId}")]
@@ -54,7 +55,8 @@
         {
             var forms = await _opticalFormRepository.GetStudentOpticalByStudentIdAsync(studentId);
 
-            return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId()));
+            return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId() ||
+                                       _httpContextAccessor.CheckIfAdmin()));
         }
 
         [HttpPost]
