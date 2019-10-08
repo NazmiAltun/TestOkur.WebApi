@@ -1,14 +1,15 @@
-﻿namespace TestOkur.WebApi.Infrastructure
+﻿namespace TestOkur.WebApi
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using CacheManager.Core;
     using Dapper;
     using IdentityModel;
     using Microsoft.AspNetCore.Http;
     using Npgsql;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using TestOkur.Infrastructure;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Configuration;
@@ -18,6 +19,7 @@
         private const string CacheKey = "UserIdMap";
 
         private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(4);
+        private static readonly SemaphoreSlim WriteSemaphore = new SemaphoreSlim(1, 1);
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager<Dictionary<string, int>> _cacheManager;
         private readonly string _connectionString;
@@ -38,19 +40,23 @@
             var subjectId = _httpContextAccessor.HttpContext?.User?
                 .FindFirst(JwtClaimTypes.Subject)?.Value;
 
-            return subjectId == null ? default : await GetIdFromDbAsync(subjectId);
-        }
-
-        private async Task<int> GetIdFromDbAsync(string subjectId)
-        {
-            const string sql = "SELECT id FROM users WHERE subject_id=@subjectId";
-
-            using (var connection = new NpgsqlConnection(_connectionString))
+            if (subjectId == null)
             {
-                return await connection.QueryFirstOrDefaultAsync<int>(
-                    sql,
-                    new { subjectId });
+                return default;
             }
+
+            var idDictionary = _cacheManager.Get(CacheKey);
+
+            await WriteSemaphore.WaitAsync();
+            if (idDictionary == null)
+            {
+                idDictionary = await ReadIdsFromDbAsync();
+                StoreToCache(idDictionary);
+            }
+
+            WriteSemaphore.Release(1);
+
+            return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
         }
 
         private async Task<Dictionary<string, int>> ReadIdsFromDbAsync()
