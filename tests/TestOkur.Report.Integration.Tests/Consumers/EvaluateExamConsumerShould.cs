@@ -38,7 +38,8 @@
                 var consumer = new EvaluateExamConsumer(
                     repository as IOpticalFormRepository,
                     logger as ILogger<EvaluateExamConsumer>,
-                    new Evaluator());
+                    new Evaluator(),
+                    null);
                 await consumer.ConsumeAsync(examId);
                 var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
                 studentOpticalForms.Should().HaveCount(forms.Count);

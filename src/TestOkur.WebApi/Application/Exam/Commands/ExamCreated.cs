@@ -16,6 +16,7 @@
             ExamDate = exam.ExamDate;
             ExamTypeName = exam.ExamType.Name.Value;
             ExamName = exam.Name.Value;
+            Shared = exam.Shared;
             AnswerKeyOpticalForms = answerKeyOpticalForms;
         }
 
@@ -28,6 +29,8 @@
         public string ExamName { get; }
 
         public string ExamTypeName { get; }
+
+        public bool Shared { get; }
 
         public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
     }

@@ -11,14 +11,16 @@
     public class EvaluateExamConsumer : IConsumer<IEvaluateExam>
     {
         private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly ISchoolResultRepository _schoolResultRepository;
         private readonly ILogger<EvaluateExamConsumer> _logger;
         private readonly IEvaluator _evaluator;
 
-        public EvaluateExamConsumer(IOpticalFormRepository opticalFormRepository, ILogger<EvaluateExamConsumer> logger, IEvaluator evaluator)
+        public EvaluateExamConsumer(IOpticalFormRepository opticalFormRepository, ILogger<EvaluateExamConsumer> logger, IEvaluator evaluator, ISchoolResultRepository schoolResultRepository)
         {
             _opticalFormRepository = opticalFormRepository;
             _logger = logger;
             _evaluator = evaluator;
+            _schoolResultRepository = schoolResultRepository;
         }
 
         public async Task Consume(ConsumeContext<IEvaluateExam> context)
@@ -41,6 +43,12 @@
 
             await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
             _logger.LogInformation($"Evaluation for exam {examId} ended...");
+
+            if (answerKeyForms.First().SharedExam)
+            {
+                var results = _evaluator.Evaluate(studentForms);
+                await _schoolResultRepository.AddOrUpdateManyAsync(results);
+            }
         }
     }
 }

@@ -25,6 +25,29 @@ namespace TestOkur.Report.Domain
             return firstSet;
         }
 
+        public IEnumerable<SchoolResult> Evaluate(IEnumerable<StudentOpticalForm> forms)
+        {
+            var results = forms.GroupBy(
+                f => f.SchoolId,
+                f => f,
+                (schoolId, fs) =>
+                new SchoolResult(fs.First())
+                {
+                    ClassroomCount = fs.Select(f => f.ClassroomId).Distinct().Count(),
+                    SuccessPercent = fs.Average(f => f.SuccessPercent),
+                });
+            var orderList = new SchoolOrderList(results, r => r.ScoreAverage);
+
+            foreach (var result in results)
+            {
+                result.CityOrder = orderList.GetCityOrder(result);
+                result.DistrictOrder = orderList.GetDistrictOrder(result);
+                result.GeneralOrder = orderList.GetGeneralOrder(result);
+            }
+
+            return results;
+        }
+
         public IEnumerable<StudentOpticalForm> Evaluate(IReadOnlyCollection<AnswerKeyOpticalForm> answerKeyOpticalForms, IReadOnlyCollection<StudentOpticalForm> forms)
         {
             if (forms == null || forms.Count == 0)

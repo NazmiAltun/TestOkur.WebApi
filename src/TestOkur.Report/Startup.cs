@@ -166,6 +166,7 @@ namespace TestOkur.Report
                 BsonClassMap.RegisterClassMap<ReportRequest>(cm => { cm.AutoMap(); });
                 BsonClassMap.RegisterClassMap<StudentOpticalForm>(cm => { cm.AutoMap(); });
                 BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>(cm => { cm.AutoMap(); });
+                BsonClassMap.RegisterClassMap<SchoolResult>(cm => { cm.AutoMap(); });
             }
         }
 
@@ -173,6 +174,7 @@ namespace TestOkur.Report
         {
             services.AddTransient<IOpticalFormRepository, OpticalFormRepository>();
             services.AddTransient<IReportRequestRepository, ReportRequestRepository>();
+            services.AddTransient<ISchoolResultRepository, SchoolResultRepository>();
             services.AddSingleton<IRequestResponseLogger, RequestResponseMongodbLogger>();
             services.AddSingleton<IEvaluator, Evaluator>();
             services.AddHttpContextAccessor();
@@ -183,11 +185,16 @@ namespace TestOkur.Report
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(
-                    AuthorizationPolicies.Private,
+                    AuthorizationPolicies.Admin,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin)));
+
+                options.AddPolicy(
+                    AuthorizationPolicies.Private, 
                     policy => policy.RequireAssertion(context =>
                         context.User.IsInRole(Roles.Admin) ||
                         context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
-                                                   c.Value == Clients.Private)));
+                                           c.Value == Clients.Private)));
                 options.AddPolicy(
                     AuthorizationPolicies.Customer,
                     policy => policy.RequireAssertion(context =>

@@ -15,6 +15,7 @@
             IncorrectEliminationRate = exam.IncorrectEliminationRate;
             ExamDate = exam.ExamDate;
             ExamName = exam.Name.Value;
+            Shared = exam.Shared;
             AnswerKeyOpticalForms = answerKeyOpticalForms;
         }
 
@@ -25,6 +26,8 @@
         public DateTime ExamDate { get; }
 
         public string ExamName { get; }
+
+        public bool Shared { get; }
 
         public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
     }

@@ -4,6 +4,7 @@
     using TestOkur.Infrastructure.Mvc;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
+    using TestOkur.Report.Domain;
     using TestOkur.Report.Models;
 
     public class TestOkurContext
@@ -27,5 +28,8 @@
 
         public IMongoCollection<ReportRequest> ReportRequests =>
             _database.GetCollection<ReportRequest>("ReportRequests");
+
+        public IMongoCollection<SchoolResult> SchoolResults =>
+            _database.GetCollection<SchoolResult>("SchoolResults");
     }
 }

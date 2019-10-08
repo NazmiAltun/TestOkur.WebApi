@@ -14,6 +14,8 @@
 
         string ExamName { get; }
 
+        bool Shared { get; }
+
         IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; }
     }
 }

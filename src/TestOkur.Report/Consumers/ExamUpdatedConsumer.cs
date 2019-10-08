@@ -25,6 +25,7 @@
                 form.ExamId = context.Message.ExamId;
                 form.ExamDate = context.Message.ExamDate;
                 form.ExamName = context.Message.ExamName;
+                form.SharedExam = context.Message.Shared;
                 form.IncorrectEliminationRate = context.Message.IncorrectEliminationRate;
             }
 

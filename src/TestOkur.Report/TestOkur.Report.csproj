@@ -26,7 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="TestOkur.Infrastructure" Version="1.0.47" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.71" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.72" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json" Link="stylecop.json" />
@@ -35,8 +35,5 @@
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
     <ProjectReference Include="..\TestOkur.Domain\TestOkur.Domain.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 </Project>
