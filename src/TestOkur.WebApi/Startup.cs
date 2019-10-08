@@ -167,7 +167,6 @@
                 options.UseNpgsql(
                     connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
-                options.EnableSensitiveDataLogging();
             });
             services.AddSingleton<IApplicationDbContextFactory, ApplicationDbContextFactory>();
         }
