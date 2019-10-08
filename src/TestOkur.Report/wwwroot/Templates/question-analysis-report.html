@@ -20,6 +20,7 @@
         .question-container {
             border: 1px solid;
             display: block;
+            max-height:182px;
         }
 
         .grid-container {
@@ -29,9 +30,19 @@
 
         .chart-container {
             display: grid;
-            grid-row-gap: 20px;
             grid-template-columns: 1fr 1fr 1fr;
         }
+        
+        .line-breaker-firstpage{
+            display:block;
+            height:80px;
+        }
+        
+        .line-breaker{
+            display:block;
+            height:110px;
+        }
+        
     </style>
     <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
     <script>
@@ -156,6 +167,16 @@
                 </tr>
             </table>
         </div>
+        {{#ifFirstPageBreak @index}}
+            <div class='line-breaker-firstpage'></div>
+            <div class='line-breaker-firstpage'></div>
+            <div class='line-breaker-firstpage'></div>
+        {{/ifFirstPageBreak}}
+        {{#ifPageBreak @index}}
+            <div class='line-breaker'></div>
+            <div class='line-breaker'></div>
+            <div class='line-breaker'></div>
+        {{/ifPageBreak}}
         {{/each}}
     </div>
     <div style='page-break-before: always;'></div>
