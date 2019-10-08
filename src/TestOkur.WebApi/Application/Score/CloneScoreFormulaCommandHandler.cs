@@ -35,6 +35,7 @@
                     .ThenInclude(c => c.ExamLessonSection)
                     .ThenInclude(e => e.Lesson)
                     .Where(s => EF.Property<int>(s, "CreatedBy") == default)
+                    .AsNoTracking()
                     .ToListAsync(cancellationToken);
 
                 var list = new List<ScoreFormula>();
