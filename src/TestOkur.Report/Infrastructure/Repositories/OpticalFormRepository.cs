@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Report.Repositories
+﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
     using System;
     using System.Collections.Generic;

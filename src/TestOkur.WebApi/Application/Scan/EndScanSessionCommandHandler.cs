@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Scan
 {
-    using System;
+    using CacheManager.Core.Logging;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Paramore.Brighter;
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using CacheManager.Core.Logging;
-    using Microsoft.Extensions.Logging;
     using TestOkur.Data;
     using TestOkur.Infrastructure.Cqrs;
 

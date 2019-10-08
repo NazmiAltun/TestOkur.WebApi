@@ -10,7 +10,7 @@
     using TestOkur.Contracts.Classroom;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
-    using TestOkur.Report.Repositories;
+    using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.TestHelper;
     using Xunit;
 

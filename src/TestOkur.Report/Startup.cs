@@ -37,8 +37,8 @@ namespace TestOkur.Report
     using TestOkur.Report.Domain;
     using TestOkur.Report.Extensions;
     using TestOkur.Report.Infrastructure;
+    using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Models;
-    using TestOkur.Report.Repositories;
 
     [ExcludeFromCodeCoverage]
     public class Startup : IStartup

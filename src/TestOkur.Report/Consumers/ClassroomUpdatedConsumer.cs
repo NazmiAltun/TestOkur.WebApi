@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using MassTransit;
     using TestOkur.Contracts.Classroom;
-    using TestOkur.Report.Repositories;
+    using TestOkur.Report.Infrastructure.Repositories;
 
     internal class ClassroomUpdatedConsumer : IConsumer<IClassroomUpdated>
     {

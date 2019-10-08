@@ -1,6 +1,5 @@
-﻿namespace TestOkur.Report.Repositories
+﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using TestOkur.Report.Models;
 

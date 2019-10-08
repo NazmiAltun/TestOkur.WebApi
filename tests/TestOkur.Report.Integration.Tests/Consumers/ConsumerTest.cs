@@ -9,8 +9,8 @@
     using TestOkur.Contracts.Exam;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
+    using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Integration.Tests.OpticalForm;
-    using TestOkur.Report.Repositories;
     using TestOkur.TestHelper;
 
     public abstract class ConsumerTest : OpticalFormTest

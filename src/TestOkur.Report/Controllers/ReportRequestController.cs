@@ -6,8 +6,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     using TestOkur.Common;
+    using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Models;
-    using TestOkur.Report.Repositories;
 
     [Route("api/v1/report-requests")]
     public class ReportRequestController : ControllerBase

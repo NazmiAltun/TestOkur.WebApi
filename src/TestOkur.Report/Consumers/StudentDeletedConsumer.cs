@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using MassTransit;
     using TestOkur.Contracts.Student;
-    using TestOkur.Report.Repositories;
+    using TestOkur.Report.Infrastructure.Repositories;
 
     internal class StudentDeletedConsumer : IConsumer<IStudentDeleted>
     {

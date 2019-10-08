@@ -6,7 +6,7 @@
     using Microsoft.Extensions.Logging;
     using TestOkur.Report.Domain;
     using TestOkur.Report.Events;
-    using TestOkur.Report.Repositories;
+    using TestOkur.Report.Infrastructure.Repositories;
 
     public class EvaluateExamConsumer : IConsumer<IEvaluateExam>
     {
