@@ -13,6 +13,7 @@
             foreach (var type in GetAuditableTypes())
             {
                 modelBuilder.Entity(type).Property<int>("CreatedBy");
+                modelBuilder.Entity(type).HasIndex("CreatedBy");
                 modelBuilder.Entity(type).Property<int>("UpdatedBy");
                 modelBuilder.Entity(type).Property<DateTime>("CreatedOnUTC");
                 modelBuilder.Entity(type).Property<DateTime>("UpdatedOnUTC");
