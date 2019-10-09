@@ -32,20 +32,35 @@
                 .Select(s => new SchoolResultSection()
                 {
                     LessonName = s.LessonName,
-                    CityAverageNet = s.CityAverageNet,
+                    CityAverageNet = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .First()
+                        .CityAverageNet,
                     CorrectCount = groupedSections
                         .First(g => g.Key == s.LessonName)
                         .Average(x => (float)x.CorrectCount),
-                    DistrictAverageNet = s.DistrictAverageNet,
+                    DistrictAverageNet = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .First()
+                        .DistrictAverageNet,
                     EmptyCount = groupedSections
                         .First(g => g.Key == s.LessonName)
                         .Average(x => (float)x.EmptyCount),
-                    GeneralAverageNet = s.GeneralAverageNet,
-                    Net = s.SchoolAverageNet,
+                    GeneralAverageNet = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .First()
+                        .GeneralAverageNet,
+                    Net = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .First()
+                        .SchoolAverageNet,
                     WrongCount = groupedSections
                         .First(g => g.Key == s.LessonName)
                         .Average(x => (float)x.WrongCount),
-                    QuestionCount = s.QuestionCount,
+                    QuestionCount = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .First()
+                        .QuestionCount,
                     SuccessPercent = groupedSections
                         .First(g => g.Key == s.LessonName)
                         .Average(x => x.SuccessPercent),

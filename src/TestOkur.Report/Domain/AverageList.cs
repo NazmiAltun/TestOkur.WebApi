@@ -61,9 +61,9 @@
             return _classroom[classroomId].TryGetValue(lessonName, out var value) ? value : 0;
         }
 
-        public float GetSchoolAverage(string lessonName, int userId)
+        public float GetSchoolAverage(string lessonName, int schoolId)
         {
-            return _school[userId].TryGetValue(lessonName, out var value) ? value : 0;
+            return _school[schoolId].TryGetValue(lessonName, out var value) ? value : 0;
         }
 
         private Dictionary<int, Dictionary<string, float>> Calculate(
