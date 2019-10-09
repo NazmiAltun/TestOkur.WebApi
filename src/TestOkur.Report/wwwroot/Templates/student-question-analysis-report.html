@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <title>{{examName}} ÖĞRENCİ - SORU ANALİZİ</title>
+    <style type='text/css'>
+        h1,
+        h3,
+        h5 {
+            text-align: center;
+        }
+
+        h3 {
+            background: #1db1d6;
+            border: 1px solid;
+            margin-top: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial Narrow, Arial, sans-serif;
+            font-size: 0.75rem;
+        }
+
+        table,
+        th,
+        td {
+            border: solid 1px black;
+            text-align: center;
+        }
+
+        th.rotate90,
+        td.rotate90 {
+            transform: rotate(-90deg);
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        th {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f2ed98;
+        }
+
+        thead tr,
+        tfoot tr {
+            background: #f79307;
+        }
+
+        td.wrong {
+            background: #ff0f0f;
+        }
+
+        td.empty {
+            background: #bababa;
+        }
+
+        td.correct {
+            background: #4ceb34;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        {{examName}} ÖĞRENCİ - SORU ANALİZİ
+    </h1>
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Adı :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examName}}
+        </div>
+        <div class='grid-item'>
+            <strong>Sınıf :</strong>
+        </div>
+        <div class='grid-item'>
+            {{classroom}}
+        </div>
+    </div>
+    <br />
+    <div class='grid-container'>
+        <div class='grid-item'>
+            <strong>Sınav Tarihi :</strong>
+        </div>
+        <div class='grid-item'>
+            {{examDate}}
+        </div>
+        <div class='grid-item'>
+            <strong>Kitapcik :</strong>
+        </div>
+        <div class='grid-item'>
+            {{booklet}}
+        </div>
+    </div>
+    {{#each sections}}
+    <h3>{{lessonName}}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan='2'>Sıra</th>
+                <th rowspan='2'>Öğr. No</th>
+                <th rowspan='2'>Adı - Soyadı</th>
+                <th colspan='2'>Cevap</th>
+                {{#each answers}}
+                <th>{{correctAnswer}}</th>
+                {{/each}}
+                <th rowspan='2'>Doğru</th>
+                <th rowspan='2'>Yanlış</th>
+                <th rowspan='2'>Boş</th>
+                <th rowspan='2'>Net</th>
+                <th rowspan='2'>Başarı (%)</th>
+            </tr>
+            <tr>
+
+                <th>Sınıf</th>
+                <th>Kit.</th>
+                {{#each answers}}
+                <th>{{questionNo}}</th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each studentResults}}
+            <tr>
+                <td>{{rowNo}}</td>
+                <td>{{studentNumber}}</td>
+                <td>{{studentFirstName}} {{studentLastName}}</td>
+                <td>{{classroom}}</td>
+                <td>{{booklet}}</td>
+                {{#each answers}}
+                <td class='{{getQuestionClass result}}'>{{answer}}</td>
+                {{/each}}
+                <td>{{correctCount}}</td>
+                <td>{{wrongCount}}</td>
+                <td>{{emptyCount}}</td>
+                <td>{{formatTwoDecimalPlaces net}}</td>
+                <td>{{formatOneDecimalPlace successPercent}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class='rotate90' colspan='3' rowspan='3'>TOPLAM</td>
+                <td colspan='2'>Doğru</td>
+                {{#each answers}}
+                <td>{{correctCount}}</td>
+                {{/each}}
+                <td>
+                    {{formatTwoDecimalPlaces correctCount}}
+                </td>
+                <td>
+                    {{formatTwoDecimalPlaces wrongCount}}
+                </td>
+                <td>
+                    {{formatTwoDecimalPlaces emptyCount}}
+                </td>
+                <td>
+                    {{formatTwoDecimalPlaces net}}
+                </td>
+                <td>
+                    {{formatOneDecimalPlace successPercent}}%
+                </td>
+            </tr>
+            <tr>
+                <td colspan='2'>Yanlış</td>
+                {{#each answers}}
+                <td>{{wrongCount}}</td>
+                {{/each}}
+            </tr>
+            <tr>
+                <td colspan='2'>Boş</td>
+                {{#each answers}}
+                <td>{{emptyCount}}</td>
+                {{/each}}
+            </tr>
+            <tr>
+                <td colspan='3'></td>
+                <td colspan='2'>Başarı (%)</td>
+                {{#each answers}}
+                <td>{{formatOneDecimalPlace successPercent}}</td>
+                {{/each}}
+            </tr>
+        </tfoot>
+    </table>
+    {{/each}}
+</body>
+
+</html>
