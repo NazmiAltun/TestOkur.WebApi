@@ -40,7 +40,8 @@ namespace TestOkur.Report.Domain
 
             for (var i = 0; i < sections.Count; i++)
             {
-                sectionOrderList.Add(sections[i].LessonName, new SchoolOrderList(results, r => r.Sections[i].Net));
+                var index = i;
+                sectionOrderList.Add(sections[i].LessonName, new SchoolOrderList(results, r => r.Sections[index].Net));
             }
 
             foreach (var result in results)
