@@ -28,11 +28,11 @@
             text-align: center;
         }
 
-        th.rotate90 {
-            transform: rotate(-90deg);
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
+            th.rotate90 {
+                transform: rotate(-90deg);
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
 
         th,
         td {
@@ -115,16 +115,16 @@
             <tr>
                 <td>{{rowNo}}</td>
                 <td>{{schoolName}}</td>
-                <td>{{city}}</td>
-                <td>{{district}}</td>
+                <td>{{cityName}}</td>
+                <td>{{districtName}}</td>
                 <td>{{classroomCount}}</td>
                 <td>{{studentCount}}</td>
                 {{#each lessonNets}}
                 <td>{{formatTwoDecimalPlaces this}}</td>
                 {{/each}}
-                <td>{{totalNets}}</td>
-                <td>{{scoreAverage}}</td>
-                <td>{{successPercent}}%</td>
+                <td>{{formatTwoDecimalPlaces totalNet}}</td>
+                <td>{{formatOneDecimalPlace scoreAverage}}</td>
+                <td>{{formatOneDecimalPlace successPercent}}%</td>
                 <td>{{districtOrder}}</td>
                 <td>{{cityOrder}}</td>
                 <td>{{generalOrder}}</td>
@@ -133,7 +133,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th colspan='4'>ORTALAMALAR</th>
+                <th colspan='4'>TOPLAMLAR - ORTALAMALAR</th>
                 <th>{{averages.classroomCount}}</th>
                 <th>{{averages.studentCount}}</th>
                 {{#each averages.lessonNets}}
@@ -141,7 +141,7 @@
                 {{/each}}
                 <th>{{formatTwoDecimalPlaces averages.totalNets}}</th>
                 <th>{{formatOneDecimalPlace averages.averageScore}}</th>
-                <th>{{formatOneDecimalPlace averages.successPercent}}%</th>
+                <th>{{formatOneDecimalPlace averages.averageSuccessPercent}}%</th>
             </tr>
         </tfoot>
     </table>

@@ -25,17 +25,17 @@ namespace TestOkur.Report.Domain
             return firstSet;
         }
 
-        public IEnumerable<SchoolResult> Evaluate(IEnumerable<StudentOpticalForm> forms)
+        public IEnumerable<SchoolResult> EvaluateSchoolResults(IEnumerable<StudentOpticalForm> forms)
         {
             var results = forms.GroupBy(
                 f => f.SchoolId,
                 f => f,
                 (schoolId, fs) =>
-                new SchoolResult(fs.First())
-                {
-                    ClassroomCount = fs.Select(f => f.ClassroomId).Distinct().Count(),
-                    SuccessPercent = fs.Average(f => f.SuccessPercent),
-                });
+                    new SchoolResult(fs.First())
+                    {
+                        ClassroomCount = fs.Select(f => f.ClassroomId).Distinct().Count(),
+                        SuccessPercent = fs.Average(f => f.SuccessPercent),
+                    }).ToList();
             var orderList = new SchoolOrderList(results, r => r.ScoreAverage);
 
             foreach (var result in results)

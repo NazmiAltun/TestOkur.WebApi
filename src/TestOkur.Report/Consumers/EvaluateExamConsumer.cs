@@ -46,7 +46,7 @@
 
             if (answerKeyForms.First().SharedExam)
             {
-                var results = _evaluator.Evaluate(studentForms);
+                var results = _evaluator.EvaluateSchoolResults(studentForms);
                 await _schoolResultRepository.AddOrUpdateManyAsync(results);
             }
         }

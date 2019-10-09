@@ -20,6 +20,7 @@
             StudentCount = form.SchoolAttendanceCount;
             LessonNetAverages = form.Sections
                 .ToDictionary(s => s.LessonName, s => s.SchoolAverageNet);
+            CreatedOnUtc = DateTime.UtcNow;
         }
 
         public SchoolResult()
@@ -57,5 +58,7 @@
         public int GeneralOrder { get; set; }
 
         public Dictionary<string, float> LessonNetAverages { get; set; }
+
+        public DateTime CreatedOnUtc { get; set; }
     }
 }

@@ -9,6 +9,6 @@
 
         IEnumerable<StudentOpticalForm> Evaluate(IReadOnlyCollection<AnswerKeyOpticalForm> answerKeyOpticalForms, IReadOnlyCollection<StudentOpticalForm> forms);
 
-        IEnumerable<SchoolResult> Evaluate(IEnumerable<StudentOpticalForm> forms);
+        IEnumerable<SchoolResult> EvaluateSchoolResults(IEnumerable<StudentOpticalForm> forms);
     }
 }
