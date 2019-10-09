@@ -57,10 +57,10 @@
             font-size: 12px;
         }
 
-        table.single-col {
-            max-width: 150px;
-            font-size: 14px;
-        }
+            table.single-col {
+                max-width: 150px;
+                font-size: 14px;
+            }
 
         table,
         th,
@@ -116,7 +116,7 @@
         <div class='grid-item'>
             <strong>İl / İlçe</strong>
         </div>
-        <div class='grid-item'>{{city}} / {{district}}</div>
+        <div class='grid-item'>{{cityName}} / {{districtName}}</div>
         <div class='grid-item'>
             <strong>Sınav Tarihi</strong>
         </div>
@@ -197,7 +197,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{formatTwoDecimalPlaces averageScore}}</td>
+                        <td>{{formatTwoDecimalPlaces scoreAverage}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -288,7 +288,7 @@
     						text: 'Okul Puanının Ortalamalar ile Karşılaştırması'
     					}
 				}});
-			</script>
+            </script>
         </div>
     </div>
     <h3>DERSLERİN NET ORTALAMALARINA GÖRE KARŞILAŞTIRILMASI</h3>
@@ -320,7 +320,7 @@
     						text: '{{lessonName}}'
     					}
 				}});
-			</script>
+            </script>
         </div>
         {{/each}}
     </div>

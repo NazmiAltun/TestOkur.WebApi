@@ -190,7 +190,7 @@ namespace TestOkur.Report
                         context.User.IsInRole(Roles.Admin)));
 
                 options.AddPolicy(
-                    AuthorizationPolicies.Private, 
+                    AuthorizationPolicies.Private,
                     policy => policy.RequireAssertion(context =>
                         context.User.IsInRole(Roles.Admin) ||
                         context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&

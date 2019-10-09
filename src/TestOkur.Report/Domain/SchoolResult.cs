@@ -7,8 +7,9 @@
 
     public class SchoolResult
     {
-        public SchoolResult(StudentOpticalForm form)
+        public SchoolResult(IEnumerable<StudentOpticalForm> forms)
         {
+            var form = forms.First();
             ExamId = form.ExamId;
             SchoolId = form.SchoolId;
             SchoolName = form.SchoolName;
@@ -18,9 +19,36 @@
             DistrictName = form.DistrictName;
             ScoreAverage = form.SchoolScoreAverage;
             StudentCount = form.SchoolAttendanceCount;
-            LessonNetAverages = form.Sections
-                .ToDictionary(s => s.LessonName, s => s.SchoolAverageNet);
             CreatedOnUtc = DateTime.UtcNow;
+            ClassroomCount = forms.Select(f => f.ClassroomId).Distinct().Count();
+            SuccessPercent = forms.Average(f => f.SuccessPercent);
+
+            var groupedSections = forms.SelectMany(f => f.Sections)
+                .GroupBy(s => s.LessonName);
+
+            Sections = form.Sections
+                .Select(s => new SchoolResultSection()
+                {
+                    LessonName = s.LessonName,
+                    CityAverageNet = s.CityAverageNet,
+                    CorrectCount = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .Average(x => (float)x.CorrectCount),
+                    DistrictAverageNet = s.DistrictAverageNet,
+                    EmptyCount = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .Average(x => (float)x.EmptyCount),
+                    GeneralAverageNet = s.GeneralAverageNet,
+                    Net = s.SchoolAverageNet,
+                    WrongCount = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .Average(x => (float)x.WrongCount),
+                    QuestionCount = s.QuestionCount,
+                    SuccessPercent = groupedSections
+                        .First(g => g.Key == s.LessonName)
+                        .Average(x => x.SuccessPercent),
+                })
+                .ToList();
         }
 
         public SchoolResult()
@@ -57,8 +85,8 @@
 
         public int GeneralOrder { get; set; }
 
-        public Dictionary<string, float> LessonNetAverages { get; set; }
-
         public DateTime CreatedOnUtc { get; set; }
+
+        public List<SchoolResultSection> Sections { get; set; }
     }
 }

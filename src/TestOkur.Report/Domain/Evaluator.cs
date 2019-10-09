@@ -30,19 +30,28 @@ namespace TestOkur.Report.Domain
             var results = forms.GroupBy(
                 f => f.SchoolId,
                 f => f,
-                (schoolId, fs) =>
-                    new SchoolResult(fs.First())
-                    {
-                        ClassroomCount = fs.Select(f => f.ClassroomId).Distinct().Count(),
-                        SuccessPercent = fs.Average(f => f.SuccessPercent),
-                    }).ToList();
+                (schoolId, fs) => new SchoolResult(fs)).ToList();
             var orderList = new SchoolOrderList(results, r => r.ScoreAverage);
+            var sectionOrderList = new Dictionary<string, SchoolOrderList>();
+            var sections = results.First().Sections;
+
+            for (var i = 0; i < sections.Count; i++)
+            {
+                sectionOrderList.Add(sections[i].LessonName, new SchoolOrderList(results, r => r.Sections[i].Net));
+            }
 
             foreach (var result in results)
             {
                 result.CityOrder = orderList.GetCityOrder(result);
                 result.DistrictOrder = orderList.GetDistrictOrder(result);
                 result.GeneralOrder = orderList.GetGeneralOrder(result);
+
+                foreach (var section in result.Sections)
+                {
+                    section.CityOrder = sectionOrderList[section.LessonName].GetCityOrder(result);
+                    section.DistrictOrder = sectionOrderList[section.LessonName].GetDistrictOrder(result);
+                    section.GeneralOrder = sectionOrderList[section.LessonName].GetGeneralOrder(result);
+                }
             }
 
             return results;
