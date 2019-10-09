@@ -7,7 +7,9 @@
 
     public class SchoolResult
     {
-        public SchoolResult(IEnumerable<StudentOpticalForm> forms)
+        public SchoolResult(
+            IEnumerable<StudentOpticalForm> forms,
+            IEnumerable<StudentOpticalFormSection> sections)
         {
             var form = forms.First();
             ExamId = form.ExamId;
@@ -26,7 +28,7 @@
             var groupedSections = forms.SelectMany(f => f.Sections)
                 .GroupBy(s => s.LessonName);
 
-            Sections = form.Sections
+            Sections = sections
                 .Select(s => new SchoolResultSection()
                 {
                     LessonName = s.LessonName,

@@ -27,13 +27,16 @@ namespace TestOkur.Report.Domain
 
         public IEnumerable<SchoolResult> EvaluateSchoolResults(IEnumerable<StudentOpticalForm> forms)
         {
+            var sections = forms
+                .OrderByDescending(f => f.Sections.Count)
+                .First()
+                .Sections;
             var results = forms.GroupBy(
                 f => f.SchoolId,
                 f => f,
-                (schoolId, fs) => new SchoolResult(fs)).ToList();
+                (schoolId, fs) => new SchoolResult(fs, sections)).ToList();
             var orderList = new SchoolOrderList(results, r => r.ScoreAverage);
             var sectionOrderList = new Dictionary<string, SchoolOrderList>();
-            var sections = results.First().Sections;
 
             for (var i = 0; i < sections.Count; i++)
             {
