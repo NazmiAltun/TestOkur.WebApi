@@ -57,10 +57,10 @@
             font-size: 12px;
         }
 
-            table.single-col {
-                max-width: 150px;
-                font-size: 14px;
-            }
+        table.single-col {
+            max-width: 150px;
+            font-size: 14px;
+        }
 
         table,
         th,
@@ -153,9 +153,9 @@
                     <tr>
                         <td>{{lessonName}}</td>
                         <td>{{questionCount}}</td>
-                        <td>{{correctCount}}</td>
-                        <td>{{wrongCount}}</td>
-                        <td>{{emptyCount}}</td>
+                        <td>{{formatTwoDecimalPlaces correctCount}}</td>
+                        <td>{{formatTwoDecimalPlaces wrongCount}}</td>
+                        <td>{{formatTwoDecimalPlaces emptyCount}}</td>
                         <td>{{formatTwoDecimalPlaces net}}</td>
                         <td>{{formatOneDecimalPlace successPercent}} %</td>
                         <td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
@@ -171,9 +171,9 @@
                     <tr>
                         <th>TOPLAM/ORT.</th>
                         <th>{{totalQuestionCount}}</th>
-                        <th>{{totalCorrectCount}}</th>
-                        <th>{{totalWrongCount}}</th>
-                        <th>{{totalEmptyCount}}</th>
+                        <th>{{formatTwoDecimalPlaces totalCorrectCount}}</th>
+                        <th>{{formatTwoDecimalPlaces totalWrongCount}}</th>
+                        <th>{{formatTwoDecimalPlaces totalEmptyCount}}</th>
                         <th>{{formatTwoDecimalPlaces totalNet}}</th>
                         <th>{{formatOneDecimalPlace successPercentAverage}}%</th>
                         <th>{{formatTwoDecimalPlaces districtAverageNetAverage}}</th>
@@ -288,7 +288,7 @@
     						text: 'Okul Puanının Ortalamalar ile Karşılaştırması'
     					}
 				}});
-            </script>
+			</script>
         </div>
     </div>
     <h3>DERSLERİN NET ORTALAMALARINA GÖRE KARŞILAŞTIRILMASI</h3>
@@ -320,7 +320,7 @@
     						text: '{{lessonName}}'
     					}
 				}});
-            </script>
+			</script>
         </div>
         {{/each}}
     </div>
