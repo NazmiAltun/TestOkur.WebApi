@@ -28,7 +28,6 @@
     using Polly.Extensions.Http;
     using Prometheus;
     using StackExchange.Redis;
-    using Swashbuckle.AspNetCore.Swagger;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -84,6 +83,7 @@
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
+            services.AddDistributedMemoryCache(); //TODO : Fix this
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllers(options =>
@@ -99,7 +99,6 @@
 
             AddCqrsFramework(services);
             AddHealthChecks(services);
-            AddSwagger(services);
             AddCache(services);
             AddDatabase(services);
             AddAuthentication(services);
@@ -124,6 +123,7 @@
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseEndpoints(endpoints =>
             {
@@ -135,51 +135,58 @@
                 endpoints.MapDefaultControllerRoute();
             });
             InitializeFluentMappings();
-            UseSwagger(app);
         }
 
-        protected virtual void AddMessageBus(
-            IServiceCollection services,
-            Action<IRabbitMqReceiveEndpointConfigurator> configure = null)
+        private void AddMessageBus(IServiceCollection services)
         {
-            var busControl = Bus.Factory.CreateUsingRabbitMq(
-                cfg =>
-                {
-                    var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                    var host = cfg.Host(new Uri(uriStr), hc =>
-                    {
-                        hc.Username(RabbitMqConfiguration.Username);
-                        hc.Password(RabbitMqConfiguration.Password);
-                    });
+            var configure = services.BuildServiceProvider().GetService<Action<IRabbitMqReceiveEndpointConfigurator>>();
 
-                    if (configure != null)
+            services.AddMassTransit(x =>
+            {
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(
+                    cfg =>
                     {
-                        cfg.ReceiveEndpoint(host, configure);
-                    }
-                });
+                        var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+                        var host = cfg.Host(new Uri(uriStr), hc =>
+                        {
+                            hc.Username(RabbitMqConfiguration.Username);
+                            hc.Password(RabbitMqConfiguration.Password);
+                        });
 
-            services.AddSingleton<IPublishEndpoint>(busControl);
-            services.AddSingleton<IBus>(busControl);
-            services.AddSingleton(busControl);
-            services.AddMassTransit();
+                        if (configure != null)
+                        {
+                            cfg.ReceiveEndpoint(host, configure);
+                        }
+                    }));
+            });
+
+            if (Environment.IsDevelopment())
+            {
+                services.BuildServiceProvider()
+                    .GetService<IBusControl>().Start();
+            }
         }
 
-        protected virtual void AddDatabase(IServiceCollection services)
+        private void AddDatabase(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("Postgres");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseNpgsql(
+            var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseNpgsql(
                     connectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            });
+                    sql => sql.MigrationsAssembly(migrationsAssembly)).Options;
+            services.AddSingleton(dbContextOptions);
             services.AddSingleton<IApplicationDbContextFactory, ApplicationDbContextFactory>();
+            services.AddDbContext<ApplicationDbContext>();
         }
 
-        protected virtual void AddAuthentication(IServiceCollection services)
+        private void AddAuthentication(IServiceCollection services)
         {
+            if (Environment.IsDevelopment())
+            {
+                return;
+            }
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
@@ -188,17 +195,6 @@
                     options.ApiName = OAuthConfiguration.ApiName;
                     options.JwtValidationClockSkew = TimeSpan.FromHours(24);
                 });
-        }
-
-        private void UseSwagger(IApplicationBuilder app)
-        {
-            if (!Configuration.GetValue<bool>("SwaggerEnabled"))
-            {
-                return;
-            }
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestOkur Web Api"); });
         }
 
         private void AddOptions(IServiceCollection services)
@@ -218,9 +214,9 @@
         {
             services.AddSingleton<ICaptchaService, CaptchaService>();
             services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
-            services.AddScoped<IUserIdProvider, UserIdProvider>();
-            services.AddScoped<IProcessor, Processor>();
-            services.AddScoped<ICommandQueryLogger, CommandQueryLogger>();
+            services.AddSingleton<IUserIdProvider, UserIdProvider>();
+            services.AddSingleton<IProcessor, Processor>();
+            services.AddSingleton<ICommandQueryLogger, CommandQueryLogger>();
             services.AddSingleton<ITelemetryInitializer, HeaderTelemetryInitializer>();
             services.AddHttpContextAccessor();
         }
@@ -235,16 +231,6 @@
             services.AddBrighter()
                 .AsyncHandlersFromAssemblies(Assembly.GetExecutingAssembly())
                 .AddPipelineHandlers();
-        }
-
-        private void AddSwagger(IServiceCollection services)
-        {
-            services.AddSwaggerGen(c =>
-            {
-                c.DescribeAllEnumsAsStrings();
-
-                c.SwaggerDoc("v1", new Info { Title = "TestOkur Web Api", Version = "v1" });
-            });
         }
 
         private void AddHealthChecks(IServiceCollection services)

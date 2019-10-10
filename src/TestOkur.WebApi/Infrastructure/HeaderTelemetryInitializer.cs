@@ -23,7 +23,7 @@
                 return;
             }
 
-            requestTelemetry.Properties.Add("ClientIp", context.Connection.RemoteIpAddress.ToString());
+            requestTelemetry.Properties.Add("ClientIp", context?.Connection?.RemoteIpAddress?.ToString());
 
             foreach (var (key, value) in context.Request.Headers)
             {

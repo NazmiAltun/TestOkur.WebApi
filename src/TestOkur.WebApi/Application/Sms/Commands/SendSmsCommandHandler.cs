@@ -24,26 +24,25 @@
         private readonly IQueryProcessor _queryProcessor;
         private readonly ISmsCreditCalculator _smsCreditCalculator;
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SendSmsCommandHandler(
             ISmsCreditCalculator smsCreditCalculator,
             IPublishEndpoint publishEndpoint,
-            ApplicationDbContext applicationDbContext,
             IHttpContextAccessor httpContextAccessor,
-            IQueryProcessor queryProcessor)
+            IQueryProcessor queryProcessor,
+            IApplicationDbContextFactory dbContextFactory)
         {
             _smsCreditCalculator = smsCreditCalculator ??
                 throw new ArgumentNullException(nameof(smsCreditCalculator));
             _publishEndpoint = publishEndpoint ??
                 throw new ArgumentNullException(nameof(publishEndpoint));
-            _applicationDbContext = applicationDbContext ??
-                throw new ArgumentNullException(nameof(applicationDbContext));
             _httpContextAccessor = httpContextAccessor ??
                 throw new ArgumentNullException(nameof(httpContextAccessor));
             _queryProcessor = queryProcessor ??
                 throw new ArgumentNullException(nameof(queryProcessor));
+            _dbContextFactory = dbContextFactory;
         }
 
         [Idempotent(1)]
@@ -99,8 +98,8 @@
 
         private async Task<int> GetRemainingCredits(int userId)
         {
-            return (await _applicationDbContext.Users
-                .FirstAsync(l => l.Id == userId)).SmsBalance;
+            await using var dbContext = _dbContextFactory.Create(default);
+            return (await dbContext.Users.FirstAsync(l => l.Id == userId)).SmsBalance;
         }
     }
 }

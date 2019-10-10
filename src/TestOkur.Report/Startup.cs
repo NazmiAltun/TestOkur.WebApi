@@ -71,10 +71,10 @@ namespace TestOkur.Report
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllers(options =>
-            {
-                options.Filters.Add(new ProducesAttribute("application/json"));
-                options.Filters.Add(new ValidateInputFilter());
-            });
+                {
+                    options.Filters.Add(new ProducesAttribute("application/json"));
+                    options.Filters.Add(new ValidateInputFilter());
+                }).AddNewtonsoftJson();
             AddAuthentication(services);
             AddPolicies(services);
             AddMessageBus(services);
@@ -96,6 +96,7 @@ namespace TestOkur.Report
 
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions
@@ -119,6 +120,11 @@ namespace TestOkur.Report
 
         private void AddAuthentication(IServiceCollection services)
         {
+            if (Environment.IsDevelopment())
+            {
+                return;
+            }
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
@@ -129,33 +135,42 @@ namespace TestOkur.Report
                 });
         }
 
-        protected virtual void AddMessageBus(
-            IServiceCollection services,
-            Action<IRabbitMqReceiveEndpointConfigurator> configure = null)
+        private void AddMessageBus(IServiceCollection services)
         {
-            AddMassTransit(services);
-            services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-             {
-                 var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                 var host = cfg.Host(new Uri(uriStr), hc =>
-                 {
-                     hc.Username(RabbitMqConfiguration.Username);
-                     hc.Password(RabbitMqConfiguration.Password);
-                 });
-                 if (configure != null)
-                 {
-                     cfg.ReceiveEndpoint(host, configure);
-                 }
+            var configure = services.BuildServiceProvider().GetService<Action<IRabbitMqReceiveEndpointConfigurator>>();
+            services.AddMassTransit(m =>
+            {
+                m.AddConsumers(GetConsumerTypes());
+                m.AddBus(provider =>
+                    Bus.Factory.CreateUsingRabbitMq(cfg =>
+                    {
+                        var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+                        var host = cfg.Host(new Uri(uriStr), hc =>
+                        {
+                            hc.Username(RabbitMqConfiguration.Username);
+                            hc.Password(RabbitMqConfiguration.Password);
+                        });
+                        if (configure != null)
+                        {
+                            cfg.ReceiveEndpoint(host, configure);
+                        }
 
-                 cfg.ReceiveEndpoint(host, e =>
-                 {
-                     e.PrefetchCount = 16;
-                     e.UseMessageRetry(x => x.Interval(2, 100));
-                     e.RegisterConsumers(provider, Environment.IsDevelopment());
-                 });
-                 cfg.UseExtensionsLogging(new LoggerFactory());
-             }));
-            services.AddSingleton<IPublishEndpoint>(x => x.GetService<IBusControl>());
+                        cfg.ReceiveEndpoint(host, e =>
+                        {
+                            e.PrefetchCount = 16;
+                            e.UseMessageRetry(x => x.Interval(2, 100));
+                            e.RegisterConsumers(provider, Environment.IsDevelopment());
+                        });
+                        cfg.UseExtensionsLogging(new LoggerFactory());
+                    }));
+            });
+
+            if (Environment.IsDevelopment())
+            {
+                services.BuildServiceProvider()
+                    .GetService<IBusControl>()
+                    .Start();
+            }
         }
 
         private void RegisterMappings()
@@ -235,14 +250,6 @@ namespace TestOkur.Report
 
             services.AddSingleton(resolver =>
                 resolver.GetRequiredService<IOptions<OAuthConfiguration>>().Value);
-        }
-
-        private void AddMassTransit(IServiceCollection services)
-        {
-            services.AddMassTransit(x =>
-            {
-                x.AddConsumers(GetConsumerTypes());
-            });
         }
 
         private Type[] GetConsumerTypes()

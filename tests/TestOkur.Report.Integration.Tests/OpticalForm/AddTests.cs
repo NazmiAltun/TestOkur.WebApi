@@ -66,36 +66,34 @@
         public async Task When_FormsExists_Then_ShouldReplaceStudentOpticalForms()
         {
             var userId = RandomGen.Next(10000);
-            using (var testServer = Create(userId))
-            {
-                var examId = RandomGen.Next();
-                var client = testServer.CreateClient();
-                var forms = new List<StudentOpticalForm>
+            using var testServer = Create(userId);
+            var examId = RandomGen.Next();
+            var client = testServer.CreateClient();
+            var forms = new List<StudentOpticalForm>
                 {
                     GenerateStudentForm(examId, userId),
                     GenerateStudentForm(examId, userId),
                 };
-                var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-                forms.First().Sections.Clear();
-                forms.First().Sections.Add(new StudentOpticalFormSection(
-                 new AnswerKeyOpticalFormSection(2065, "TestLesson"))
-                {
-                    Answers = GenerateAnswers(10).ToList(),
-                });
-                forms.Last().Sections.Clear();
-                forms.Last().Sections.Add(new StudentOpticalFormSection(
-                    new AnswerKeyOpticalFormSection(2065, "TestLesson"))
-                {
-                    Answers = GenerateAnswers(10).ToList(),
-                });
-                response = await client.PostAsync(ApiPath, forms.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-                var examForms = await GetListAsync<StudentOpticalForm>(client, examId);
-                examForms.Should().HaveCount(2);
-                examForms.Should().Contain(
-                    f => f.Sections.First().LessonName == "TestLesson");
-            }
+            var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
+            response.EnsureSuccessStatusCode();
+            forms.First().Sections.Clear();
+            forms.First().Sections.Add(new StudentOpticalFormSection(
+             new AnswerKeyOpticalFormSection(2065, "TestLesson"))
+            {
+                Answers = GenerateAnswers(10).ToList(),
+            });
+            forms.Last().Sections.Clear();
+            forms.Last().Sections.Add(new StudentOpticalFormSection(
+                new AnswerKeyOpticalFormSection(2065, "TestLesson"))
+            {
+                Answers = GenerateAnswers(10).ToList(),
+            });
+            response = await client.PostAsync(ApiPath, forms.ToJsonContent());
+            response.EnsureSuccessStatusCode();
+            var examForms = await GetListAsync<StudentOpticalForm>(client, examId);
+            examForms.Should().HaveCount(2);
+            examForms.Should().Contain(
+                f => f.Sections.First().LessonName == "TestLesson");
         }
 
         [Fact]
