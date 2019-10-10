@@ -83,7 +83,7 @@
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
-            services.AddDistributedMemoryCache(); //TODO : Fix this
+            services.AddMemoryCache();
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllers(options =>
