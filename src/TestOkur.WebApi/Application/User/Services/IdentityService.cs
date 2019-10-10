@@ -1,32 +1,27 @@
 ﻿namespace TestOkur.WebApi.Application.User.Services
 {
+    using IdentityModel.Client;
+    using Newtonsoft.Json;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using CacheManager.Core;
-    using IdentityModel.Client;
-    using Newtonsoft.Json;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
 
     public class IdentityService : IIdentityService
     {
-        private const string CacheKey = "private_access_token";
         private readonly HttpClient _httpClient;
         private readonly OAuthConfiguration _oAuthConfiguration;
-        private readonly ICacheManager<string> _tokenCache;
 
         public IdentityService(
             HttpClient httpClient,
-            OAuthConfiguration oAuthConfiguration,
-            ICacheManager<string> tokenCache)
+            OAuthConfiguration oAuthConfiguration)
         {
             _httpClient = httpClient;
             _oAuthConfiguration = oAuthConfiguration;
-            _tokenCache = tokenCache;
         }
 
         public async Task DeleteUserAsync(string id, CancellationToken cancellationToken)
@@ -83,11 +78,7 @@
 
         private async Task SetBearerToken()
         {
-            var token = _tokenCache.Get(CacheKey);
-
-            if (string.IsNullOrEmpty(token))
-            {
-                var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(
+            var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(
                     new ClientCredentialsTokenRequest()
                     {
                         Address = $"{_oAuthConfiguration.Authority}connect/token",
@@ -95,20 +86,8 @@
                         ClientSecret = _oAuthConfiguration.PrivateClientSecret,
                         Scope = _oAuthConfiguration.ApiName,
                     });
-                token = tokenResponse.AccessToken;
-                StoreAccessTokenInCache(token);
-            }
-
-            _httpClient.SetBearerToken(token);
+            _httpClient.SetBearerToken(tokenResponse.AccessToken);
         }
 
-        private void StoreAccessTokenInCache(string token)
-        {
-            _tokenCache.Add(new CacheItem<string>(
-                CacheKey,
-                token,
-                ExpirationMode.Absolute,
-                TimeSpan.FromMinutes(59)));
-        }
     }
 }
