@@ -15,8 +15,6 @@
         private const int Length = 4;
         private const int Distortion = 5;
         private const int FontSize = 20;
-        private static readonly string FontFamily = new InstalledFontCollection().Families.Last().Name;
-
         private readonly ICacheManager<Captcha> _captchaCache;
         private readonly Random _random = new Random();
 

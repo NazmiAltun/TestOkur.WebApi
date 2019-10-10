@@ -272,30 +272,30 @@ workflows:
   version: 2  
   deploy-qa:
     jobs:
-      #- static-code-analysis
+      - static-code-analysis
       - unit-tests
       - notification-report-integration-tests
       - webapi-integration-tests
-      # - code-coverage:
-          #requires:
-            #- static-code-analysis
-            #- unit-tests
-            #- notification-report-integration-tests
-            #- webapi-integration-tests
+      - code-coverage:
+          requires:
+            - static-code-analysis
+            - unit-tests
+            - notification-report-integration-tests
+            - webapi-integration-tests
       - build-webapi:
           requires:
             - webapi-integration-tests
             - unit-tests
-            #- static-code-analysis
+            - static-code-analysis
       - build-notification:
           requires:
             - unit-tests
-            #- static-code-analysis
+            - static-code-analysis
             - notification-report-integration-tests
       - build-report:
           requires:
             - unit-tests
-            #- static-code-analysis
+            - static-code-analysis
             - notification-report-integration-tests
   deploy-prod:
     jobs:
