@@ -7,6 +7,7 @@
     using System.Drawing.Text;
     using System.IO;
     using System.Linq;
+    using RabbitMQ.Client.Impl;
 
     public class CaptchaService : ICaptchaService
     {
@@ -85,11 +86,12 @@
 
         private void DrawCaptchaCode(string captchaCode, Graphics graphicsTextHolder)
         {
-            graphicsTextHolder.Clear(Color.WhiteSmoke);
+            graphicsTextHolder.Clear(Color.Wheat);
+            var random = new InstalledFontCollection().Families.RandomItem();
             graphicsTextHolder.DrawString(
                 captchaCode,
-                new Font(FontFamily, FontSize, FontStyle.Italic),
-                new SolidBrush(Color.Black),
+                new Font(random, FontSize, FontStyle.Italic | FontStyle.Bold),
+                new SolidBrush(Color.Gray),
                 new PointF(8.4F, 10.4F));
         }
 
