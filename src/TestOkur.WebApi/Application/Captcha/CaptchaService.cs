@@ -3,9 +3,11 @@
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Drawing.Text;
     using System.IO;
     using System.Linq;
     using CacheManager.Core;
+    using Microsoft.Extensions.Logging;
 
     public class CaptchaService : ICaptchaService
     {
@@ -15,11 +17,13 @@
         private const int Distortion = 10;
         private const int FontSize = 20;
         private readonly ICacheManager<Captcha> _captchaCache;
+        private readonly ILogger<CaptchaService> _logger;
         private readonly Random _random = new Random();
 
-        public CaptchaService(ICacheManager<Captcha> captchaCache)
+        public CaptchaService(ICacheManager<Captcha> captchaCache, ILogger<CaptchaService> logger)
         {
             _captchaCache = captchaCache;
+            _logger = logger;
         }
 
         public Stream Generate(Guid id)
@@ -84,6 +88,13 @@
         private void DrawCaptchaCode(string captchaCode, Graphics graphicsTextHolder)
         {
             graphicsTextHolder.Clear(Color.Wheat);
+            var fonts = new InstalledFontCollection();
+
+            foreach (var family in fonts.Families)
+            {
+                _logger.LogError(family.Name);
+            }
+
             graphicsTextHolder.DrawString(
                 captchaCode,
                 new Font(FontFamily, FontSize, FontStyle.Italic),
