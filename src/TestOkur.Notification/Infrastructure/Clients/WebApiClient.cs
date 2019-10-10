@@ -47,6 +47,7 @@
 
         public async Task ReEvaluateAllExamsAsync()
         {
+            await SetBearerToken();
             var response = await _httpClient.PostAsync("api/v1/exams/re-evaluate", null);
             response.EnsureSuccessStatusCode();
         }
