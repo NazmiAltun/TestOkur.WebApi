@@ -12,9 +12,9 @@
     {
         private const string Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const int Length = 4;
-        private const int Distortion = 10;
+        private const int Distortion = 5;
         private const int FontSize = 20;
-        private static readonly string FontFamily = new InstalledFontCollection().Families.First().Name;
+        private static readonly string FontFamily = new InstalledFontCollection().Families.Last().Name;
 
         private readonly ICacheManager<Captcha> _captchaCache;
         private readonly Random _random = new Random();
@@ -85,11 +85,11 @@
 
         private void DrawCaptchaCode(string captchaCode, Graphics graphicsTextHolder)
         {
-            graphicsTextHolder.Clear(Color.Wheat);
+            graphicsTextHolder.Clear(Color.WhiteSmoke);
             graphicsTextHolder.DrawString(
                 captchaCode,
                 new Font(FontFamily, FontSize, FontStyle.Italic),
-                new SolidBrush(Color.Gray),
+                new SolidBrush(Color.Black),
                 new PointF(8.4F, 10.4F));
         }
 
