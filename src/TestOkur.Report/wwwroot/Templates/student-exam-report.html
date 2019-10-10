@@ -351,7 +351,7 @@
                 new Chart(document.getElementById('canvas{{@index}}'), {
     				type: 'bar',
     				data: {
-    				   	labels: ['Öğrenci','Sınıf','Okul','İlçe','İl','Genel'],
+    				   	labels: ['Öğrenci','Sınıf','Okul','İlçe','İl','Genel',''],
     				   	datasets: [{
     				   	    backgroundColor:['#3d78f0','#f03d3d','#21a60c','#6200b3','#3ed4e5','#e27828'],
     				   	    data: [
@@ -360,7 +360,7 @@
     				   	        {{schoolScoreAverage}},
     				   	        {{districtScoreAverage}},
     				   	        {{cityScoreAverage}},
-    				   	        {{generalScoreAverage}}]
+    				   	        {{generalScoreAverage}},0]
     				   	}]
     				},
     				options: {
