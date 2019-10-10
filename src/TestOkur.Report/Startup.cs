@@ -16,6 +16,7 @@ namespace TestOkur.Report
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using MongoDB.Bson;
@@ -41,9 +42,9 @@ namespace TestOkur.Report
     using TestOkur.Report.Models;
 
     [ExcludeFromCodeCoverage]
-    public class Startup : IStartup
+    public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
@@ -54,7 +55,7 @@ namespace TestOkur.Report
 
         public IConfiguration Configuration { get; }
 
-        public IHostingEnvironment Environment { get; }
+        public IWebHostEnvironment Environment { get; }
 
         private ReportConfiguration ReportConfiguration { get; } = new ReportConfiguration();
 
@@ -62,14 +63,14 @@ namespace TestOkur.Report
 
         private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             RegisterMappings();
             AddHealthCheck(services);
             AddOptions(services);
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
-            services.AddMvc(options =>
+            services.AddControllers(options =>
             {
                 options.Filters.Add(new ProducesAttribute("application/json"));
                 options.Filters.Add(new ValidateInputFilter());
@@ -79,38 +80,44 @@ namespace TestOkur.Report
             AddMessageBus(services);
             RegisterServices(services);
             AddHostedServices(services);
-
-            return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var env = app.ApplicationServices.GetService<IHostingEnvironment>();
+            app.UseStaticFiles();
+            app.UseRouting();
             app.UseHttpMetrics();
+            app.UseMetricServer("/metrics-core");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            var hcOptions = new HealthCheckOptions()
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-            };
-            app.UseMetricServer("/metrics-core");
-            app.UseHealthChecks("/hc", hcOptions);
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlingMiddleware>();
-            app.UseMvc();
-            app.UseStaticFiles();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+                });
+                endpoints.MapDefaultControllerRoute();
+            });
         }
 
-        protected virtual void AddHostedServices(IServiceCollection services)
+        private void AddHostedServices(IServiceCollection services)
         {
+            if (Environment.IsDevelopment())
+            {
+                return;
+            }
+
             services.AddHostedService<BusService>();
         }
 
-        protected virtual void AddAuthentication(IServiceCollection services)
+        private void AddAuthentication(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>

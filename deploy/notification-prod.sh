@@ -7,5 +7,5 @@ docker run -d \
 	--restart=unless-stopped  \
 	--network=testokur \
 	--network-alias=notification \
-	-m=350M \
+	-m=256M \
 	nazmialtun/testokur-notification:latest

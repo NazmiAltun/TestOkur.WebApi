@@ -10,7 +10,7 @@
         {
             builder.ToTable("optical_form_types");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("optical_form_types_seq");
+                .UseHiLo("optical_form_types_seq");
             builder.OwnsName(_ => _.Name, 100);
             builder.HasMany(_ => _.OpticalFormDefinitions)
                 .WithOne()

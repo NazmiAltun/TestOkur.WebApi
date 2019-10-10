@@ -1,12 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Error
 {
+    using FluentAssertions;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.IO;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using FluentAssertions;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using TestOkur.Contracts.Alert;
     using TestOkur.Infrastructure.Extensions;
     using TestOkur.TestHelper;

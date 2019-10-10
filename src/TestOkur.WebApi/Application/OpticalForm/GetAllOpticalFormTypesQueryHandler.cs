@@ -42,10 +42,10 @@
 								ORDER BY opt.list_order
                                ";
 
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly string _connectionString;
 
-        public GetAllOpticalFormTypesQueryHandler(ApplicationConfiguration configurationOptions, IHostingEnvironment hostingEnvironment)
+        public GetAllOpticalFormTypesQueryHandler(ApplicationConfiguration configurationOptions, IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
             _connectionString = configurationOptions.Postgres;

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Prometheus.DotNetRuntime;
+using System;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("TestOkur.Notification.Unit.Tests")]
 
@@ -20,14 +19,11 @@ namespace TestOkur.Notification
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .ConfigureLogging((hostingContext, logging) =>
+        public static IHost BuildWebHost(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
-                    .AddConsole()
-                    .AddDebug();
+                    webBuilder.UseStartup<Startup>();
                 }).Build();
     }
 }

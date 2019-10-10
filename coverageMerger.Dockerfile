@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-sdk-alpine
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 
 RUN dotnet tool install -g dotnet-reportgenerator-globaltool
 RUN mkdir /reports
 VOLUME /reports/

@@ -10,7 +10,7 @@
         {
             builder.ToTable("optical_form_text_locations");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("optical_form_text_locations_seq");
+                .UseHiLo("optical_form_text_locations_seq");
             builder.OwnsOne(_ => _.Name);
             builder.OwnsOne(_ => _.Surname);
             builder.OwnsOne(_ => _.Class);

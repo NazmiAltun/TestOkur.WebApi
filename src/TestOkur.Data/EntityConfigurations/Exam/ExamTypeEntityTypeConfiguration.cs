@@ -10,8 +10,7 @@
         public void Configure(EntityTypeBuilder<ExamType> builder)
         {
             builder.ToTable("exam_types");
-            builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("exam_types_seq");
+            builder.Property(_ => _.Id).UseHiLo("exam_types_seq");
             builder.OwnsName(_ => _.Name, 100);
             builder.OwnsOne(_ => _.DefaultIncorrectEliminationRate);
             builder.HasMany(_ => _.ExamTypeOpticalFormTypes)

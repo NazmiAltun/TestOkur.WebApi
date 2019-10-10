@@ -10,7 +10,7 @@
         {
             builder.ToTable("units");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("units_seq");
+                .UseHiLo("units_seq");
             builder.HasOne(_ => _.Lesson)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);

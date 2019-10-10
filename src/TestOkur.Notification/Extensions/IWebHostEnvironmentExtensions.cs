@@ -2,9 +2,9 @@
 {
     using Microsoft.AspNetCore.Hosting;
 
-    public static class IHostingEnvironmentExtensions
+    public static class IWebHostEnvironmentExtensions
     {
-        public static bool IsProd(this IHostingEnvironment hostingEnvironment)
+        public static bool IsProd(this IWebHostEnvironment hostingEnvironment)
         {
             return hostingEnvironment.EnvironmentName == "prod";
         }

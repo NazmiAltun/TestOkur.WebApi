@@ -1,10 +1,9 @@
 ﻿namespace TestOkur.Report
 {
-    using System;
-    using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Hosting;
     using Prometheus.DotNetRuntime;
+    using System;
 
     public static class Program
     {
@@ -18,14 +17,11 @@
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .ConfigureLogging((hostingContext, logging) =>
+        public static IHost BuildWebHost(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"))
-                    .AddConsole()
-                    .AddDebug();
+                    webBuilder.UseStartup<Startup>();
                 }).Build();
     }
 }

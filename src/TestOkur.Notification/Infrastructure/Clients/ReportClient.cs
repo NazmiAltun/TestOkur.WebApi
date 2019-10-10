@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
+    using IdentityModel.Client;
     using Newtonsoft.Json;
     using System.Net.Http;
     using System.Threading.Tasks;

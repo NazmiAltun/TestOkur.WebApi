@@ -10,7 +10,7 @@
         {
             builder.ToTable("optical_form_definitions");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("optical_form_definitions_seq");
+                .UseHiLo("optical_form_definitions_seq");
             builder.Property(_ => _.Name)
                 .IsRequired()
                 .HasMaxLength(50)

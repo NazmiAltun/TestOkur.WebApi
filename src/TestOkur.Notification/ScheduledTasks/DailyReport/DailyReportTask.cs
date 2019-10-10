@@ -13,7 +13,7 @@
 
     internal class DailyReportTask : IDailyReportTask
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly INotificationFacade _notificationFacade;
         private readonly ISmsRepository _smsRepository;
         private readonly IWebApiClient _webApiClient;
@@ -23,7 +23,7 @@
 
         public DailyReportTask(
             INotificationFacade notificationFacade,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment hostingEnvironment,
             ILogger<DailyReportTask> logger,
             ISmsRepository smsRepository,
             IWebApiClient webApiClient,

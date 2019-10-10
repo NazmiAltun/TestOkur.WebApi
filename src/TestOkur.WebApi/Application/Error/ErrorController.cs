@@ -13,10 +13,10 @@
     [Authorize(AuthorizationPolicies.Customer)]
     public class ErrorController : ControllerBase
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public ErrorController(IPublishEndpoint publishEndpoint, IHostingEnvironment hostingEnvironment)
+        public ErrorController(IPublishEndpoint publishEndpoint, IWebHostEnvironment hostingEnvironment)
         {
             _publishEndpoint = publishEndpoint;
             _hostingEnvironment = hostingEnvironment;

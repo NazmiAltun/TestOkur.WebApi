@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Sonar Scan
           command: |
-            docker run -it --rm -v $(pwd):/source  nosinovacao/dotnet-sonar:19.09.0 bash -c "cd source \
+            docker run -it --rm -v $(pwd):/source  nosinovacao/dotnet-sonar:latest bash -c "cd source \
             && dotnet /sonar-scanner/SonarScanner.MSBuild.dll begin /k:NazmiAltun_TestOkur.WebApi /o:nazmialtun-github /d:sonar.login='$SONAR_LOGIN' /d:sonar.host.url="https://sonarcloud.io"  /name:$CIRCLE_PROJECT_REPONAME /version:$CIRCLE_BUILD_NUM \
             && dotnet restore \
             && dotnet build -c Release \

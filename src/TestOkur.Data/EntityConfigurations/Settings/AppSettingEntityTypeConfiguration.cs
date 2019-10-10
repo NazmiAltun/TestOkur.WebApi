@@ -10,7 +10,7 @@
         {
             builder.ToTable("appsettings");
             builder.Property(_ => _.Id)
-               .ForNpgsqlUseSequenceHiLo("appsettings_seq");
+               .UseHiLo("appsettings_seq");
             builder.OwnsName(_ => _.Name, 100);
             builder.Property(_ => _.Value)
                 .IsUnicode()

@@ -10,7 +10,7 @@
         {
             builder.ToTable("users");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("user_seq");
+                .UseHiLo("user_seq");
             builder.HasOne(_ => _.City)
                 .WithMany()
                 .OnDelete(DeleteBehavior.SetNull);

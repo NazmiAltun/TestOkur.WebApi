@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using MongoDB.Bson.Serialization;
@@ -37,9 +38,9 @@
     using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
     using TestOkur.Notification.ScheduledTasks.ReEvaluateAllExams;
 
-    public class Startup : IStartup
+    public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
@@ -49,9 +50,9 @@
             Configuration.GetSection("HangfireConfiguration").Bind(HangfireConfiguration);
         }
 
-        private IConfiguration Configuration { get; }
+        private IWebHostEnvironment Environment { get; }
 
-        private IHostingEnvironment Environment { get; }
+        private IConfiguration Configuration { get; }
 
         private ApplicationConfiguration ApplicationConfiguration { get; } = new ApplicationConfiguration();
 
@@ -61,7 +62,7 @@
 
         private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
 
-        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             RegisterMappings();
             AddOptions(services);
@@ -85,24 +86,27 @@
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
-            services.AddMvc();
+            services.AddControllersWithViews();
             services.AddHttpContextAccessor();
-            return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            UseHangfire(app);
-            app.UseHttpMetrics();
-            app.UseHealthChecks("/hc", new HealthCheckOptions
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-            });
-            app.UseMetricServer("/metrics-core");
-            app.UseAuthentication();
-            app.UseMvc();
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseHttpMetrics();
+            app.UseMetricServer("/metrics-core");
+            UseHangfire(app);
+            app.UseAuthentication();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+                });
+                endpoints.MapDefaultControllerRoute();
+            });
         }
 
         protected virtual void AddHostedServices(IServiceCollection services)
@@ -236,6 +240,7 @@
                 {
                     e.PrefetchCount = 16;
                     e.UseMessageRetry(x => x.Interval(2, 100));
+
                     if (!Environment.IsDevelopment())
                     {
                         e.Consumer<DefaultFaultConsumer>(provider);

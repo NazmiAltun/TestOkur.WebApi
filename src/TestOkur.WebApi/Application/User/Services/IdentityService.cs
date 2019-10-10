@@ -88,6 +88,5 @@
                     });
             _httpClient.SetBearerToken(tokenResponse.AccessToken);
         }
-
     }
 }

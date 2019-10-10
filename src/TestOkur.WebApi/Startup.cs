@@ -18,6 +18,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
     using Paramore.Brighter.Extensions.DependencyInjection;
@@ -53,11 +54,11 @@
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     [ExcludeFromCodeCoverage]
-    public class Startup : IStartup
+    public class Startup
     {
         private const string CorsPolicyName = "EnableCorsToAll";
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
@@ -65,7 +66,7 @@
             Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
         }
 
-        public IHostingEnvironment Environment { get; }
+        public IWebHostEnvironment Environment { get; }
 
         private IConfiguration Configuration { get; }
 
@@ -73,7 +74,7 @@
 
         private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
 
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             AddOptions(services);
 
@@ -85,16 +86,16 @@
             }));
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
-            services.AddMvc(options =>
+            services.AddControllers(options =>
                 {
                     options.Filters.Add(new ProducesAttribute("application/json"));
                     options.Filters.Add(new ValidateInputFilter());
                 })
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+               });
 
             AddCqrsFramework(services);
             AddHealthChecks(services);
@@ -107,26 +108,32 @@
             AddHttpClients(services);
             RegisterServices(services);
             AddHostedServices(services);
-            return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var env = app.ApplicationServices.GetService<IHostingEnvironment>();
-
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
+            app.UseMetricServer("/metrics-core");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMetricServer("/metrics-core");
-            UseHealthChecks(app);
-            app.UseCors(CorsPolicyName);
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlingMiddleware>();
-            app.UseMvc();
-            app.UseStaticFiles();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+                });
+                endpoints.MapDefaultControllerRoute();
+            });
             InitializeFluentMappings();
             UseSwagger(app);
         }
@@ -181,16 +188,6 @@
                     options.ApiName = OAuthConfiguration.ApiName;
                     options.JwtValidationClockSkew = TimeSpan.FromHours(24);
                 });
-        }
-
-        private static void UseHealthChecks(IApplicationBuilder app)
-        {
-            var hcOptions = new HealthCheckOptions()
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-            };
-            app.UseHealthChecks("/hc", hcOptions);
         }
 
         private void UseSwagger(IApplicationBuilder app)

@@ -11,7 +11,7 @@
         {
             builder.ToTable("exam_type_optical_form_types");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("exam_type_optical_form_seq");
+                .UseHiLo("exam_type_optical_form_seq");
             builder.HasOne(_ => _.OpticalFormType)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade)

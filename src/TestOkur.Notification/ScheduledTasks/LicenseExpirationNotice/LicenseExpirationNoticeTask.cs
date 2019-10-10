@@ -14,7 +14,7 @@
 
     internal class LicenseExpirationNoticeTask : ILicenseExpirationNoticeTask
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IOAuthClient _oAuthClient;
         private readonly IWebApiClient _webApiClient;
         private readonly INotificationFacade _notificationFacade;
@@ -26,7 +26,7 @@
             IOAuthClient oAuthClient,
             IWebApiClient webApiClient,
             ApplicationConfiguration applicationConfiguration,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment hostingEnvironment,
             ILogger<LicenseExpirationNoticeTask> logger)
         {
             _notificationFacade = notificationFacade;

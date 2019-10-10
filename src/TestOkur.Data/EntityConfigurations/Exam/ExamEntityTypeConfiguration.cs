@@ -11,7 +11,7 @@
         {
             builder.ToTable("exams");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("exams_seq");
+                .UseHiLo("exams_seq");
             builder.OwnsName(_ => _.Name, 150);
             builder.OwnsOne(_ => _.IncorrectEliminationRate);
             builder.HasOne(_ => _.ExamType)

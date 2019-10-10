@@ -10,7 +10,7 @@
         {
             builder.ToTable("form_lesson_sections");
             builder.Property(_ => _.Id)
-                .ForNpgsqlUseSequenceHiLo("form_lesson_sections_seq");
+                .UseHiLo("form_lesson_sections_seq");
             builder.HasOne(_ => _.Lesson)
                 .WithMany()
                 .HasForeignKey("lesson_id")

@@ -10,7 +10,7 @@
         {
             builder.ToTable("lessons");
             builder.Property(_ => _.Id)
-             .ForNpgsqlUseSequenceHiLo("lessons_seq");
+             .UseHiLo("lessons_seq");
             builder.OwnsName(_ => _.Name, 50);
         }
     }
