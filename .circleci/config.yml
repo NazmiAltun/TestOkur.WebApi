@@ -272,7 +272,6 @@ workflows:
   version: 2  
   deploy-qa:
     jobs:
-      - static-code-analysis
       - unit-tests
       - notification-report-integration-tests
       - webapi-integration-tests
