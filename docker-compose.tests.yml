@@ -99,6 +99,7 @@ services:
       - ConnectionStrings__Redis=redis,allowAdmin=true,defaultDatabase=1
       - ApplicationConfiguration__Postgres=Server=postgres;Database=testokur;User Id=testokur;Password=testadmin@123
       - RabbitMqConfiguration__Uri=rabbitmq
+      - CaptchaServiceUrl=http://mockserver:8080/
       - OAuthConfiguration__Authority=http://mockserver:8080/
   report-unit-test:
     image: testokur-report-unit-test
