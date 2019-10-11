@@ -21,5 +21,7 @@
         string District { get; }
 
         string City { get; }
+
+        string Password { get; }
     }
 }

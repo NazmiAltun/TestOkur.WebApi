@@ -68,6 +68,12 @@
                 "Lisans Kaydınız Alındı",
                 "User_New_User_Mail.html");
 
+        public static readonly Template AccountRegistrationSmsUser =
+            new Template(
+                "YeniLisansKaydi_Kullanici_Sms",
+                "TestOkur",
+                "User_New_User_SMS.html");
+
         public static readonly Template PasswordResetEmailUser =
             new Template(
                 "ParolaSifirlama_Kullanici_Email",

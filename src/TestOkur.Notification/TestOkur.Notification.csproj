@@ -76,6 +76,9 @@
     <None Update="Templates\User_New_User_Mail.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\User_New_User_SMS.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\User_ResetPassword_Mail.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

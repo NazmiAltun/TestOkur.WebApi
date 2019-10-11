@@ -117,7 +117,8 @@
                     command.UserPhone,
                     command.LicenseTypeName,
                     command.DistrictName,
-                    command.CityName), cancellationToken);
+                    command.CityName,
+                    command.Password), cancellationToken);
         }
 
         private void ValidateCaptcha(CreateUserCommand command)
