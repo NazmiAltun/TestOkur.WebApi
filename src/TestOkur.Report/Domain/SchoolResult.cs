@@ -11,7 +11,6 @@
             IEnumerable<StudentOpticalForm> forms,
             IEnumerable<StudentOpticalFormSection> sections)
         {
-            Id = Guid.NewGuid();
             var form = forms.First();
             ExamId = form.ExamId;
             SchoolId = form.SchoolId;
@@ -73,7 +72,7 @@
         {
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public int ExamId { get; set; }
 

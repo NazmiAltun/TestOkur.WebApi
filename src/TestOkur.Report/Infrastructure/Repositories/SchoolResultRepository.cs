@@ -22,23 +22,10 @@
             {
                 return;
             }
-
-            var writeModels = new List<WriteModel<SchoolResult>>();
-
-            foreach (var result in results)
-            {
-                var model = new ReplaceOneModel<SchoolResult>(
-                    Builders<SchoolResult>.Filter.Eq(x => x.ExamId, result.ExamId) &
-                    Builders<SchoolResult>.Filter.Eq(x => x.SchoolId, result.SchoolId),
-                    result)
-                {
-                    IsUpsert = true,
-                };
-
-                writeModels.Add(model);
-            }
-
-            await _context.SchoolResults.BulkWriteAsync(writeModels);
+            
+            var filter = Builders<SchoolResult>.Filter.Eq(x => x.ExamId, results.First().ExamId);
+            await _context.SchoolResults.DeleteManyAsync(filter);
+            await _context.SchoolResults.InsertManyAsync(results);
         }
 
         public async Task<IEnumerable<SchoolResult>> GetByExamId(int examId)
