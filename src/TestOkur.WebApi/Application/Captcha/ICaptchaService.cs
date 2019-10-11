@@ -2,10 +2,11 @@
 {
     using System;
     using System.IO;
+    using System.Threading.Tasks;
 
     public interface ICaptchaService
     {
-        Stream Generate(Guid id);
+        Task<Stream> GenerateAsync(Guid id);
 
         bool Validate(Guid id, string code);
     }

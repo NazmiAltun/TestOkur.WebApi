@@ -1,8 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.Captcha
 {
-    using System;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Threading.Tasks;
     using TestOkur.Common;
 
     [Route("api/v1/captcha")]
@@ -17,9 +18,11 @@
         }
 
         [HttpGet("{id}")]
-        public IActionResult Generate(Guid id)
+        public async Task<IActionResult> GenerateAsync(Guid id)
         {
-            return File(_captchaService.Generate(id), "image/png");
+            return File(
+                await _captchaService.GenerateAsync(id),
+                "image/png");
         }
     }
 }

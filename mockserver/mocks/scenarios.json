@@ -47,6 +47,9 @@
     },
     "/hc": {
       "get": "hc.json"
+    },
+    "/captcha" :{
+      "get" : "captcha.js"
     }
   }
 }

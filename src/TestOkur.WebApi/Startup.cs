@@ -211,7 +211,10 @@
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddSingleton<ICaptchaService, CaptchaService>();
+            services.AddHttpClient<ICaptchaService, CaptchaService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("CaptchaServiceUrl"));
+            });
             services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.AddSingleton<IProcessor, Processor>();

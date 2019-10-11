@@ -2,38 +2,35 @@
 {
     using CacheManager.Core;
     using System;
-    using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.Drawing.Text;
     using System.IO;
     using System.Linq;
-    using RabbitMQ.Client.Impl;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
     public class CaptchaService : ICaptchaService
     {
-        private const string Letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const int Length = 4;
-        private const int Distortion = 5;
-        private const int FontSize = 20;
         private readonly ICacheManager<Captcha> _captchaCache;
-        private readonly Random _random = new Random();
+        private readonly HttpClient _captchaClient;
 
-        public CaptchaService(ICacheManager<Captcha> captchaCache)
+        public CaptchaService(
+            ICacheManager<Captcha> captchaCache,
+            HttpClient captchaClient)
         {
             _captchaCache = captchaCache;
+            _captchaClient = captchaClient;
         }
 
-        public Stream Generate(Guid id)
+        public async Task<Stream> GenerateAsync(Guid id)
         {
-            var code = GenerateCode(Length);
-
+            var response = await _captchaClient.GetAsync("captcha");
+            var code = response.Headers.GetValues("Text").First();
             _captchaCache.Add(new CacheItem<Captcha>(
                 $"Captcha_{id}",
                 new Captcha(id, code),
                 ExpirationMode.Absolute,
                 TimeSpan.FromHours(1)));
 
-            return BuildImage(code, 50, 100);
+            return await response.Content.ReadAsStreamAsync();
         }
 
         public bool Validate(Guid id, string code)
@@ -48,66 +45,5 @@
             return captcha?.Code == code;
         }
 
-        private MemoryStream BuildImage(string captchaCode, int imageHeight, int imageWidth)
-        {
-            var memoryStream = new MemoryStream();
-
-            using (var captchaImage = new Bitmap(imageWidth, imageHeight))
-            {
-                using (var cache = new Bitmap(imageWidth, imageHeight))
-                {
-                    using (var graphicsTextHolder = Graphics.FromImage(captchaImage))
-                    {
-                        DrawCaptchaCode(captchaCode, graphicsTextHolder);
-                        DistortImage(imageHeight, imageWidth, cache, captchaImage);
-                        cache.Save(memoryStream, ImageFormat.Png);
-                        memoryStream.Position = 0;
-                        return memoryStream;
-                    }
-                }
-            }
-        }
-
-        private void DistortImage(int imageHeight, int imageWidth, Bitmap cache, Bitmap captchaImage)
-        {
-            for (var y = 0; y < imageHeight; y++)
-            {
-                for (var x = 0; x < imageWidth; x++)
-                {
-                    var newX = Distort(x, y, imageWidth);
-                    var newY = Distort(y, x, imageHeight);
-
-                    cache.SetPixel(x, y, captchaImage.GetPixel(newX, newY));
-                }
-            }
-        }
-
-        private void DrawCaptchaCode(string captchaCode, Graphics graphicsTextHolder)
-        {
-            graphicsTextHolder.Clear(Color.Wheat);
-            var random = new InstalledFontCollection().Families.RandomItem();
-            graphicsTextHolder.DrawString(
-                captchaCode,
-                new Font(random, FontSize, FontStyle.Italic | FontStyle.Bold),
-                new SolidBrush(Color.Gray),
-                new PointF(8.4F, 10.4F));
-        }
-
-        private int Distort(int d1, int d2, int limit)
-        {
-            var newD = (int)(d1 + (Distortion * Math.Sin(Math.PI * d2 / 64.0)));
-            if (newD < 0 || newD >= limit)
-            {
-                newD = 0;
-            }
-
-            return newD;
-        }
-
-        private string GenerateCode(int length)
-        {
-            return new string(Enumerable.Repeat(Letters, length)
-                .Select(s => s[_random.Next(s.Length)]).ToArray());
-        }
     }
 }
