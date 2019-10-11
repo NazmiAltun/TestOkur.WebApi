@@ -98,6 +98,7 @@
             app.UseMetricServer("/metrics-core");
             UseHangfire(app);
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions
