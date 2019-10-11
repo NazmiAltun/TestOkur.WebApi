@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using Paramore.Brighter;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
     public class DeductSmsCreditsCommand : Command, IClearCache

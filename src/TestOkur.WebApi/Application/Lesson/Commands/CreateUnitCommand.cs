@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using TestOkur.Domain.Model.LessonModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
     [DataContract]

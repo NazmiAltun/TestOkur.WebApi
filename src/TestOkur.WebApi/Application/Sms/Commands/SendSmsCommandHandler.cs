@@ -16,7 +16,7 @@
     using TestOkur.Contracts.Sms;
     using TestOkur.Data;
     using TestOkur.Domain.Model.SmsModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Queries;
 
     public sealed class SendSmsCommandHandler : RequestHandlerAsync<SendSmsCommand>

@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Paramore.Darker;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Lesson.Commands;
     using TestOkur.WebApi.Application.Lesson.Queries;
 

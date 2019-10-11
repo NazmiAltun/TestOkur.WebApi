@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.TestHelper;
     using TestOkur.WebApi.Data;
 

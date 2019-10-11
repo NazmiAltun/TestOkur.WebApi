@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
     using System.Runtime.Serialization;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
     public class ActivateUserCommand : CommandBase

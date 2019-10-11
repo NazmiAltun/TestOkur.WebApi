@@ -8,7 +8,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.StudentModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class BulkEditContactsCommandHandler : RequestHandlerAsync<BulkEditContactsCommand>
     {

@@ -6,7 +6,7 @@
     using MassTransit;
     using Paramore.Brighter;
     using TestOkur.Contracts.Sms;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class SendSmsAdminCommandHandler : RequestHandlerAsync<SendSmsAdminCommand>
     {

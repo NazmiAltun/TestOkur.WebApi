@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Contact;
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
     using Student = TestOkur.Domain.Model.StudentModel.Student;

@@ -9,7 +9,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.StudentModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
     public class BulkCreateStudentCommandHandler : RequestHandlerAsync<BulkCreateStudentCommand>

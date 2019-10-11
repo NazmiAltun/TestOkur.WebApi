@@ -7,7 +7,7 @@
     using Dapper;
     using Npgsql;
     using Paramore.Darker;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Contact;
     using TestOkur.WebApi.Configuration;
 

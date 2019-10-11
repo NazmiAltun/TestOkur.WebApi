@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Services;
     using User = TestOkur.Domain.Model.UserModel.User;
 

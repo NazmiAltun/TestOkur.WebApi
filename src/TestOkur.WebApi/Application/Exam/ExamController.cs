@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Exam.Commands;
     using TestOkur.WebApi.Application.Exam.Queries;
 

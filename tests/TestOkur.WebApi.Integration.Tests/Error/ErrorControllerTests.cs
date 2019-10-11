@@ -2,12 +2,11 @@
 {
     using FluentAssertions;
     using Microsoft.AspNetCore.Http;
-    using System;
     using System.IO;
     using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Contracts.Alert;
-    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Error;

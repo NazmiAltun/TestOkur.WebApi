@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class GetUserClassroomsQuery :
         QueryBase<IReadOnlyCollection<ClassroomReadModel>>,

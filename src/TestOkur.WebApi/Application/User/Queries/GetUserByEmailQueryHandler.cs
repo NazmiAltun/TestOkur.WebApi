@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Paramore.Darker;
     using Paramore.Darker.QueryLogging;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class GetUserByEmailQueryHandler : QueryHandlerAsync<GetUserByEmailQuery, UserReadModel>
     {

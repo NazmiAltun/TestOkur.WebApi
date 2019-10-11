@@ -5,7 +5,7 @@
     using MassTransit;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class CommandQueryLogger : ICommandQueryLogger
     {

@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Paramore.Brighter;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Sms.Commands;
 
     [Route("api/v1/sms")]

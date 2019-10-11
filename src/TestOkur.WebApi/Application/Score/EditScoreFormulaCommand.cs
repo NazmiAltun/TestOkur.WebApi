@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
     public class EditScoreFormulaCommand : CommandBase

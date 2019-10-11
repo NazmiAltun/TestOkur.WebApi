@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Domain;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/classrooms")]
     [Authorize(AuthorizationPolicies.Customer)]

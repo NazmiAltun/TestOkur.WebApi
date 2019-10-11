@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
     using System.Collections.Generic;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class DeleteExamCommand : CommandBase, IClearCacheWithRegion
     {

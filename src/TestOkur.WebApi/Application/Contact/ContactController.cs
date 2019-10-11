@@ -8,7 +8,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/contacts")]
     [Authorize(AuthorizationPolicies.Customer)]

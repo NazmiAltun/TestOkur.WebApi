@@ -7,7 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using Student = TestOkur.Domain.Model.StudentModel.Student;
 
     public class DeleteStudentCommandHandler : RequestHandlerAsync<DeleteStudentCommand>

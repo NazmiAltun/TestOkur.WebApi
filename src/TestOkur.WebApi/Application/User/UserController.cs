@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Domain;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Commands;
     using TestOkur.WebApi.Application.User.Queries;
 

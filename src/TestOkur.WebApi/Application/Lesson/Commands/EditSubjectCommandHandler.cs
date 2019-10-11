@@ -9,7 +9,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class EditSubjectCommandHandler
         : RequestHandlerAsync<EditSubjectCommand>

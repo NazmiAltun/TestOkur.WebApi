@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Runtime.Serialization;
     using TestOkur.Domain.Model.StudentModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
     public class CreateContactCommand : CommandBase, IClearCache

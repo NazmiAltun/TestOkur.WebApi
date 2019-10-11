@@ -37,12 +37,11 @@
     using TestOkur.Common.Configuration;
     using TestOkur.Data;
     using TestOkur.Domain.Model.SmsModel;
-    using TestOkur.Infrastructure;
-    using TestOkur.Infrastructure.Cqrs;
-    using TestOkur.Infrastructure.Extensions;
-    using TestOkur.Infrastructure.Monitoring;
-    using TestOkur.Infrastructure.Mvc;
-    using TestOkur.Infrastructure.Threading;
+    using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.Infrastructure.Mvc.Extensions;
+    using TestOkur.Infrastructure.Mvc.Monitoring;
+    using TestOkur.Infrastructure.Mvc.Mvc;
+    using TestOkur.Infrastructure.Mvc.Threading;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.City;
     using TestOkur.WebApi.Application.User;

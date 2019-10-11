@@ -11,7 +11,7 @@
     using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.LicenseType;
     using TestOkur.WebApi.Application.User.Events;

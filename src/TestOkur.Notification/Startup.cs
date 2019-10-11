@@ -26,8 +26,8 @@
     using System.Reflection;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
-    using TestOkur.Infrastructure.Extensions;
-    using TestOkur.Infrastructure.Monitoring;
+    using TestOkur.Infrastructure.Mvc.Extensions;
+    using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Consumers;
     using TestOkur.Notification.Infrastructure;

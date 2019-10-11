@@ -9,7 +9,7 @@
     using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;

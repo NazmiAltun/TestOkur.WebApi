@@ -1,6 +1,6 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class GetUserByEmailQuery : QueryBase<UserReadModel>, ISkipLogging
     {

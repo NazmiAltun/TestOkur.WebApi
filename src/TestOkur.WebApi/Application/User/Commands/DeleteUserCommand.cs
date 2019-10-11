@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
     using System.Collections.Generic;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class DeleteUserCommand : CommandBase, IClearCache
     {

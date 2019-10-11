@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
     using System.Collections.Generic;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class DeleteStudentCommand : CommandBase, IClearCache
     {

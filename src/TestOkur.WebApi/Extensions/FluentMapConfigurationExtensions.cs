@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Extensions
 {
+    using Dapper.FluentMap.Configuration;
+    using Dapper.FluentMap.Mapping;
+    using Paramore.Brighter.Extensions;
     using System;
     using System.Linq;
     using System.Reflection;
-    using Dapper.FluentMap.Configuration;
-    using Dapper.FluentMap.Mapping;
-    using TestOkur.Infrastructure.Extensions;
 
     public static class FluentMapConfigurationExtensions
     {

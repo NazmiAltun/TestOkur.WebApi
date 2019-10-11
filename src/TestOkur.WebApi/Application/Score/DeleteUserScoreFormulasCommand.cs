@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
     using System.Collections.Generic;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class DeleteUserScoreFormulasCommand : CommandBase, IClearCache
     {

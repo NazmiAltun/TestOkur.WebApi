@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class CreateContactCommandHandler
         : RequestHandlerAsync<CreateContactCommand>

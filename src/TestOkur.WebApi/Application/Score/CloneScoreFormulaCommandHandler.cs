@@ -9,7 +9,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.ScoreModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class CloneScoreFormulaCommandHandler
         : RequestHandlerAsync<CloneScoreFormulaCommand>

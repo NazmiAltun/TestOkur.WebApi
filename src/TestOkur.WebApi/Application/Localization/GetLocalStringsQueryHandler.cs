@@ -6,7 +6,7 @@
     using OfficeOpenXml;
     using Paramore.Darker;
     using Paramore.Darker.QueryLogging;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class GetLocalStringsQueryHandler : QueryHandler<GetLocalStringsQuery, IReadOnlyCollection<LocalString>>
     {

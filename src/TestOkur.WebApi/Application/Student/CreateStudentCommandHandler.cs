@@ -10,7 +10,7 @@
     using Paramore.Brighter;
     using TestOkur.Common;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
     public sealed class CreateStudentCommandHandler : RequestHandlerAsync<CreateStudentCommand>

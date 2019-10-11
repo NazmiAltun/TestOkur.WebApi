@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Paramore.Darker;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class GetAllCitiesQuery :
         IQuery<IReadOnlyCollection<CityReadModel>>,

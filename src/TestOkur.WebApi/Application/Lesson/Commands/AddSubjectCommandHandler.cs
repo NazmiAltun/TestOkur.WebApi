@@ -7,7 +7,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class AddSubjectCommandHandler : RequestHandlerAsync<AddSubjectCommand>
     {

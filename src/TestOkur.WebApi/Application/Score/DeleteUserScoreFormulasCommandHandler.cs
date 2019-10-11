@@ -7,7 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class DeleteUserScoreFormulasCommandHandler
         : RequestHandlerAsync<DeleteUserScoreFormulasCommand>

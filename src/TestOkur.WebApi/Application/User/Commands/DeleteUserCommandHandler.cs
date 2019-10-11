@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Services;
 
     public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>

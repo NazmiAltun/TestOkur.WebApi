@@ -10,7 +10,7 @@
     using Npgsql;
     using Paramore.Darker;
     using Paramore.Darker.QueryLogging;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetAllOpticalFormTypesQueryHandler : QueryHandlerAsync<GetAllOpticalFormTypesQuery, IReadOnlyCollection<OpticalFormTypeReadModel>>

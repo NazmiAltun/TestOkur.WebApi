@@ -18,14 +18,17 @@
     using TestOkur.Domain.Model.SettingModel;
     using TestOkur.Domain.Model.StudentModel;
     using TestOkur.Domain.Model.UserModel;
-    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Data;
+    using TestOkur.Infrastructure.Mvc.Extensions;
 
     [ExcludeFromCodeCoverage]
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, ICanMigrate
     {
         private readonly int _currentUserId;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, int currentUserId = default)
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
+            int currentUserId = default)
            : base(options)
         {
             _currentUserId = currentUserId;
@@ -106,6 +109,16 @@
                 entry.Property("CreatedOnUTC").CurrentValue = DateTime.UtcNow;
                 entry.Property("CreatedBy").CurrentValue = _currentUserId;
             }
+        }
+
+        public void Migrate()
+        {
+            Database.Migrate();
+        }
+
+        public async Task MigrateAsync()
+        {
+            await Database.MigrateAsync();
         }
     }
 }

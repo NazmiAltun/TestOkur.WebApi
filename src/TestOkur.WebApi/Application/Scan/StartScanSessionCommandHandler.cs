@@ -7,7 +7,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.ExamModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using Exam = TestOkur.Domain.Model.ExamModel.Exam;
 
     public class StartScanSessionCommandHandler

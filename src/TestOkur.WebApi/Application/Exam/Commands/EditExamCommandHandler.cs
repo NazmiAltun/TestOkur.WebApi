@@ -13,7 +13,7 @@
     using TestOkur.Data;
     using TestOkur.Domain.Model.ExamModel;
     using TestOkur.Domain.SeedWork;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Exam.Queries;
     using Exam = TestOkur.Domain.Model.ExamModel.Exam;
     using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;

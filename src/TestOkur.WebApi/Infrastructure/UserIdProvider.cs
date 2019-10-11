@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.WebApi
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using CacheManager.Core;
     using Dapper;
     using IdentityModel;
     using Microsoft.AspNetCore.Http;
     using Npgsql;
-    using TestOkur.Infrastructure;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Configuration;
 

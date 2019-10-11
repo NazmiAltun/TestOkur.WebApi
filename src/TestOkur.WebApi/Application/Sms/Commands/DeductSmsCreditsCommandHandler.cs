@@ -6,7 +6,7 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Domain.Model.SmsModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class DeductSmsCreditsCommandHandler : RequestHandlerAsync<DeductSmsCreditsCommand>
     {

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using TestOkur.Domain.Model.CityModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using City = TestOkur.Domain.Model.CityModel.City;
     using User = TestOkur.Domain.Model.UserModel.User;
 

@@ -11,7 +11,7 @@
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Lesson.Queries;
 
     public sealed class EditUnitCommandHandler : RequestHandlerAsync<EditUnitCommand>

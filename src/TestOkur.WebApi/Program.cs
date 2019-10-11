@@ -6,7 +6,7 @@
     using System;
     using System.Threading.Tasks;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Extensions;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.WebApi.Data;
 
     public static class Program

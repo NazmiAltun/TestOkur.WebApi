@@ -8,7 +8,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Data;
-    using TestOkur.Infrastructure.Cqrs;
+    using TestOkur.Infrastructure.CommandsQueries;
 
     public class EndScanSessionCommandHandler
         : RequestHandlerAsync<EndScanSessionCommand>

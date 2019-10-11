@@ -2,7 +2,6 @@
 {
     using System.Net.Mail;
     using System.Threading.Tasks;
-    using TestOkur.Infrastructure.Extensions;
     using TestOkur.Notification.Models;
 
     public class EmailBuilder<TModel>
@@ -47,7 +46,10 @@
                 Body = await _templateEngine.RenderTemplateAsync(_template.BodyPath, _model),
             };
 
-            _receivers.Each(r => mail.To.Add(r));
+            foreach (var receiver in _receivers)
+            {
+                mail.To.Add(receiver);
+            }
 
             return mail;
         }
