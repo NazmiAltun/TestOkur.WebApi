@@ -231,6 +231,13 @@
                     policy => policy.RequireAssertion(context =>
                         context.User.IsInRole(Roles.Admin) ||
                         context.User.IsInRole(Roles.Customer)));
+
+                options.AddPolicy(
+                    AuthorizationPolicies.Private,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) ||
+                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
+                                                   c.Value == Clients.Private)));
             });
         }
 
