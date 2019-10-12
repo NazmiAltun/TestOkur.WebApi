@@ -267,7 +267,7 @@ jobs:
           name: Clear Cache
           command: |
             chmod +x deploy/retry.sh
-            deploy/retry.sh $WEBAPI_URL/api/cache
+            deploy/retry.sh $WEBAPI_URL/api/cache?key=$APP_KEY
 workflows:
   version: 2  
   deploy-qa:

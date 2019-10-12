@@ -6,5 +6,8 @@
     {
         [Required]
         public string Postgres { get; set; }
+
+        [Required]
+        public string Key { get; set; }
     }
 }
