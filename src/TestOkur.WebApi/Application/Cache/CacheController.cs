@@ -3,7 +3,9 @@
     using System.ComponentModel.DataAnnotations;
     using CacheManager.Core;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Hosting;
     using TestOkur.WebApi.Configuration;
 
     [Route("api/cache")]
@@ -12,11 +14,13 @@
     {
         private readonly ICacheManager<object> _cacheManager;
         private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CacheController(ICacheManager<object> cacheManager, ApplicationConfiguration applicationConfiguration)
+        public CacheController(ICacheManager<object> cacheManager, ApplicationConfiguration applicationConfiguration, IWebHostEnvironment webHostEnvironment)
         {
             _cacheManager = cacheManager;
             _applicationConfiguration = applicationConfiguration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpDelete]
@@ -27,7 +31,11 @@
                 return Unauthorized();
             }
 
-            _cacheManager.Clear();
+            if (!_webHostEnvironment.IsDevelopment())
+            {
+                _cacheManager.Clear();
+            }
+
             return NoContent();
         }
     }
