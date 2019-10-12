@@ -52,7 +52,7 @@
 								GROUP BY oft.code
 								)fls ON e.applicable_form_type_code=fls.code
 								WHERE e.created_by=@userId OR e.shared=true
-								ORDER BY e.created_on_utc DESC";
+								ORDER BY e.shared DESC, e.created_on_utc DESC";
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {
