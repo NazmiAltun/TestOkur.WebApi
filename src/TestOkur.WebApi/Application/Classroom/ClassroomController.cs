@@ -13,6 +13,7 @@
 
     [Route("api/v1/classrooms")]
     [Authorize(AuthorizationPolicies.Customer)]
+    [ApiController]
     public class ClassroomController : ControllerBase
     {
         private readonly IProcessor _processor;
@@ -25,7 +26,7 @@
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateClassroomCommand command)
+        public async Task<IActionResult> CreateAsync(CreateClassroomCommand command)
         {
             await _processor.SendAsync(command);
             return Ok(SuccessCodes.ClassCreated);
@@ -49,7 +50,7 @@
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EditAsync([FromBody, Required]EditClassroomCommand command)
+        public async Task<IActionResult> EditAsync(EditClassroomCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();

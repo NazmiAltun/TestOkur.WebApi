@@ -11,6 +11,7 @@
     using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/students")]
+    [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class StudentController : ControllerBase
     {
@@ -24,7 +25,7 @@
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateStudentCommand command)
+        public async Task<IActionResult> CreateAsync(CreateStudentCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -41,7 +42,7 @@
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EditAsync([FromBody, Required]EditStudentCommand command)
+        public async Task<IActionResult> EditAsync(EditStudentCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -57,7 +58,7 @@
         [HttpPost("bulk")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateBulkAsync([FromBody, Required]BulkCreateStudentCommand command)
+        public async Task<IActionResult> CreateBulkAsync(BulkCreateStudentCommand command)
         {
             await _processor.SendAsync(command);
 

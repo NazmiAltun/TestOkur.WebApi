@@ -14,6 +14,7 @@
 
     [Route("api/v1/units")]
     [Authorize(AuthorizationPolicies.Customer)]
+    [ApiController]
     public class UnitController : ControllerBase
     {
         private readonly IProcessor _processor;
@@ -26,7 +27,7 @@
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateUnitCommand command)
+        public async Task<IActionResult> CreateAsync(CreateUnitCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -50,7 +51,7 @@
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EditAsync([FromBody, Required]EditUnitCommand command)
+        public async Task<IActionResult> EditAsync(EditUnitCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -59,7 +60,7 @@
         [HttpPost("{unitId}/subjects")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddSubjectAsync(int unitId, [FromBody, Required]AddSubjectCommand command)
+        public async Task<IActionResult> AddSubjectAsync(int unitId, AddSubjectCommand command)
         {
             command.UnitId = unitId;
             await _processor.SendAsync(command);
@@ -78,7 +79,7 @@
         [HttpPut("{unitId}/subjects")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EditSubjectAsync(int unitId, [FromBody, Required]EditSubjectCommand command)
+        public async Task<IActionResult> EditSubjectAsync(int unitId, EditSubjectCommand command)
         {
             command.UnitId = unitId;
             await _processor.SendAsync(command);

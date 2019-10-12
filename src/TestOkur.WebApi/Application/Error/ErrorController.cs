@@ -11,6 +11,7 @@
 
     [Route("api/v1/error")]
     [Authorize(AuthorizationPolicies.Customer)]
+    [ApiController]
     public class ErrorController : ControllerBase
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -24,7 +25,7 @@
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> PostAsync([FromBody]ErrorModel model)
+        public async Task<IActionResult> PostAsync(ErrorModel model)
         {
             await _publishEndpoint.Publish(model);
             return Accepted();

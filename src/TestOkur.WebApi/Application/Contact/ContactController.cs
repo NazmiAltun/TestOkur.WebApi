@@ -11,6 +11,7 @@
     using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/contacts")]
+    [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ContactController : ControllerBase
     {
@@ -23,7 +24,7 @@
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> EditAsync([FromBody, Required]BulkEditContactsCommand command)
+        public async Task<IActionResult> EditAsync(BulkEditContactsCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -32,7 +33,7 @@
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateContactCommand command)
+        public async Task<IActionResult> CreateAsync(CreateContactCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();

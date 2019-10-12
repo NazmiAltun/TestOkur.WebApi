@@ -15,6 +15,7 @@
 
     [Route("api/v1/lessons")]
     [Authorize(AuthorizationPolicies.Customer)]
+    [ApiController]
     public class LessonController : ControllerBase
     {
         private readonly IProcessor _processor;
@@ -29,7 +30,7 @@
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateLessonCommand command)
+        public async Task<IActionResult> CreateAsync(CreateLessonCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -53,7 +54,7 @@
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EditAsync([FromBody, Required]EditLessonCommand command)
+        public async Task<IActionResult> EditAsync(EditLessonCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();

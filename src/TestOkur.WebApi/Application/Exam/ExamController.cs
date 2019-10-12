@@ -14,6 +14,7 @@
     using TestOkur.WebApi.Application.Exam.Queries;
 
     [Route("api/v1/exams")]
+    [ApiController]
     public class ExamController : ControllerBase
     {
         private readonly IProcessor _processor;
@@ -29,7 +30,7 @@
         [Authorize(AuthorizationPolicies.Customer)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync([FromBody, Required]CreateExamCommand command)
+        public async Task<IActionResult> CreateAsync(CreateExamCommand command)
         {
             if (!User.IsInRole(Roles.Admin))
             {
@@ -81,7 +82,7 @@
         [Authorize(AuthorizationPolicies.Customer)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EditAsync([FromBody, Required]EditExamCommand command)
+        public async Task<IActionResult> EditAsync(EditExamCommand command)
         {
             if (!User.IsInRole(Roles.Admin))
             {

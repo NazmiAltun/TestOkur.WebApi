@@ -9,6 +9,7 @@
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Models;
 
+    [ApiController]
     [Route("api/v1/report-requests")]
     public class ReportRequestController : ControllerBase
     {
@@ -22,7 +23,7 @@
         [HttpPost]
         [Authorize(AuthorizationPolicies.Customer)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddAsync([FromBody, Required]ReportRequest reportRequest)
+        public async Task<IActionResult> AddAsync(ReportRequest reportRequest)
         {
             await _reportRequestRepository.AddAsync(reportRequest);
             return Ok();

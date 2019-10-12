@@ -14,6 +14,7 @@
     using TestOkur.WebApi.Application.User.Queries;
 
     [Route("api/v1/users")]
+    [ApiController]
     public sealed class UserController : ControllerBase
     {
         private readonly IProcessor _processor;
@@ -27,7 +28,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(AuthorizationPolicies.Public)]
-        public async Task<IActionResult> SendResetPasswordLinkAsync([FromBody, Required]SendResetPasswordLinkCommand command)
+        public async Task<IActionResult> SendResetPasswordLinkAsync(SendResetPasswordLinkCommand command)
         {
             await _processor.SendAsync(command);
 
@@ -38,7 +39,7 @@
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(AuthorizationPolicies.Customer)]
-        public async Task<IActionResult> UpdateUserAsync([FromBody, Required]UpdateUserCommand command)
+        public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand command)
         {
             await _processor.SendAsync(command);
 
@@ -49,7 +50,7 @@
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(AuthorizationPolicies.Public)]
-        public async Task<IActionResult> CreateUserAsync([FromBody, Required]CreateUserCommand command)
+        public async Task<IActionResult> CreateUserAsync(CreateUserCommand command)
         {
             await _processor.SendAsync(command);
 
@@ -127,7 +128,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(AuthorizationPolicies.Admin)]
-        public async Task<IActionResult> UpdateUserByAdminAsync([FromBody, Required]UpdateUserByAdminCommand command)
+        public async Task<IActionResult> UpdateUserByAdminAsync(UpdateUserByAdminCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();
@@ -137,7 +138,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(AuthorizationPolicies.Admin)]
-        public async Task<IActionResult> ExtendSubscriptionAsync([FromBody, Required]ExtendUserSubscriptionCommand command)
+        public async Task<IActionResult> ExtendSubscriptionAsync(ExtendUserSubscriptionCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();

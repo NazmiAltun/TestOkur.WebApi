@@ -12,6 +12,7 @@
     using TestOkur.WebApi.Application.Sms.Commands;
 
     [Route("api/v1/sms")]
+    [ApiController]
     public class SmsController : ControllerBase
     {
         private readonly IAmACommandProcessor _commandProcessor;
@@ -27,7 +28,7 @@
         [Authorize(AuthorizationPolicies.Customer)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SendSmsAsync([FromBody, Required]SendSmsCommand command)
+        public async Task<IActionResult> SendSmsAsync(SendSmsCommand command)
         {
             await _contextCommandProcessor.SendAsync(command);
 
@@ -37,7 +38,7 @@
         [HttpPost("send-admin")]
         [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> SendSmsAsync([FromBody, Required]SendSmsAdminCommand command)
+        public async Task<IActionResult> SendSmsAsync(SendSmsAdminCommand command)
         {
             await _contextCommandProcessor.SendAsync(command);
             return Accepted();
@@ -47,7 +48,7 @@
         [Authorize(AuthorizationPolicies.Private)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeductSmsCreditsAsync([FromBody, Required]DeductSmsCreditsCommand command)
+        public async Task<IActionResult> DeductSmsCreditsAsync(DeductSmsCreditsCommand command)
         {
             await _commandProcessor.SendAsync(command);
 
@@ -58,7 +59,7 @@
         [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddSmsCreditsAsync([FromBody, Required]AddSmsCreditsCommand command)
+        public async Task<IActionResult> AddSmsCreditsAsync(AddSmsCreditsCommand command)
         {
             await _commandProcessor.SendAsync(command);
 

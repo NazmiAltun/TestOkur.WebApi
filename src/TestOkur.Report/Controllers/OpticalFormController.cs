@@ -15,6 +15,7 @@
     using TestOkur.Report.Infrastructure.Repositories;
 
     [Route("api/v1/forms")]
+    [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class OpticalFormController : ControllerBase
     {
@@ -61,7 +62,7 @@
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddManyAsync([FromBody, Required]IEnumerable<StudentOpticalForm> forms)
+        public async Task<IActionResult> AddManyAsync(IEnumerable<StudentOpticalForm> forms)
         {
             await _opticalFormRepository.DeleteManyAsync(forms);
             await _opticalFormRepository.AddManyAsync(forms);

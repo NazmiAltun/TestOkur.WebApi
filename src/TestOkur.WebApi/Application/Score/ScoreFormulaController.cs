@@ -13,6 +13,7 @@
 
     [Route("api/v1/score-formulas")]
     [Authorize(AuthorizationPolicies.Customer)]
+    [ApiController]
     public class ScoreFormulaController : ControllerBase
     {
         private readonly IProcessor _processor;
@@ -46,7 +47,7 @@
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateAsync([FromBody, Required] BulkEditScoreFormulaCommand command)
+        public async Task<IActionResult> UpdateAsync(BulkEditScoreFormulaCommand command)
         {
             await _processor.SendAsync(command);
             return Ok();

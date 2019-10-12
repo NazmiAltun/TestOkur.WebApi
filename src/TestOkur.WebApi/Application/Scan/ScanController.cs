@@ -10,6 +10,7 @@
     using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/scan-sessions")]
+    [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ScanController : ControllerBase
     {
@@ -22,7 +23,7 @@
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> StartAsync([FromBody, Required]StartScanSessionCommand command)
+        public async Task<IActionResult> StartAsync(StartScanSessionCommand command)
         {
             await _commandProcessor.SendAsync(command);
             return Ok();
@@ -30,7 +31,7 @@
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> EndAsync([FromBody, Required]EndScanSessionCommand command)
+        public async Task<IActionResult> EndAsync(EndScanSessionCommand command)
         {
             await _commandProcessor.SendAsync(command);
             return Ok();
