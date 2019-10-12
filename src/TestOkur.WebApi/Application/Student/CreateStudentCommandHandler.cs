@@ -1,17 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-    using System;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
-    using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
     public sealed class CreateStudentCommandHandler : RequestHandlerAsync<CreateStudentCommand>
     {
