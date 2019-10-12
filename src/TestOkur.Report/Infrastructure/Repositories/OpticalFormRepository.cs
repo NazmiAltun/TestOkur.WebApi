@@ -196,7 +196,7 @@
             }
 
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, forms.First().ExamId);
-            filter = filter & Builders<StudentOpticalForm>.Filter.In(x => x.StudentId, forms.Select(x => x.StudentId));
+            filter &= Builders<StudentOpticalForm>.Filter.In(x => x.StudentId, forms.Select(x => x.StudentId));
             await _context.StudentOpticalForms.DeleteManyAsync(filter);
         }
 
