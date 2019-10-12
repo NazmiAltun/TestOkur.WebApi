@@ -26,7 +26,9 @@
             var filter = Builders<EMail>.Filter.Gte(e => e.SentOnUtc, from.ToUniversalTime());
             filter &= Builders<EMail>.Filter.Lte(e => e.SentOnUtc, to.ToUniversalTime());
 
-            return await _context.Emails.Find(filter).ToListAsync();
+            return await _context.Emails.Find(filter)
+                .SortByDescending(e => e.SentOnUtc)
+                .ToListAsync();
         }
     }
 }
