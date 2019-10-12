@@ -5,7 +5,6 @@
     <LangVersion>latest</LangVersion>
     <CodeAnalysisRuleSet>..\..\StyleCopRules.ruleset</CodeAnalysisRuleSet>
     <ServerGarbageCollection>true</ServerGarbageCollection>
-    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="3.0.0" />
