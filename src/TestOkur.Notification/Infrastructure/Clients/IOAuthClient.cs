@@ -10,6 +10,6 @@
 
         Task<IEnumerable<IdentityUser>> GetUsersAsync();
 
-        Task<IEnumerable<string>> GetTodaysLogins();
+        Task<IdentityStatisticsModel> GetDailyStatsAsync();
     }
 }

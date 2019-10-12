@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Logging;
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Notification.Extensions;
@@ -65,10 +64,6 @@
                     }).OrderByDescending(x => x.TotalCredit)
                 .FirstOrDefault();
             var apiUsers = await _webApiClient.GetUsersAsync();
-            var identityUsers = await _oAuthClient.GetUsersAsync();
-            var expiredUsersEmails = identityUsers.Where(u => u.ExpiryDateUtc != null &&
-                                     u.ExpiryDateUtc.Value.Date == DateTime.Today)
-                .Select(u => u.Email);
 
             return new DailyReportModel()
             {
@@ -83,8 +78,7 @@
                 TotalFailedSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Failed),
                 TopSMSSenderCreditInDay = topUserSmsStats?.TotalCredit ?? 0,
                 TopSMSSenderEmailAddressInDay = apiUsers.FirstOrDefault(u => u.Id == topUserSmsStats?.UserId)?.Email,
-                ExpiredLicensesToday = string.Join(", ", expiredUsersEmails),
-                TotalIndividualLoginCountInDay = (await _oAuthClient.GetTodaysLogins()).Count(),
+                IdentityStatistics = await _oAuthClient.GetDailyStatsAsync(),
             };
         }
     }
