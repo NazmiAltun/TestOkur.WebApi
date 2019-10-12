@@ -110,7 +110,11 @@
                 {{/each}}
                 <th rowspan='2'>Başarı</th>
                 <th rowspan='2'>Sınıf Sıra</th>
-                <th rowspan='2'>Okul Sıra</th>
+                {{#if srcExam}}
+                <th rowspan='2'>Basari Durumu</th>}
+                {{else}}
+                    <th rowspan='2'>Okul Sıra</th>}
+                {{/if}}
             </tr>
             <tr>
                 {{#each lessons}}
@@ -162,7 +166,11 @@
                 {{/each}}
                 <td>%{{formatOneDecimalPlace successPercent}}</td>
                 <td>{{classroomOrder}}</td>
-                <td>{{schoolOrder}}</td>
+                {{#if ../srcExam}}
+                    <td>{{status}}</td>
+                {{else}}
+                    <td>{{schoolOrder}}</td>
+                {{/if}}
             </tr>
             {{/each}}
             <tr height="40">
