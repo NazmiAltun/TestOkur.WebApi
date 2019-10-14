@@ -80,6 +80,8 @@ services:
       context: .
       dockerfile: src/TestOkur.WebApi/Dockerfile
       target: integrationtest
+      args:
+      - install_drawing_packages=True
     entrypoint:
       - dotnet
       - test
