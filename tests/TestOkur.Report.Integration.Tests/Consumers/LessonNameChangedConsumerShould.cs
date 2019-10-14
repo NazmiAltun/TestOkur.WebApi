@@ -44,8 +44,11 @@
                     .Should().NotContain(s => s.LessonName != lessonName);
 
                 var newLessonName = RandomGen.String(20);
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new LessonNameChangedConsumer(repository as IOpticalFormRepository);
+                var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
+                    as IStudentOpticalFormRepository;
+                var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
+                    as IAnswerKeyOpticalFormRepository;
+                var consumer = new LessonNameChangedConsumer(repository, answerKeyOpticalFormRepository);
                 var context = Substitute.For<ConsumeContext<ILessonNameChanged>>();
                 context.Message.LessonId.Returns(lessonId);
                 context.Message.NewLessonName.Returns(newLessonName);

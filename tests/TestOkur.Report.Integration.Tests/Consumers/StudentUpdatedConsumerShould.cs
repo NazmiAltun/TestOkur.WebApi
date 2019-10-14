@@ -36,8 +36,8 @@
                 var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
                 studentOpticalForms.Should()
                     .HaveCount(1);
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new StudentUpdatedConsumer(repository as IOpticalFormRepository);
+                var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository));
+                var consumer = new StudentUpdatedConsumer(repository as IStudentOpticalFormRepository);
                 var context = Substitute.For<ConsumeContext<IStudentUpdated>>();
                 context.Message.ClassroomId.Returns(classroomId);
                 context.Message.FirstName.Returns(firstName);

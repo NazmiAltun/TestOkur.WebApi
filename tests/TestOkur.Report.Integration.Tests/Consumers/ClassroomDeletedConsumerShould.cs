@@ -33,8 +33,8 @@
                     .HaveCount(2)
                     .And
                     .NotContain(s => s.ClassroomId != classroomId);
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new ClassroomDeletedConsumer(repository as IOpticalFormRepository, null);
+                var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository));
+                var consumer = new ClassroomDeletedConsumer(repository as IStudentOpticalFormRepository, null);
                 var context = Substitute.For<ConsumeContext<IClassroomDeleted>>();
                 context.Message.ClassroomId.Returns(classroomId);
                 await consumer.Consume(context);

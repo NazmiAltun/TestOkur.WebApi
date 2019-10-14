@@ -13,14 +13,9 @@
         [ResultCaching(2)]
         public override IReadOnlyCollection<LocalString> Execute(GetLocalStringsQuery query)
         {
-            return ReadFromExcel(query.CultureCode);
-        }
-
-        private IReadOnlyCollection<LocalString> ReadFromExcel(string cultureCode)
-        {
             return JsonConvert.DeserializeObject<IReadOnlyCollection<LocalString>>(
                 File.ReadAllText(Path.Combine(
-                    "Application", "Localization", $"{cultureCode}.json")));
+                    "Application", "Localization", $"{query.CultureCode}.json")));
         }
     }
 }

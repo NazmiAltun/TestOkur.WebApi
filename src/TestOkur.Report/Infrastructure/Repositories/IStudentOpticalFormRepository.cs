@@ -7,19 +7,15 @@
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
 
-    public interface IOpticalFormRepository
+    public interface IStudentOpticalFormRepository
     {
         Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms);
 
         Task AddManyAsync(IEnumerable<StudentOpticalForm> forms);
 
-        Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
-
         Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
 
         Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId);
-
-        Task<IEnumerable<AnswerKeyOpticalForm>> GetAnswerKeyOpticalForms(int examId);
 
         Task<IEnumerable<int>> GetExamIdsAsync(
             Expression<Func<StudentOpticalForm, int>> selector,
@@ -30,8 +26,6 @@
         Task DeleteByClassroomIdAsync(int classroomId);
 
         Task DeleteByStudentIdAsync(int studentId);
-
-        Task DeleteAnswerKeyOpticalFormsByExamIdAsync(int examId);
 
         Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms);
 

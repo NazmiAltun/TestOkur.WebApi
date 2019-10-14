@@ -33,8 +33,8 @@
                     .HaveCount(1)
                     .And
                     .Contain(s => s.StudentId == studentId);
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new StudentDeletedConsumer(repository as IOpticalFormRepository, null);
+                var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository));
+                var consumer = new StudentDeletedConsumer(repository as IStudentOpticalFormRepository, null);
                 var context = Substitute.For<ConsumeContext<IStudentDeleted>>();
                 context.Message.StudentId.Returns(studentId);
                 await consumer.Consume(context);

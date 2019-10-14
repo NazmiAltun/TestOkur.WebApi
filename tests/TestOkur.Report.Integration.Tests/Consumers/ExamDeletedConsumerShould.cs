@@ -20,8 +20,11 @@
                 var examId = await ExecuteExamCreatedConsumerAsync(testServer);
                 var list = await GetListAsync<AnswerKeyOpticalForm>(testServer.CreateClient(), examId);
                 list.Should().NotBeEmpty();
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new ExamDeletedConsumer(repository as IOpticalFormRepository);
+                var studentOpticalFormRepository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
+                    as IStudentOpticalFormRepository;
+                var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
+                    as IAnswerKeyOpticalFormRepository;
+                var consumer = new ExamDeletedConsumer(studentOpticalFormRepository, answerKeyOpticalFormRepository);
                 var context = Substitute.For<ConsumeContext<IExamDeleted>>();
                 context.Message.ExamId.Returns(examId);
                 await consumer.Consume(context);

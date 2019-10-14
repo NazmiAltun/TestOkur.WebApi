@@ -7,16 +7,21 @@
 
     internal class SubjectChangedConsumer : IConsumer<ISubjectChanged>
     {
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
+        private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
 
-        public SubjectChangedConsumer(IOpticalFormRepository opticalFormRepository)
+        public SubjectChangedConsumer(IStudentOpticalFormRepository studentOpticalFormRepository, IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository)
         {
-            _opticalFormRepository = opticalFormRepository;
+            _studentOpticalFormRepository = studentOpticalFormRepository;
+            _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
         public async Task Consume(ConsumeContext<ISubjectChanged> context)
         {
-            await _opticalFormRepository.UpdateSubjectNameAsync(
+            await _answerKeyOpticalFormRepository.UpdateSubjectNameAsync(
+                context.Message.SubjectId,
+                context.Message.NewName);
+            await _studentOpticalFormRepository.UpdateSubjectNameAsync(
                 context.Message.SubjectId,
                 context.Message.NewName);
         }

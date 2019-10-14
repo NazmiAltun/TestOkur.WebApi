@@ -25,7 +25,10 @@
             {
                 var client = testServer.CreateClient();
                 var examId = await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms);
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
+                var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
+                    as IStudentOpticalFormRepository;
+                var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
+                    as IAnswerKeyOpticalFormRepository;
                 var logger = testServer.Host.Services.GetService(typeof(ILogger<EvaluateExamConsumer>));
                 var forms = new List<StudentOpticalForm>
                 {
@@ -36,9 +39,10 @@
                 response.EnsureSuccessStatusCode();
 
                 var consumer = new EvaluateExamConsumer(
-                    repository as IOpticalFormRepository,
+                    repository,
                     logger as ILogger<EvaluateExamConsumer>,
                     new Evaluator(),
+                    answerKeyOpticalFormRepository,
                     null);
                 await consumer.ConsumeAsync(examId);
                 var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);

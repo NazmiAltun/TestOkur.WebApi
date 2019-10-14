@@ -7,16 +7,16 @@
 
     internal class ClassroomUpdatedConsumer : IConsumer<IClassroomUpdated>
     {
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
 
-        public ClassroomUpdatedConsumer(IOpticalFormRepository opticalFormRepository)
+        public ClassroomUpdatedConsumer(IStudentOpticalFormRepository studentOpticalFormRepository)
         {
-            _opticalFormRepository = opticalFormRepository;
+            _studentOpticalFormRepository = studentOpticalFormRepository;
         }
 
         public async Task Consume(ConsumeContext<IClassroomUpdated> context)
         {
-            await _opticalFormRepository
+            await _studentOpticalFormRepository
                 .UpdateClassroomAsync(
                     context.Message.ClassroomId,
                     context.Message.Grade,

@@ -37,8 +37,8 @@
                     .HaveCount(2)
                     .And
                     .NotContain(s => s.ClassroomId != classroomId);
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new ClassroomUpdatedConsumer(repository as IOpticalFormRepository);
+                var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository));
+                var consumer = new ClassroomUpdatedConsumer(repository as IStudentOpticalFormRepository);
                 var context = Substitute.For<ConsumeContext<IClassroomUpdated>>();
                 context.Message.ClassroomId.Returns(classroomId);
                 context.Message.Grade.Returns(newGrade);

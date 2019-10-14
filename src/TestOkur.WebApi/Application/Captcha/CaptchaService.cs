@@ -44,6 +44,5 @@
 
             return captcha?.Code == code;
         }
-
     }
 }

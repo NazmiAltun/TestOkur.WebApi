@@ -70,6 +70,16 @@
             return await base.SaveChangesAsync(cancellationToken);
         }
 
+        public void Migrate()
+        {
+            Database.Migrate();
+        }
+
+        public async Task MigrateAsync()
+        {
+            await Database.MigrateAsync();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -109,16 +119,6 @@
                 entry.Property("CreatedOnUTC").CurrentValue = DateTime.UtcNow;
                 entry.Property("CreatedBy").CurrentValue = _currentUserId;
             }
-        }
-
-        public void Migrate()
-        {
-            Database.Migrate();
-        }
-
-        public async Task MigrateAsync()
-        {
-            await Database.MigrateAsync();
         }
     }
 }

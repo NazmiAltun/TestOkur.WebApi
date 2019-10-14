@@ -7,16 +7,19 @@
 
     internal class ExamDeletedConsumer : IConsumer<IExamDeleted>
     {
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
+        private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
 
-        public ExamDeletedConsumer(IOpticalFormRepository opticalFormRepository)
+        public ExamDeletedConsumer(IStudentOpticalFormRepository studentOpticalFormRepository, IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository)
         {
-            _opticalFormRepository = opticalFormRepository;
+            _studentOpticalFormRepository = studentOpticalFormRepository;
+            _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
         public async Task Consume(ConsumeContext<IExamDeleted> context)
         {
-            await _opticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
+            await _answerKeyOpticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
+            await _studentOpticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
         }
     }
 }

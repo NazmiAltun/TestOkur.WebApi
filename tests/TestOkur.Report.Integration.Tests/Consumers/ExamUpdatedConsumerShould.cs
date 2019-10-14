@@ -45,8 +45,8 @@
                 studentForms.Last().SetFromScanOutput(new ScanOutput("ABCABDABCABDAC", 0), list.Last());
                 await client.PostAsync(ApiPath, studentForms.ToJsonContent());
                 var newAnswerKeyForms = GenerateAnswerKeyOpticalForms(4).ToList();
-                var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-                var consumer = new ExamUpdatedConsumer(repository as IOpticalFormRepository, null);
+                var repository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository));
+                var consumer = new ExamUpdatedConsumer(repository as IAnswerKeyOpticalFormRepository, null);
                 var context = Substitute.For<ConsumeContext<IExamUpdated>>();
                 context.Message.ExamId.Returns(examId);
                 context.Message.AnswerKeyOpticalForms.Returns(newAnswerKeyForms);

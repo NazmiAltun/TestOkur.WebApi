@@ -4,6 +4,7 @@
 
 namespace TestOkur.Report
 {
+    using CacheManager.Core;
     using GreenPipes;
     using HealthChecks.UI.Client;
     using IdentityModel;
@@ -11,6 +12,7 @@ namespace TestOkur.Report
     using MassTransit.RabbitMqTransport;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -24,14 +26,12 @@ namespace TestOkur.Report
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Bson.Serialization.Serializers;
     using Prometheus;
+    using StackExchange.Redis;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using CacheManager.Core;
-    using Microsoft.AspNetCore.DataProtection;
-    using StackExchange.Redis;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Mvc.Extensions;
@@ -200,7 +200,8 @@ namespace TestOkur.Report
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddTransient<IOpticalFormRepository, OpticalFormRepository>();
+            services.AddTransient<IStudentOpticalFormRepository, StudentOpticalFormRepository>();
+            services.AddTransient<IAnswerKeyOpticalFormRepository, AnswerKeyOpticalFormRepository>();
             services.AddTransient<IReportRequestRepository, ReportRequestRepository>();
             services.AddTransient<ISchoolResultRepository, SchoolResultRepository>();
             services.AddSingleton<IRequestResponseLogger, RequestResponseMongodbLogger>();

@@ -7,11 +7,11 @@
 
     internal class ExamCreatedConsumer : IConsumer<IExamCreated>
     {
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
 
-        public ExamCreatedConsumer(IOpticalFormRepository opticalFormRepository)
+        public ExamCreatedConsumer(IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository)
         {
-            _opticalFormRepository = opticalFormRepository;
+            _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
         public async Task Consume(ConsumeContext<IExamCreated> context)
@@ -28,7 +28,7 @@
                 form.ExamTypeName = context.Message.ExamTypeName;
             }
 
-            await _opticalFormRepository.AddManyAsync(forms);
+            await _answerKeyOpticalFormRepository.AddManyAsync(forms);
         }
     }
 }

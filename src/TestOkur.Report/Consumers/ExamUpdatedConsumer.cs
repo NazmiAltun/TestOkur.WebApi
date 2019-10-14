@@ -7,13 +7,13 @@
 
     internal class ExamUpdatedConsumer : IConsumer<IExamUpdated>
     {
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
         private readonly EvaluateExamConsumer _evaluateExamConsumer;
 
-        public ExamUpdatedConsumer(IOpticalFormRepository opticalFormRepository, EvaluateExamConsumer evaluateExamConsumer)
+        public ExamUpdatedConsumer(IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository, EvaluateExamConsumer evaluateExamConsumer)
         {
-            _opticalFormRepository = opticalFormRepository;
             _evaluateExamConsumer = evaluateExamConsumer;
+            _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
         public async Task Consume(ConsumeContext<IExamUpdated> context)
@@ -29,8 +29,8 @@
                 form.IncorrectEliminationRate = context.Message.IncorrectEliminationRate;
             }
 
-            await _opticalFormRepository.DeleteAnswerKeyOpticalFormsByExamIdAsync(context.Message.ExamId);
-            await _opticalFormRepository.AddManyAsync(forms);
+            await _answerKeyOpticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
+            await _answerKeyOpticalFormRepository.AddManyAsync(forms);
             if (_evaluateExamConsumer != null)
             {
                 await _evaluateExamConsumer.ConsumeAsync(context.Message.ExamId);

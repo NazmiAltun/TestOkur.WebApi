@@ -25,8 +25,9 @@
         protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, List<AnswerKeyOpticalForm> answerKeyOpticalForms)
         {
             var examId = RandomGen.Next();
-            var repository = testServer.Host.Services.GetService(typeof(IOpticalFormRepository));
-            var consumer = new ExamCreatedConsumer(repository as IOpticalFormRepository);
+            var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
+                as IAnswerKeyOpticalFormRepository;
+            var consumer = new ExamCreatedConsumer(answerKeyOpticalFormRepository);
             var context = Substitute.For<ConsumeContext<IExamCreated>>();
             context.Message.ExamId.Returns(examId);
             context.Message.AnswerKeyOpticalForms.Returns(answerKeyOpticalForms);

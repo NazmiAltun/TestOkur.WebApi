@@ -17,7 +17,6 @@
             var client = (await GetTestServer()).CreateClient();
             var response = await client.DeleteAsync(ApiPath);
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-
         }
 
         [Fact]

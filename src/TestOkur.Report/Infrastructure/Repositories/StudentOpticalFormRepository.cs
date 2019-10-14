@@ -11,11 +11,11 @@
     using TestOkur.Report.Configuration;
     using TestOkur.Report.Infrastructure;
 
-    public class OpticalFormRepository : IOpticalFormRepository
+    public class StudentOpticalFormRepository : IStudentOpticalFormRepository
     {
         private readonly TestOkurContext _context;
 
-        public OpticalFormRepository(ReportConfiguration configuration)
+        public StudentOpticalFormRepository(ReportConfiguration configuration)
         {
             _context = new TestOkurContext(configuration);
         }
@@ -65,7 +65,6 @@
 
         public async Task UpdateSubjectNameAsync(int subjectId, string newSubjectName)
         {
-            await UpdateAnswerkeyOpticalFormsSubject(subjectId, newSubjectName);
             await UpdateStudentOpticalFormsSubject(subjectId, newSubjectName);
         }
 
@@ -98,22 +97,11 @@
             var update = Builders<StudentOpticalForm>.Update
                 .Set("Sections.$.LessonName", newLessonName);
             await _context.StudentOpticalForms.UpdateManyAsync(filter, update);
-
-            var aFilter = Builders<AnswerKeyOpticalForm>.Filter
-                .ElemMatch(x => x.Sections, s => s.LessonId == lessonId);
-            var aUpdate = Builders<AnswerKeyOpticalForm>.Update
-                .Set("Sections.$.LessonName", newLessonName);
-            await _context.AnswerKeyOpticalForms.UpdateManyAsync(aFilter, aUpdate);
         }
 
         public async Task AddManyAsync(IEnumerable<StudentOpticalForm> forms)
         {
             await _context.StudentOpticalForms.InsertManyAsync(forms);
-        }
-
-        public async Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms)
-        {
-            await _context.AnswerKeyOpticalForms.InsertManyAsync(forms);
         }
 
         public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId)
@@ -148,22 +136,6 @@
             return list;
         }
 
-        public async Task<IEnumerable<AnswerKeyOpticalForm>> GetAnswerKeyOpticalForms(int examId)
-        {
-            var list = await _context.AnswerKeyOpticalForms
-                .Find(Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.ExamId, examId))
-                .ToListAsync();
-
-            foreach (var item in list)
-            {
-                item.Sections = item.Sections.OrderBy(s => s.FormPart)
-                    .ThenBy(s => s.ListOrder)
-                    .ToList();
-            }
-
-            return list;
-        }
-
         public async Task DeleteByStudentIdAsync(int studentId)
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId);
@@ -179,13 +151,6 @@
         public async Task DeleteByExamIdAsync(int examId)
         {
             await DeleteStudentOpticalFormsByExamIdAsync(examId);
-            await DeleteAnswerKeyOpticalFormsByExamIdAsync(examId);
-        }
-
-        public async Task DeleteAnswerKeyOpticalFormsByExamIdAsync(int examId)
-        {
-            var aFilter = Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.ExamId, examId);
-            await _context.AnswerKeyOpticalForms.DeleteManyAsync(aFilter);
         }
 
         public async Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms)
@@ -222,26 +187,6 @@
                     }
 
                     _context.StudentOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
-                });
-            }
-        }
-
-        private async Task UpdateAnswerkeyOpticalFormsSubject(int subjectId, string newSubjectName)
-        {
-            var filter = Builders<AnswerKeyOpticalForm>.Filter.Eq(
-                "Sections.Answers.SubjectId", subjectId);
-
-            using (var cursor = await _context.AnswerKeyOpticalForms.FindAsync(filter))
-            {
-                await cursor.ForEachAsync(form =>
-                {
-                    foreach (var answer in form.Sections.SelectMany(s => s.Answers)
-                        .Where(a => a.SubjectId == subjectId))
-                    {
-                        answer.SubjectName = newSubjectName;
-                    }
-
-                    _context.AnswerKeyOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
                 });
             }
         }

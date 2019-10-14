@@ -10,17 +10,24 @@
 
     public class EvaluateExamConsumer : IConsumer<IEvaluateExam>
     {
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
+        private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
         private readonly ISchoolResultRepository _schoolResultRepository;
         private readonly ILogger<EvaluateExamConsumer> _logger;
         private readonly IEvaluator _evaluator;
 
-        public EvaluateExamConsumer(IOpticalFormRepository opticalFormRepository, ILogger<EvaluateExamConsumer> logger, IEvaluator evaluator, ISchoolResultRepository schoolResultRepository)
+        public EvaluateExamConsumer(
+            IStudentOpticalFormRepository studentOpticalFormRepository,
+            ILogger<EvaluateExamConsumer> logger,
+            IEvaluator evaluator,
+            IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository,
+            ISchoolResultRepository schoolResultRepository)
         {
-            _opticalFormRepository = opticalFormRepository;
+            _studentOpticalFormRepository = studentOpticalFormRepository;
             _logger = logger;
             _evaluator = evaluator;
             _schoolResultRepository = schoolResultRepository;
+            _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
         public async Task Consume(ConsumeContext<IEvaluateExam> context)
@@ -31,17 +38,16 @@
         public async Task ConsumeAsync(int examId)
         {
             _logger.LogInformation($"Evaluation for exam {examId} started...");
-            var answerKeyForms = (await _opticalFormRepository
-                    .GetAnswerKeyOpticalForms(examId))
+            var answerKeyForms = (await _answerKeyOpticalFormRepository.GetByExamIdAsync(examId))
                 .ToList();
             _logger.LogInformation($"Answerkey forms count {answerKeyForms.Count}");
-            var studentForms = (await _opticalFormRepository
+            var studentForms = (await _studentOpticalFormRepository
                     .GetStudentOpticalFormsByExamIdAsync(examId))
                 .ToList();
             _logger.LogInformation($"Student forms count {studentForms.Count}");
             studentForms = _evaluator.Evaluate(answerKeyForms, studentForms).ToList();
 
-            await _opticalFormRepository.AddOrUpdateManyAsync(studentForms);
+            await _studentOpticalFormRepository.AddOrUpdateManyAsync(studentForms);
             _logger.LogInformation($"Evaluation for exam {examId} ended...");
 
             if (answerKeyForms.First().SharedExam)

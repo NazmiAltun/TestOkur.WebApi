@@ -16,12 +16,17 @@
     public class EvaluateController : ControllerBase
     {
         private readonly IEvaluator _evaluator;
-        private readonly IOpticalFormRepository _opticalFormRepository;
+        private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
+        private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
 
-        public EvaluateController(IEvaluator evaluator, IOpticalFormRepository opticalFormRepository)
+        public EvaluateController(
+            IEvaluator evaluator,
+            IStudentOpticalFormRepository studentOpticalFormRepository,
+            IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository)
         {
             _evaluator = evaluator;
-            _opticalFormRepository = opticalFormRepository;
+            _studentOpticalFormRepository = studentOpticalFormRepository;
+            _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
         [HttpGet]
@@ -30,10 +35,10 @@
             [FromQuery] int primaryExamId,
             [FromQuery] int secondaryExamId)
         {
-            var primaryExamForms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(primaryExamId);
-            var secondaryExamForms = await _opticalFormRepository.GetStudentOpticalFormsByExamIdAsync(secondaryExamId);
+            var primaryExamForms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(primaryExamId);
+            var secondaryExamForms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(secondaryExamId);
             var combinedExamForms = _evaluator.JoinSets(primaryExamForms, secondaryExamForms);
-            var answerKeyOpticalForms = await _opticalFormRepository.GetAnswerKeyOpticalForms(primaryExamId);
+            var answerKeyOpticalForms = await _answerKeyOpticalFormRepository.GetByExamIdAsync(primaryExamId);
 
             return Ok(_evaluator.Evaluate(answerKeyOpticalForms.ToList(), combinedExamForms.ToList()));
         }

@@ -1,5 +1,7 @@
 ﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
+    using System;
+    using CacheManager.Core;
     using MongoDB.Driver;
     using System.Collections.Generic;
     using System.Linq;
@@ -9,10 +11,14 @@
 
     public class SchoolResultRepository : ISchoolResultRepository
     {
-        private readonly TestOkurContext _context;
+        private const string BaseCacheKey = "SchoolResults";
 
-        public SchoolResultRepository(ReportConfiguration configuration)
+        private readonly TestOkurContext _context;
+        private readonly ICacheManager<IEnumerable<SchoolResult>> _cache;
+
+        public SchoolResultRepository(ReportConfiguration configuration, ICacheManager<IEnumerable<SchoolResult>> cache)
         {
+            _cache = cache;
             _context = new TestOkurContext(configuration);
         }
 
@@ -22,17 +28,29 @@
             {
                 return;
             }
-            
+
             var filter = Builders<SchoolResult>.Filter.Eq(x => x.ExamId, results.First().ExamId);
             await _context.SchoolResults.DeleteManyAsync(filter);
             await _context.SchoolResults.InsertManyAsync(results);
+            _cache.Remove($"{BaseCacheKey}-{results.First().ExamId}");
         }
 
         public async Task<IEnumerable<SchoolResult>> GetByExamId(int examId)
         {
-            return await _context.SchoolResults
+            var key = $"{BaseCacheKey}-{examId}";
+            var results = _cache.Get(key);
+
+            if (results != null)
+            {
+                return results;
+            }
+
+            results = await _context.SchoolResults
                 .Find(Builders<SchoolResult>.Filter.Eq(x => x.ExamId, examId))
                 .ToListAsync();
+            _cache.Add(new CacheItem<IEnumerable<SchoolResult>>(
+                key, results, ExpirationMode.Absolute, TimeSpan.MaxValue));
+            return results;
         }
     }
 }
