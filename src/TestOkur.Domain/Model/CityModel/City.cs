@@ -1,11 +1,18 @@
 ﻿namespace TestOkur.Domain.Model.CityModel
 {
     using System.Collections.Generic;
+    using System.Linq;
     using TestOkur.Domain.SeedWork;
 
     public class City : Entity
     {
         private readonly List<District> _districts;
+
+        public City(long id, Name name, IEnumerable<District> districts)
+            : this(id, name)
+        {
+            _districts = districts.ToList();
+        }
 
         public City(long id, Name name)
             : this()
