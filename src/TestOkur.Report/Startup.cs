@@ -26,8 +26,12 @@ namespace TestOkur.Report
     using Prometheus;
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
+    using CacheManager.Core;
+    using Microsoft.AspNetCore.DataProtection;
+    using StackExchange.Redis;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Mvc.Extensions;
@@ -40,6 +44,7 @@ namespace TestOkur.Report
     using TestOkur.Report.Infrastructure;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Models;
+    using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     [ExcludeFromCodeCoverage]
     public class Startup
@@ -67,6 +72,7 @@ namespace TestOkur.Report
         {
             RegisterMappings();
             AddHealthCheck(services);
+            AddCache(services);
             AddOptions(services);
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
@@ -231,12 +237,34 @@ namespace TestOkur.Report
                 $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri)
+                .AddRedis(Configuration.GetConnectionString("Redis"))
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddMongoDb(
                     ReportConfiguration.ConnectionString,
                     ReportConfiguration.Database,
                     "mongodb",
                     null);
+        }
+
+        private void AddCache(IServiceCollection services)
+        {
+            var cacheManagerConfig =
+                ConfigurationBuilder.BuildConfiguration(cfg =>
+                {
+                    cfg.WithJsonSerializer()
+                        .WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
+                        .WithRedisBackplane("redis")
+                        .WithRedisCacheHandle("redis", true);
+                });
+
+            services.AddSingleton(cacheManagerConfig);
+            services.AddCacheManager();
+
+            var redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
+            services.AddSingleton<IConnectionMultiplexer>(redisConnection);
+
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo("DataProtection-Keys"));
         }
 
         private void AddOptions(IServiceCollection services)

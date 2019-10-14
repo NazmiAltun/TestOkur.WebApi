@@ -130,6 +130,7 @@ services:
       - mongo
       - rabbitmq
       - mockserver
+      - redis
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - WAIT_HOSTS= rabbitmq:5672, mongo:27017, mockserver:8080
@@ -137,6 +138,7 @@ services:
       - RabbitMqConfiguration__Uri=rabbitmq
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
       - OAuthConfiguration__Authority=http://mockserver:8080/
+      - ConnectionStrings__Redis=redis,allowAdmin=true,defaultDatabase=3
   notification-integration-test:
     image: testokur-notification-integration-test
     container_name: notification-integration-test
