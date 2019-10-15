@@ -50,6 +50,9 @@
     },
     "/captcha" :{
       "get" : "captcha.js"
+    },
+    "/captcha/hc": {
+      "get": 200
     }
   }
 }

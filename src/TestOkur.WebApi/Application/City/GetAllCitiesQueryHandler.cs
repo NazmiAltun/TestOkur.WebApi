@@ -28,11 +28,10 @@
         [ResultCaching(2)]
         public override async Task<IReadOnlyCollection<CityReadModel>> ExecuteAsync(GetAllCitiesQuery query, CancellationToken cancellationToken = default)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                var cityDictionary = new Dictionary<long, CityReadModel>();
+            await using var connection = new NpgsqlConnection(_connectionString);
+            var cityDictionary = new Dictionary<long, CityReadModel>();
 
-                return (await connection.QueryAsync<CityReadModel, DistrictReadModel, CityReadModel>(
+            return (await connection.QueryAsync<CityReadModel, DistrictReadModel, CityReadModel>(
                     Sql,
                     (city, district) =>
                     {
@@ -46,9 +45,8 @@
 
                         return cityEntry;
                     }))
-                    .Distinct()
-                    .ToList();
-            }
+                .Distinct()
+                .ToList();
         }
     }
 }

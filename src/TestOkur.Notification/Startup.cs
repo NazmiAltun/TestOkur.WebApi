@@ -209,6 +209,7 @@
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri)
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"))
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
                     ApplicationConfiguration.Database,
