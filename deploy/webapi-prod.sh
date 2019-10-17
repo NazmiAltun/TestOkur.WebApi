@@ -2,7 +2,7 @@
 docker pull nazmialtun/testokur-webapi:latest
 docker stop testokur-webapi && docker rm testokur-webapi --force
 docker run -d \
-	--env-file /home/env/webapi-prod.env \
+	--env-file /home/env/webapi-prod1.env \
 	-v /home/uploads:/app/wwwroot/uploads \
 	-v /home/DataProtection-Keys:/app/DataProtection-Keys \
 	--name testokur-webapi \
@@ -13,7 +13,7 @@ docker run -d \
 	nazmialtun/testokur-webapi:latest
 docker stop testokur-webapi_2 && docker rm testokur-webapi_2 --force
 docker run -d \
-	--env-file /home/env/webapi-prod.env \
+	--env-file /home/env/webapi-prod2.env \
 	-v /home/uploads:/app/wwwroot/uploads \
 	-v /home/DataProtection-Keys:/app/DataProtection-Keys \
 	--name testokur-webapi_2 \
