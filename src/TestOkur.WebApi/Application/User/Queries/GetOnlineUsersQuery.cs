@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    public class GetOnlineUsersQuery:
+    public class GetOnlineUsersQuery :
         QueryBase<IReadOnlyCollection<string>>,
         ISkipLogging
     {

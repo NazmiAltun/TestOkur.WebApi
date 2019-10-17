@@ -110,7 +110,7 @@
                 .ExecuteAsync<GetUserByEmailQuery, UserReadModel>(
                     new GetUserByEmailQuery());
 
-            OnlineUserTracker.Add(user.Email);
+            await _processor.SendAsync(new UpdateUserOnlineStatusCommand(user.Email));
             return Ok(user);
         }
 
@@ -147,9 +147,10 @@
         [HttpGet("online")]
         [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
-        public IActionResult GetOnlineUsers()
+        public async Task<IActionResult> GetOnlineUsersAsync()
         {
-            return Ok(OnlineUserTracker.GetOnlineUsers());
+            return Ok(await _processor.ExecuteAsync<GetOnlineUsersQuery, IReadOnlyCollection<string>>(
+                new GetOnlineUsersQuery()));
         }
     }
 }
