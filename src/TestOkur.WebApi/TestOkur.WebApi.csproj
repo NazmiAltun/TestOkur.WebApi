@@ -5,6 +5,13 @@
     <CodeAnalysisRuleSet>..\..\StyleCopRules.ruleset</CodeAnalysisRuleSet>
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastructure\Clients\**" />
+    <Content Remove="Infrastructure\Clients\**" />
+    <EmbeddedResource Remove="Infrastructure\Clients\**" />
+    <None Remove="Infrastructure\Clients\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
@@ -64,7 +71,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\Clients\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 </Project>
