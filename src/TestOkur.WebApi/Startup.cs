@@ -236,10 +236,11 @@
 
         private void AddHealthChecks(IServiceCollection services)
         {
+            //TODO:Fix
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
-                .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"))
+                //.AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"))
                 .AddRedis(Configuration.GetConnectionString("Redis"))
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddRabbitMQ(rabbitMqUri);
