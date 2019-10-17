@@ -1,394 +1,410 @@
 ﻿[
-    {
-        "Name": "SuccessMessage",
-        "Value": "İşleminiz başarılı"
-    },
-    {
-        "Name": "FirstNameCannotBeEmpty",
-        "Value": "İsim alanı zorunludur"
-    },
-    {
-        "Name": "LastNameCannotBeEmpty",
-        "Value": "Soyisim alanı zorunludur"
-    },
-    {
-        "Name": "RegistrarNameCannotBeEmpty",
-        "Value": "Sipariş veren isim alanı zorunludur"
-    },
-    {
-        "Name": "NameCannotBeEmpty",
-        "Value": "İsim alanı boş geçilemez"
-    },
-    {
-        "Name": "InvalidPhoneNumber",
-        "Value": "Geçersiz telefon numarası"
-    },
-    {
-        "Name": "InvalidCaptcha",
-        "Value": "Geçersiz güvenlik kodu"
-    },
-    {
-        "Name": "InvalidEmailAddress",
-        "Value": "Geçersiz e-posta adresi"
-    },
-    {
-        "Name": "ForgotPasswordEmailAddressDoesNotExist",
-        "Value": "E-posta adresi sistemimizde kayıtlı değildir"
-    },
-    {
-        "Name": "UserAlreadyExists",
-        "Value": "Bu e-posta adresi zaten kayıtlıdır"
-    },
-    {
-        "Name": "invalid_username_or_password",
-        "Value": "Hatalı e-posta veya parola"
-    },
-    {
-        "Name": "UserCreated",
-        "Value": "TestOkur üyelik talebiniz alınmıştır.Üyelik bilgileriniz doğrulanarak 24 saat içinde lisans kaydınız onaylanacak e-posta ve SMS yolu ile bilgilendirileceksiniz."
-    },
-    {
-        "Name": "WaitingForApproval",
-        "Value": "Kullanıcı hesabınız aktif değildir. Üyelik bilgileriniz doğrulanarak 24 saat içinde lisans kaydınız onaylanacak e-posta ve SMS yolu ile bilgilendirileceksiniz."
-    },
-    {
-        "Name": "CannotDeleteLesson",
-        "Value": "Sistem dersi silinemez."
-    },
-    {
-        "Name": "ChooseLessonToDelete",
-        "Value": "Silinecek dersi seçiniz"
-    },
-    {
-        "Name": "CannotUpdateLesson",
-        "Value": "Sistem dersi güncellenemez."
-    },
-    {
-        "Name": "EmailCannotBeEmpty",
-        "Value": "E-posta adresi boş geçilemez."
-    },
-    {
-        "Name": "ClassCreated",
-        "Value": "Sınıf Kaydedildi."
-    },
-    {
-        "Name": "ConfirmDelete",
-        "Value": "Bu kaydı silmek istediğinize emin misiniz?"
-    },
-    {
-        "Name": "Error",
-        "Value": "Hata"
-    },
-    {
-        "Name": "Information",
-        "Value": "Bilgi"
-    },
-    {
-        "Name": "UnexpectedSystemError",
-        "Value": "Beklenmedik bir sistem hatasi olustu.Lutfen TestOkur yetkililerine bildiriniz."
-    },
-    {
-        "Name": "Confirmation",
-        "Value": "Onay"
-    },
-    {
-        "Name": "LessonExists",
-        "Value": "Bu isimde ders kaydı zaten bulunmakta."
-    },
-    {
-        "Name": "SelectUnitToEdit",
-        "Value": "Güncellenecek üniteyi seçiniz."
-    },
-    {
-        "Name": "SelectUnitToDelete",
-        "Value": "Silinecek üniteyi seçiniz."
-    },
-    {
-        "Name": "UnitCannotBeEmpty",
-        "Value": "Ünite adı boş geçilemez"
-    },
-    {
-        "Name": "UserUpdated",
-        "Value": "Bilgileriniz güncellendi."
-    },
-    {
-        "Name": "UpdateLesson",
-        "Value": "Ders Güncelleme"
-    },
-    {
-        "Name": "UnitExists",
-        "Value": "Bu isimde unite kaydı zaten bulunmakta."
-    },
-    {
-        "Name": "LessonnameCannotBeEmpty",
-        "Value": "Ders adı boş geçilemez."
-    },
-    {
-        "Name": "SelectSubjectToEdit",
-        "Value": "Düzenlenecek konuyu seçiniz."
-    },
-    {
-        "Name": "Save",
-        "Value": "Kaydet"
-    },
-    {
-        "Name": "SelectSubjectToDelete",
-        "Value": "Silinecek konuyu seçiniz."
-    },
-    {
-        "Name": "SubjectCannotBeEmpty",
-        "Value": "Konu adi boş geçilemez."
-    },
-    {
-        "Name": "EnterCriteria",
-        "Value": "Lutfen bir kriter giriniz."
-    },
-    {
-        "Name": "StudentUpdate",
-        "Value": "ÖĞRENCİ GÜNCELLEME"
-    },
-    {
-        "Name": "ReadingStudentParentPhoneInfoMessage",
-        "Value": "Öğrenci veli telefon bilgileri okunuyor."
-    },
-    {
-        "Name": "ReadingBranchInfoMessage",
-        "Value": "Şube bilgileri okunuyor...."
-    },
-    {
-        "Name": "ReadingClasslevelInfoMessage",
-        "Value": "Sınıf bilgileri okunuyor...."
-    },
-    {
-        "Name": "ReadingStudentInfoMessage",
-        "Value": "Öğrenci bilgileri okunuyor...."
-    },
-    {
-        "Name": "StudentInfoReadMessage",
-        "Value": "Öğrenci bilgileri okundu...."
-    },
-    {
-        "Name": "SelectRowToBeDeleted",
-        "Value": "Silme işlemini gerçekleştirmek için tanımlı bir satır seçmeniz gerekmektedir."
-    },
-    {
-        "Name": "StudentsImported",
-        "Value": "Öğrenciler aktarıldı."
-    },
-    {
-        "Name": "SelectStudentToDelete",
-        "Value": "Silinecek ogrenciyi seciniz"
-    },
-    {
-        "Name": "SelectExamToDelete",
-        "Value": "Silinecek sinavi seciniz"
-    },
-    {
-        "Name": "SelectRecordToBeDeleted",
-        "Value": "Lütfen silmek istediğiniz kaydı seçin."
-    },
-    {
-        "Name": "ClassroomExists",
-        "Value": "Bu sınıf kaydı zaten bulunmakta."
-    },
-    {
-        "Name": "ScoreFormulasUpdated",
-        "Value": "Katsayilar guncellendi."
-    },
-    {
-        "Name": "ChooseClassroomToDelete",
-        "Value": "Silinecek sinifi seciniz"
-    },
-    {
-        "Name": "ChooseClassroomToProceed",
-        "Value": "Once sinif seciniz"
-    },
-    {
-        "Name": "ClassroomHasNoStudents",
-        "Value": "Bu sinifta ogrenci bulunmamaktadir."
-    },
-    {
-        "Name": "StudentExists",
-        "Value": "Bu ogrenci numarasi zaten mevcut"
-    },
-    {
-        "Name": "ExamExists",
-        "Value": "Bu isimde sinav zaten mevcut"
-    },
-    {
-        "Name": "ScanResultsSaved",
-        "Value": "Taranan formlar kaydedildi"
-    },
-    {
-        "Name": "Directory",
-        "Value": "Diğer"
-    },
-    {
-        "Name": "Mother",
-        "Value": "Veli (Anne)"
-    },
-    {
-        "Name": "Father",
-        "Value": "Veli (Baba)"
-    },
-    {
-        "Name": "PasswordsDoNotMatch",
-        "Value": "Parola ve tekrar parola uyuşmuyor."
-    },
-    {
-        "Name": "PasswordChanged",
-        "Value": "Parolaniz basariyla degistirildi."
-    },
-    {
-        "Name": "ForgotPasswordLinkSentInfo",
-        "Value": "Parolanizi sifirlamak icin e-posta adresinize baglanti gonderilmistir"
-    },
-    {
-        "Name": "BackToDefaultDefaultScoreFormulaConfirmation",
-        "Value": "Varsayilan katsayilara donulecektir. Onayliyor musunuz?"
-    },
-    {
-        "Name": "PleaseChooseFormType",
-        "Value": "Lutfen optik form tipini seciniz"
-    },
-    {
-        "Name": "SmsSentSuccess",
-        "Value": "SMS basariyla gonderildi"
-    },
-    {
-        "Name": "ConfirmDeleteClassroom",
-        "Value": "Secmis oldugunuz sinif kaydi, sinifa kayitli ogrencilerle birlikte silinecektir onayliyor musunuz?"
-    },
-    {
-        "Name": "CheckInternetConnection",
-        "Value": "TestOkur sunucusuna erisim saglanamadi.Internet baglantinizi kontrol ediniz."
-    },
-    {
-        "Name": "BookletNotMarked",
-        "Value": "Ogrenci kitapcigi isaretli degil veya bu kitapcik sinavda tanimli degil.Lutfen kontrol ediniz"
-    },
-    {
-        "Name": "AnswerKeyBookletNotMarked",
-        "Value": "Kitapcik turu isaretli degil.Lutfen kitapcik turunu isaretleyiniz."
-    },
-    {
-        "Name": "OpticalFormNotFound",
-        "Value": "Secilen sinava ve filtre degerlerine uyan optik form kaydi bulunamadi"
-    },
-    {
-        "Name": "ConfirmDeleteStudentForm",
-        "Value": "Secilen optik form sonucunu silmek istediginize emin misiniz?"
-    },
-    {
-        "Name": "ErrorSubmitted",
-        "Value": "Mesajiniz iletildi. 24 saat icinde size geri donus yapilacaktir."
-    },
-    {
-        "Name": "FileSizeTooBig",
-        "Value": "Ekran goruntusu dosya boyutu 2 MB'dan buyuk olamaz"
-    },
-    {
-        "Name": "SelectStudentFirst",
-        "Value": "Raporunu almak istediginiz ogrenciyi seciniz"
-    },
-    {
-        "Name": "ExamNameCannotBeEmpty",
-        "Value": "Lutfen sinav adini giriniz"
-    },
-    {
-        "Name": "PleaseEnterAnswerkeyForm",
-        "Value": "Lutfen cevap anahtarini giriniz"
-    },
-    {
-        "Name": "AllFormsScanned",
-        "Value": "Tum formlar tarandi"
-    },
-    {
-        "Name": "MigrationQuestionPrompt",
-        "Value": "Eski uygulamadaki öğrenci verilerinizi giriş ekranındakı 'Eski Sistem Verilerini Aktar' butonunu kullanabilirsiniz."
-    },
-    {
-        "Name": "UserExpired",
-        "Value": "Kullanıcı hesabınızın süresi dolmuştur. TestOkur'u kullanmaya devam etmek için  web sitemizden lisans yenileme işlemi yapmalısınız"
-    },
-    {
-        "Name": "UserNotActive",
-        "Value": "Kullanıcı hesabınız aktif değildir. Lütfen TestOkur yetkilileri ile görüşünüz"
-    },
-    {
-        "Name": "SelectLessonToViewSubjects",
-        "Value": "Konularini gormek istediginiz dersi seciniz"
-    },
-    {
-        "Name": "SelectLessonToViewUnits",
-        "Value": "Uniteleri gormek istediginiz dersi seciniz"
-    },
-    {
-        "Name": "Warning",
-        "Value": "Uyari"
-    },
-    {
-        "Name": "MaxAllowedDeviceExceeded",
-        "Value": "TestOkur’u sadece kayıtlı olan bilgisayarınızda kullanabilirsiniz. Daha fazla bilgisayarda kullanabilmek için yeni lisans satın almanız gerekmektedir"
-    },
-    {
-        "Name": "AbsenceLoginInfo",
-        "Value": "Devamsizlik SMS gonderimi icin e-okul oturumunuzu acmaniz gerekmektedir."
-    },
-    {
-        "Name": "MigrationInfoMessage",
-        "Value": "Sadece sinif ve ogrenci bilgileri aktarilacaktir. Eski  sinav ve optik formlar yeni sistemle uyumlu olmadigi icin bunlar aktarilmayacaktir."
-    },
-    {
-        "Name": "ESchoolLoginWarning",
-        "Value": "E-Okul'dan veri cekilmesi esnasinda kullandiginiz kullanici bilgieri ile baska bir yerde oturum acmamaniz gerekmektedir. Oturum acildigi takdir de  uygulamadaki  veri aktarimi kesilecektir ve islem devam etmeyecektir."
-    },
-    {
-        "Name": "NoStudentsForPrintingForms",
-        "Value": "Optik form yazdirmak istediginz sinif(lar)da  ogrenci bulunamadi."
-    },
-    {
-        "Name": "PasswordResetUserNotFound",
-        "Value": "Bu e-posta adresine ait kullanici kaydi bulunmamistir. Lutfen e-posta adresinizin dogru oldugundan emin olunuz."
-    },
-    {
-        "Name": "InsufficientFunds",
-        "Value": "SMS bakiyeniz yetersizdir."
-    },
-    {
-        "Name": "PleaseNarrowDownFilters",
-        "Value": "Sectiginiz filtre degerlerinde 1000'den fazla SMS kaydi bulunmaktadir. Lutfen filtre degerlerini daraltip tekrar deneyiniz."
-    },
-    {
-        "Name": "PleaseEnterMessage",
-        "Value": "Lutfen gonderilecek mesaji giriniz"
-    },
-    {
-        "Name": "PleaseEnterSmsCellPhoneNumbers",
-        "Value": "Lutfen mesaj gonderilecek olan telefon numaralarini giriniz."
-    },
-    {
-        "Name": "PasswordCannotBeEmpty",
-        "Value": "Lutfen Parola Giriniz"
-    },
-    {
-        "Name": "invalid_grant",
-        "Value": "Gecersiz kullanici adi veya parola"
-    },
-    {
-        "Name": "YouAreNotAuthorizedToEditSharedExam",
-        "Value": "Ortak deneme sinavlari sadece  TestOkur yoneticileri tarafindan guncellenebilir."
-    },
-    {
-        "Name": "YouAreNotAuthorizedToDeleteSharedExam",
-        "Value": "Ortak deneme sinavlari sadece  TestOkur yoneticileri tarafindan silinebilir."
-    },
-    {
-        "Name": "StudentOpticalFormGradeMismatch",
-        "Value": "En son okunan optik form  ile ondan once okunan optik form farkli siniflara ait. Bu gibi durumlar raporlardaki ortalama ve siralamayi etkileyebilir."
-    },
-    {
-        "Name": "ThisReportTypeIsOnlyAvaliableForSharedExams",
-        "Value": "Bu rapor turunu sadece ortak sinavlarda alabilirsiniz"
-    }
+  {
+    "Name": "CannotDeleteSharedSubject",
+    "Value": "Ortak konu sadece TestOkur yoneticileri tarafindan silinebilir"
+  },
+  {
+    "Name": "CannotEditSharedSubject",
+    "Value": "Ortak konu sadece TestOkur yoneticileri tarafindan duzenlenebilir"
+  },
+  {
+    "Name": "CannotDeleteSharedUnit",
+    "Value": "Ortak unite sadece TestOkur yoneticileri tarafindan silinebilir"
+  },
+  {
+    "Name": "CannotEditSharedUnit",
+    "Value": "Ortak unite sadece TestOkur yoneticileri tarafindan duzenlenebilir"
+  },
+  {
+    "Name": "SuccessMessage",
+    "Value": "İşleminiz başarılı"
+  },
+  {
+    "Name": "FirstNameCannotBeEmpty",
+    "Value": "İsim alanı zorunludur"
+  },
+  {
+    "Name": "LastNameCannotBeEmpty",
+    "Value": "Soyisim alanı zorunludur"
+  },
+  {
+    "Name": "RegistrarNameCannotBeEmpty",
+    "Value": "Sipariş veren isim alanı zorunludur"
+  },
+  {
+    "Name": "NameCannotBeEmpty",
+    "Value": "İsim alanı boş geçilemez"
+  },
+  {
+    "Name": "InvalidPhoneNumber",
+    "Value": "Geçersiz telefon numarası"
+  },
+  {
+    "Name": "InvalidCaptcha",
+    "Value": "Geçersiz güvenlik kodu"
+  },
+  {
+    "Name": "InvalidEmailAddress",
+    "Value": "Geçersiz e-posta adresi"
+  },
+  {
+    "Name": "ForgotPasswordEmailAddressDoesNotExist",
+    "Value": "E-posta adresi sistemimizde kayıtlı değildir"
+  },
+  {
+    "Name": "UserAlreadyExists",
+    "Value": "Bu e-posta adresi zaten kayıtlıdır"
+  },
+  {
+    "Name": "invalid_username_or_password",
+    "Value": "Hatalı e-posta veya parola"
+  },
+  {
+    "Name": "UserCreated",
+    "Value": "TestOkur üyelik talebiniz alınmıştır.Üyelik bilgileriniz doğrulanarak 24 saat içinde lisans kaydınız onaylanacak e-posta ve SMS yolu ile bilgilendirileceksiniz."
+  },
+  {
+    "Name": "WaitingForApproval",
+    "Value": "Kullanıcı hesabınız aktif değildir. Üyelik bilgileriniz doğrulanarak 24 saat içinde lisans kaydınız onaylanacak e-posta ve SMS yolu ile bilgilendirileceksiniz."
+  },
+  {
+    "Name": "CannotDeleteLesson",
+    "Value": "Sistem dersi silinemez."
+  },
+  {
+    "Name": "ChooseLessonToDelete",
+    "Value": "Silinecek dersi seçiniz"
+  },
+  {
+    "Name": "CannotUpdateLesson",
+    "Value": "Sistem dersi güncellenemez."
+  },
+  {
+    "Name": "EmailCannotBeEmpty",
+    "Value": "E-posta adresi boş geçilemez."
+  },
+  {
+    "Name": "ClassCreated",
+    "Value": "Sınıf Kaydedildi."
+  },
+  {
+    "Name": "ConfirmDelete",
+    "Value": "Bu kaydı silmek istediğinize emin misiniz?"
+  },
+  {
+    "Name": "Error",
+    "Value": "Hata"
+  },
+  {
+    "Name": "Information",
+    "Value": "Bilgi"
+  },
+  {
+    "Name": "UnexpectedSystemError",
+    "Value": "Beklenmedik bir sistem hatasi olustu.Lutfen TestOkur yetkililerine bildiriniz."
+  },
+  {
+    "Name": "Confirmation",
+    "Value": "Onay"
+  },
+  {
+    "Name": "LessonExists",
+    "Value": "Bu isimde ders kaydı zaten bulunmakta."
+  },
+  {
+    "Name": "SelectUnitToEdit",
+    "Value": "Güncellenecek üniteyi seçiniz."
+  },
+  {
+    "Name": "SelectUnitToDelete",
+    "Value": "Silinecek üniteyi seçiniz."
+  },
+  {
+    "Name": "UnitCannotBeEmpty",
+    "Value": "Ünite adı boş geçilemez"
+  },
+  {
+    "Name": "UserUpdated",
+    "Value": "Bilgileriniz güncellendi."
+  },
+  {
+    "Name": "UpdateLesson",
+    "Value": "Ders Güncelleme"
+  },
+  {
+    "Name": "UnitExists",
+    "Value": "Bu isimde unite kaydı zaten bulunmakta."
+  },
+  {
+    "Name": "LessonnameCannotBeEmpty",
+    "Value": "Ders adı boş geçilemez."
+  },
+  {
+    "Name": "SelectSubjectToEdit",
+    "Value": "Düzenlenecek konuyu seçiniz."
+  },
+  {
+    "Name": "Save",
+    "Value": "Kaydet"
+  },
+  {
+    "Name": "SelectSubjectToDelete",
+    "Value": "Silinecek konuyu seçiniz."
+  },
+  {
+    "Name": "SubjectCannotBeEmpty",
+    "Value": "Konu adi boş geçilemez."
+  },
+  {
+    "Name": "EnterCriteria",
+    "Value": "Lutfen bir kriter giriniz."
+  },
+  {
+    "Name": "StudentUpdate",
+    "Value": "ÖĞRENCİ GÜNCELLEME"
+  },
+  {
+    "Name": "ReadingStudentParentPhoneInfoMessage",
+    "Value": "Öğrenci veli telefon bilgileri okunuyor."
+  },
+  {
+    "Name": "ReadingBranchInfoMessage",
+    "Value": "Şube bilgileri okunuyor...."
+  },
+  {
+    "Name": "ReadingClasslevelInfoMessage",
+    "Value": "Sınıf bilgileri okunuyor...."
+  },
+  {
+    "Name": "ReadingStudentInfoMessage",
+    "Value": "Öğrenci bilgileri okunuyor...."
+  },
+  {
+    "Name": "StudentInfoReadMessage",
+    "Value": "Öğrenci bilgileri okundu...."
+  },
+  {
+    "Name": "SelectRowToBeDeleted",
+    "Value": "Silme işlemini gerçekleştirmek için tanımlı bir satır seçmeniz gerekmektedir."
+  },
+  {
+    "Name": "StudentsImported",
+    "Value": "Öğrenciler aktarıldı."
+  },
+  {
+    "Name": "SelectStudentToDelete",
+    "Value": "Silinecek ogrenciyi seciniz"
+  },
+  {
+    "Name": "SelectExamToDelete",
+    "Value": "Silinecek sinavi seciniz"
+  },
+  {
+    "Name": "SelectRecordToBeDeleted",
+    "Value": "Lütfen silmek istediğiniz kaydı seçin."
+  },
+  {
+    "Name": "ClassroomExists",
+    "Value": "Bu sınıf kaydı zaten bulunmakta."
+  },
+  {
+    "Name": "ScoreFormulasUpdated",
+    "Value": "Katsayilar guncellendi."
+  },
+  {
+    "Name": "ChooseClassroomToDelete",
+    "Value": "Silinecek sinifi seciniz"
+  },
+  {
+    "Name": "ChooseClassroomToProceed",
+    "Value": "Once sinif seciniz"
+  },
+  {
+    "Name": "ClassroomHasNoStudents",
+    "Value": "Bu sinifta ogrenci bulunmamaktadir."
+  },
+  {
+    "Name": "StudentExists",
+    "Value": "Bu ogrenci numarasi zaten mevcut"
+  },
+  {
+    "Name": "ExamExists",
+    "Value": "Bu isimde sinav zaten mevcut"
+  },
+  {
+    "Name": "ScanResultsSaved",
+    "Value": "Taranan formlar kaydedildi"
+  },
+  {
+    "Name": "Directory",
+    "Value": "Diğer"
+  },
+  {
+    "Name": "Mother",
+    "Value": "Veli (Anne)"
+  },
+  {
+    "Name": "Father",
+    "Value": "Veli (Baba)"
+  },
+  {
+    "Name": "PasswordsDoNotMatch",
+    "Value": "Parola ve tekrar parola uyuşmuyor."
+  },
+  {
+    "Name": "PasswordChanged",
+    "Value": "Parolaniz basariyla degistirildi."
+  },
+  {
+    "Name": "ForgotPasswordLinkSentInfo",
+    "Value": "Parolanizi sifirlamak icin e-posta adresinize baglanti gonderilmistir"
+  },
+  {
+    "Name": "BackToDefaultDefaultScoreFormulaConfirmation",
+    "Value": "Varsayilan katsayilara donulecektir. Onayliyor musunuz?"
+  },
+  {
+    "Name": "PleaseChooseFormType",
+    "Value": "Lutfen optik form tipini seciniz"
+  },
+  {
+    "Name": "SmsSentSuccess",
+    "Value": "SMS basariyla gonderildi"
+  },
+  {
+    "Name": "ConfirmDeleteClassroom",
+    "Value": "Secmis oldugunuz sinif kaydi, sinifa kayitli ogrencilerle birlikte silinecektir onayliyor musunuz?"
+  },
+  {
+    "Name": "CheckInternetConnection",
+    "Value": "TestOkur sunucusuna erisim saglanamadi.Internet baglantinizi kontrol ediniz."
+  },
+  {
+    "Name": "BookletNotMarked",
+    "Value": "Ogrenci kitapcigi isaretli degil veya bu kitapcik sinavda tanimli degil.Lutfen kontrol ediniz"
+  },
+  {
+    "Name": "AnswerKeyBookletNotMarked",
+    "Value": "Kitapcik turu isaretli degil.Lutfen kitapcik turunu isaretleyiniz."
+  },
+  {
+    "Name": "OpticalFormNotFound",
+    "Value": "Secilen sinava ve filtre degerlerine uyan optik form kaydi bulunamadi"
+  },
+  {
+    "Name": "ConfirmDeleteStudentForm",
+    "Value": "Secilen optik form sonucunu silmek istediginize emin misiniz?"
+  },
+  {
+    "Name": "ErrorSubmitted",
+    "Value": "Mesajiniz iletildi. 24 saat icinde size geri donus yapilacaktir."
+  },
+  {
+    "Name": "FileSizeTooBig",
+    "Value": "Ekran goruntusu dosya boyutu 2 MB'dan buyuk olamaz"
+  },
+  {
+    "Name": "SelectStudentFirst",
+    "Value": "Raporunu almak istediginiz ogrenciyi seciniz"
+  },
+  {
+    "Name": "ExamNameCannotBeEmpty",
+    "Value": "Lutfen sinav adini giriniz"
+  },
+  {
+    "Name": "PleaseEnterAnswerkeyForm",
+    "Value": "Lutfen cevap anahtarini giriniz"
+  },
+  {
+    "Name": "AllFormsScanned",
+    "Value": "Tum formlar tarandi"
+  },
+  {
+    "Name": "MigrationQuestionPrompt",
+    "Value": "Eski uygulamadaki öğrenci verilerinizi giriş ekranındakı 'Eski Sistem Verilerini Aktar' butonunu kullanabilirsiniz."
+  },
+  {
+    "Name": "UserExpired",
+    "Value": "Kullanıcı hesabınızın süresi dolmuştur. TestOkur'u kullanmaya devam etmek için  web sitemizden lisans yenileme işlemi yapmalısınız"
+  },
+  {
+    "Name": "UserNotActive",
+    "Value": "Kullanıcı hesabınız aktif değildir. Lütfen TestOkur yetkilileri ile görüşünüz"
+  },
+  {
+    "Name": "SelectLessonToViewSubjects",
+    "Value": "Konularini gormek istediginiz dersi seciniz"
+  },
+  {
+    "Name": "SelectLessonToViewUnits",
+    "Value": "Uniteleri gormek istediginiz dersi seciniz"
+  },
+  {
+    "Name": "Warning",
+    "Value": "Uyari"
+  },
+  {
+    "Name": "MaxAllowedDeviceExceeded",
+    "Value": "TestOkur’u sadece kayıtlı olan bilgisayarınızda kullanabilirsiniz. Daha fazla bilgisayarda kullanabilmek için yeni lisans satın almanız gerekmektedir"
+  },
+  {
+    "Name": "AbsenceLoginInfo",
+    "Value": "Devamsizlik SMS gonderimi icin e-okul oturumunuzu acmaniz gerekmektedir."
+  },
+  {
+    "Name": "MigrationInfoMessage",
+    "Value": "Sadece sinif ve ogrenci bilgileri aktarilacaktir. Eski  sinav ve optik formlar yeni sistemle uyumlu olmadigi icin bunlar aktarilmayacaktir."
+  },
+  {
+    "Name": "ESchoolLoginWarning",
+    "Value": "E-Okul'dan veri cekilmesi esnasinda kullandiginiz kullanici bilgieri ile baska bir yerde oturum acmamaniz gerekmektedir. Oturum acildigi takdir de  uygulamadaki  veri aktarimi kesilecektir ve islem devam etmeyecektir."
+  },
+  {
+    "Name": "NoStudentsForPrintingForms",
+    "Value": "Optik form yazdirmak istediginz sinif(lar)da  ogrenci bulunamadi."
+  },
+  {
+    "Name": "PasswordResetUserNotFound",
+    "Value": "Bu e-posta adresine ait kullanici kaydi bulunmamistir. Lutfen e-posta adresinizin dogru oldugundan emin olunuz."
+  },
+  {
+    "Name": "InsufficientFunds",
+    "Value": "SMS bakiyeniz yetersizdir."
+  },
+  {
+    "Name": "PleaseNarrowDownFilters",
+    "Value": "Sectiginiz filtre degerlerinde 1000'den fazla SMS kaydi bulunmaktadir. Lutfen filtre degerlerini daraltip tekrar deneyiniz."
+  },
+  {
+    "Name": "PleaseEnterMessage",
+    "Value": "Lutfen gonderilecek mesaji giriniz"
+  },
+  {
+    "Name": "PleaseEnterSmsCellPhoneNumbers",
+    "Value": "Lutfen mesaj gonderilecek olan telefon numaralarini giriniz."
+  },
+  {
+    "Name": "PasswordCannotBeEmpty",
+    "Value": "Lutfen Parola Giriniz"
+  },
+  {
+    "Name": "invalid_grant",
+    "Value": "Gecersiz kullanici adi veya parola"
+  },
+  {
+    "Name": "YouAreNotAuthorizedToEditSharedExam",
+    "Value": "Ortak deneme sinavlari sadece  TestOkur yoneticileri tarafindan guncellenebilir."
+  },
+  {
+    "Name": "YouAreNotAuthorizedToDeleteSharedExam",
+    "Value": "Ortak deneme sinavlari sadece  TestOkur yoneticileri tarafindan silinebilir."
+  },
+  {
+    "Name": "StudentOpticalFormGradeMismatch",
+    "Value": "En son okunan optik form  ile ondan once okunan optik form farkli siniflara ait. Bu gibi durumlar raporlardaki ortalama ve siralamayi etkileyebilir."
+  },
+  {
+    "Name": "ThisReportTypeIsOnlyAvaliableForSharedExams",
+    "Value": "Bu rapor turunu sadece ortak sinavlarda alabilirsiniz"
+  }
 ]
