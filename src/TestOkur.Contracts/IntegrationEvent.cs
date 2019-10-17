@@ -2,9 +2,9 @@
 {
     using System;
 
-    public class IntegrationEvent : IIntegrationEvent
+    public abstract class IntegrationEvent : IIntegrationEvent
     {
-        public IntegrationEvent()
+        protected IntegrationEvent()
         {
             Id = Guid.NewGuid();
             CreatedOnUTC = DateTime.UtcNow;
