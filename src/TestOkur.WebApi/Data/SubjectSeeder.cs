@@ -32,23 +32,16 @@
 
             foreach (var row in rows)
             {
-                try
-                {
-                    var unit = new Unit(
+                var unit = new Unit(
                         row.UnitName.Trim(),
                         lessons.First(l => l.Name.Value == row.Lesson.Trim()),
                         Convert.ToInt32(row.Grade.First().ToString()),
                         true);
-                    unit.AddSubject(row.Subject.Trim(), true);
+                unit.AddSubject(row.Subject.Trim(), true);
 
-                    if (!unitDictionary.TryAdd(row.Key, unit))
-                    {
-                        unitDictionary[row.Key].AddSubject(row.Subject, true);
-                    }
-                }
-                catch(Exception ex)
+                if (!unitDictionary.TryAdd(row.Key, unit))
                 {
-                    throw;
+                    unitDictionary[row.Key].AddSubject(row.Subject, true);
                 }
             }
 

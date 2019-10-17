@@ -19,7 +19,7 @@
                 .ToListAsync();
             foreach (var lesson in lessons)
             {
-                if (!existingLessons.Contains(lesson))
+                if (existingLessons.All(l => l.Name != lesson.Name))
                 {
                     await dbContext.Lessons.AddAsync(lesson);
                 }
