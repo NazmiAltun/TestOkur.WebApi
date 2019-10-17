@@ -105,7 +105,6 @@
             AddMessageBus(services);
             AddHttpClients(services);
             RegisterServices(services);
-            AddHostedServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -307,14 +306,6 @@
                     AuthorizationPolicies.Admin,
                     policy => policy.RequireRole(Roles.Admin));
             });
-        }
-
-        private void AddHostedServices(IServiceCollection services)
-        {
-            if (!Environment.IsDevelopment())
-            {
-                services.AddHostedService<OnlineUserTrackerCleanupService>();
-            }
         }
 
         private void AddHttpClients(IServiceCollection services)
