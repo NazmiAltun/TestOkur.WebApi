@@ -22,7 +22,7 @@
             var addSubjectCommand = new AddSubjectCommand(
                     Guid.NewGuid(),
                     Random.RandomString(10),
-                    units.Last().Id);
+                    units.Last(u => !u.Shared).Id);
 
             var response = await client.PostAsync(
                 $"{ApiPath}/{addSubjectCommand.UnitId}/subjects",
