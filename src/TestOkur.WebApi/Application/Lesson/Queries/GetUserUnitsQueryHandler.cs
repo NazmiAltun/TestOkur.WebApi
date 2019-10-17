@@ -26,7 +26,7 @@
 								FROM units u
 								INNER JOIN lessons l on l.id=u.lesson_id
 								LEFT JOIN subjects s on s.unit_id=u.id
-								WHERE u.created_by=@userId OR u.shared=true
+								WHERE u.created_by=@userId
 								ORDER BY u.name_value,s.name_value";
 
         private readonly string _connectionString;
@@ -42,7 +42,7 @@
             GetUserUnitsQuery query,
             CancellationToken cancellationToken = default)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
+            await using (var connection = new NpgsqlConnection(_connectionString))
             {
                 var dictionary = new Dictionary<int, UnitReadModel>();
 

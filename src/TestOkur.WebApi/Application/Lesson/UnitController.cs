@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Lesson.Commands;
@@ -18,10 +20,12 @@
     public class UnitController : ControllerBase
     {
         private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public UnitController(IProcessor processor)
+        public UnitController(IProcessor processor, IQueryProcessor queryProcessor)
         {
             _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _queryProcessor = queryProcessor;
         }
 
         [HttpPost]
@@ -37,7 +41,12 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<UnitReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _processor.ExecuteAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>(new GetUserUnitsQuery()));
+            var userUnits =
+                await _processor.ExecuteAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>(
+                    new GetUserUnitsQuery());
+            var sharedUnits = await _queryProcessor.ExecuteAsync(new GetSharedUnitsQuery());
+
+            return Ok(userUnits.Concat(sharedUnits));
         }
 
         [HttpDelete("{id}")]

@@ -29,7 +29,7 @@
             using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var unit = await GetUnitAsync(dbContext, command, cancellationToken);
-                
+
                 unit.AddSubject(command.Name);
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
