@@ -250,7 +250,7 @@
             var cacheManagerConfig =
                 ConfigurationBuilder.BuildConfiguration(cfg =>
                 {
-                    cfg.WithJsonSerializer()
+                    cfg.WithGzJsonSerializer()
                         .WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
                         .WithRedisBackplane("redis")
                         .WithRedisCacheHandle("redis", true);
