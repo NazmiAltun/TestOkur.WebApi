@@ -1,12 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using MassTransit;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Infrastructure.CommandsQueries;
@@ -57,12 +59,19 @@
             EditSubjectCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Units
+            var unit = await dbContext.Units
                 .Include(u => u.Subjects)
                 .FirstOrDefaultAsync(
                     u => u.Id == command.UnitId &&
                          EF.Property<int>(u, "CreatedBy") == command.UserId,
                     cancellationToken);
+
+            if (unit.Shared)
+            {
+                throw new ValidationException(ErrorCodes.CannotApplyAnyOperationOnSharedModels);
+            }
+
+            return unit;
         }
     }
 }

@@ -20,7 +20,7 @@
             _userCacheManager = userCacheManager;
         }
 
-        public override async Task<IReadOnlyCollection<string>> ExecuteAsync(GetOnlineUsersQuery query, CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<IReadOnlyCollection<string>> ExecuteAsync(GetOnlineUsersQuery query, CancellationToken cancellationToken = default)
         {
             var usersDictionary = _userCacheManager.Get(CacheKey) ?? new Dictionary<string, DateTime>();
 

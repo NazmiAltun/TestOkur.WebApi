@@ -13,12 +13,18 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
         {
-            if (await dbContext.Lessons.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
+            var lessons = GetLessons();
+            var existingLessons = await dbContext.Lessons.
+                Where(l => EF.Property<int>(l, "CreatedBy") == default)
+                .ToListAsync();
+            foreach (var lesson in lessons)
             {
-                return;
+                if (!existingLessons.Contains(lesson))
+                {
+                    await dbContext.Lessons.AddAsync(lesson);
+                }
             }
 
-            dbContext.Lessons.AddRange(GetLessons());
             await dbContext.SaveChangesAsync();
         }
 

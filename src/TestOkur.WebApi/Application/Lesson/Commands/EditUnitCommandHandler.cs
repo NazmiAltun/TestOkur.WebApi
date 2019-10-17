@@ -67,10 +67,17 @@
             EditUnitCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Units.FirstOrDefaultAsync(
+            var unit = await dbContext.Units.FirstOrDefaultAsync(
                 l => l.Id == command.UnitId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
+
+            if (unit.Shared)
+            {
+                throw new ValidationException(ErrorCodes.CannotApplyAnyOperationOnSharedModels);
+            }
+
+            return unit;
         }
     }
 }

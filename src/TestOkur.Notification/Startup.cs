@@ -205,12 +205,11 @@
 
         private void AddHealthCheck(IServiceCollection services)
         {
-            //TODO:Fix
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri)
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
-                //.AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"))
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"))
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
                     ApplicationConfiguration.Database,

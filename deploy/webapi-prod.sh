@@ -6,7 +6,7 @@ docker run -d \
 	-v /home/uploads:/app/wwwroot/uploads \
 	-v /home/DataProtection-Keys:/app/DataProtection-Keys \
 	--name testokur-webapi \
-	--restart=unless-stopped \
+	--restart=always \
 	--network=testokur \
 	--network-alias=webapi \
 	-m=256M \
@@ -17,7 +17,7 @@ docker run -d \
 	-v /home/uploads:/app/wwwroot/uploads \
 	-v /home/DataProtection-Keys:/app/DataProtection-Keys \
 	--name testokur-webapi_2 \
-	--restart=unless-stopped \
+	--restart=always \
 	--network=testokur \
 	--network-alias=webapi_2 \
 	-m=256M \

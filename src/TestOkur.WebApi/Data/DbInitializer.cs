@@ -12,6 +12,7 @@
             new SettingsSeeder(),
             new CitySeeder(),
             new LessonSeeder(),
+            new SubjectSeeder(),
             new OpticalFormsSeeder(),
             new ExamTypeSeeder(),
             new ScoreFormulaSeeder(),

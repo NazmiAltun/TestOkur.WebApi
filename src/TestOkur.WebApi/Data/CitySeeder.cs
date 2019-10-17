@@ -13,7 +13,7 @@
 
     internal class CitySeeder : ISeeder
     {
-        private const string CityExcelFilePath = "cities.json";
+        private const string FilePath = "cities.json";
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
         {
@@ -23,7 +23,7 @@
             }
 
             var cities = JsonConvert.DeserializeObject<List<CityReadModel>>(
-                    File.ReadAllText(Path.Combine("Data", CityExcelFilePath)))
+                    File.ReadAllText(Path.Combine("Data", FilePath)))
                 .Select(cr => new City(
                     cr.Id,
                     cr.Name,

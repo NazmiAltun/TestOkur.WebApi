@@ -55,5 +55,7 @@
         public const string ContactExists = "ContactExists";
 
         public const string PasswordResetUserNotFound = "PasswordResetUserNotFound";
+
+        public const string CannotApplyAnyOperationOnSharedModels = "CannotApplyAnyOperationOnSharedModels";
     }
 }

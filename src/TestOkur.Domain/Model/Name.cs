@@ -37,7 +37,7 @@
                 throw new ArgumentNullException(nameof(value), ErrorCodes.NameCannotBeEmpty);
             }
 
-            if (value.Length > 150)
+            if (value.Length > 300)
             {
                 throw new ArgumentException($"{value} is too long", nameof(value));
             }
