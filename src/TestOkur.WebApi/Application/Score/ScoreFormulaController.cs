@@ -7,38 +7,37 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/score-formulas")]
     [Authorize(AuthorizationPolicies.Customer)]
     [ApiController]
     public class ScoreFormulaController : ControllerBase
     {
-        private readonly IProcessor _processor;
+        private readonly IAmACommandProcessor _commandProcessor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public ScoreFormulaController(IProcessor processor)
+        public ScoreFormulaController(IAmACommandProcessor commandProcessor, IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
+            _queryProcessor = queryProcessor;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IReadOnlyCollection<ScoreFormulaReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _processor
-                .ExecuteAsync<GetUserScoreFormulasQuery, IReadOnlyCollection<ScoreFormulaReadModel>>(
-                new GetUserScoreFormulasQuery());
+            var list = await _queryProcessor.ExecuteAsync(new GetUserScoreFormulasQuery());
 
             if (list.Any())
             {
                 return Ok(list);
             }
 
-            await _processor.SendAsync(new CloneScoreFormulaCommand());
-            list = await _processor
-                .ExecuteAsync<GetUserScoreFormulasQuery, IReadOnlyCollection<ScoreFormulaReadModel>>(
-                    new GetUserScoreFormulasQuery());
+            await _commandProcessor.SendAsync(new CloneScoreFormulaCommand());
+            list = await _queryProcessor.ExecuteAsync(new GetUserScoreFormulasQuery());
 
             return Ok(list);
         }
@@ -48,7 +47,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAsync(BulkEditScoreFormulaCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -56,7 +55,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _processor.SendAsync(new DeleteUserScoreFormulasCommand());
+            await _commandProcessor.SendAsync(new DeleteUserScoreFormulasCommand());
             return Ok();
         }
     }

@@ -59,6 +59,8 @@
             return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
         }
 
+        public int Get() => GetAsync().Result;
+
         private async Task<Dictionary<string, int>> ReadIdsFromDbAsync()
         {
             const string sql = "SELECT id,subject_id FROM users";

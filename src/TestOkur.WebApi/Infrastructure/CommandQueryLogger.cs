@@ -30,5 +30,7 @@
                 _logger.LogError(ex, "Error occured while logging command/query");
             }
         }
+
+        public void Log(object message) => LogAsync(message).RunSynchronously();
     }
 }

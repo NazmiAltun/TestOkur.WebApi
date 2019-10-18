@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
@@ -14,12 +14,12 @@
     public sealed class CreateStudentCommandHandler : RequestHandlerAsync<CreateStudentCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public CreateStudentCommandHandler(IProcessor processor, IApplicationDbContextFactory dbContextFactory)
+        public CreateStudentCommandHandler(IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
         {
-            _processor = processor;
             _dbContextFactory = dbContextFactory;
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(1)]
@@ -50,7 +50,7 @@
             CancellationToken cancellationToken)
         {
             var query = new GetUserStudentsQuery(command.UserId);
-            var list = await _processor.ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(query, cancellationToken);
+            var list = await _queryProcessor.ExecuteAsync(query, cancellationToken);
 
             if (list.Any(c => c.StudentNumber == command.StudentNumber))
             {

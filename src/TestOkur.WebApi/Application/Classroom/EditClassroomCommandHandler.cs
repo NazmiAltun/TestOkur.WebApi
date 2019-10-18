@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-    using MassTransit;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
@@ -17,17 +17,17 @@
     public sealed class EditClassroomCommandHandler : RequestHandlerAsync<EditClassroomCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IPublishEndpoint _publishEndpoint;
 
         public EditClassroomCommandHandler(
-            IProcessor processor,
             IPublishEndpoint publishEndpoint,
-            IApplicationDbContextFactory dbContextFactory)
+            IApplicationDbContextFactory dbContextFactory,
+            IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _publishEndpoint = publishEndpoint;
             _dbContextFactory = dbContextFactory;
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(1)]
@@ -63,9 +63,7 @@
             EditClassroomCommand command,
             CancellationToken cancellationToken)
         {
-            var classrooms = await _processor.ExecuteAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>(
-                new GetUserClassroomsQuery(command.UserId),
-                cancellationToken);
+            var classrooms = await _queryProcessor.ExecuteAsync(new GetUserClassroomsQuery(command.UserId), cancellationToken);
 
             if (classrooms.Any(
                 c => c.Grade == command.NewGrade &&

@@ -3,7 +3,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Report.Infrastructure.Repositories;

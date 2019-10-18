@@ -6,19 +6,22 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/students")]
     [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class StudentController : ControllerBase
     {
-        private readonly IProcessor _processor;
+        private readonly IAmACommandProcessor _commandProcessor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public StudentController(IProcessor processor)
+        public StudentController(IAmACommandProcessor commandProcessor, IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
+            _queryProcessor = queryProcessor;
         }
 
         [HttpPost]
@@ -26,7 +29,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreateStudentCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -34,7 +37,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _processor.SendAsync(new DeleteStudentCommand(id));
+            await _commandProcessor.SendAsync(new DeleteStudentCommand(id));
             return Ok();
         }
 
@@ -43,7 +46,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditAsync(EditStudentCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -51,7 +54,7 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<StudentReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _processor.ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(new GetUserStudentsQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(new GetUserStudentsQuery()));
         }
 
         [HttpPost("bulk")]
@@ -59,7 +62,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateBulkAsync(BulkCreateStudentCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
 
             return Ok();
         }

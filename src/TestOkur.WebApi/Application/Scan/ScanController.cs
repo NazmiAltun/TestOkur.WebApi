@@ -5,17 +5,17 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Paramore.Brighter;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.CommandsQueries;
 
     [Route("api/v1/scan-sessions")]
     [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ScanController : ControllerBase
     {
-        private readonly IProcessor _commandProcessor;
+        private readonly IAmACommandProcessor _commandProcessor;
 
-        public ScanController(IProcessor commandProcessor)
+        public ScanController(IAmACommandProcessor commandProcessor)
         {
             _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
         }

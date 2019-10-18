@@ -1,14 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.Exam
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using MassTransit;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Exam.Commands;
     using TestOkur.WebApi.Application.Exam.Queries;
 
@@ -16,12 +17,14 @@
     [ApiController]
     public class ExamController : ControllerBase
     {
-        private readonly IProcessor _processor;
+        private readonly IAmACommandProcessor _commandProcessor;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public ExamController(IProcessor processor, IPublishEndpoint publishEndpoint)
+        public ExamController(IPublishEndpoint publishEndpoint, IAmACommandProcessor commandProcessor, IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
+            _queryProcessor = queryProcessor;
             _publishEndpoint = publishEndpoint;
         }
 
@@ -36,7 +39,7 @@
                 command.Shared = false;
             }
 
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -45,8 +48,7 @@
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<IActionResult> ReEvaluateAsync()
         {
-            var examIds = await _processor.ExecuteAsync<GetAllExamIdsQuery, IEnumerable<int>>(
-                  new GetAllExamIdsQuery());
+            var examIds = await _queryProcessor.ExecuteAsync(new GetAllExamIdsQuery());
             await _publishEndpoint.Publish(new ReEvaluateMultipleExams(examIds));
             return Accepted();
         }
@@ -56,7 +58,7 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<ExamReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _processor.ExecuteAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>(new GetUserExamsQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(new GetUserExamsQuery()));
         }
 
         [HttpDelete("{id}")]
@@ -64,7 +66,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _processor.SendAsync(new DeleteExamCommand(id, false));
+            await _commandProcessor.SendAsync(new DeleteExamCommand(id, false));
             return Ok();
         }
 
@@ -73,7 +75,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteSharedAsync(int id)
         {
-            await _processor.SendAsync(new DeleteExamCommand(id, true));
+            await _commandProcessor.SendAsync(new DeleteExamCommand(id, true));
             return Ok();
         }
 
@@ -88,7 +90,7 @@
                 command.Shared = false;
             }
 
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
     }

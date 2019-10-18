@@ -1,6 +1,5 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -8,6 +7,7 @@
     using MassTransit;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
@@ -16,15 +16,15 @@
 
     public sealed class EditStudentCommandHandler : RequestHandlerAsync<EditStudentCommand>
     {
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public EditStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory, IProcessor processor)
+        public EditStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
         {
             _publishEndpoint = publishEndpoint;
             _dbContextFactory = dbContextFactory;
-            _processor = processor;
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(1)]
@@ -97,8 +97,7 @@
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            var students = await _processor
-                .ExecuteAsync<GetUserStudentsQuery, IReadOnlyCollection<StudentReadModel>>(
+            var students = await _queryProcessor.ExecuteAsync(
                     new GetUserStudentsQuery(command.UserId), cancellationToken);
             if (students.Any(
                 s => s.StudentNumber == command.NewStudentNumber &&

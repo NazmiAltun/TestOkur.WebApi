@@ -2,8 +2,8 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using Paramore.Darker;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -17,12 +17,12 @@
     public sealed class CreateUnitCommandHandler : RequestHandlerAsync<CreateUnitCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public CreateUnitCommandHandler(IProcessor processor, IApplicationDbContextFactory dbContextFactory)
+        public CreateUnitCommandHandler(IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _dbContextFactory = dbContextFactory;
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(1)]
@@ -46,8 +46,7 @@
             CreateUnitCommand command,
             CancellationToken cancellationToken = default)
         {
-            var units = await _processor.ExecuteAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>(
-                new GetUserUnitsQuery(command.UserId), cancellationToken);
+            var units = await _queryProcessor.ExecuteAsync(new GetUserUnitsQuery(command.UserId), cancellationToken);
 
             if (units.Any(l => string.Equals(l.Name, command.Name, StringComparison.InvariantCultureIgnoreCase) &&
                                l.Grade == command.Grade &&

@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Paramore.Brighter;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Sms.Commands;
 
     [Route("api/v1/sms")]
@@ -15,12 +14,10 @@
     public class SmsController : ControllerBase
     {
         private readonly IAmACommandProcessor _commandProcessor;
-        private readonly IProcessor _contextCommandProcessor;
 
-        public SmsController(IAmACommandProcessor commandProcessor, IProcessor contextCommandProcessor)
+        public SmsController(IAmACommandProcessor commandProcessor)
         {
             _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
-            _contextCommandProcessor = contextCommandProcessor;
         }
 
         [HttpPost]
@@ -29,7 +26,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SendSmsAsync(SendSmsCommand command)
         {
-            await _contextCommandProcessor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
 
             return Accepted();
         }
@@ -39,7 +36,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> SendSmsAsync(SendSmsAdminCommand command)
         {
-            await _contextCommandProcessor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Accepted();
         }
 

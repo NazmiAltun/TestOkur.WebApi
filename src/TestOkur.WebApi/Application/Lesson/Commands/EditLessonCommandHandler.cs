@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -18,7 +17,6 @@
 
     public sealed class EditLessonCommandHandler : RequestHandlerAsync<EditLessonCommand>
     {
-        private readonly IProcessor _processor;
         private readonly IQueryProcessor _queryProcessor;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IApplicationDbContextFactory _dbContextFactory;
@@ -26,11 +24,9 @@
         public EditLessonCommandHandler(
             IPublishEndpoint publishEndpoint,
             IQueryProcessor queryProcessor,
-            IProcessor processor,
             IApplicationDbContextFactory dbContextFactory)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
-            _processor = processor;
             _dbContextFactory = dbContextFactory;
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
@@ -77,8 +73,7 @@
         private async Task EnsureNotExistsInUserLessons(EditLessonCommand command, CancellationToken cancellationToken)
         {
             var lessonsByUserQuery = new GetUserLessonsQuery(command.UserId);
-            var lessonsByUser = await _processor
-                .ExecuteAsync<GetUserLessonsQuery, IReadOnlyCollection<LessonReadModel>>(lessonsByUserQuery, cancellationToken);
+            var lessonsByUser = await _queryProcessor.ExecuteAsync(lessonsByUserQuery, cancellationToken);
 
             if (lessonsByUser.Any(l => string.Equals(l.Name, command.NewName, StringComparison.InvariantCultureIgnoreCase) &&
                                        l.Id != command.LessonId))

@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi
+﻿using TestOkur.Infrastructure.CommandsQueries.Extensions;
+
+namespace TestOkur.WebApi
 {
     using CacheManager.Core;
     using Dapper;
@@ -94,7 +96,7 @@
                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                });
 
-            AddCqrsFramework(services);
+            services.AddCommandsAndQueries();
             AddHealthChecks(services);
             AddCache(services);
             AddDatabase(services);
@@ -214,24 +216,11 @@
             });
             services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
-            services.AddSingleton<IProcessor, Processor>();
             services.AddSingleton<ICommandQueryLogger, CommandQueryLogger>();
             services.AddSingleton<ITelemetryInitializer, HeaderTelemetryInitializer>();
             services.AddHttpContextAccessor();
         }
-
-        //TODO:Use the one in the library instead
-        private void AddCqrsFramework(IServiceCollection services)
-        {
-            services.AddDarker()
-                .AddHandlersFromAssemblies(typeof(GetAllCitiesQuery).Assembly)
-                .AddCustomDecorators();
-
-            services.AddBrighter()
-                .AsyncHandlersFromAssemblies(Assembly.GetExecutingAssembly())
-                .AddPipelineHandlers();
-        }
-
+        
         private void AddHealthChecks(IServiceCollection services)
         {
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";

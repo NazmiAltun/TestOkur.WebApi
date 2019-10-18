@@ -1,15 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.User
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Domain;
-    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Commands;
     using TestOkur.WebApi.Application.User.Queries;
 
@@ -17,11 +18,13 @@
     [ApiController]
     public sealed class UserController : ControllerBase
     {
-        private readonly IProcessor _processor;
+        private readonly IAmACommandProcessor _commandProcessor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public UserController(IProcessor processor)
+        public UserController(IAmACommandProcessor commandProcessor, IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
+            _queryProcessor = queryProcessor;
         }
 
         [HttpPost("send-reset-password-link")]
@@ -30,7 +33,7 @@
         [Authorize(AuthorizationPolicies.Public)]
         public async Task<IActionResult> SendResetPasswordLinkAsync(SendResetPasswordLinkCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
 
             return Ok(SuccessCodes.PasswordResetLinkSent);
         }
@@ -41,7 +44,7 @@
         [Authorize(AuthorizationPolicies.Customer)]
         public async Task<IActionResult> UpdateUserAsync(UpdateUserCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
 
             return Ok(SuccessCodes.UserUpdated);
         }
@@ -52,7 +55,7 @@
         [Authorize(AuthorizationPolicies.Public)]
         public async Task<IActionResult> CreateUserAsync(CreateUserCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
 
             return Ok(SuccessCodes.UserCreated);
         }
@@ -62,7 +65,7 @@
         [Authorize(AuthorizationPolicies.Admin)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _processor.SendAsync(new DeleteUserCommand(id));
+            await _commandProcessor.SendAsync(new DeleteUserCommand(id));
             return Ok();
         }
 
@@ -73,7 +76,7 @@
         public async Task<IActionResult> ActivateAsync([FromQuery, Required]string email)
         {
             var command = new ActivateUserCommand(email);
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok(SuccessCodes.UserActivated);
         }
 
@@ -82,9 +85,7 @@
         [Authorize(AuthorizationPolicies.Private)]
         public async Task<IActionResult> GetUsersAsync()
         {
-            var users = await _processor
-                .ExecuteAsync<GetAllUsersQuery, IReadOnlyCollection<UserReadModel>>(
-                    new GetAllUsersQuery());
+            var users = await _queryProcessor.ExecuteAsync(new GetAllUsersQuery());
 
             return Ok(users);
         }
@@ -94,9 +95,7 @@
         [Authorize(AuthorizationPolicies.Admin)]
         public async Task<IActionResult> GetUserAsync(string email)
         {
-            var user = await _processor
-                .ExecuteAsync<GetUserByEmailQuery, UserReadModel>(
-                    new GetUserByEmailQuery(email));
+            var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery(email));
 
             return Ok(user);
         }
@@ -106,11 +105,9 @@
         [ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRequestedUserInfoAsync([FromQuery]string version)
         {
-            var user = await _processor
-                .ExecuteAsync<GetUserByEmailQuery, UserReadModel>(
-                    new GetUserByEmailQuery());
+            var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery());
 
-            await _processor.SendAsync(new UpdateUserOnlineStatusCommand(user.Email));
+            await _commandProcessor.SendAsync(new UpdateUserOnlineStatusCommand(user.Email));
             return Ok(user);
         }
 
@@ -119,7 +116,7 @@
         [Authorize(AuthorizationPolicies.Customer)]
         public async Task<IActionResult> GetUserRecordCountsAsync()
         {
-            var records = await _processor.ExecuteAsync<GetUserRecordCountsQuery, UserRecords>(new GetUserRecordCountsQuery());
+            var records = await _queryProcessor.ExecuteAsync(new GetUserRecordCountsQuery());
 
             return Ok(records);
         }
@@ -130,7 +127,7 @@
         [Authorize(AuthorizationPolicies.Admin)]
         public async Task<IActionResult> UpdateUserByAdminAsync(UpdateUserByAdminCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -140,7 +137,7 @@
         [Authorize(AuthorizationPolicies.Admin)]
         public async Task<IActionResult> ExtendSubscriptionAsync(ExtendUserSubscriptionCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -149,8 +146,7 @@
         [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOnlineUsersAsync()
         {
-            return Ok(await _processor.ExecuteAsync<GetOnlineUsersQuery, IReadOnlyCollection<string>>(
-                new GetOnlineUsersQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(new GetOnlineUsersQuery()));
         }
     }
 }

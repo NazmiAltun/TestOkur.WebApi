@@ -1,7 +1,5 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Data
 {
-    using System;
-    using System.Net.Mail;
     using MongoDB.Driver;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Models;

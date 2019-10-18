@@ -22,13 +22,11 @@
                                 ";
 
         private readonly string _connectionString;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public GetUserStudentsQueryHandler(
-            ApplicationConfiguration configurationOptions,
-            IProcessor processor)
+        public GetUserStudentsQueryHandler(ApplicationConfiguration configurationOptions, IQueryProcessor queryProcessor)
         {
-            _processor = processor;
+            _queryProcessor = queryProcessor;
             _connectionString = configurationOptions.Postgres;
         }
 
@@ -46,8 +44,7 @@
                     new { userId = query.UserId })).ToList();
             }
 
-            var contacts = await _processor.ExecuteAsync<GetUserContactsQuery, IReadOnlyCollection<ContactReadModel>>(
-                new GetUserContactsQuery(query.UserId), cancellationToken);
+            var contacts = await _queryProcessor.ExecuteAsync(new GetUserContactsQuery(query.UserId), cancellationToken);
 
             foreach (var student in students)
             {

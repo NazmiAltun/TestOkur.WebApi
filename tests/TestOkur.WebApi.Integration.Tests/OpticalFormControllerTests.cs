@@ -11,7 +11,6 @@
     using TestOkur.WebApi.Application.OpticalForm;
     using TestOkur.WebApi.Integration.Tests.Common;
     using Xunit;
-    using Xunit.Abstractions;
 
     public class OpticalFormControllerTests : Test
     {

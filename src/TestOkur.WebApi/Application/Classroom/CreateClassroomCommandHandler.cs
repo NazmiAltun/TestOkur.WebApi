@@ -1,12 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Classroom
 {
-    using Paramore.Brighter;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
@@ -14,14 +14,12 @@
     public sealed class CreateClassroomCommandHandler : RequestHandlerAsync<CreateClassroomCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public CreateClassroomCommandHandler(
-            IApplicationDbContextFactory dbContext,
-            IProcessor processor)
+        public CreateClassroomCommandHandler(IApplicationDbContextFactory dbContext, IQueryProcessor queryProcessor)
         {
             _dbContextFactory = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(2)]
@@ -45,7 +43,7 @@
             CancellationToken cancellationToken)
         {
             var query = new GetUserClassroomsQuery(command.UserId);
-            var list = await _processor.ExecuteAsync<GetUserClassroomsQuery, IReadOnlyCollection<ClassroomReadModel>>(query, cancellationToken);
+            var list = await _queryProcessor.ExecuteAsync(query, cancellationToken);
 
             if (list.Any(c => c.Grade == command.Grade &&
                              string.Equals(c.Name, command.Name, StringComparison.InvariantCultureIgnoreCase)))

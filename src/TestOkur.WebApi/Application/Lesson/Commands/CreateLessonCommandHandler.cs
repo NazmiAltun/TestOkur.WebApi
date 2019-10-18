@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -16,15 +15,13 @@
     public sealed class CreateLessonCommandHandler : RequestHandlerAsync<CreateLessonCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+
         private readonly IQueryProcessor _queryProcessor;
 
         public CreateLessonCommandHandler(
-            IProcessor processor,
             IQueryProcessor queryProcessor,
             IApplicationDbContextFactory dbContextFactory)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _queryProcessor = queryProcessor;
             _dbContextFactory = dbContextFactory;
         }
@@ -56,8 +53,7 @@
         private async Task EnsureNotExistsInUserLessons(CreateLessonCommand command, CancellationToken cancellationToken)
         {
             var lessonsByUserQuery = new GetUserLessonsQuery(command.UserId);
-            var lessonsByUser = await _processor
-                .ExecuteAsync<GetUserLessonsQuery, IReadOnlyCollection<LessonReadModel>>(lessonsByUserQuery, cancellationToken);
+            var lessonsByUser = await _queryProcessor.ExecuteAsync(lessonsByUserQuery, cancellationToken);
 
             if (lessonsByUser.Any(l => string.Equals(l.Name, command.Name, StringComparison.InvariantCultureIgnoreCase)))
             {

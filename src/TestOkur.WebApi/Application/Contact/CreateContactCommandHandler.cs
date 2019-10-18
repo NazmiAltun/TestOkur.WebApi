@@ -1,8 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
     using Paramore.Brighter;
-    using System;
-    using System.Collections.Generic;
+    using Paramore.Darker;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
@@ -15,14 +14,12 @@
         : RequestHandlerAsync<CreateContactCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public CreateContactCommandHandler(
-            IApplicationDbContextFactory dbContextFactory,
-            IProcessor processor)
+        public CreateContactCommandHandler(IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
         {
             _dbContextFactory = dbContextFactory;
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(2)]
@@ -47,7 +44,7 @@
             CancellationToken cancellationToken)
         {
             var query = new GetUserContactsQuery(command.UserId);
-            var list = await _processor.ExecuteAsync<GetUserContactsQuery, IReadOnlyCollection<ContactReadModel>>(query, cancellationToken);
+            var list = await _queryProcessor.ExecuteAsync(query, cancellationToken);
 
             if (list.Any(c => c.Phone == command.Phone))
             {

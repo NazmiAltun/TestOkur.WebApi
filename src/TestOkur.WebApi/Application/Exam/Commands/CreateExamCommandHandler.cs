@@ -1,14 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Commands
 {
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using MassTransit;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.ExamModel;
@@ -21,18 +22,18 @@
 
     public sealed class CreateExamCommandHandler : RequestHandlerAsync<CreateExamCommand>
     {
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IApplicationDbContextFactory _dbContextFactory;
 
         public CreateExamCommandHandler(
-            IProcessor processor,
             IPublishEndpoint publishEndpoint,
-            IApplicationDbContextFactory dbContextFactory)
+            IApplicationDbContextFactory dbContextFactory,
+            IQueryProcessor queryProcessor)
         {
-            _processor = processor;
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
             _dbContextFactory = dbContextFactory;
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(2)]
@@ -81,8 +82,7 @@
         private async Task EnsureNotExistsAsync(
             CreateExamCommand command, CancellationToken cancellationToken)
         {
-            var list = (await _processor.ExecuteAsync<GetUserExamsQuery, IReadOnlyCollection<ExamReadModel>>(
-                new GetUserExamsQuery(command.UserId), cancellationToken)).ToList();
+            var list = (await _queryProcessor.ExecuteAsync(new GetUserExamsQuery(command.UserId), cancellationToken)).ToList();
 
             if (list.Any(c => c.Name == command.Name))
             {

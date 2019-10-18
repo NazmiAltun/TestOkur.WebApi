@@ -6,9 +6,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Paramore.Brighter;
     using Paramore.Darker;
     using TestOkur.Common;
-    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Lesson.Commands;
     using TestOkur.WebApi.Application.Lesson.Queries;
 
@@ -17,12 +17,12 @@
     [ApiController]
     public class LessonController : ControllerBase
     {
-        private readonly IProcessor _processor;
+        private readonly IAmACommandProcessor _commandProcessor;
         private readonly IQueryProcessor _queryProcessor;
 
-        public LessonController(IQueryProcessor queryProcessor, IProcessor processor)
+        public LessonController(IQueryProcessor queryProcessor, IAmACommandProcessor commandProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
 
@@ -31,7 +31,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAsync(CreateLessonCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -46,7 +46,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _processor.SendAsync(new DeleteLessonCommand(id));
+            await _commandProcessor.SendAsync(new DeleteLessonCommand(id));
             return Ok();
         }
 
@@ -55,7 +55,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditAsync(EditLessonCommand command)
         {
-            await _processor.SendAsync(command);
+            await _commandProcessor.SendAsync(command);
             return Ok();
         }
 
@@ -63,9 +63,7 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<LessonReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _processor
-                .ExecuteAsync<GetUserLessonsQuery, IReadOnlyCollection<LessonReadModel>>(
-                    new GetUserLessonsQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(new GetUserLessonsQuery()));
         }
     }
 }

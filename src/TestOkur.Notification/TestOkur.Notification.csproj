@@ -21,7 +21,7 @@
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.5.5" />
     <PackageReference Include="MassTransit.Extensions.Logging" Version="5.5.5" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="5.5.5" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.2.1" />

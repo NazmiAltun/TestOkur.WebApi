@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.WebApi.Application.Lesson.Commands
 {
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
@@ -17,12 +17,12 @@
     public sealed class EditUnitCommandHandler : RequestHandlerAsync<EditUnitCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IProcessor _processor;
+        private readonly IQueryProcessor _queryProcessor;
 
-        public EditUnitCommandHandler(IProcessor processor, IApplicationDbContextFactory dbContextFactory)
+        public EditUnitCommandHandler(IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
         {
-            _processor = processor ?? throw new ArgumentNullException(nameof(processor));
             _dbContextFactory = dbContextFactory;
+            _queryProcessor = queryProcessor;
         }
 
         [Idempotent(2)]
@@ -50,9 +50,7 @@
             EditUnitCommand command,
             CancellationToken cancellationToken)
         {
-            var units = await _processor.ExecuteAsync<GetUserUnitsQuery, IReadOnlyCollection<UnitReadModel>>(
-                new GetUserUnitsQuery(command.UserId),
-                cancellationToken);
+            var units = await _queryProcessor.ExecuteAsync(new GetUserUnitsQuery(command.UserId), cancellationToken);
 
             if (units.Any(
                 c => string.Equals(c.Name, command.NewName, StringComparison.InvariantCultureIgnoreCase) &&
