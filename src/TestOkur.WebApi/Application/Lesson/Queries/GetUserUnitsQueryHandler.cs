@@ -7,7 +7,6 @@
     using Dapper;
     using Npgsql;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Configuration;
 
@@ -36,7 +35,6 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        [QueryLogging(2)]
         [ResultCaching(3)]
         public override async Task<IReadOnlyCollection<UnitReadModel>> ExecuteAsync(
             GetUserUnitsQuery query,

@@ -3,7 +3,6 @@
     using Dapper;
     using Npgsql;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.WebApi.Configuration;
@@ -17,7 +16,6 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        [QueryLogging(1)]
         public override async Task<StatisticsReadModel> ExecuteAsync(StatisticsQuery query, CancellationToken cancellationToken = default)
         {
             const string sql = @"SELECT * FROM 

@@ -23,7 +23,6 @@
     using Newtonsoft.Json;
     using Paramore.Brighter.Extensions.DependencyInjection;
     using Paramore.Darker.AspNetCore;
-    using Paramore.Darker.QueryLogging;
     using Polly;
     using Polly.Extensions.Http;
     using Prometheus;
@@ -44,7 +43,6 @@
     using TestOkur.Infrastructure.Mvc.Threading;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.City;
-    using TestOkur.WebApi.Application.User;
     using TestOkur.WebApi.Application.User.Services;
     using TestOkur.WebApi.Configuration;
     using TestOkur.WebApi.Extensions;
@@ -222,11 +220,11 @@
             services.AddHttpContextAccessor();
         }
 
+        //TODO:Use the one in the library instead
         private void AddCqrsFramework(IServiceCollection services)
         {
             services.AddDarker()
                 .AddHandlersFromAssemblies(typeof(GetAllCitiesQuery).Assembly)
-                .AddJsonQueryLogging()
                 .AddCustomDecorators();
 
             services.AddBrighter()

@@ -5,7 +5,6 @@
     using Dapper;
     using Npgsql;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetUserRecordCountsQueryHandler :
@@ -18,7 +17,6 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        [QueryLogging(2)]
         public override async Task<UserRecords> ExecuteAsync(
             GetUserRecordCountsQuery query,
             CancellationToken cancellationToken = default)

@@ -1,13 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.Exam.Queries
 {
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Dapper;
-    using Npgsql;
-    using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Configuration;
 
@@ -21,8 +20,7 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        [QueryLogging(2)]
-        [ResultCaching(3)]
+        [ResultCaching(1)]
         public override async Task<IReadOnlyCollection<ExamReadModel>> ExecuteAsync(
             GetUserExamsQuery query,
             CancellationToken cancellationToken = default)

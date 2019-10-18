@@ -8,7 +8,6 @@
     using CacheManager.Core;
     using Paramore.Darker;
 
-    //TODO:Fix
     public sealed class GetOnlineUsersQueryHandler : QueryHandlerAsync<GetOnlineUsersQuery, IReadOnlyCollection<string>>
     {
         private const string CacheKey = "OnlineUsers";
@@ -26,7 +25,7 @@
 
             foreach (var key in usersDictionary.Keys)
             {
-                if (usersDictionary[key].Subtract(DateTime.UtcNow).TotalMinutes > 1)
+                if (DateTime.UtcNow.Subtract(usersDictionary[key]).TotalMinutes > 1)
                 {
                     usersDictionary.Remove(key);
                 }

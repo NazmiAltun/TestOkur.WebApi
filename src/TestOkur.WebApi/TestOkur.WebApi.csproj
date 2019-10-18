@@ -44,7 +44,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1" />
     <PackageReference Include="Paramore.Darker" Version="2.0.78" />
     <PackageReference Include="Paramore.Darker.AspNetCore" Version="2.0.78" />
-    <PackageReference Include="Paramore.Darker.QueryLogging" Version="2.0.78" />
     <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.2.1" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.2.0" />

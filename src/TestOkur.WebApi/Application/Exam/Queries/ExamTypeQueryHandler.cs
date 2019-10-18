@@ -7,7 +7,6 @@
     using Dapper;
     using Npgsql;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.OpticalForm;
     using TestOkur.WebApi.Configuration;
@@ -35,8 +34,7 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        [QueryLogging(1)]
-        [ResultCaching(2)]
+        [ResultCaching(1)]
         public override async Task<IReadOnlyCollection<ExamTypeReadModel>> ExecuteAsync(ExamTypeQuery query, CancellationToken cancellationToken = default)
         {
             var formTypes = await GetOpticalFormTypesAsync(cancellationToken);

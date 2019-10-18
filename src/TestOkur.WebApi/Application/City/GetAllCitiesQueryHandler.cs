@@ -7,7 +7,6 @@
     using Dapper;
     using Npgsql;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Configuration;
 
@@ -24,8 +23,7 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        [QueryLogging(1)]
-        [ResultCaching(2)]
+        [ResultCaching(1)]
         public override async Task<IReadOnlyCollection<CityReadModel>> ExecuteAsync(GetAllCitiesQuery query, CancellationToken cancellationToken = default)
         {
             await using var connection = new NpgsqlConnection(_connectionString);

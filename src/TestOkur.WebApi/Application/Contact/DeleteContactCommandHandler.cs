@@ -1,9 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using MassTransit;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
     using TestOkur.Data;

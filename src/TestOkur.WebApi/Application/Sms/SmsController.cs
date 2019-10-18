@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi.Application.Sms
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;

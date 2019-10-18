@@ -2,14 +2,12 @@
 {
     using Newtonsoft.Json;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using System.Collections.Generic;
     using System.IO;
     using TestOkur.Infrastructure.CommandsQueries;
 
     public class GetLocalStringsQueryHandler : QueryHandler<GetLocalStringsQuery, IReadOnlyCollection<LocalString>>
     {
-        [QueryLogging(1)]
         [ResultCaching(2)]
         public override IReadOnlyCollection<LocalString> Execute(GetLocalStringsQuery query)
         {

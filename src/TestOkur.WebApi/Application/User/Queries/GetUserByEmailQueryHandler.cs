@@ -5,7 +5,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Paramore.Darker;
-    using Paramore.Darker.QueryLogging;
     using TestOkur.Infrastructure.CommandsQueries;
 
     public sealed class GetUserByEmailQueryHandler : QueryHandlerAsync<GetUserByEmailQuery, UserReadModel>
@@ -17,7 +16,6 @@
             _processor = processor;
         }
 
-        [QueryLogging(2)]
         public override async Task<UserReadModel> ExecuteAsync(
             GetUserByEmailQuery query,
             CancellationToken cancellationToken = default)
