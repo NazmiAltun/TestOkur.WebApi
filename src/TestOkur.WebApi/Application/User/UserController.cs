@@ -107,7 +107,7 @@
         {
             var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery());
 
-            await _commandProcessor.SendAsync(new UpdateUserOnlineStatusCommand(user.Email));
+            _commandProcessor.Send(new UpdateUserOnlineStatusCommand(user.Email));
             return Ok(user);
         }
 
@@ -144,9 +144,9 @@
         [HttpGet("online")]
         [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetOnlineUsersAsync()
+        public IActionResult GetOnlineUsersAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new GetOnlineUsersQuery()));
+            return Ok(_queryProcessor.Execute(new GetOnlineUsersQuery()));
         }
     }
 }

@@ -1,14 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
+    using CacheManager.Core;
+    using Paramore.Darker;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using CacheManager.Core;
-    using Paramore.Darker;
 
-    public sealed class GetOnlineUsersQueryHandler : QueryHandlerAsync<GetOnlineUsersQuery, IReadOnlyCollection<string>>
+    public sealed class GetOnlineUsersQueryHandler : QueryHandler<GetOnlineUsersQuery, IReadOnlyCollection<string>>
     {
         private const string CacheKey = "OnlineUsers";
 
@@ -19,7 +17,7 @@
             _userCacheManager = userCacheManager;
         }
 
-        public override async Task<IReadOnlyCollection<string>> ExecuteAsync(GetOnlineUsersQuery query, CancellationToken cancellationToken = default)
+        public override IReadOnlyCollection<string> Execute(GetOnlineUsersQuery query)
         {
             var usersDictionary = _userCacheManager.Get(CacheKey) ?? new Dictionary<string, DateTime>();
 
@@ -33,7 +31,6 @@
 
             _userCacheManager.AddOrUpdate(CacheKey, usersDictionary, (d) => usersDictionary);
 
-            await Task.Delay(1, cancellationToken);
             return usersDictionary.Keys.ToList();
         }
     }
