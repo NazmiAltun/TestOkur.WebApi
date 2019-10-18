@@ -251,9 +251,10 @@
                 ConfigurationBuilder.BuildConfiguration(cfg =>
                 {
                     cfg.WithGzJsonSerializer()
-                        .WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
-                        .WithRedisBackplane("redis")
-                        .WithRedisCacheHandle("redis", true);
+                        .WithMicrosoftMemoryCacheHandle();
+                    //.WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
+                    //.WithRedisBackplane("redis")
+                    //.WithRedisCacheHandle("redis", true);
                 });
 
             services.AddSingleton(cacheManagerConfig);
