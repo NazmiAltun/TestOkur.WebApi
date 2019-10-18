@@ -1,6 +1,4 @@
-﻿using TestOkur.Infrastructure.CommandsQueries.Extensions;
-
-namespace TestOkur.WebApi
+﻿namespace TestOkur.WebApi
 {
     using CacheManager.Core;
     using Dapper;
@@ -23,12 +21,9 @@ namespace TestOkur.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
-    using Paramore.Brighter.Extensions.DependencyInjection;
-    using Paramore.Darker.AspNetCore;
     using Polly;
     using Polly.Extensions.Http;
     using Prometheus;
-    using StackExchange.Redis;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -39,12 +34,12 @@ namespace TestOkur.WebApi
     using TestOkur.Data;
     using TestOkur.Domain.Model.SmsModel;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.Infrastructure.CommandsQueries.Extensions;
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Infrastructure.Mvc.Mvc;
     using TestOkur.Infrastructure.Mvc.Threading;
     using TestOkur.WebApi.Application.Captcha;
-    using TestOkur.WebApi.Application.City;
     using TestOkur.WebApi.Application.User.Services;
     using TestOkur.WebApi.Configuration;
     using TestOkur.WebApi.Extensions;
@@ -95,8 +90,7 @@ namespace TestOkur.WebApi
                {
                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                });
-
-            services.AddCommandsAndQueries();
+            services.AddCommandsAndQueries(Assembly.GetExecutingAssembly());
             AddHealthChecks(services);
             AddCache(services);
             AddDatabase(services);
@@ -220,14 +214,13 @@ namespace TestOkur.WebApi
             services.AddSingleton<ITelemetryInitializer, HeaderTelemetryInitializer>();
             services.AddHttpContextAccessor();
         }
-        
+
         private void AddHealthChecks(IServiceCollection services)
         {
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
                 .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"))
-                .AddRedis(Configuration.GetConnectionString("Redis"))
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddRabbitMQ(rabbitMqUri);
         }
@@ -238,16 +231,11 @@ namespace TestOkur.WebApi
                 ConfigurationBuilder.BuildConfiguration(cfg =>
                 {
                     cfg.WithGzJsonSerializer()
-                        .WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
-                        .WithRedisBackplane("redis")
-                        .WithRedisCacheHandle("redis", true);
+                        .WithMicrosoftMemoryCacheHandle("runTimeMemory");
                 });
 
             services.AddSingleton(cacheManagerConfig);
             services.AddCacheManager();
-
-            var redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
-            services.AddSingleton<IConnectionMultiplexer>(redisConnection);
 
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo("DataProtection-Keys"));

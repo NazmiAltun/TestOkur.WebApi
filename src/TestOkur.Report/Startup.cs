@@ -26,7 +26,6 @@ namespace TestOkur.Report
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Bson.Serialization.Serializers;
     using Prometheus;
-    using StackExchange.Redis;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -238,7 +237,6 @@ namespace TestOkur.Report
                 $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri)
-                .AddRedis(Configuration.GetConnectionString("Redis"))
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddMongoDb(
                     ReportConfiguration.ConnectionString,
@@ -253,17 +251,11 @@ namespace TestOkur.Report
                 ConfigurationBuilder.BuildConfiguration(cfg =>
                 {
                     cfg.WithGzJsonSerializer()
-                        .WithRedisConfiguration("redis", Configuration.GetConnectionString("Redis"))
-                        .WithRedisBackplane("redis")
-                        .WithRedisCacheHandle("redis", true);
+                        .WithMicrosoftMemoryCacheHandle("runTimeMemory");
                 });
 
             services.AddSingleton(cacheManagerConfig);
             services.AddCacheManager();
-
-            var redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
-            services.AddSingleton<IConnectionMultiplexer>(redisConnection);
-
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo("DataProtection-Keys"));
         }

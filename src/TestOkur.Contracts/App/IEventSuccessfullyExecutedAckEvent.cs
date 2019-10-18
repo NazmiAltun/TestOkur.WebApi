@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace TestOkur.Contracts.App
+﻿namespace TestOkur.Contracts.App
 {
+    using System;
+
     public interface IEventSuccessfullyExecutedAckEvent : IIntegrationEvent
     {
         Guid ExecutedEventId { get; }

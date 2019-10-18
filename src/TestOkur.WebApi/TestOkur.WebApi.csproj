@@ -16,7 +16,6 @@
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.0.0" />
-    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.0.0" />
     <PackageReference Include="CacheManager.Core" Version="1.2.0" />
@@ -24,7 +23,6 @@
     <PackageReference Include="CacheManager.Microsoft.Extensions.Configuration" Version="1.2.0" />
     <PackageReference Include="CacheManager.Microsoft.Extensions.Logging" Version="1.2.0" />
     <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
-    <PackageReference Include="CacheManager.StackExchange.Redis" Version="1.2.0" />
 	  <PackageReference Include="Dapper" Version="2.0.30" />
     <PackageReference Include="Dapper.FluentMap" Version="1.8.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
@@ -51,7 +49,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.0.5" />
+    <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.0.8" />
     <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.1" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.72" />
   </ItemGroup>
