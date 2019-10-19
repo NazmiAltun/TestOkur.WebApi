@@ -14,7 +14,7 @@
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly INotificationFacade _notificationFacade;
-        private readonly ISmsRepository _smsRepository;
+        private readonly IStatsRepository _statsRepository;
         private readonly IWebApiClient _webApiClient;
         private readonly IOAuthClient _oAuthClient;
         private readonly IReportClient _reportClient;
@@ -24,18 +24,18 @@
             INotificationFacade notificationFacade,
             IWebHostEnvironment hostingEnvironment,
             ILogger<DailyReportTask> logger,
-            ISmsRepository smsRepository,
             IWebApiClient webApiClient,
             IOAuthClient oAuthClient,
-            IReportClient reportClient)
+            IReportClient reportClient,
+            IStatsRepository statsRepository)
         {
             _notificationFacade = notificationFacade;
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
-            _smsRepository = smsRepository;
             _webApiClient = webApiClient;
             _oAuthClient = oAuthClient;
             _reportClient = reportClient;
+            _statsRepository = statsRepository;
         }
 
         public async Task SendAsync()
@@ -54,30 +54,13 @@
 
         private async Task<DailyReportModel> GetDailyReportAsync()
         {
-            var todaysSmsList = await _smsRepository.GetTodaysSmsesAsync();
-            var durations = todaysSmsList.Select(s => s.ResponseDateTimeUtc.Subtract(s.RequestDateTimeUtc).TotalMilliseconds);
-            var topUserSmsStats = todaysSmsList.GroupBy(
-                    x => x.UserId, (userId, smses) => new
-                    {
-                        UserId = userId,
-                        TotalCredit = smses.Sum(x => x.Credit),
-                    }).OrderByDescending(x => x.TotalCredit)
-                .FirstOrDefault();
             var apiUsers = await _webApiClient.GetUsersAsync();
 
             return new DailyReportModel()
             {
                 Statistics = await _webApiClient.GetStatisticsAsync(),
                 ReportStatistics = await _reportClient.GetStatisticsAsync(),
-                TotalSuccessfulSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Successful),
-                AverageSMSDuration = (int)(durations.Any() ? durations.Average() : 0),
-                TotalSmsCredit = todaysSmsList.Sum(s => s.Credit),
-                LongestSMSDuration = (int)(durations.Any() ? durations.Max() : 0),
-                TotalUserSMSCountInDay = todaysSmsList.Count(s => s.UserId != default),
-                TotalSystemSMSCountInDay = todaysSmsList.Count(s => s.UserId == default),
-                TotalFailedSMSCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Failed),
-                TopSMSSenderCreditInDay = topUserSmsStats?.TotalCredit ?? 0,
-                TopSMSSenderEmailAddressInDay = apiUsers.FirstOrDefault(u => u.Id == topUserSmsStats?.UserId)?.Email,
+                NotificationStatistics = await _statsRepository.GetStatisticsAsync(),
                 IdentityStatistics = await _oAuthClient.GetDailyStatsAsync(),
             };
         }

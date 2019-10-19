@@ -92,6 +92,7 @@
                 .Build());
             services.AddTransient<ISmsRepository, SmsRepository>();
             services.AddTransient<IEMailRepository, EMailRepository>();
+            services.AddTransient<IStatsRepository, StatsRepository>();
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllersWithViews();

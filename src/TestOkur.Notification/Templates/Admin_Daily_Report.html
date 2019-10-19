@@ -34,7 +34,7 @@
                 <strong>Kullanici Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
             </td>
             <td>
-                @Model.TotalUserSMSCountInDay ( Kontor Olarak : @Model.TotalSmsCredit)
+                @Model.NotificationStatistics.TotalUserSmsCountInDay ( Kontor Olarak : @Model.TotalSmsCredit)
             </td>
         </tr>
         <tr>
@@ -42,7 +42,7 @@
                 <strong>Sistem(Otomatik) Tarafindan Gun Icinde Iletilen SMS Sayisi</strong>
             </td>
             <td>
-                @Model.TotalSystemSMSCountInDay
+                @Model.NotificationStatistics.TotalSystemSmsCountInDay
             </td>
         </tr>
         <tr>
@@ -50,7 +50,7 @@
                 <strong>Gun Icinde Gonderilen Basarili SMS Sayisi</strong>
             </td>
             <td>
-                @Model.TotalSuccessfulSMSCountInDay
+                @Model.NotificationStatistics.TotalSuccessfulSmsCountInDay
             </td>
         </tr>
         <tr>
@@ -58,7 +58,7 @@
                 <strong>Gun Icinde Hata Alinan SMS Sayisi</strong>
             </td>
             <td>
-                @Model.TotalFailedSMSCountInDay
+                @Model.NotificationStatistics.TotalFailedSmsCountInDay
             </td>
         </tr>
         <tr>
@@ -66,7 +66,7 @@
                 <strong>En Uzun SMS Gonderim Suresi</strong>
             </td>
             <td>
-                @Model.LongestSMSDuration <strong style="color:red">ms</strong>
+                @Model.NotificationStatistics.LongestSmsDuration <strong style="color:red">ms</strong>
             </td>
         </tr>
         <tr>
@@ -74,7 +74,7 @@
                 <strong>Ortalama SMS Gonderim Suresi</strong>
             </td>
             <td>
-                @Model.AverageSMSDuration <strong style="color:red">ms</strong>
+                @Model.NotificationStatistics.AverageSmsDuration <strong style="color:red">ms</strong>
             </td>
         </tr>
         <tr>
@@ -82,7 +82,15 @@
                 <strong>Gun icinde en cok SMS gonderen kullanici</strong>
             </td>
             <td>
-                @Model.TopSMSSenderEmailAddressInDay (@Model.TopSMSSenderCreditInDay kontor)
+                Gecici Olarak Gostermiyoruz(Nazmi) (@Model.NotificationStatistics.TopSmsSenderCreditInDay kontor)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Toplam Gonderilen SMS Sayisi (Agustos 2017'den itibaren kullanici ve sistem toplam)</strong>
+            </td>
+            <td>
+                @Model.NotificationStatistics.TotalSmsCountAll (Kullanici Kontor Olarak :  @Model.NotificationStatistics.TotalSmsCreditsAll )
             </td>
         </tr>
         <tr>
@@ -105,20 +113,37 @@
                 @Model.IdentityStatistics.ExpiredUsersToday
             </td>
         </tr>
-        <tr>
+    <tr>
+        <td>
+            <strong>Aktif Kullanici Sayisi</strong>
+        </td>
+        <td>
+            @Model.IdentityStatistics.TotalActiveUserCount
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <strong>Toplam Kullanici Sayisi</strong>
+        </td>
+        <td>
+            @Model.IdentityStatistics.TotalUserCount
+        </td>
+    </tr>
+    <tr>
             <td>
-                <strong>Aktif / Toplam Yeni Kullanici Sayisi</strong>
+                <strong>Bugun Onaylanan Yeni Kullanici Sayisi</strong>
             </td>
             <td>
-                @Model.IdentityStatistics.TotalActiveUserCount / @Model.IdentityStatistics.TotalUserCount
+                @Model.IdentityStatistics.NewUserActivatedCountToday
             </td>
         </tr>
         <tr>
             <td>
-                <strong>Bugun Yeni Aktif Olan / Lisans Uzatan Yeni Kullanici Sayisi</strong>
+                <strong>Bugun Lisans Uzatan Yeni Kullanici Sayisi</strong>
             </td>
             <td>
-                @Model.IdentityStatistics.NewUserActivatedCountToday / @Model.IdentityStatistics.SubscriptionExtendedCountToday
+                @Model.IdentityStatistics.SubscriptionExtendedCountToday
             </td>
         </tr>
         <tr>
