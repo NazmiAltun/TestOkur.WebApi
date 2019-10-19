@@ -44,7 +44,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.0.8" />
-    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.1" />
+    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.2" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.72" />
   </ItemGroup>
   <ItemGroup>

@@ -35,9 +35,9 @@
     using TestOkur.Domain.Model.SmsModel;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.Infrastructure.CommandsQueries.Extensions;
+    using TestOkur.Infrastructure.Mvc;
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Infrastructure.Mvc.Monitoring;
-    using TestOkur.Infrastructure.Mvc.Mvc;
     using TestOkur.Infrastructure.Mvc.Threading;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.User.Services;
