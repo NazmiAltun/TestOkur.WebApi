@@ -5,9 +5,10 @@
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>ÖĞRENCİ KARNESİ</title>
     <style type='text/css'>
-		html {
+        html {
             font-size: 80%;
         }
+
         body {
             font-family: Arial Narrow, Arial, sans-serif;
             font-size: 0.75rem;
@@ -46,9 +47,9 @@
             font-size: 0.75rem;
         }
 
-            table.answer-table {
-                max-width: 400px;
-            }
+        table.answer-table {
+            max-width: 400px;
+        }
 
         table,
         th,
@@ -75,11 +76,12 @@
             background: #bababa;
         }
 
-        td.correct {
-        }
+        td.correct {}
+
         .subject-detail-container {
             flex-flow: column wrap;
         }
+
         .ml10px {
             margin-left: 10px;
         }
@@ -304,13 +306,13 @@
                         <td>
                             <strong>{{lessonName}} Cevap</strong>
                         </td>
-                        {{#eachWitIndex answers 0 41}}
+                        {{#eachWitIndex answers 0 ../../secondQuestionIndex}}
                         <td class='{{getQuestionClass result}}'>{{correctAnswer}}</td>
                         {{/eachWitIndex}}
                     </tr>
                     <tr>
                         <td>Öğr. Cevapları</td>
-                        {{#eachWitIndex answers 0 41}}
+                        {{#eachWitIndex answers 0 ../../secondQuestionIndex}}
                         <td class='{{getQuestionClass result}}'>{{answer}}</td>
                         {{/eachWitIndex}}
                     </tr>
@@ -333,13 +335,13 @@
                         <td>
                             <strong>{{lessonName}} Cevap</strong>
                         </td>
-                        {{#eachWitIndex answers 41 80}}
+                        {{#eachWitIndex answers ../../secondQuestionIndex ../../questionCount}}
                         <td class='{{getQuestionClass result}}'>{{correctAnswer}}</td>
                         {{/eachWitIndex}}
                     </tr>
                     <tr>
                         <td>Öğr. Cevapları</td>
-                        {{#eachWitIndex answers 41 80}}
+                        {{#eachWitIndex answers ../../secondQuestionIndex ../../questionCount}}
                         <td class='{{getQuestionClass result}}'>{{answer}}</td>
                         {{/eachWitIndex}}
                     </tr>
