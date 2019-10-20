@@ -12,8 +12,11 @@
             Credit = sms.Credit;
             RequestDateTimeUtc = sms.RequestDateTimeUtc;
             ResponseDateTimeUtc = sms.ResponseDateTimeUtc;
+            CreatedOnDateTimeUtc = sms.CreatedOnDateTimeUtc;
             Status = sms.Status;
         }
+
+        public DateTime CreatedOnDateTimeUtc { get; set; }
 
         public string Phone { get; set; }
 
