@@ -16,6 +16,6 @@
 
         Task<IEnumerable<Sms>> GetUserSmsesAsync(string userSubjectId);
 
-        Task<IEnumerable<Sms>> GetPendingOrFailedSmsesTodayAsync();
+        Task<IEnumerable<Sms>> GetPendingOrFailedSmsesAsync();
     }
 }

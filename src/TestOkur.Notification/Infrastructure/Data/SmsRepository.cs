@@ -49,9 +49,9 @@
             return (await _context.Smses.Find(filter).ToListAsync()).OrderByDescending(s => s.CreatedOnDateTimeUtc);
         }
 
-        public async Task<IEnumerable<Sms>> GetPendingOrFailedSmsesTodayAsync()
+        public async Task<IEnumerable<Sms>> GetPendingOrFailedSmsesAsync()
         {
-            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date.AddDays(-1));
+            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date.AddDays(-21));
             filter &= Builders<Sms>.Filter.In(x => x.Status, new[] { SmsStatus.Pending, SmsStatus.Failed });
 
             return await _context.Smses

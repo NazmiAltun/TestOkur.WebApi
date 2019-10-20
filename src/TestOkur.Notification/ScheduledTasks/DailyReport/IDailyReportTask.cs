@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    internal interface IDailyReportTask
+    internal interface IDailyReportTask : IScheduledTask
     {
         Task SendAsync();
     }

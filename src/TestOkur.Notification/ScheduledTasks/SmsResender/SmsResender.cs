@@ -19,7 +19,7 @@
 
         public async Task TryResendAsync()
         {
-            var smses = await _smsRepository.GetPendingOrFailedSmsesTodayAsync();
+            var smses = await _smsRepository.GetPendingOrFailedSmsesAsync();
 
             foreach (var sms in smses)
             {

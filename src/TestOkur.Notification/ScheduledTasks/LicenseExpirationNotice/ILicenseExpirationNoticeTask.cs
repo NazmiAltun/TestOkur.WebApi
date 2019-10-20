@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    internal interface ILicenseExpirationNoticeTask
+    internal interface ILicenseExpirationNoticeTask : IScheduledTask
     {
         Task NotifyUsersAsync();
     }

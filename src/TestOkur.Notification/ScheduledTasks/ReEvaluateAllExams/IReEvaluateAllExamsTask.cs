@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface IReEvaluateAllExamsTask
+    public interface IReEvaluateAllExamsTask : IScheduledTask
     {
         Task SendRequestAsync();
     }

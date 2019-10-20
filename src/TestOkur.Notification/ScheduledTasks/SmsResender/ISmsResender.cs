@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface ISmsResender
+    public interface ISmsResender : IScheduledTask
     {
         Task TryResendAsync();
     }
