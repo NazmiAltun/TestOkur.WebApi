@@ -32,7 +32,7 @@
             return Ok(smses.Select(s => new UserSmsModel(s)));
         }
 
-        [HttpGet]
+        [HttpGet("today")]
         [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(typeof(IEnumerable<Sms>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTodaysSmsesAsync()
