@@ -99,6 +99,9 @@
         [DataMember]
         public string CaptchaCode { get; private set; }
 
+        [DataMember]
+        public string Referrer { get; private set; }
+
         public User ToDomainModel(City city, District district)
         {
             return new User(
@@ -112,6 +115,7 @@
                 SchoolName,
                 RegistrarFullName,
                 RegistrarPhone,
+                Referrer,
                 null);
         }
     }

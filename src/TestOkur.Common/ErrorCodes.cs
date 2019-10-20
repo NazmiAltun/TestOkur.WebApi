@@ -57,5 +57,7 @@
         public const string PasswordResetUserNotFound = "PasswordResetUserNotFound";
 
         public const string CannotApplyAnyOperationOnSharedModels = "CannotApplyAnyOperationOnSharedModels";
+
+        public const string ReferrerDoesNotExist = "ReferrerDoesNotExist";
     }
 }

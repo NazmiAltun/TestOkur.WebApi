@@ -16,7 +16,8 @@
             string licenseType,
             string district,
             string city,
-            string password)
+            string password,
+            string referrer)
         {
             Email = email;
             RegistrarFullName = registrarFullName;
@@ -29,6 +30,7 @@
             District = district;
             City = city;
             Password = password;
+            Referrer = referrer;
         }
 
         public string Email { get; }
@@ -52,5 +54,7 @@
         public string City { get; }
 
         public string Password { get; }
+
+        public string Referrer { get; }
     }
 }

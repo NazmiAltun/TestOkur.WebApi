@@ -23,5 +23,7 @@
         string City { get; }
 
         string Password { get; }
+
+        string Referrer { get; }
     }
 }

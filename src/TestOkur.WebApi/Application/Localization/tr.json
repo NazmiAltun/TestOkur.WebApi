@@ -44,6 +44,10 @@
     "Value": "Geçersiz güvenlik kodu"
   },
   {
+    "Name": "ReferrerDoesNotExist",
+    "Value": "Tavsiye eden kullanici sistemimizde bulunmamaktadir."
+  },
+  {
     "Name": "InvalidEmailAddress",
     "Value": "Geçersiz e-posta adresi"
   },

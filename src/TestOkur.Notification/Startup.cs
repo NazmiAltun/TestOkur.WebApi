@@ -277,6 +277,7 @@
                     e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
                     e.Consumer<UserErrorReceivedConsumer>(provider);
                     e.Consumer<CommandQueryLogEventConsumer>(provider);
+                    e.Consumer<ReferredUserActivatedConsumer>(provider);
                 });
                 cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
             }));

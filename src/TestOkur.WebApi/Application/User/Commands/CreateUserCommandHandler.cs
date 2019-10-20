@@ -47,8 +47,10 @@
             CancellationToken cancellationToken = default)
         {
             ValidateCaptcha(command);
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
+                await ValidateReferrerAsync(dbContext, command);
                 await EnsureUserDoesNotExistAsync(command, cancellationToken);
                 await SaveToDatabaseAsync(dbContext, command, cancellationToken);
             }
@@ -118,7 +120,21 @@
                     command.LicenseTypeName,
                     command.DistrictName,
                     command.CityName,
-                    command.Password), cancellationToken);
+                    command.Password,
+                    command.Referrer), cancellationToken);
+        }
+
+        private async Task ValidateReferrerAsync(ApplicationDbContext dbContext, CreateUserCommand command)
+        {
+            if (string.IsNullOrEmpty(command.Referrer))
+            {
+                return;
+            }
+
+            if (!await dbContext.Users.AnyAsync(u => u.Email.Value == command.Referrer))
+            {
+                throw new ValidationException(ErrorCodes.ReferrerDoesNotExist);
+            }
         }
 
         private void ValidateCaptcha(CreateUserCommand command)

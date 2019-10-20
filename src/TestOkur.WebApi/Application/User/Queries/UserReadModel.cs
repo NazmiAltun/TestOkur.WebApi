@@ -31,5 +31,7 @@
         public string RegistrarFullName { get; set; }
 
         public string RegistrarPhone { get; set; }
+
+        public string Referrer { get; set; }
     }
 }

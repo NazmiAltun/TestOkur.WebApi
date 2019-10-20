@@ -17,6 +17,7 @@
             Name schoolName,
             Name registrarFullName,
             Phone registrarPhone,
+            string referrer,
             string notes)
         : this()
         {
@@ -30,6 +31,7 @@
             SchoolName = schoolName;
             RegistrarFullName = registrarFullName;
             RegistrarPhone = registrarPhone;
+            Referrer = referrer;
             Notes = notes;
         }
 
@@ -59,6 +61,8 @@
         public Name RegistrarFullName { get; private set; }
 
         public Phone RegistrarPhone { get; private set; }
+
+        public string Referrer { get; private set; }
 
         public string Notes { get; private set; }
 

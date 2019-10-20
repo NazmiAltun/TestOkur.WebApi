@@ -58,9 +58,21 @@
 
         public static readonly Template AccountActivationSmsUser =
             new Template(
-                "LisansAktiflestirme_Kullanici_Email",
+                "LisansAktiflestirme_Kullanici_Sms",
                 "TestOkur",
                 "User_MembershipActivation_SMS.html");
+
+        public static readonly Template ReferrerSmsCreditsAddedSms =
+            new Template(
+                "ReferrerSmsCreditsAddedSms",
+                "TestOkur",
+                "Referrer_SmsCredits_Added_Sms.html");
+
+        public static readonly Template RefereeSmsCreditsAddedSms =
+            new Template(
+                "RefereeSmsCreditsAddedSms",
+                "TestOkur",
+                "Referee_SmsCredits_Added_Sms.html");
 
         public static readonly Template AccountRegistrationEmailUser =
             new Template(

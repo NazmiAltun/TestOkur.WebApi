@@ -24,6 +24,11 @@
             return new Name(value);
         }
 
+        public static implicit operator string(Name name)
+        {
+            return name.Value;
+        }
+
         public static bool operator ==(Name name1, Name name2) =>
             string.Equals(name1?.Value, name2?.Value, StringComparison.InvariantCultureIgnoreCase);
 

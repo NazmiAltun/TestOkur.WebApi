@@ -26,6 +26,7 @@
             builder.OwnsPhone(_ => _.Phone);
             builder.OwnsPhone(_ => _.RegistrarPhone);
             builder.Property(_ => _.Notes).HasMaxLength(500);
+            builder.Property(_ => _.Referrer).HasMaxLength(255);
         }
     }
 }
