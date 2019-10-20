@@ -34,28 +34,35 @@ function getStatusClass(status) {
     }
     return '';
 }
+
 function ifTooManySections(secondaryLessons, lessons, opts) {
-    if(secondaryLessons || lessons.length > 5  ){
+    if (secondaryLessons || lessons.length > 5) {
         return opts.fn(this);
-    }
-    else {
-        return opts.inverse(this);
-    }
-}
-function ifFirstPageBreak(index,opts) {
-    if(index + 1 === 15){
-        return opts.fn(this);
-    }
-    else {
+    } else {
         return opts.inverse(this);
     }
 }
 
-function ifPageBreak(index,opts) {
-    if( index > 16 && (index-14) % 18 === 0){
+function ifFirstPageBreak(index, opts) {
+    if (index + 1 === 15) {
         return opts.fn(this);
+    } else {
+        return opts.inverse(this);
     }
-    else {
+}
+
+function ifPageBreak(index, opts) {
+    if (index > 16 && (index - 14) % 18 === 0) {
+        return opts.fn(this);
+    } else {
+        return opts.inverse(this);
+    }
+}
+
+function ifTooManyAnswers(answers, opts) {
+    if (answers.length > 50) {
+        return opts.fn(this);
+    } else {
         return opts.inverse(this);
     }
 }

@@ -43,11 +43,6 @@
             padding-bottom: 20px;
         }
 
-        th {
-            padding-right: 2px;
-            padding-left: 2px;
-        }
-
         tbody tr:nth-child(even) {
             background: #f2ed98;
         }
@@ -106,21 +101,21 @@
     </div>
     {{#each sections}}
     <h3>{{lessonName}}</h3>
-    <table>
+    <table {{#ifTooManyAnswers answers}} style='font-size:0.5rem' {{/ifTooManyAnswers}}>
         <thead>
             <tr>
-                <th rowspan='2'>Sıra</th>
-                <th rowspan='2'>Öğr. No</th>
-                <th rowspan='2'>Adı - Soyadı</th>
-                <th colspan='2'>Cevap</th>
+                <th class='rotate90' rowspan='2'>Sıra</th>
+                <th class='rotate90' rowspan='2'>Öğr. No</th>
+                <th class='rotate90' rowspan='2'>Adı - Soyadı</th>
+                <th class='rotate90' colspan='2'>Cevap</th>
                 {{#each answers}}
                 <th>{{correctAnswer}}</th>
                 {{/each}}
-                <th rowspan='2'>Doğru</th>
-                <th rowspan='2'>Yanlış</th>
-                <th rowspan='2'>Boş</th>
-                <th rowspan='2'>Net</th>
-                <th rowspan='2'>Başarı (%)</th>
+                <th class='rotate90' rowspan='2'>Doğru</th>
+                <th class='rotate90' rowspan='2'>Yanlış</th>
+                <th class='rotate90' rowspan='2'>Boş</th>
+                <th class='rotate90' rowspan='2'>Net</th>
+                <th class='rotate90' rowspan='2'>Başarı (%)</th>
             </tr>
             <tr>
 
@@ -185,7 +180,7 @@
                 <td>{{emptyCount}}</td>
                 {{/each}}
             </tr>
-            <tr>
+            <tr {{#ifTooManyAnswers answers}} style='font-size:3px' {{/ifTooManyAnswers}}>
                 <td colspan='3'></td>
                 <td colspan='2'>Başarı (%)</td>
                 {{#each answers}}
