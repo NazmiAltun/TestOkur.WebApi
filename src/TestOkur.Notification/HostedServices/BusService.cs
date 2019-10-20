@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification
+﻿namespace TestOkur.Notification.HostedServices
 {
     using System.Threading;
     using System.Threading.Tasks;

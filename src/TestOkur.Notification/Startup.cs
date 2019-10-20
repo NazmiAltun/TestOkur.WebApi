@@ -30,6 +30,7 @@
     using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Consumers;
+    using TestOkur.Notification.HostedServices;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Infrastructure.Data;
@@ -37,6 +38,7 @@
     using TestOkur.Notification.ScheduledTasks.DailyReport;
     using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
     using TestOkur.Notification.ScheduledTasks.ReEvaluateAllExams;
+    using TestOkur.Notification.ScheduledTasks.SmsResender;
 
     public class Startup
     {
@@ -81,6 +83,7 @@
             services.AddScoped<ILicenseExpirationNoticeTask, LicenseExpirationNoticeTask>();
             services.AddScoped<IDailyReportTask, DailyReportTask>();
             services.AddScoped<IReEvaluateAllExamsTask, ReEvaluateAllExamsTask>();
+            services.AddScoped<ISmsResender, SmsResender>();
             AddHttpClients(services);
             AddMessageBus(services);
             AddHostedServices(services);
@@ -154,6 +157,8 @@
                 notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
             RecurringJob.AddOrUpdate<IDailyReportTask>(
                 x => x.SendAsync(), Cron.Daily(20, 30));
+            RecurringJob.AddOrUpdate<ISmsResender>(
+                x => x.TryResendAsync(), Cron.Hourly);
             RecurringJob.AddOrUpdate<IReEvaluateAllExamsTask>(
                 x => x.SendRequestAsync(), Cron.Never);
         }

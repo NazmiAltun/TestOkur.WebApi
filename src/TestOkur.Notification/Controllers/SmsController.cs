@@ -12,7 +12,6 @@
     using TestOkur.Notification.Models;
 
     [Route("api/v1/sms")]
-    [Authorize(AuthorizationPolicies.Customer)]
     public class SmsController : ControllerBase
     {
         private readonly ISmsRepository _smsRepository;
@@ -25,11 +24,20 @@
         }
 
         [HttpGet]
+        [Authorize(AuthorizationPolicies.Customer)]
         [ProducesResponseType(typeof(IEnumerable<UserSmsModel>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetUserSmses()
+        public async Task<IActionResult> GetUserSmsesAsync()
         {
             var smses = await _smsRepository.GetUserSmsesAsync(_httpContextAccessor.GetUserId());
             return Ok(smses.Select(s => new UserSmsModel(s)));
+        }
+
+        [HttpGet]
+        [Authorize(AuthorizationPolicies.Admin)]
+        [ProducesResponseType(typeof(IEnumerable<Sms>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTodaysSmsesAsync()
+        {
+            return Ok(await _smsRepository.GetTodaysSmsesAsync());
         }
     }
 }
