@@ -97,8 +97,6 @@ jobs:
       - run:
           name: Merge Coverage Reports
           command: |
-            ls ./coverage
-            ls ~/repo/coverage
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
       - codecov/upload:
           file: ./coverage/Cobertura.xml

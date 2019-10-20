@@ -5,6 +5,6 @@ VOLUME /reports/
 WORKDIR /src
 COPY . .
 ENTRYPOINT /root/.dotnet/tools/reportgenerator \
-      "-reports:/reports/*test.xml" \
+      "-reports:/reports/*test.opencover.xml" \
       "-targetdir:/reports" \
       -reporttypes:Cobertura
