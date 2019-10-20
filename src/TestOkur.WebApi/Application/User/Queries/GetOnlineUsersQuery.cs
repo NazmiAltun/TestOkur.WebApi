@@ -4,7 +4,7 @@
     using TestOkur.Infrastructure.CommandsQueries;
 
     public class GetOnlineUsersQuery :
-        QueryBase<IReadOnlyCollection<string>>,
+        QueryBase<IEnumerable<string>>,
         ISkipLogging
     {
     }
