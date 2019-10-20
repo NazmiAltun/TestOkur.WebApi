@@ -35,7 +35,7 @@
 
         public async Task<IEnumerable<Sms>> GetTodaysSmsesAsync()
         {
-            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.Today);
+            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date);
 
             return await _context.Smses
                 .Find(filter)
