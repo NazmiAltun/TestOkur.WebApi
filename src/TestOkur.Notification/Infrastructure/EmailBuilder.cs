@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
+    using System.IO;
     using System.Net.Mail;
     using System.Threading.Tasks;
     using TestOkur.Notification.Models;
@@ -43,7 +44,7 @@
             var mail = new MailMessage
             {
                 Subject = _template.Subject,
-                Body = await _templateEngine.RenderTemplateAsync(_template.BodyPath, _model),
+                Body = await _templateEngine.RenderTemplateAsync(Path.Join("Email", _template.BodyPath), _model),
             };
 
             foreach (var receiver in _receivers)

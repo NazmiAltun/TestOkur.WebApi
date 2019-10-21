@@ -18,91 +18,91 @@
             new Template(
                 "YeniLisansKaydi_Yonetici_Email",
                 "Yeni Lisans Kaydı",
-                "Admin_New_User_Mail.html");
+                "Admin_New_User.html");
 
         public static readonly Template SmsFailureEmailAdmin =
             new Template(
                 "SmsHatasi_Yonetici_Email",
                 "SMS Hatasi",
-                "Admin_SMS_Failure_Mail.html");
+                "Admin_SMS_Failure.html");
 
         public static readonly Template LicenseExpirationNoticeEmailUser =
             new Template(
                 "LisansSonaErmeBildirim_Kullanici_Email",
                 "TestOkur Lisans Süreniz Dolmak Üzere",
-                "LicenseExpirationNoticeMail.html");
+                "LicenseExpirationNotice.html");
 
         public static readonly Template UserSubscriptionExtendedEmail =
             new Template(
                 "UserSubscriptionExtendedEmail",
                 "Lisans Yenileme",
-                "UserSubscriptionExtendedEmail.html");
+                "UserSubscriptionExtended.html");
 
         public static readonly Template UserSubscriptionExtendedSms =
             new Template(
                 "UserSubscriptionExtendedSms",
                 "TestOkur",
-                "UserSubscriptionExtendedSms.html");
+                "UserSubscriptionExtended.html");
 
         public static readonly Template LicenseExpirationNoticeSms =
             new Template(
                 "LicenseExpirationNoticeSms",
                 "TestOkur",
-                "LicenseExpirationNoticeSms.html");
+                "LicenseExpirationNotice.html");
 
         public static readonly Template AccountActivationEmailUser =
             new Template(
                 "LisansAktiflestirme_Kullanici_Email",
                 "Lisans Bilgileriniz",
-                "User_MembershipActivation_Mail.html");
+                "User_MembershipActivation.html");
 
         public static readonly Template AccountActivationSmsUser =
             new Template(
                 "LisansAktiflestirme_Kullanici_Sms",
                 "TestOkur",
-                "User_MembershipActivation_SMS.html");
+                "User_MembershipActivation.html");
 
         public static readonly Template ReferrerSmsCreditsAddedSms =
             new Template(
                 "ReferrerSmsCreditsAddedSms",
                 "TestOkur",
-                "Referrer_SmsCredits_Added_Sms.html");
+                "Referrer_SmsCredits_Added.html");
 
         public static readonly Template RefereeSmsCreditsAddedSms =
             new Template(
                 "RefereeSmsCreditsAddedSms",
                 "TestOkur",
-                "Referee_SmsCredits_Added_Sms.html");
+                "Referee_SmsCredits_Added.html");
 
         public static readonly Template AccountRegistrationEmailUser =
             new Template(
                 "YeniLisansKaydi_Kullanici_Email",
                 "Lisans Kaydınız Alındı",
-                "User_New_User_Mail.html");
+                "User_New_User.html");
 
         public static readonly Template AccountRegistrationSmsUser =
             new Template(
                 "YeniLisansKaydi_Kullanici_Sms",
                 "TestOkur",
-                "User_New_User_SMS.html");
+                "User_New_User.html");
 
         public static readonly Template PasswordResetEmailUser =
             new Template(
                 "ParolaSifirlama_Kullanici_Email",
                 "TestOkur Parola Sifirla",
-                "User_ResetPassword_Mail.html");
+                "User_ResetPassword.html");
 
         public static readonly Template SmsCreditAddedEmailUser =
             new Template(
                 "SmsPaketi_Kullanici_Email",
                 "SMS Paketiniz",
-                "User_SMSOrder_Mail.html");
+                "User_SMSOrder.html");
 
         public static readonly Template SmsCreditAddedSmsUser =
             new Template(
                 "SmsPaketi_Kullanici_Sms",
                 "TestOkur",
-                "User_SMSOrder_SMS.html");
+                "User_SMSOrder.html");
 
         public Template(string name, string subject, string bodyPath)
         {

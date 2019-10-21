@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Notification.Infrastructure
 {
     using System;
+    using System.IO;
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Notification.Infrastructure.Clients;
@@ -31,7 +32,8 @@
 
         public async Task SendSmsAsync<TModel>(TModel model, Template template, string receiver)
         {
-            var body = await _templateEngine.RenderTemplateAsync(template.BodyPath, model);
+            var body = await _templateEngine.RenderTemplateAsync(
+                Path.Join("Sms",template.BodyPath), model);
             var sms = new Sms()
             {
                 Id = Guid.NewGuid(),
