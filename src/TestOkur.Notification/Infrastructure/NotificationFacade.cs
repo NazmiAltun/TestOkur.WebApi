@@ -33,7 +33,7 @@
         public async Task SendSmsAsync<TModel>(TModel model, Template template, string receiver)
         {
             var body = await _templateEngine.RenderTemplateAsync(
-                Path.Join("Sms",template.BodyPath), model);
+                Path.Join("Sms", template.BodyPath), model);
             var sms = new Sms()
             {
                 Id = Guid.NewGuid(),

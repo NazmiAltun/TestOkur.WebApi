@@ -67,8 +67,7 @@
                     referee,
                     referrer,
                     RefereeGainedSmsCredits,
-                    ReferrerGainedSmsCredits
-                ), cancellationToken);
+                    ReferrerGainedSmsCredits), cancellationToken);
         }
 
         private async Task PublishUserActivatedEventAsync(
