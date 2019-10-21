@@ -16,9 +16,12 @@
         public async Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
         {
             var template = File.ReadAllText(Path.Combine("Templates", filePath));
-            var name = string.Join('_', Path.Combine("Templates", filePath)
+            var name = Path.Combine("Templates", filePath)
                 .Replace('.', '_')
-                .Split(Path.PathSeparator));
+                .Replace(Path.PathSeparator, '_')
+                .Replace(Path.VolumeSeparatorChar, '_')
+                .Replace(Path.AltDirectorySeparatorChar, '_')
+                .Replace(Path.DirectorySeparatorChar, '_');
 
             return await _engine.CompileRenderAsync(name, template, viewModel);
         }
