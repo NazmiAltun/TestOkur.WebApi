@@ -20,7 +20,6 @@
         [DataMember]
         public DateTime CurrentExpiryDateTimeUtc { get; private set; }
 
-        public IEnumerable<string> CacheKeys => new[] { "Users" };
-
+        public IEnumerable<string> CacheKeys => new[] { "Users", "UserIdMap" };
     }
 }

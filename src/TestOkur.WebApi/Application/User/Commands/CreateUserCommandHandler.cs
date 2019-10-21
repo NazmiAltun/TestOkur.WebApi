@@ -135,6 +135,11 @@
             {
                 throw new ValidationException(ErrorCodes.ReferrerDoesNotExist);
             }
+
+            if (command.Email == command.Referrer)
+            {
+                throw new ValidationException(ErrorCodes.SelfReferrerNotAllowed);
+            }
         }
 
         private void ValidateCaptcha(CreateUserCommand command)

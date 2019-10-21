@@ -46,11 +46,9 @@
             GetAllUsersQuery query,
             CancellationToken cancellationToken = default)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<UserReadModel>(Sql))
-                    .ToList();
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<UserReadModel>(Sql))
+                .ToList();
         }
     }
 }
