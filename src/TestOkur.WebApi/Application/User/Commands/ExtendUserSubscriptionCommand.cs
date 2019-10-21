@@ -1,11 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
     using System;
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
-    public class ExtendUserSubscriptionCommand : CommandBase
+    public class ExtendUserSubscriptionCommand : CommandBase, IClearCache
     {
         public ExtendUserSubscriptionCommand(string email, DateTime currentExpiryDateTimeUtc)
         {
@@ -18,5 +19,8 @@
 
         [DataMember]
         public DateTime CurrentExpiryDateTimeUtc { get; private set; }
+
+        public IEnumerable<string> CacheKeys => new[] { "Users" };
+
     }
 }

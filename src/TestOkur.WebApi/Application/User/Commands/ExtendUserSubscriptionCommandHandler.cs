@@ -6,6 +6,7 @@
     using MassTransit;
     using Paramore.Brighter;
     using Paramore.Darker;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Application.User.Services;
@@ -26,6 +27,8 @@
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
 
+        [Idempotent(1)]
+        [ClearCache(2)]
         public override async Task<ExtendUserSubscriptionCommand> HandleAsync(
             ExtendUserSubscriptionCommand command,
             CancellationToken cancellationToken = default)

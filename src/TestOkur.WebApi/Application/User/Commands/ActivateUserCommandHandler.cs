@@ -8,6 +8,7 @@
     using Paramore.Brighter;
     using Paramore.Darker;
     using TestOkur.Data;
+    using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Application.User.Services;
@@ -34,6 +35,8 @@
             _applicationDbContextFactory = applicationDbContextFactory;
         }
 
+        [Idempotent(1)]
+        [ClearCache(2)]
         public override async Task<ActivateUserCommand> HandleAsync(
             ActivateUserCommand command,
             CancellationToken cancellationToken = default)
