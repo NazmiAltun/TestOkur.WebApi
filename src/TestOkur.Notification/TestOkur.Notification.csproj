@@ -65,6 +65,12 @@
     <None Update="Templates\Email\NewErrorMessageReceived.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\Email\Referee_SmsCredits_Added.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Email\Referrer_SmsCredits_Added.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Email\UserSubscriptionExtended.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
