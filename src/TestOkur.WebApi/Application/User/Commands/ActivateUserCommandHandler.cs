@@ -14,7 +14,7 @@
 
     public sealed class ActivateUserCommandHandler : RequestHandlerAsync<ActivateUserCommand>
     {
-        private const int ReferrerGainedSmsCredits = 750;
+        private const int ReferrerGainedSmsCredits = 1000;
         private const int RefereeGainedSmsCredits = 500;
 
         private readonly IPublishEndpoint _publishEndpoint;
