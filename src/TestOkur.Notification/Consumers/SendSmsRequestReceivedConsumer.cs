@@ -54,9 +54,22 @@
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error while sending sms");
+                    await UpdateSmsStatusAsync(ex, message);
                     await PublishSmsRequestFailedEventAsync(context, message, ex);
                 }
             }
+        }
+
+        private async Task UpdateSmsStatusAsync(Exception ex, Sms message)
+        {
+            if (ex is SmsException smsException)
+            {
+                message.UserFriendlyErrorMessage = smsException.Message;
+            }
+
+            message.Error = ex.ToString();
+            message.Status = SmsStatus.Failed;
+            await _smsRepository.UpdateSmsAsync(message);
         }
 
         private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)

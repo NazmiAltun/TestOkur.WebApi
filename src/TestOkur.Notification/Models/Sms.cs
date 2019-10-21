@@ -41,6 +41,10 @@
 
         public string ServiceResponse { get; set; }
 
+        public string UserFriendlyErrorMessage { get; set; }
+
+        public string Error { get; set; }
+
         public int Credit { get; set; }
 
         public string StudentOpticalFormId { get; set; }
