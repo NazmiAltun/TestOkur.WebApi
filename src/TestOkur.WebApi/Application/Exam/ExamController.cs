@@ -71,7 +71,7 @@
         }
 
         [HttpDelete("shared/{id}")]
-        [Authorize(AuthorizationPolicies.Admin)]
+        [Authorize(AuthorizationPolicies.Distributor)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteSharedAsync(int id)
         {
@@ -85,7 +85,7 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditAsync(EditExamCommand command)
         {
-            if (!User.IsInRole(Roles.Admin))
+            if (!User.IsInRole(Roles.Distributor))
             {
                 command.Shared = false;
             }

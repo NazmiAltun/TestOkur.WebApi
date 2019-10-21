@@ -280,6 +280,11 @@
                 options.AddPolicy(
                     AuthorizationPolicies.Admin,
                     policy => policy.RequireRole(Roles.Admin));
+
+                options.AddPolicy(
+                    AuthorizationPolicies.Distributor,
+                    policy => policy.RequireAssertion(context =>
+                        context.User.IsInRole(Roles.Admin) || context.User.IsInRole(Roles.Distributor)));
             });
         }
 
