@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.Report.Infrastructure
 {
     using System.Threading.Tasks;
-    using TestOkur.Infrastructure.Mvc.Mvc;
+    using TestOkur.Infrastructure.Mvc;
     using TestOkur.Report.Configuration;
 
     public class RequestResponseMongodbLogger : IRequestResponseLogger

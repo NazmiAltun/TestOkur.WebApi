@@ -5,7 +5,7 @@
     using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
-    public class ActivateUserCommand : CommandBase , IClearCache
+    public class ActivateUserCommand : CommandBase, IClearCache
     {
         public ActivateUserCommand(string email)
         {
@@ -16,6 +16,5 @@
         public string Email { get; }
 
         public IEnumerable<string> CacheKeys => new[] { "Users", "UserIdMap" };
-
     }
 }

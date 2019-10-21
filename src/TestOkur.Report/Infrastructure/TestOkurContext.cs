@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.Report.Infrastructure
 {
     using MongoDB.Driver;
-    using TestOkur.Infrastructure.Mvc.Mvc;
+    using TestOkur.Infrastructure.Mvc;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
     using TestOkur.Report.Domain;
