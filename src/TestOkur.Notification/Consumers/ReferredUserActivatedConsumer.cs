@@ -17,6 +17,15 @@
 
         public async Task Consume(ConsumeContext<IReferredUserActivated> context)
         {
+            await _notificationFacade.SendEmailAsync(
+                context.Message,
+                Template.RefereeSmsCreditsAddedEmail,
+                context.Message.RefereeEmail);
+            await _notificationFacade.SendEmailAsync(
+                context.Message,
+                Template.ReferrerSmsCreditsAddedEmail,
+                context.Message.ReferrerEmail);
+
             await _notificationFacade.SendSmsAsync(
                 context.Message,
                 Template.RefereeSmsCreditsAddedSms,

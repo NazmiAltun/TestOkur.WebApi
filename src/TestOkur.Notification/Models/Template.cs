@@ -62,18 +62,6 @@
                 "TestOkur",
                 "User_MembershipActivation.html");
 
-        public static readonly Template ReferrerSmsCreditsAddedSms =
-            new Template(
-                "ReferrerSmsCreditsAddedSms",
-                "TestOkur",
-                "Referrer_SmsCredits_Added.html");
-
-        public static readonly Template RefereeSmsCreditsAddedSms =
-            new Template(
-                "RefereeSmsCreditsAddedSms",
-                "TestOkur",
-                "Referee_SmsCredits_Added.html");
-
         public static readonly Template AccountRegistrationEmailUser =
             new Template(
                 "YeniLisansKaydi_Kullanici_Email",
@@ -103,6 +91,30 @@
                 "SmsPaketi_Kullanici_Sms",
                 "TestOkur",
                 "User_SMSOrder.html");
+
+        public static readonly Template ReferrerSmsCreditsAddedSms =
+            new Template(
+                "ReferrerSmsCreditsAddedSms",
+                "TestOkur",
+                "Referrer_SmsCredits_Added.html");
+
+        public static readonly Template RefereeSmsCreditsAddedSms =
+            new Template(
+                "RefereeSmsCreditsAddedSms",
+                "TestOkur",
+                "Referee_SmsCredits_Added.html");
+
+        public static readonly Template ReferrerSmsCreditsAddedEmail =
+            new Template(
+                "ReferrerSmsCreditsAddedSms",
+                "TestOkur'dan Hediye SMS Kazandiniz!",
+                "Referrer_SmsCredits_Added.html");
+
+        public static readonly Template RefereeSmsCreditsAddedEmail =
+            new Template(
+                "RefereeSmsCreditsAddedSms",
+                "TestOkur'dan Hediye SMS Kazandiniz!",
+                "Referee_SmsCredits_Added.html");
 
         public Template(string name, string subject, string bodyPath)
         {
