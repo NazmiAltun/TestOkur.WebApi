@@ -95,7 +95,7 @@
         [Authorize(AuthorizationPolicies.Admin)]
         public async Task<IActionResult> GetUserAsync(string email)
         {
-            var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery(email));
+            var user = await _queryProcessor.ExecuteAsync(new GetUserQuery(email));
 
             return Ok(user);
         }
@@ -105,7 +105,7 @@
         [ProducesResponseType(typeof(UserReadModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRequestedUserInfoAsync([FromQuery]string version)
         {
-            var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery());
+            var user = await _queryProcessor.ExecuteAsync(new GetUserQuery());
 
             _commandProcessor.Send(new UpdateUserOnlineStatusCommand(user.Email));
             return Ok(user);

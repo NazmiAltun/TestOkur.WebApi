@@ -33,7 +33,7 @@
             ExtendUserSubscriptionCommand command,
             CancellationToken cancellationToken = default)
         {
-            var user = await _queryProcessor.ExecuteAsync(new GetUserByEmailQuery(command.Email), cancellationToken);
+            var user = await _queryProcessor.ExecuteAsync(new GetUserQuery(command.Email), cancellationToken);
             await _identityService.ExtendUserSubscriptionAsync(user.SubjectId, cancellationToken);
             var newExpiryDate = DateTime.UtcNow > command.CurrentExpiryDateTimeUtc
                 ? DateTime.UtcNow.AddYears(1)

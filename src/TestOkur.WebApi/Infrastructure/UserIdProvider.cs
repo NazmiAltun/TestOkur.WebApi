@@ -65,11 +65,9 @@
         {
             const string sql = "SELECT id,subject_id FROM users";
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<UserReadModel>(sql))
-                    .ToDictionary(u => u.SubjectId, u => u.Id);
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<UserReadModel>(sql))
+                .ToDictionary(u => u.SubjectId, u => u.Id);
         }
 
         private void StoreToCache(Dictionary<string, int> idDictionary)

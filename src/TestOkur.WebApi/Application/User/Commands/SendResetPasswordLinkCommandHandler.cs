@@ -55,7 +55,7 @@
             CancellationToken cancellationToken)
         {
             var user = await _queryProcessor.ExecuteAsync(
-                new GetUserByEmailQuery(email),
+                new GetUserQuery(email),
                 cancellationToken);
             var url = $"{_oAuthConfiguration.Authority}account/reset-password?token={token}&email={email}";
 

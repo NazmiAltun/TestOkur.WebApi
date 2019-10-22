@@ -2,13 +2,13 @@
 {
     using TestOkur.Infrastructure.CommandsQueries;
 
-    public class GetUserByEmailQuery : QueryBase<UserReadModel>, ISkipLogging
+    public class GetUserQuery : QueryBase<UserReadModel>, ISkipLogging
     {
-        public GetUserByEmailQuery()
+        public GetUserQuery()
         {
         }
 
-        public GetUserByEmailQuery(string email)
+        public GetUserQuery(string email)
         {
             Email = email;
         }
