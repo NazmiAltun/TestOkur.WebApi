@@ -39,6 +39,7 @@
 
             return await _context.Smses
                 .Find(filter)
+                .SortByDescending(e => e.CreatedOnDateTimeUtc)
                 .ToListAsync();
         }
 
