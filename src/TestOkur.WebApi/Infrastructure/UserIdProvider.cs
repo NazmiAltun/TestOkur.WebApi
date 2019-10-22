@@ -22,14 +22,14 @@
         private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(4);
         private static readonly SemaphoreSlim WriteSemaphore = new SemaphoreSlim(1, 1);
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ICacheManager<Dictionary<string, int>> _cacheManager;
+        private readonly ICacheManager<object> _cacheManager;
         private readonly ILogger<UserIdProvider> _logger;
         private readonly string _connectionString;
 
         public UserIdProvider(
             ApplicationConfiguration configurationOptions,
             IHttpContextAccessor httpContextAccessor,
-            ICacheManager<Dictionary<string, int>> cacheManager,
+            ICacheManager<object> cacheManager,
             ILogger<UserIdProvider> logger)
         {
             _httpContextAccessor = httpContextAccessor ??
@@ -50,7 +50,7 @@
                 return default;
             }
 
-            var idDictionary = _cacheManager.Get(CacheKey);
+            var idDictionary = (Dictionary<string, int>)_cacheManager.Get(CacheKey);
 
             await WriteSemaphore.WaitAsync();
             if (idDictionary == null)
@@ -78,7 +78,7 @@
 
         private void StoreToCache(Dictionary<string, int> idDictionary)
         {
-            _cacheManager.Add(new CacheItem<Dictionary<string, int>>(
+            _cacheManager.Add(new CacheItem<object>(
                 CacheKey,
                 idDictionary,
                 ExpirationMode.Absolute,
