@@ -4,6 +4,7 @@
     using Dapper;
     using IdentityModel;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
     using Npgsql;
     using System;
     using System.Collections.Generic;
@@ -22,16 +23,19 @@
         private static readonly SemaphoreSlim WriteSemaphore = new SemaphoreSlim(1, 1);
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager<Dictionary<string, int>> _cacheManager;
+        private readonly ILogger<UserIdProvider> _logger;
         private readonly string _connectionString;
 
         public UserIdProvider(
             ApplicationConfiguration configurationOptions,
             IHttpContextAccessor httpContextAccessor,
-            ICacheManager<Dictionary<string, int>> cacheManager)
+            ICacheManager<Dictionary<string, int>> cacheManager,
+            ILogger<UserIdProvider> logger)
         {
             _httpContextAccessor = httpContextAccessor ??
                                    throw new ArgumentNullException(nameof(httpContextAccessor));
             _cacheManager = cacheManager;
+            _logger = logger;
             _connectionString = configurationOptions.Postgres;
         }
 
@@ -42,6 +46,7 @@
 
             if (subjectId == null)
             {
+                _logger.LogInformation("SubjectId not found");
                 return default;
             }
 
@@ -55,6 +60,7 @@
             }
 
             WriteSemaphore.Release(1);
+            _logger.LogInformation($"idDictionary.ContainsKey(${subjectId}) : {idDictionary.ContainsKey(subjectId)}");
 
             return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
         }
