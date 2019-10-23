@@ -11,7 +11,6 @@
 
     public class WebApiClient : IWebApiClient
     {
-        private const string DeductSmsEndpoint = "/api/v1/sms/deduct-credits";
         private const string AppSettingsEndpoint = "/api/v1/settings/appsettings";
         private const string UsersEndpoint = "api/v1/users";
         private const string StatisticsEndpoint = "api/v1/statistics";
@@ -25,20 +24,6 @@
         {
             _httpClient = httpClient;
             _oAuthClient = oAuthClient;
-        }
-
-        public async Task DeductSmsCreditsAsync(int userId, string smsBody)
-        {
-            var model = new DeductSmsCreditsModel
-            {
-                Id = Guid.NewGuid(),
-                UserId = userId,
-                SmsBody = smsBody,
-            };
-            await SetBearerToken();
-
-            var response = await _httpClient.PostAsync(DeductSmsEndpoint, model.ToJsonContent());
-            response.EnsureSuccessStatusCode();
         }
 
         public async Task<StatisticsReadModel> GetStatisticsAsync()

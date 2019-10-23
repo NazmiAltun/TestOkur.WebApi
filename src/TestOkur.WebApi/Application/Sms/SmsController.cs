@@ -40,17 +40,6 @@
             return Accepted();
         }
 
-        [HttpPost("deduct-credits")]
-        [Authorize(AuthorizationPolicies.Private)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeductSmsCreditsAsync(DeductSmsCreditsCommand command)
-        {
-            await _commandProcessor.SendAsync(command);
-
-            return Ok();
-        }
-
         [HttpPost("add-credits")]
         [Authorize(AuthorizationPolicies.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]

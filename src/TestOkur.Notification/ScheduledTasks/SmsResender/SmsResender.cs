@@ -23,12 +23,7 @@
 
             foreach (var sms in smses)
             {
-                var smsBody = await _smsClient.SendAsync(sms);
-
-                if (sms.UserId != default)
-                {
-                    await _webApiClient.DeductSmsCreditsAsync(sms.UserId, smsBody);
-                }
+                await _smsClient.SendAsync(sms);
             }
         }
     }

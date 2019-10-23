@@ -19,7 +19,6 @@
 
     public class SendSmsRequestReceivedConsumerShould
     {
-        private readonly IWebApiClient _webApiClient;
         private readonly SmsConfiguration _configuration;
 
         public SendSmsRequestReceivedConsumerShould()
@@ -30,7 +29,6 @@
                 ServiceUrl = "http://localhost/send-sms",
                 User = "Test",
             };
-            _webApiClient = Substitute.For<IWebApiClient>();
         }
 
         [Fact]
@@ -39,11 +37,6 @@
             const int userId = 15;
             const string messageBody = "Hello There!";
             var smsDeducted = false;
-
-            _webApiClient.DeductSmsCreditsAsync(userId, messageBody)
-                .Returns(Task.FromResult((object)null))
-                .AndDoes(x => smsDeducted = true);
-
             var publishEndPoint = Substitute.For<IPublishEndpoint>();
             var smsRepository = Substitute.For<ISmsRepository>();
             var logger = Substitute.For<ILogger<SendSmsRequestReceivedConsumer>>();
@@ -51,13 +44,11 @@
                 {
                     new SmsMessage("TEST", messageBody, "42342"),
                 };
-
             var consumerContext = Substitute.For<ConsumeContext<ISendSmsRequestReceived>>();
             consumerContext.Message.UserId.Returns(userId);
             consumerContext.Message.SmsMessages.Returns(smsMessages);
 
             var consumer = new SendSmsRequestReceivedConsumer(
-                _webApiClient,
                 publishEndPoint,
                 CreateSmsClient("text/plain", "123123"),
                 smsRepository,
@@ -87,7 +78,6 @@
             consumerContext.Message.SmsMessages.Returns(smsMessages);
 
             var consumer = new SendSmsRequestReceivedConsumer(
-                _webApiClient,
                 publishEndPoint,
                 CreateSmsClient("text/plain", "HATA|310|Uzun mesaj metni"),
                 smsRepository,

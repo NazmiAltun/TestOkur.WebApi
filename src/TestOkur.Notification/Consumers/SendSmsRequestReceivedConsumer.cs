@@ -18,18 +18,15 @@
     {
         private readonly ILogger<SendSmsRequestReceivedConsumer> _logger;
         private readonly ISmsClient _smsClient;
-        private readonly IWebApiClient _webApiClient;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ISmsRepository _smsRepository;
 
         public SendSmsRequestReceivedConsumer(
-            IWebApiClient webApiClient,
             IPublishEndpoint publishEndpoint,
             ISmsClient smsClient,
             ISmsRepository smsRepository,
             ILogger<SendSmsRequestReceivedConsumer> logger)
         {
-            _webApiClient = webApiClient;
             _publishEndpoint = publishEndpoint;
             _smsClient = smsClient;
             _smsRepository = smsRepository;
@@ -45,11 +42,7 @@
             {
                 try
                 {
-                    var smsBody = await _smsClient.SendAsync(message);
-                    if (context.Message.UserId != default)
-                    {
-                        await _webApiClient.DeductSmsCreditsAsync(context.Message.UserId, smsBody);
-                    }
+                    await _smsClient.SendAsync(message);
                 }
                 catch (Exception ex)
                 {
