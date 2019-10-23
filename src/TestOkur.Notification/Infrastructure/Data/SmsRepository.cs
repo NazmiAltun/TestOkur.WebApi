@@ -52,7 +52,7 @@
 
         public async Task<IEnumerable<Sms>> GetPendingOrFailedSmsesAsync()
         {
-            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date.AddDays(-21));
+            var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date.AddDays(-2));
             filter &= Builders<Sms>.Filter.In(x => x.Status, new[] { SmsStatus.Pending, SmsStatus.Failed });
 
             return await _context.Smses
