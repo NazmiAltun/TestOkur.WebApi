@@ -6,7 +6,7 @@
     using TestOkur.Infrastructure.CommandsQueries;
 
     [DataContract]
-    public class SendSmsCommand : CommandBase
+    public class SendSmsCommand : CommandBase , IClearCache
     {
         public SendSmsCommand(
             Guid id,
@@ -15,6 +15,7 @@
         {
             Messages = messages;
         }
+        public IEnumerable<string> CacheKeys => new[] { "Users" };
 
         [DataMember]
         public IEnumerable<SmsMessageModel> Messages { get; private set; }

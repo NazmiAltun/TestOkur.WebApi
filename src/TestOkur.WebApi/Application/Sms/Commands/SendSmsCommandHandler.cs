@@ -46,6 +46,7 @@
         }
 
         [Idempotent(1)]
+        [ClearCache(2)]
         public override async Task<SendSmsCommand> HandleAsync(
             SendSmsCommand command,
             CancellationToken cancellationToken = default)
