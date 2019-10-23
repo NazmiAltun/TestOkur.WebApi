@@ -30,34 +30,7 @@
                 User = "Test",
             };
         }
-
-        [Fact]
-        public async Task DeductSmsCreditsFromAccountsCreditBalance_When_SmsSuccessfullySent()
-        {
-            const int userId = 15;
-            const string messageBody = "Hello There!";
-            var smsDeducted = false;
-            var publishEndPoint = Substitute.For<IPublishEndpoint>();
-            var smsRepository = Substitute.For<ISmsRepository>();
-            var logger = Substitute.For<ILogger<SendSmsRequestReceivedConsumer>>();
-            var smsMessages = new List<ISmsMessage>
-                {
-                    new SmsMessage("TEST", messageBody, "42342"),
-                };
-            var consumerContext = Substitute.For<ConsumeContext<ISendSmsRequestReceived>>();
-            consumerContext.Message.UserId.Returns(userId);
-            consumerContext.Message.SmsMessages.Returns(smsMessages);
-
-            var consumer = new SendSmsRequestReceivedConsumer(
-                publishEndPoint,
-                CreateSmsClient("text/plain", "123123"),
-                smsRepository,
-                logger);
-
-            await consumer.Consume(consumerContext);
-            smsDeducted.Should().BeTrue();
-        }
-
+        
         [Fact]
         public async Task PublishSmsRequestFailedEvent_When_SmsCannotBeSent()
         {
