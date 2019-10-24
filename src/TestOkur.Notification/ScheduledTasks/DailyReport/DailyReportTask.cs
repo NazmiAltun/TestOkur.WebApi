@@ -56,13 +56,18 @@
         {
             var apiUsers = await _webApiClient.GetUsersAsync();
 
-            return new DailyReportModel()
+            var model = new DailyReportModel()
             {
                 Statistics = await _webApiClient.GetStatisticsAsync(),
                 ReportStatistics = await _reportClient.GetStatisticsAsync(),
                 NotificationStatistics = await _statsRepository.GetStatisticsAsync(),
                 IdentityStatistics = await _oAuthClient.GetDailyStatsAsync(),
             };
+            model.NotificationStatistics.TopSmsSenderEmailInDay =
+                apiUsers.FirstOrDefault(u => u.Id == model.NotificationStatistics.TopSmsSenderIdInDay)
+                ?.Email;
+
+            return model;
         }
     }
 }

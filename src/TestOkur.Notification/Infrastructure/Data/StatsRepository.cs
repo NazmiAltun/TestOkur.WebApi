@@ -34,13 +34,14 @@
             return new NotificationStatisticsDto
             {
                 TotalSuccessfulSmsCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Successful),
-                AverageSmsDuration = (int)(durations.Any() ? durations.Average() : 0),
+                AverageSmsDuration = (int)(durations.Any() ? durations.Average() : default),
                 TotalSmsCredit = todaysSmsList.Sum(s => s.Credit),
-                LongestSmsDuration = (int)(durations.Any() ? durations.Max() : 0),
+                LongestSmsDuration = (int)(durations.Any() ? durations.Max() : default),
                 TotalUserSmsCountInDay = todaysSmsList.Count(s => s.UserId != default),
                 TotalSystemSmsCountInDay = todaysSmsList.Count(s => s.UserId == default),
                 TotalFailedSmsCountInDay = todaysSmsList.Count(s => s.Status == SmsStatus.Failed),
-                TopSmsSenderCreditInDay = topUserSmsStats?.TotalCredit ?? 0,
+                TopSmsSenderCreditInDay = topUserSmsStats?.TotalCredit ?? default,
+                TopSmsSenderIdInDay = topUserSmsStats?.UserId ?? default,
                 TotalSmsCountAll = await _context.Smses.EstimatedDocumentCountAsync(),
                 TotalSmsCreditsAll = await _context.Smses.AsQueryable()
                     .Where(s => s.UserId > 0).SumAsync(s => s.Credit),

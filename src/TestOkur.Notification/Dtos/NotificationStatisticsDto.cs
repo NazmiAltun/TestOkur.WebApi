@@ -18,6 +18,10 @@
 
         public int TopSmsSenderCreditInDay { get; set; }
 
+        public int TopSmsSenderIdInDay { get; set; }
+
+        public string TopSmsSenderEmailInDay { get; set; }
+
         public long TotalSmsCountAll { get; set; }
 
         public long TotalSmsCreditsAll { get; set; }
