@@ -2,6 +2,7 @@
 {
     using System;
     using TestOkur.Contracts.Sms;
+    using TestOkur.Notification.Extensions;
 
     public class Sms
     {
@@ -13,7 +14,7 @@
         public Sms(ISendSmsRequestReceived @event, ISmsMessage smsMessage)
         {
             Subject = smsMessage.Subject;
-            Body = smsMessage.Body;
+            Body = smsMessage.Body.ToSmsFriendly();
             Phone = smsMessage.Receiver;
             Credit = smsMessage.Credit;
             Status = SmsStatus.Pending;

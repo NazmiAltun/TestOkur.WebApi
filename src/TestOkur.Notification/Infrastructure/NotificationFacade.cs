@@ -4,6 +4,7 @@
     using System.IO;
     using System.Threading.Tasks;
     using TestOkur.Common;
+    using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Infrastructure.Data;
     using TestOkur.Notification.Models;
@@ -37,7 +38,7 @@
             var sms = new Sms()
             {
                 Id = Guid.NewGuid(),
-                Body = body,
+                Body = body.ToSmsFriendly(),
                 Phone = receiver,
                 Subject = template.Subject,
             };

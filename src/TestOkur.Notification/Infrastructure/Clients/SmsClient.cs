@@ -20,13 +20,11 @@
 
         public async Task<string> SendAsync(Sms sms)
         {
-            var smsFriendlyBody = sms.Body.ToSmsFriendly();
-
-            var request = CreateRequest(sms, smsFriendlyBody);
+            var request = CreateRequest(sms, sms.Body);
             var response = await _httpClient.SendAsync(request);
             await EnsureSuccess(response);
 
-            return smsFriendlyBody;
+            return sms.Body;
         }
 
         private HttpRequestMessage CreateRequest(Sms sms, string smsFriendlyBody)
