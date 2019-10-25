@@ -6,15 +6,11 @@
     <title>SINAV SONUÇ LİSTESİ</title>
     <style type='text/css'>
         html {
-            font-size: 100%;
+            font-size: {{fontSizePercent}}%;
         }
-        {{#ifTooManySections secondaryLessons lessons}}
-            html {
-                font-size: 75%;
-            }
-        {{/ifTooManySections}}
         h1 {
             text-align: center;
+            font-size: 16px;
         }
 
         .grid-container {
@@ -26,7 +22,6 @@
             width: 100%;
             border-collapse: collapse;
             font-family: Arial Narrow, Arial, sans-serif;
-            font-size: 1rem;
         }
 
         table,
@@ -38,14 +33,14 @@
 
         th.rotate90 {
             transform: rotate(-90deg);
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
         }
 
         th,
         td {
-            padding-right: 2px;
-            padding-left: 2px;
+            padding-right: 0.15rem;
+            padding-left: 0.15rem;
         }
 
         tbody tr:nth-child(even) {
@@ -76,21 +71,13 @@
         <div class='grid-item'>
             {{classroom}}
         </div>
-    </div>
-    <br />
-    <div class='grid-container'>
         <div class='grid-item'>
             <strong>Sınav Tarihi :</strong>
         </div>
         <div class='grid-item'>
             {{examDate}}
         </div>
-        <div class='grid-item'>
-        </div>
-        <div class='grid-item'>
-        </div>
     </div>
-    <br>
     <table>
         <thead>
             <tr>
@@ -173,7 +160,7 @@
                 {{/if}}
             </tr>
             {{/each}}
-            <tr height="40">
+            <tr>
                 <td colspan="5">
                     Ortalama
                 </td>
@@ -194,7 +181,7 @@
                 {{/each}}
                 <td>%{{formatOneDecimalPlace averageList.averageSuccessPercent}}</td>
             </tr>
-            <tr height="40">
+            <tr>
                 <td colspan="5">
                     Basari(%)
                 </td>

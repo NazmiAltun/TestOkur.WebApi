@@ -58,11 +58,3 @@ function ifPageBreak(index, opts) {
         return opts.inverse(this);
     }
 }
-
-function ifTooManyAnswers(answers, opts) {
-    if (answers.length > 50) {
-        return opts.fn(this);
-    } else {
-        return opts.inverse(this);
-    }
-}

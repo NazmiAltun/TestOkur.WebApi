@@ -5,6 +5,9 @@
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>{{examName}} ÖĞRENCİ - SORU ANALİZİ</title>
     <style type='text/css'>
+        html {
+            font-size: {{fontSizePercent}}%;
+        }
         h1,
         h3,
         h5 {
@@ -14,7 +17,7 @@
         h3 {
             background: #1db1d6;
             border: 1px solid;
-            margin-top: 20px;
+            margin-top: 1.25rem;
         }
 
         .grid-container {
@@ -26,7 +29,6 @@
             width: 100%;
             border-collapse: collapse;
             font-family: Arial Narrow, Arial, sans-serif;
-            font-size: 0.75rem;
         }
 
         table,
@@ -39,8 +41,8 @@
         th.rotate90,
         td.rotate90 {
             transform: rotate(-90deg);
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
         }
 
         tbody tr:nth-child(even) {
@@ -101,13 +103,13 @@
     </div>
     {{#each sections}}
     <h3>{{lessonName}}</h3>
-    <table {{#ifTooManyAnswers answers}} style='font-size:0.5rem' {{/ifTooManyAnswers}}>
+    <table>
         <thead>
             <tr>
                 <th class='rotate90' rowspan='2'>Sıra</th>
                 <th class='rotate90' rowspan='2'>Öğr. No</th>
-                <th class='rotate90' rowspan='2'>Adı - Soyadı</th>
-                <th class='rotate90' colspan='2'>Cevap</th>
+                <th rowspan='2'>Adı - Soyadı</th>
+                <th  colspan='2'>Cevap</th>
                 {{#each answers}}
                 <th>{{correctAnswer}}</th>
                 {{/each}}
@@ -147,7 +149,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td class='rotate90' colspan='3' rowspan='3'>TOPLAM</td>
+                <td class='rotate90' colspan='3' rowspan='3'>TOP.</td>
                 <td colspan='2'>Doğru</td>
                 {{#each answers}}
                 <td>{{correctCount}}</td>
@@ -180,11 +182,11 @@
                 <td>{{emptyCount}}</td>
                 {{/each}}
             </tr>
-            <tr {{#ifTooManyAnswers answers}} style='font-size:3px' {{/ifTooManyAnswers}}>
+            <tr>
                 <td colspan='3'></td>
-                <td colspan='2'>Başarı (%)</td>
+                <td colspan='2' class='rotate90'>Başarı (%)</td>
                 {{#each answers}}
-                <td>{{formatOneDecimalPlace successPercent}}</td>
+                <td class='rotate90'>{{formatOneDecimalPlace successPercent}}</td>
                 {{/each}}
             </tr>
         </tfoot>

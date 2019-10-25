@@ -6,7 +6,7 @@
     <title>OKUL SINAV SONUÇ LİSTESİ</title>
     <style type='text/css'>
 		html {
-            font-size: 75%;
+            font-size: {{fontSizePercent}}%;
         }
         h1 {
             text-align: center;
@@ -21,7 +21,6 @@
             width: 100%;
             border-collapse: collapse;
             font-family: Arial Narrow, Arial, sans-serif;
-            font-size: 1rem;
         }
 
         table,
@@ -33,14 +32,14 @@
 
             th.rotate90 {
                 transform: rotate(-90deg);
-                padding-top: 20px;
-                padding-bottom: 20px;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
             }
 
         th,
         td {
-            padding-right: 2px;
-            padding-left: 2px;
+            padding-right: 0.15rem;
+            padding-left: 0.15rem;
         }
 
         tbody tr:nth-child(even) {
