@@ -9,5 +9,9 @@
         string Email { get; }
 
         string Phone { get; }
+
+        int UserId { get; }
+
+        string UserSubjectId { get; }
     }
 }

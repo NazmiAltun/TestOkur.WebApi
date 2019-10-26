@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Dtos;
-    using TestOkur.Notification.Models;
 
     public class StatsRepository : IStatsRepository
     {

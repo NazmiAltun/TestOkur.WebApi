@@ -69,7 +69,7 @@
                 //Add Some SMS Credits
                 var user = await testServer.GetCurrentUserInSession();
                 var client = testServer.CreateClient();
-                var addSmsCreditsCommand = new AddSmsCreditsCommand(Guid.NewGuid(), user.Id, 2);
+                var addSmsCreditsCommand = new AddSmsCreditsCommand(Guid.NewGuid(), user.Id, 2, false);
                 await client.PostAsync($"{ApiPath}/add-credits", addSmsCreditsCommand.ToJsonContent());
                 var messages = new List<SmsMessageModel>();
 

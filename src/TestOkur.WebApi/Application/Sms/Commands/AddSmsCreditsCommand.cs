@@ -9,11 +9,12 @@
     [DataContract]
     public class AddSmsCreditsCommand : Command, IClearCache
     {
-        public AddSmsCreditsCommand(Guid commandId, int userId, int amount)
+        public AddSmsCreditsCommand(Guid commandId, int userId, int amount, bool gift)
             : base(commandId)
         {
             UserId = userId;
             Amount = amount;
+            Gift = gift;
         }
 
         [DataMember]
@@ -21,6 +22,9 @@
 
         [DataMember]
         public int Amount { get; private set; }
+
+        [DataMember]
+        public bool Gift { get; private set; }
 
         public IEnumerable<string> CacheKeys => new[] { "Users" };
     }

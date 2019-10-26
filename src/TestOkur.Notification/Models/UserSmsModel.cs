@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Notification.Models
 {
     using System;
+    using TestOkur.Notification.Dtos;
 
     public class UserSmsModel
     {

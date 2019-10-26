@@ -4,8 +4,7 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Notification.Configuration;
-    using TestOkur.Notification.Extensions;
-    using TestOkur.Notification.Models;
+    using TestOkur.Notification.Dtos;
 
     public class SmsClient : ISmsClient
     {

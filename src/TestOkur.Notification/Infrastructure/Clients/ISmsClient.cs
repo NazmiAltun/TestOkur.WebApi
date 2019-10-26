@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
     using System.Threading.Tasks;
-    using TestOkur.Notification.Models;
+    using TestOkur.Notification.Dtos;
 
     public interface ISmsClient
     {

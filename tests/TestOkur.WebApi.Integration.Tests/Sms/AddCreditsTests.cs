@@ -24,7 +24,7 @@
             var additionAmount = RandomGen.Next(1000);
             var response = await client.GetAsync($"api/v1/users/{model.Email}");
             var user = await response.ReadAsync<Domain.Model.UserModel.User>();
-            var command = new AddSmsCreditsCommand(Guid.NewGuid(), (int)user.Id, additionAmount);
+            var command = new AddSmsCreditsCommand(Guid.NewGuid(), (int)user.Id, additionAmount, true);
             response = await client.PostAsync($"{ApiPath}", command.ToJsonContent());
             response.EnsureSuccessStatusCode();
             response = await client.GetAsync($"api/v1/users/{model.Email}");

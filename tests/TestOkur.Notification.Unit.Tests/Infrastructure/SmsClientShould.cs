@@ -7,9 +7,9 @@
     using FluentAssertions;
     using RichardSzalay.MockHttp;
     using TestOkur.Notification.Configuration;
+    using TestOkur.Notification.Dtos;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
-    using TestOkur.Notification.Models;
     using Xunit;
 
     public class SmsClientShould

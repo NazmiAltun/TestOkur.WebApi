@@ -30,7 +30,7 @@
                 User = "Test",
             };
         }
-        
+
         [Fact]
         public async Task PublishSmsRequestFailedEvent_When_SmsCannotBeSent()
         {
@@ -54,7 +54,8 @@
                 publishEndPoint,
                 CreateSmsClient("text/plain", "HATA|310|Uzun mesaj metni"),
                 smsRepository,
-                logger);
+                logger,
+                Substitute.For<ISmsLogRepository>());
 
             await consumer.Consume(consumerContext);
             eventList.First().UserFriendlyMessage.Should().Contain("Uzun mesaj metni");

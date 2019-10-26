@@ -1,6 +1,5 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using TestOkur.Notification.Models;

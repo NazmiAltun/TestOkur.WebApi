@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Notification.Configuration;
-    using TestOkur.Notification.Models;
+    using TestOkur.Notification.Dtos;
 
     internal class SmsRepository : ISmsRepository
     {

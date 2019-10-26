@@ -8,11 +8,11 @@
     using Microsoft.Extensions.Logging;
     using TestOkur.Common;
     using TestOkur.Contracts.Sms;
+    using TestOkur.Notification.Dtos;
     using TestOkur.Notification.Events;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Infrastructure.Data;
-    using TestOkur.Notification.Models;
 
     public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>
     {
@@ -20,21 +20,25 @@
         private readonly ISmsClient _smsClient;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ISmsRepository _smsRepository;
+        private readonly ISmsLogRepository _smsLogRepository;
 
         public SendSmsRequestReceivedConsumer(
             IPublishEndpoint publishEndpoint,
             ISmsClient smsClient,
             ISmsRepository smsRepository,
-            ILogger<SendSmsRequestReceivedConsumer> logger)
+            ILogger<SendSmsRequestReceivedConsumer> logger,
+            ISmsLogRepository smsLogRepository)
         {
             _publishEndpoint = publishEndpoint;
             _smsClient = smsClient;
             _smsRepository = smsRepository;
             _logger = logger;
+            _smsLogRepository = smsLogRepository;
         }
 
         public async Task Consume(ConsumeContext<ISendSmsRequestReceived> context)
         {
+            await _smsLogRepository.LogAsync(SmsLog.CreateUsageLog(context.Message));
             var smsList = ToSmsList(context);
             await StoreAsync(smsList);
 

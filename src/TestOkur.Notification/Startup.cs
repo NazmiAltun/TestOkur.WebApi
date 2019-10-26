@@ -30,6 +30,7 @@
     using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Consumers;
+    using TestOkur.Notification.Dtos;
     using TestOkur.Notification.HostedServices;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;

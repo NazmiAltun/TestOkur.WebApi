@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Notification.Models
+﻿namespace TestOkur.Notification.Dtos
 {
     using System;
     using TestOkur.Contracts.Sms;

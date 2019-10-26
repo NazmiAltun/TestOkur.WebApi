@@ -4,6 +4,7 @@
     using System.IO;
     using System.Threading.Tasks;
     using TestOkur.Common;
+    using TestOkur.Notification.Dtos;
     using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Infrastructure.Data;

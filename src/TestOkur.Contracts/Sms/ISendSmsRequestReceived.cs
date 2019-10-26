@@ -11,5 +11,7 @@
         string UserEmail { get; }
 
         IEnumerable<ISmsMessage> SmsMessages { get; }
+
+        int CreditAmount { get; }
     }
 }

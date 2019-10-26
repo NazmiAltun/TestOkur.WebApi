@@ -82,7 +82,9 @@
                     user.Phone,
                     user.Email,
                     user.LastName,
-                    user.FirstName), cancellationToken);
+                    user.FirstName,
+                    user.Id,
+                    user.SubjectId), cancellationToken);
         }
     }
 }

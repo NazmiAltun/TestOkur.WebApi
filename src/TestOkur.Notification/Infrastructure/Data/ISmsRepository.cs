@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using TestOkur.Notification.Models;
+    using TestOkur.Notification.Dtos;
 
     public interface ISmsRepository
     {

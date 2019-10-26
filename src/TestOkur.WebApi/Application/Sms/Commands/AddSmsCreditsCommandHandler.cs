@@ -40,7 +40,10 @@
                         user.FirstName.Value,
                         user.LastName.Value,
                         user.Email,
-                        user.Phone), cancellationToken);
+                        user.Phone,
+                        command.Gift,
+                        (int)user.Id,
+                        user.SubjectId), cancellationToken);
             }
 
             return await base.HandleAsync(command, cancellationToken);

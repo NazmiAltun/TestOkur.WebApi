@@ -2,7 +2,11 @@
 {
     public interface ISmsCreditAdded : IIntegrationEvent
     {
-        int Amount { get; set; }
+        int UserId { get; }
+
+        string UserSubjectId { get; }
+
+        int Amount { get; }
 
         int TotalSmsCredits { get; }
 
@@ -10,8 +14,10 @@
 
         string LastName { get; }
 
-        string Email { get; set; }
+        string Email { get;  }
 
-        string Phone { get; set; }
+        string Phone { get; }
+
+        bool Gift { get;  }
     }
 }
