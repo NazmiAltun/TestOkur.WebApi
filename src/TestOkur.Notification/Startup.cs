@@ -95,6 +95,7 @@
                 .UseMemoryCachingProvider()
                 .Build());
             services.AddTransient<ISmsRepository, SmsRepository>();
+            services.AddTransient<ISmsLogRepository, SmsLogRepository>();
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddTransient<IStatsRepository, StatsRepository>();
             services.AddApplicationInsightsTelemetry();
