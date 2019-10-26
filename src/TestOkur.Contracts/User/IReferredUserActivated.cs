@@ -25,5 +25,13 @@
         int RefereeGainedSmsCredits { get; }
 
         int RefereeSmsBalance { get; }
+
+        int RefereeUserId { get; }
+
+        string RefereeSubjectId { get; }
+
+        int ReferrerUserId { get; }
+
+        string ReferrerSubjectId { get; }
     }
 }

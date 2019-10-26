@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Notification.Dtos
 {
     using System;
+    using System.Collections.Generic;
     using TestOkur.Contracts.Sms;
     using TestOkur.Contracts.User;
 
@@ -32,6 +33,23 @@
                 @event.UserSubjectId,
                 @event.Amount,
                 @event.Gift ? SmsLogType.Gift : SmsLogType.Purchase,
+                @event.CreatedOnUTC);
+        }
+
+        public static IEnumerable<SmsLog> CreateSmsPromotionLogs(IReferredUserActivated @event)
+        {
+            yield return new SmsLog(
+                @event.RefereeUserId,
+                @event.RefereeSubjectId,
+                @event.RefereeGainedSmsCredits,
+                SmsLogType.Promotion,
+                @event.CreatedOnUTC);
+
+            yield return new SmsLog(
+                @event.ReferrerUserId,
+                @event.ReferrerSubjectId,
+                @event.ReferrerGainedSmsCredits,
+                SmsLogType.Promotion,
                 @event.CreatedOnUTC);
         }
 

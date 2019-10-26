@@ -9,5 +9,6 @@
         Purchase,
         Gift,
         UsageDeduction,
+        Promotion,
     }
 }

@@ -12,6 +12,10 @@
             int refereeGainedSmsCredits,
             int referrerGainedSmsCredits)
         {
+            ReferrerUserId = (int)referrer.Id;
+            RefereeUserId = (int)referee.Id;
+            ReferrerSubjectId = referrer.SubjectId;
+            RefereeSubjectId = referee.SubjectId;
             RefereeEmail = referee.Email;
             RefereeFirstName = referee.FirstName;
             RefereeLastName = referee.LastName;
@@ -49,5 +53,13 @@
         public int RefereeGainedSmsCredits { get; }
 
         public int RefereeSmsBalance { get; }
+
+        public int RefereeUserId { get; }
+
+        public string RefereeSubjectId { get; }
+
+        public int ReferrerUserId { get; }
+
+        public string ReferrerSubjectId { get; }
     }
 }
