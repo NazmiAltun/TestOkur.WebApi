@@ -303,14 +303,14 @@
                     {{#each sections}}
                     <tr>
                         <td>
-                            <strong>{{lessonName}} Cevap</strong>
+                            <strong>{{lessonName}}.CVP</strong>
                         </td>
                         {{#eachWitIndex answers 0 ../../secondQuestionIndex}}
                         <td class='{{getQuestionClass result}}'>{{correctAnswer}}</td>
                         {{/eachWitIndex}}
                     </tr>
                     <tr>
-                        <td>Öğr. Cevapları</td>
+                        <td>Öğr.CVP</td>
                         {{#eachWitIndex answers 0 ../../secondQuestionIndex}}
                         <td class='{{getQuestionClass result}}'>{{answer}}</td>
                         {{/eachWitIndex}}
