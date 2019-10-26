@@ -15,9 +15,10 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         }
-
+		.grid-item {
+            grid-row: 1;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -51,6 +52,10 @@
         tfoot tr {
             background: #f79307;
         }
+        
+        button{
+            font-size:8px;
+        }
     </style>
 </head>
 
@@ -61,22 +66,21 @@
     <div class='grid-container'>
         <div class='grid-item'>
             <strong>Sınav Adı :</strong>
-        </div>
-        <div class='grid-item'>
-            {{examName}}
+			{{examName}}
         </div>
         <div class='grid-item'>
             <strong>Sınıf :</strong>
-        </div>
-        <div class='grid-item'>
-            {{classroom}}
+			{{classroom}}
         </div>
         <div class='grid-item'>
             <strong>Sınav Tarihi :</strong>
+			{{examDate}}
         </div>
+		{{#if html}}
         <div class='grid-item'>
-            {{examDate}}
+            <button onclick="window.print();">Yazdir</button>
         </div>
+        {{/if}}
     </div>
     <table>
         <thead>
