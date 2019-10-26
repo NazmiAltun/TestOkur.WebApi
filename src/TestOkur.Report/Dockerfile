@@ -34,5 +34,5 @@ FROM base as final
 WORKDIR /app
 EXPOSE 80
 COPY --from=publish /app .
-COPY --from=minifier /out wwwroot/Templates/
+COPY --from=minifier /minify/out wwwroot/Templates/
 ENTRYPOINT ["dotnet", "TestOkur.Report.dll"]
