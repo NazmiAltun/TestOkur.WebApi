@@ -4,58 +4,11 @@
 <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>SINAV SONUÇ LİSTESİ</title>
+    <link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
     <style type='text/css'>
         html {
             font-size: {{fontSizePercent}}%;
-        }
-        h1 {
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .grid-container {
-            display: grid;
-        }
-		.grid-item {
-            grid-row: 1;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: Arial Narrow, Arial, sans-serif;
-        }
-
-        table,
-        th,
-        td {
-            border: solid 1px black;
-            text-align: center;
-        }
-
-        th.rotate90 {
-            transform: rotate(-90deg);
-            padding-top: 1.25rem;
-            padding-bottom: 1.25rem;
-        }
-
-        th,
-        td {
-            padding-right: 0.15rem;
-            padding-left: 0.15rem;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f2ed98;
-        }
-
-        thead tr,
-        tfoot tr {
-            background: #f79307;
-        }
-        
-        button{
-            font-size:8px;
-        }
+        }        
     </style>
 </head>
 
@@ -63,24 +16,22 @@
     <h1>
         {{examName}} SINAV SONUÇ LİSTESİ
     </h1>
+    {{#if html}}
+    <button class="print-button" onclick="window.print();">Yazdir</button>
+    {{/if}}
     <div class='grid-container'>
         <div class='grid-item'>
             <strong>Sınav Adı :</strong>
-			{{examName}}
+            {{examName}}
         </div>
         <div class='grid-item'>
             <strong>Sınıf :</strong>
-			{{classroom}}
+            {{classroom}}
         </div>
         <div class='grid-item'>
             <strong>Sınav Tarihi :</strong>
-			{{examDate}}
+            {{examDate}}
         </div>
-		{{#if html}}
-        <div class='grid-item'>
-            <button onclick="window.print();">Yazdir</button>
-        </div>
-        {{/if}}
     </div>
     <table>
         <thead>
@@ -102,10 +53,8 @@
                 <th rowspan='2'>Başarı</th>
                 <th rowspan='2'>Sınıf Sıra</th>
                 {{#if srcExam}}
-                <th rowspan='2'>Basari Durumu</th>}
-                {{else}}
-                    <th rowspan='2'>Okul Sıra</th>}
-                {{/if}}
+                <th rowspan='2'>Basari Durumu</th>} {{else}}
+                <th rowspan='2'>Okul Sıra</th>} {{/if}}
             </tr>
             <tr>
                 {{#each lessons}}
@@ -158,9 +107,9 @@
                 <td>%{{formatOneDecimalPlace successPercent}}</td>
                 <td>{{classroomOrder}}</td>
                 {{#if ../srcExam}}
-                    <td>{{status}}</td>
+                <td>{{status}}</td>
                 {{else}}
-                    <td>{{schoolOrder}}</td>
+                <td>{{schoolOrder}}</td>
                 {{/if}}
             </tr>
             {{/each}}

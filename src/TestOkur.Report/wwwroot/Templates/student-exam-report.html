@@ -84,11 +84,20 @@
         .ml10px {
             margin-left: 10px;
         }
+		.print-button {
+            font-size: 24px;
+            position: absolute;
+            right:0;
+            top:0;
+        }
     </style>
     <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
 </head>
 
 <body>
+	{{#if html}}
+    <button class="print-button" onclick="window.print();">Yazdir</button>
+    {{/if}}
     {{#each list}}
     <h2>ÖĞRENCİ KARNESİ</h2>
     <div class='grid-container'>
