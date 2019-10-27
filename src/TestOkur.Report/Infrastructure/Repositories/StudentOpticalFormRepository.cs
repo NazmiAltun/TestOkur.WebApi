@@ -9,7 +9,6 @@
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
-    using TestOkur.Report.Infrastructure;
 
     public class StudentOpticalFormRepository : IStudentOpticalFormRepository
     {

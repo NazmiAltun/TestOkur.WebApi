@@ -63,8 +63,6 @@
 
         public Student ToDomainModel(Classroom classroom, int userId)
         {
-            var contacts = Contacts?.Select(c => c.ToDomainModel()).Where(x => x != null);
-
             return new Student(
                 FirstName,
                 LastName,

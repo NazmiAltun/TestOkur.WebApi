@@ -1,12 +1,11 @@
 ﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
+    using MongoDB.Driver;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using MongoDB.Driver;
     using TestOkur.Report.Configuration;
-    using TestOkur.Report.Infrastructure;
     using TestOkur.Report.Models;
 
     public class ReportRequestRepository : IReportRequestRepository

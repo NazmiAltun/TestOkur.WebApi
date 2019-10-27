@@ -5,7 +5,6 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Collections.Immutable;
 
     public sealed class GetOnlineUsersQueryHandler : QueryHandler<GetOnlineUsersQuery, IEnumerable<string>>
     {

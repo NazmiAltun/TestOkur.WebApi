@@ -68,7 +68,7 @@ namespace TestOkur.Report.Domain
                 return forms;
             }
 
-            if (answerKeyOpticalForms.Count() == 1)
+            if (answerKeyOpticalForms.Count == 1)
             {
                 answerKeyOpticalForms = answerKeyOpticalForms.First().Expand();
             }
