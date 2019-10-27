@@ -29,6 +29,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial Narrow, Arial, sans-serif;
+    font-size:inherit;
 }
 
 table,
