@@ -101,7 +101,6 @@ td.empty {
 .question-container {
     border: 1px solid;
     display: block;
-    max-height:182px;
 }
 .lesson-container {
     flex-wrap: wrap;
@@ -133,4 +132,7 @@ tr.error{
 }
 table.answer-table {
     max-width: 400px;
+}
+.lesson-chart{
+    max-width: 40%;
 }
