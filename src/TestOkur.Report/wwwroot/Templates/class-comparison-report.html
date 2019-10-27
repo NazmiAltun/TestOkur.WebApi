@@ -3,65 +3,19 @@
 <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>SINIF KARSILASTIRMA RAPORU</title>
-    <style type='text/css'>
-        h1 {
-            text-align: center;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: Arial Narrow, Arial, sans-serif;
-            font-size: 12px;
-        }
-
-        table,
-        th,
-        td {
-            border: solid 1px black;
-            text-align: center;
-        }
-
-        th.rotate90 {
-            transform: rotate(-90deg);
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        th,
-        td {
-            padding-right: 2px;
-            padding-left: 2px;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #f2ed98;
-        }
-
-        thead tr,
-        tfoot tr {
-            background: #f79307 !important;
-        }
-
-        tfoot tr {
-            height: 40px;
-        }
-        
+    <link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
+    <style type='text/css'>     
         .chart-container{
-            display: grid;
             grid-row-gap: 70px;
-            grid-template-columns: 1fr 1fr 1fr;
         }
     </style>
     <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
 </head>
 
 <body>
+        {{#if html}}
+        <button class="print-button" onclick="window.print();">Yazdir</button>
+        {{/if}}
     <h1>
         SINIF KARSILASTIRMA RAPORU
     </h1>

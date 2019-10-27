@@ -2,61 +2,14 @@
 <html>
     <head>
     	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-    	<title>ÖĞRENCİ SINAV GEÇMİŞİ</title>
-    	<style type='text/css'>
-		    body {
-			    font-family: Arial Narrow, Arial, sans-serif;
-			    font-size: 11px;
-		    }
-		    h1 {
-			    text-align: center;
-			    background: #1db1d6;
-			    border: 1px solid;
-		    }
-		   	.container {
-		    	display: flex;
-		    }
-
-		    .item {
-		    	flex-basis: auto;
-		    	flex-grow: 2;
-	    	}
-    		table {
-    			width: 100%;
-			    border-collapse: collapse;
-			    font-family: Arial Narrow,Arial,sans-serif;
-			    font-size: 12px;
-		    }
-
-	    	table,
-		    th,
-		    td {
-			    border: solid 1px black;
-			    text-align: center;
-		    }
-		    th.rotate90{
-		        transform: rotate(-90deg);
-		        padding-top:20px;
-		        padding-bottom:20px;
-		    }
-		    th,
-		    td {
-			    padding-right: 2px;
-			    padding-left: 2px;
-		    }
-		    tbody tr:nth-child(even) {
-			    background: #f2ed98;
-		    }
-		    thead tr {
-		        background: #a5eeff;
-		    }
-		    .ml10px {
-			    margin-left: 10px;
-		    }
-		</style>
+		<title>ÖĞRENCİ SINAV GEÇMİŞİ</title>
+		<link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
 		<script src="{#asset assets/Chart.min.js @encoding=link}"></script>
     </head>
     <body>
+			{{#if html}}
+			<button class="print-button" onclick="window.print();">Yazdir</button>
+			{{/if}}
         <h1>ÖĞRENCİ SINAV GEÇMİŞİ</h1>
         <div class='container'>
     		<div class='item'>

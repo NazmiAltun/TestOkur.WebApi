@@ -4,45 +4,16 @@
 <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>{{examName}} MADDE ANALİZİ</title>
+    <link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
     <style type='text/css'>
-        h1,
-        h3,
-        h5 {
-            text-align: center;
-        }
-
+       html {
+            font-size: {{fontSizePercent}}%;
+        }     
         h3 {
             background: #1db1d6;
             border: 1px solid;
             margin-top: 20px;
         }
-
-        .question-container {
-            border: 1px solid;
-            display: block;
-            max-height:182px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        }
-
-        .chart-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-        
-        .line-breaker-firstpage{
-            display:block;
-            height:120px;
-        }
-        
-        .line-breaker{
-            display:block;
-            height:140px;
-        }
-        
     </style>
     <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
     <script>
@@ -52,6 +23,9 @@
 </head>
 
 <body>
+        {{#if html}}
+        <button class="print-button" onclick="window.print();">Yazdir</button>
+        {{/if}}
     <h1>
         {{examName}} MADDE ANALİZİ
     </h1>

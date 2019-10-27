@@ -3,36 +3,12 @@
 <head>
 	<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
 	<title>SINIF LİSTESİ</title>
-	<style type='text/css'>
-		table {
-			border-collapse: collapse;
-			border-spacing: 0;
-			width: 100%;
-			border: 1px solid #ddd;
-		}
-
-		th,
-		td {
-			text-align: left;
-			padding: 16px;
-		}
-
-		tr:nth-child(even) {
-			background-color: #f2f2f2
-		}
-
-		h2 {
-			text-align: center;
-		}
-
-		table,
-		th,
-		td {
-			border: 1px solid black;
-		}
-	</style>
+	<link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
 </head>
 <body>
+		{{#if html}}
+		<button class="print-button" onclick="window.print();">Yazdir</button>
+		{{/if}}
 <h2>{{classroom}} SINIF LİSTESİ</h2>
 <hr/>
 <table>

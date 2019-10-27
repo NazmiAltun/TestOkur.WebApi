@@ -4,91 +4,20 @@
 <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>ÖĞRENCİ KARNESİ</title>
+    <link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
     <style type='text/css'>
         html {
             font-size: {{fontSizePercent}}%;
         }
-
-        body {
-            font-family: Arial Narrow, Arial, sans-serif;
-        }
-
         h2 {
-            text-align: center;
-            background: #1db1d6;
-            border: 1px solid;
             margin-top: 1.25rem;
         }
-
-        .grid-container {
-            display: grid;
-            font-size:12px;
-            grid-template-columns: 1fr 3fr 1fr 3fr
-        }
-
         .grid-item {
             border: 1px solid;
             padding: 0.15rem;
         }
-
-        .container {
-            display: flex;
-        }
-
-        .item {
-            flex-basis: auto;
-            flex-grow: 2;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: Arial Narrow, Arial, sans-serif;
-        }
-
-        table.answer-table {
-            max-width: 400px;
-        }
-
-        table,
-        th,
-        td {
-            border: solid 1px black;
-            text-align: center;
-        }
-
-        th,
-        td {
-            padding-right: 1.25rem;
-            padding-left: 1.25rem;
-        }
-
         thead tr {
             background: #a5eeff;
-        }
-
-        td.wrong {
-            background: #ff0f0f;
-        }
-
-        td.empty {
-            background: #bababa;
-        }
-
-        td.correct {}
-
-        .subject-detail-container {
-            flex-flow: column wrap;
-        }
-
-        .ml10px {
-            margin-left: 10px;
-        }
-		.print-button {
-            font-size: 24px;
-            position: absolute;
-            right:0;
-            top:0;
         }
     </style>
     <script src="{#asset assets/Chart.min.js @encoding=link}"></script>

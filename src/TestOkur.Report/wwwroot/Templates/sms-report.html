@@ -4,72 +4,17 @@
 <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>SMS RAPORU</title>
+    <link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
     <style type='text/css'>
-        body {
-            font-family: Arial Narrow, Arial, sans-serif;
-            font-size: 11px;
-        }
-
-        h1 {
-            text-align: center;
-            background: #1db1d6;
-            border: 1px solid;
-        }
-
-        .container {
-            display: flex;
-        }
-
-        .item {
-            flex-basis: auto;
-            flex-grow: 2;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: Arial Narrow, Arial, sans-serif;
-            font-size: 12px;
-        }
-
-        table,
-        th,
-        td {
-            border: solid 1px black;
-            text-align: center;
-        }
-
-        th.rotate90 {
-            transform: rotate(-90deg);
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        th,
-        td {
-            padding-right: 2px;
-            padding-left: 2px;
-        }
-
-        tbody tr:nth-child(even) {
-            background: #fafafa;
-        }
-
-        thead tr {
-            background: #a5eeff;
-        }
-        td.body{ 
-            width:250px;
-        }
-        tr.pending{ 
-            color: #c99a00;
-        }
-        tr.error{ 
-            color: #e32d2d;
-        }
+        html {
+            font-size: {{fontSizePercent}}%;
+        }        
     </style>
 </head>
 <body>
+        {{#if html}}
+        <button class="print-button" onclick="window.print();">Yazdir</button>
+        {{/if}}
     <h1>SMS RAPORU</h1>
     <br>
     <br>
