@@ -102,12 +102,14 @@
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
+            services.AddResponseCompression();
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseResponseCompression();
             app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
             app.UseMetricServer("/metrics-core");

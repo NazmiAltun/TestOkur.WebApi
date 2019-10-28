@@ -99,6 +99,7 @@
             AddMessageBus(services);
             AddHttpClients(services);
             RegisterServices(services);
+            services.AddResponseCompression();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -116,6 +117,7 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseResponseCompression();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseEndpoints(endpoints =>
             {

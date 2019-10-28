@@ -93,6 +93,7 @@ namespace TestOkur.Report
             AddMessageBus(services);
             RegisterServices(services);
             AddHostedServices(services);
+            services.AddResponseCompression();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -108,6 +109,7 @@ namespace TestOkur.Report
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseResponseCompression();
             app.UseAuthentication();
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseAuthorization();
