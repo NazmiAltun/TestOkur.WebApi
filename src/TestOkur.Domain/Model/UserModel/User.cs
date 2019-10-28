@@ -110,12 +110,14 @@
             District district,
             Name schoolName,
             Phone phone,
+            string referrer,
             string notes)
         {
             Email = email;
             FirstName = firstName;
             LastName = lastName;
             Notes = notes;
+            Referrer = referrer;
             Update(city, district, schoolName, phone);
         }
 

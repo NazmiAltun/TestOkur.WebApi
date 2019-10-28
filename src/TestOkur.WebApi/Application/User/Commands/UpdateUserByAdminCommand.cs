@@ -95,6 +95,9 @@
         public bool Active { get; private set; }
 
         [DataMember]
+        public string Referrer { get; private set; }
+
+        [DataMember]
         public string Notes { get; private set; }
 
         internal UpdateUserModel ToIdentityUpdateUserModel()
