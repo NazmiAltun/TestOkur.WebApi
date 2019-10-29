@@ -6,16 +6,16 @@
     using Paramore.Brighter;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.WebApi.Application.User.Services;
+    using TestOkur.WebApi.Application.User.Clients;
 
     public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>
     {
-        private readonly IIdentityService _identityService;
+        private readonly IIdentityClient _identityClient;
         private readonly IApplicationDbContextFactory _dbContextFactory;
 
-        public DeleteUserCommandHandler(IIdentityService identityService, IApplicationDbContextFactory dbContextFactory)
+        public DeleteUserCommandHandler(IIdentityClient identityClient, IApplicationDbContextFactory dbContextFactory)
         {
-            _identityService = identityService;
+            _identityClient = identityClient;
             _dbContextFactory = dbContextFactory;
         }
 
@@ -32,7 +32,7 @@
 
                 if (user != null)
                 {
-                    await _identityService.DeleteUserAsync(user.SubjectId, cancellationToken);
+                    await _identityClient.DeleteUserAsync(user.SubjectId, cancellationToken);
                     dbContext.Remove(user);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }

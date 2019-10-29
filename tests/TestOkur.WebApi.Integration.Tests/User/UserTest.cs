@@ -19,8 +19,7 @@
         {
             var captcha = await GetCaptchaAsync(client, serviceProvider);
             var city = await GetRandomCityAsync(client);
-            var licenseType = await GetRandomLicenseTypeAsync(client);
-            var command = GenerateCreateUserCommand(captcha, city, licenseType);
+            var command = GenerateCreateUserCommand(captcha, city);
             var response = await client.PostAsync(ApiPath, command.ToJsonContent());
             response.EnsureSuccessStatusCode();
 

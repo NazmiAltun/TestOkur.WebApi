@@ -40,7 +40,7 @@
     using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Infrastructure.Mvc.Threading;
     using TestOkur.WebApi.Application.Captcha;
-    using TestOkur.WebApi.Application.User.Services;
+    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Configuration;
     using TestOkur.WebApi.Extensions;
     using TestOkur.WebApi.Infrastructure;
@@ -199,10 +199,6 @@
 
         private void RegisterServices(IServiceCollection services)
         {
-            services.AddHttpClient<ICaptchaService, CaptchaService>(client =>
-            {
-                client.BaseAddress = new Uri(Configuration.GetValue<string>("CaptchaServiceUrl"));
-            });
             services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.AddSingleton<ICommandQueryLogger, CommandQueryLogger>();
@@ -283,7 +279,18 @@
 
         private void AddHttpClients(IServiceCollection services)
         {
-            services.AddHttpClient<IIdentityService, IdentityService>(client =>
+            services.AddHttpClient<ICaptchaService, CaptchaService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("CaptchaServiceUrl"));
+            });
+
+            services.AddHttpClient<ISabitClient, SabitClient>(client =>
+                {
+                    client.BaseAddress = new Uri(Configuration.GetValue<string>("SabitApiUrl"));
+                }).AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+            services.AddHttpClient<IIdentityClient, IdentityClient>(client =>
             {
                 client.BaseAddress = new Uri(OAuthConfiguration.Authority);
             }).AddPolicyHandler(GetRetryPolicy())

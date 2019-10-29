@@ -1,43 +1,45 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
+    using MassTransit;
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using MassTransit;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Captcha;
-    using TestOkur.WebApi.Application.LicenseType;
+    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
-    using TestOkur.WebApi.Application.User.Services;
 
     public sealed class CreateUserCommandHandler : RequestHandlerAsync<CreateUserCommand>
     {
         private readonly ICaptchaService _captchaService;
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly IIdentityService _identityService;
+        private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
         private readonly IApplicationDbContextFactory _dbContextFactory;
+        private readonly ISabitClient _sabitClient;
 
         public CreateUserCommandHandler(
             ICaptchaService captchaService,
             IPublishEndpoint publishEndpoint,
-            IIdentityService identityService,
+            IIdentityClient identityClient,
             IQueryProcessor queryProcessor,
-            IApplicationDbContextFactory dbContextFactory)
+            IApplicationDbContextFactory dbContextFactory,
+            ISabitClient sabitClient)
         {
             _captchaService = captchaService ?? throw new ArgumentNullException(nameof(captchaService));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor;
             _dbContextFactory = dbContextFactory;
+            _sabitClient = sabitClient;
         }
 
         [Idempotent(1)]
@@ -63,9 +65,8 @@
 
         private async Task RegisterUserAsync(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            var licenseType = _queryProcessor.Execute(new GetAllLicenseTypesQuery())
+            var licenseType = (await _sabitClient.GetLicenseTypesAsync())
                 .First(l => l.Id == command.LicenseTypeId);
-
             var model = new CreateCustomerUserModel()
             {
                 Email = command.Email,
@@ -76,7 +77,7 @@
                 MaxAllowedStudentCount = licenseType.MaxAllowedRecordCount,
                 Password = command.Password,
             };
-            await _identityService.RegisterUserAsync(model, cancellationToken);
+            await _identityClient.RegisterUserAsync(model, cancellationToken);
         }
 
         private async Task SaveToDatabaseAsync(

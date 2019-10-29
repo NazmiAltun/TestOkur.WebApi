@@ -9,9 +9,9 @@
     using Paramore.Darker;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
-    using TestOkur.WebApi.Application.User.Services;
 
     public sealed class ActivateUserCommandHandler : RequestHandlerAsync<ActivateUserCommand>
     {
@@ -19,18 +19,18 @@
         private const int RefereeGainedSmsCredits = 500;
 
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly IIdentityService _identityService;
+        private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
         private readonly IApplicationDbContextFactory _applicationDbContextFactory;
 
         public ActivateUserCommandHandler(
             IPublishEndpoint publishEndpoint,
-            IIdentityService identityService,
+            IIdentityClient identityClient,
             IQueryProcessor queryProcessor,
             IApplicationDbContextFactory applicationDbContextFactory)
         {
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _applicationDbContextFactory = applicationDbContextFactory;
         }
@@ -43,7 +43,7 @@
         {
             var user = await _queryProcessor.ExecuteAsync(
                 new GetUserQuery(command.Email), cancellationToken);
-            await _identityService.ActivateUserAsync(command.Email, cancellationToken);
+            await _identityClient.ActivateUserAsync(command.Email, cancellationToken);
             await PublishUserActivatedEventAsync(user, cancellationToken);
             await ApplyPromotionAsync(user, cancellationToken);
             return await base.HandleAsync(command, cancellationToken);

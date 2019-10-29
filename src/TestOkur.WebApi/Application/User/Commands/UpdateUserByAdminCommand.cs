@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.WebApi.Application.User.Services;
+    using TestOkur.WebApi.Application.User.Clients;
 
     [DataContract]
     public class UpdateUserByAdminCommand : CommandBase, IClearCache

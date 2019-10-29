@@ -8,6 +8,10 @@
     "/connect/token": {
       "post": "token.js"
     },
+	"/api/v1/license-types": {
+      "options": 204,
+      "get": "license-types.json"
+    },
     "/api/v1/users": {
       "options": 204,
       "get": "users.json"

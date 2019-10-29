@@ -8,19 +8,19 @@
     using System.Threading.Tasks;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.WebApi.Application.User.Services;
+    using TestOkur.WebApi.Application.User.Clients;
     using User = TestOkur.Domain.Model.UserModel.User;
 
     public sealed class UpdateUserByAdminCommandHandler
         : RequestHandlerAsync<UpdateUserByAdminCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IIdentityService _identityService;
+        private readonly IIdentityClient _identityClient;
 
         public UpdateUserByAdminCommandHandler(
-            IIdentityService identityService, IApplicationDbContextFactory dbContextFactory)
+            IIdentityClient identityClient, IApplicationDbContextFactory dbContextFactory)
         {
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _dbContextFactory = dbContextFactory;
         }
 
@@ -37,7 +37,7 @@
 
         private async Task UpdateIdentityUserAsync(UpdateUserByAdminCommand command, CancellationToken cancellationToken)
         {
-            await _identityService.UpdateUserAsync(command.ToIdentityUpdateUserModel(), cancellationToken);
+            await _identityClient.UpdateUserAsync(command.ToIdentityUpdateUserModel(), cancellationToken);
         }
 
         private async Task UpdateWebApiUserAsync(UpdateUserByAdminCommand command, CancellationToken cancellationToken)

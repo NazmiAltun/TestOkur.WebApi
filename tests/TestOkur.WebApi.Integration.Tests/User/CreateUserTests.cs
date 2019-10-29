@@ -24,7 +24,7 @@
         public async Task When_BadDataPosted_Then_BadRequest_Should_Return()
         {
             var client = (await GetTestServer()).CreateClient();
-            var model = GenerateCreateUserCommand(null, null, null, string.Empty);
+            var model = GenerateCreateUserCommand(null, null, string.Empty);
 
             var response = await client.PostAsync(ApiPath, model.ToJsonContent());
             await response.Should().BeBadRequestAsync(ErrorCodes.InvalidPhoneNumber);

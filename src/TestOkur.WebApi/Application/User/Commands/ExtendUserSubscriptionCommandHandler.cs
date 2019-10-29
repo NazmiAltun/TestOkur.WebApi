@@ -7,23 +7,23 @@
     using Paramore.Brighter;
     using Paramore.Darker;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
-    using TestOkur.WebApi.Application.User.Services;
 
     public sealed class ExtendUserSubscriptionCommandHandler : RequestHandlerAsync<ExtendUserSubscriptionCommand>
     {
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly IIdentityService _identityService;
+        private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
 
         public ExtendUserSubscriptionCommandHandler(
             IPublishEndpoint publishEndpoint,
-            IIdentityService identityService,
+            IIdentityClient identityClient,
             IQueryProcessor queryProcessor)
         {
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
 
@@ -34,7 +34,7 @@
             CancellationToken cancellationToken = default)
         {
             var user = await _queryProcessor.ExecuteAsync(new GetUserQuery(command.Email), cancellationToken);
-            await _identityService.ExtendUserSubscriptionAsync(user.SubjectId, cancellationToken);
+            await _identityClient.ExtendUserSubscriptionAsync(user.SubjectId, cancellationToken);
             var newExpiryDate = DateTime.UtcNow > command.CurrentExpiryDateTimeUtc
                 ? DateTime.UtcNow.AddYears(1)
                 : command.CurrentExpiryDateTimeUtc.AddYears(1);

@@ -33,7 +33,7 @@
                     updated_by = table.Column<int>(type: "integer", nullable: false),
                     updated_on_utc = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     value = table.Column<string>(type: "text", nullable: false),
-                    name_value = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
+                    name_value = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                 },
                 constraints: table =>
                 {

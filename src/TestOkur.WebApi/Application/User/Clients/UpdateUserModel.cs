@@ -1,4 +1,4 @@
-﻿namespace TestOkur.WebApi.Application.User.Services
+﻿namespace TestOkur.WebApi.Application.User.Clients
 {
     using System;
 

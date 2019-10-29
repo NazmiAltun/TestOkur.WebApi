@@ -11,28 +11,28 @@
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Captcha;
+    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Events;
     using TestOkur.WebApi.Application.User.Queries;
-    using TestOkur.WebApi.Application.User.Services;
 
     public sealed class SendResetPasswordLinkCommandHandler : RequestHandlerAsync<SendResetPasswordLinkCommand>
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly ICaptchaService _captchaService;
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly IIdentityService _identityService;
+        private readonly IIdentityClient _identityClient;
         private readonly OAuthConfiguration _oAuthConfiguration;
 
         public SendResetPasswordLinkCommandHandler(
             ICaptchaService captchaService,
             IPublishEndpoint publishEndpoint,
-            IIdentityService identityService,
+            IIdentityClient identityClient,
             IQueryProcessor queryProcessor,
             OAuthConfiguration oAuthConfiguration)
         {
             _captchaService = captchaService ?? throw new ArgumentNullException(nameof(captchaService));
             _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _oAuthConfiguration = oAuthConfiguration;
         }
@@ -43,7 +43,7 @@
             CancellationToken cancellationToken = default)
         {
             ValidateCaptcha(command);
-            var token = await _identityService.GeneratePasswordResetTokenAsync(command.Email, cancellationToken);
+            var token = await _identityClient.GeneratePasswordResetTokenAsync(command.Email, cancellationToken);
             await PublishEventAsync(command.Email, token, cancellationToken);
 
             return await base.HandleAsync(command, cancellationToken);

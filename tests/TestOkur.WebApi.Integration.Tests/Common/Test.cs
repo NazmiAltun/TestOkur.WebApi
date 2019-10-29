@@ -1,19 +1,19 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Common
 {
+    using CacheManager.Core;
+    using IdentityModel;
+    using Microsoft.AspNetCore.TestHost;
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using CacheManager.Core;
-    using IdentityModel;
-    using Microsoft.AspNetCore.TestHost;
-    using Microsoft.Extensions.DependencyInjection;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.City;
-    using TestOkur.WebApi.Application.LicenseType;
+    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Commands;
 
     public abstract class Test
@@ -66,22 +66,13 @@
                 var client = testServer.CreateClient();
                 var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
                 var city = await GetRandomCityAsync(client);
-                var licenseType = await GetRandomLicenseTypeAsync(client);
-                var model = GenerateCreateUserCommand(captcha, city, licenseType);
+                var model = GenerateCreateUserCommand(captcha, city);
 
                 var response = await client.PostAsync(UserApiPath, model.ToJsonContent());
                 response.EnsureSuccessStatusCode();
 
                 return model;
             }
-        }
-
-        protected async Task<LicenseTypeReadModel> GetRandomLicenseTypeAsync(HttpClient client)
-        {
-            var response = await client.GetAsync(LicenseTypesApiPath);
-            var licenseTypes = await response.ReadAsync<IEnumerable<LicenseTypeReadModel>>();
-
-            return licenseTypes.Random();
         }
 
         protected async Task<CityReadModel> GetRandomCityAsync(HttpClient client)
@@ -104,7 +95,6 @@
         protected CreateUserCommand GenerateCreateUserCommand(
             Captcha captcha = null,
             CityReadModel city = null,
-            LicenseTypeReadModel licenseType = null,
             string phone = null)
         {
             var district = city?.Districts?.Random();
@@ -119,10 +109,10 @@
                 $"{Random.RandomString(120)}@hotmail.com",
                 phone ?? RandomGen.Phone(),
                 Random.Next(99999, int.MaxValue).ToString(),
-                licenseType?.Id ?? 1,
+                1 + Random.Next(4),
                 city?.Id ?? 0,
                 district?.Id ?? 0,
-                licenseType?.Name ?? "test",
+                "test",
                 city?.Name ?? "test",
                 district?.Name ?? "test",
                 captcha?.Id ?? Guid.Empty,
