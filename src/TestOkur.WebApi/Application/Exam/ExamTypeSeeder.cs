@@ -1,4 +1,4 @@
-﻿namespace TestOkur.WebApi.Data
+﻿namespace TestOkur.WebApi.Application.Exam
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +8,7 @@
     using TestOkur.Data;
     using TestOkur.Domain.Model.ExamModel;
     using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.WebApi.Data;
 
     internal class ExamTypeSeeder : ISeeder
     {

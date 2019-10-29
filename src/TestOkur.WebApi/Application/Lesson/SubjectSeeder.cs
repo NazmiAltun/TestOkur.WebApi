@@ -1,5 +1,6 @@
 ﻿// ReSharper disable UnusedAutoPropertyAccessor.Local
-namespace TestOkur.WebApi.Data
+
+namespace TestOkur.WebApi.Application.Lesson
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace TestOkur.WebApi.Data
     using Newtonsoft.Json;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.WebApi.Data;
 
     internal class SubjectSeeder : ISeeder
     {

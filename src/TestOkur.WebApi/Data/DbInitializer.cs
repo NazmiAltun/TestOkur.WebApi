@@ -4,6 +4,12 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using TestOkur.Data;
+    using TestOkur.WebApi.Application.City;
+    using TestOkur.WebApi.Application.Exam;
+    using TestOkur.WebApi.Application.Lesson;
+    using TestOkur.WebApi.Application.OpticalForm;
+    using TestOkur.WebApi.Application.Score;
+    using TestOkur.WebApi.Application.Settings;
 
     public static class DbInitializer
     {

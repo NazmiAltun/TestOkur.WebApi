@@ -1,4 +1,4 @@
-﻿namespace TestOkur.WebApi.Data
+﻿namespace TestOkur.WebApi.Application.Settings
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,7 @@
     using TestOkur.Common;
     using TestOkur.Data;
     using TestOkur.Domain.Model.SettingModel;
+    using TestOkur.WebApi.Data;
 
     internal class SettingsSeeder : ISeeder
     {

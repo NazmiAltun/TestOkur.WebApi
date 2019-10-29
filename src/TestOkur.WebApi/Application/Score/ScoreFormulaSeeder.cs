@@ -1,4 +1,4 @@
-﻿namespace TestOkur.WebApi.Data
+﻿namespace TestOkur.WebApi.Application.Score
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,7 @@
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Domain.Model.OpticalFormModel;
     using TestOkur.Domain.Model.ScoreModel;
+    using TestOkur.WebApi.Data;
 
     internal class ScoreFormulaSeeder : ISeeder
     {

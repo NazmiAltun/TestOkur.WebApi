@@ -1,15 +1,15 @@
-﻿namespace TestOkur.WebApi.Data
+﻿namespace TestOkur.WebApi.Application.City
 {
-    using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
     using TestOkur.Data;
     using TestOkur.Domain.Model.CityModel;
-    using TestOkur.WebApi.Application.City;
+    using TestOkur.WebApi.Data;
 
     internal class CitySeeder : ISeeder
     {
@@ -24,7 +24,7 @@
 
             var cities = JsonConvert.DeserializeObject<List<CityReadModel>>(
                     File.ReadAllText(Path.Combine("Data", FilePath)))
-                .Select(cr => new City(
+                .Select(cr => new Domain.Model.CityModel.City(
                     cr.Id,
                     cr.Name,
                     cr.Districts.Select(d => new District(d.Id, d.Name))));
