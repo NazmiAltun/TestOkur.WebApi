@@ -257,10 +257,8 @@
             {
                 options.AddPolicy(
                     AuthorizationPolicies.Public,
-                    policy => policy.RequireAssertion(context =>
-                        context.User.Identity.IsAuthenticated ||
-                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
-                                                   c.Value == Clients.Public)));
+                    policy => policy.RequireAssertion(context => context.User.Identity.IsAuthenticated));
+
                 options.AddPolicy(
                     AuthorizationPolicies.Private,
                     policy => policy.RequireAssertion(context =>

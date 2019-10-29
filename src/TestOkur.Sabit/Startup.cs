@@ -14,8 +14,13 @@
     using Microsoft.Extensions.Hosting;
     using Prometheus;
     using System;
+    using System.Reflection;
+    using System.Text.Json;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
+    using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.Infrastructure.CommandsQueries.Extensions;
+    using TestOkur.Sabit.Infrastructure;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     public class Startup
@@ -28,7 +33,7 @@
             Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
         }
 
-        private OAuthConfiguration OAuthConfiguration { get;  }
+        private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
 
         private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
@@ -44,7 +49,14 @@
             AddAuthorization(services);
             AddCache(services);
             AddMessageBus(services);
-            services.AddControllers();
+            services.AddSingleton<IUserIdProvider, StubUserIdProvider>();
+            services.AddSingleton<ICommandQueryLogger, StubCommandQueryLogger>();
+            services.AddControllers()
+                .AddJsonOptions(cfg =>
+                {
+                    cfg.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                });
+            services.AddQueries(Assembly.GetExecutingAssembly());
             services.AddResponseCompression();
         }
 
@@ -89,11 +101,6 @@
 
         private void AddAuthentication(IServiceCollection services)
         {
-            if (Environment.IsDevelopment())
-            {
-                return;
-            }
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
@@ -111,9 +118,7 @@
                 options.AddPolicy(
                     AuthorizationPolicies.Public,
                     policy => policy.RequireAssertion(context =>
-                        context.User.Identity.IsAuthenticated ||
-                        context.User.HasClaim(c => c.Type == JwtClaimTypes.ClientId &&
-                                                   c.Value == Clients.Public)));
+                        context.User.Identity.IsAuthenticated));
             });
         }
 

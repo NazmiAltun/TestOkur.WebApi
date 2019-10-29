@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Sabit.Application.City
+﻿namespace TestOkur.Sabit.Application.LicenseType
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -8,22 +8,22 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
 
-    [Route("api/v1/cities")]
+    [Route("api/v1/license-types")]
     [Authorize(AuthorizationPolicies.Public)]
-    public class CitiesController : ControllerBase
+    public class LicenseTypeController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 
-        public CitiesController(IQueryProcessor queryProcessor)
+        public LicenseTypeController(IQueryProcessor queryProcessor)
         {
             _queryProcessor = queryProcessor;
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<City>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<LicenseType>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new CityQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(new LicenseTypeQuery()));
         }
     }
 }

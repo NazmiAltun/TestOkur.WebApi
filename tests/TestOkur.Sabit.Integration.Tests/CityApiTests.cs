@@ -1,22 +1,21 @@
 ﻿namespace TestOkur.Sabit.Integration.Tests
 {
+    using FluentAssertions;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
-    using Microsoft.AspNetCore.Mvc.Testing;
     using TestOkur.Sabit.Application.City;
     using TestOkur.TestHelper.Extensions;
     using Xunit;
 
-    public class CityApiTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class CityApiTests : IClassFixture<WebApplicationFactory>
     {
         private const string ApiPath = "api/v1/cities";
 
-        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly WebApplicationFactory _factory;
 
-        public CityApiTests(WebApplicationFactory<Startup> factory)
+        public CityApiTests(WebApplicationFactory factory)
         {
             _factory = factory;
         }

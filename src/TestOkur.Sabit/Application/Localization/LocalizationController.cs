@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Sabit.Application.City
+﻿namespace TestOkur.Sabit.Application.Localization
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -8,22 +8,22 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
 
-    [Route("api/v1/cities")]
+    [Route("api/v1/localization")]
     [Authorize(AuthorizationPolicies.Public)]
-    public class CitiesController : ControllerBase
+    public class LocalizationController : ControllerBase
     {
         private readonly IQueryProcessor _queryProcessor;
 
-        public CitiesController(IQueryProcessor queryProcessor)
+        public LocalizationController(IQueryProcessor queryProcessor)
         {
             _queryProcessor = queryProcessor;
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<City>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<LocalString>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new CityQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(new LocalStringQuery()));
         }
     }
 }
