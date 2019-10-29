@@ -67,6 +67,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{F2A3E8
 		deploy\webapi-qa.sh = deploy\webapi-qa.sh
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Sabit", "src\TestOkur.Sabit\TestOkur.Sabit.csproj", "{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Sabit.Integration.Tests", "tests\TestOkur.Sabit.Integration.Tests\TestOkur.Sabit.Integration.Tests.csproj", "{1BE47627-8339-44B7-9EFA-3497AB215170}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +133,14 @@ Global
 		{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE47627-8339-44B7-9EFA-3497AB215170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE47627-8339-44B7-9EFA-3497AB215170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE47627-8339-44B7-9EFA-3497AB215170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE47627-8339-44B7-9EFA-3497AB215170}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +162,8 @@ Global
 		{7EBAF429-0759-4831-99C4-70AB9E3B4F48} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 		{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 		{F2A3E842-195F-4313-B417-A57353A05112} = {4DC8C14D-84F4-42CC-913F-D45CB12CA317}
+		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A} = {BF44ED5D-0258-46C1-BA87-F6833CA75720}
+		{1BE47627-8339-44B7-9EFA-3497AB215170} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D101CF9D-F29C-49EC-A59E-021C88B68A94}
