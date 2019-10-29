@@ -25,7 +25,7 @@
                 context.Message,
                 Template.AccountRegistrationSmsUser,
                 context.Message.UserPhone);
-            await _notificationFacade.SendEmailToAdminsAsync(
+            await _notificationFacade.SendEmailToProductOwnersAsync(
                 context.Message,
                 Template.AccountRegistrationEmailAdmin);
         }

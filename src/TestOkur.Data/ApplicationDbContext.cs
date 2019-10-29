@@ -15,7 +15,6 @@
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Domain.Model.OpticalFormModel;
     using TestOkur.Domain.Model.ScoreModel;
-    using TestOkur.Domain.Model.SettingModel;
     using TestOkur.Domain.Model.StudentModel;
     using TestOkur.Domain.Model.UserModel;
     using TestOkur.Infrastructure.Data;
@@ -45,8 +44,6 @@
         public DbSet<Lesson> Lessons { get; set; }
 
         public DbSet<Unit> Units { get; set; }
-
-        public DbSet<AppSetting> AppSettings { get; set; }
 
         public DbSet<User> Users { get; set; }
 

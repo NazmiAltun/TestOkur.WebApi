@@ -9,13 +9,11 @@
     using TestOkur.WebApi.Application.Lesson;
     using TestOkur.WebApi.Application.OpticalForm;
     using TestOkur.WebApi.Application.Score;
-    using TestOkur.WebApi.Application.Settings;
 
     public static class DbInitializer
     {
         private static readonly IEnumerable<ISeeder> Seeders = new ISeeder[]
         {
-            new SettingsSeeder(),
             new CitySeeder(),
             new LessonSeeder(),
             new SubjectSeeder(),

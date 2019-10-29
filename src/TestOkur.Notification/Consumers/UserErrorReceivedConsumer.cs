@@ -17,7 +17,7 @@
 
         public async Task Consume(ConsumeContext<IUserErrorReceived> context)
         {
-            await _notificationFacade.SendEmailToAdminsAsync(
+            await _notificationFacade.SendEmailToProductOwnersAsync(
                 context.Message,
                 Template.UserErrorAlertEmail);
         }

@@ -9,7 +9,7 @@
 
         Task SendEmailToSystemAdminsAsync<TModel>(TModel model, Template template);
 
-        Task SendEmailToAdminsAsync<TModel>(TModel model, Template template);
+        Task SendEmailToProductOwnersAsync<TModel>(TModel model, Template template);
 
         Task SendEmailAsync<TModel>(TModel model, Template template, string receiver);
     }

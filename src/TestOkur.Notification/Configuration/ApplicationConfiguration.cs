@@ -12,5 +12,11 @@
 
         [Required]
         public int RemainderDays { get; set; }
+
+        [Required]
+        public string ProductOwnersEmails { get; set; }
+
+        [Required]
+        public string SystemAdminEmails { get; set; }
     }
 }
