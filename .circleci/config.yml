@@ -275,6 +275,14 @@ jobs:
           name: Run container
           command: |
             ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/report-prod.sh > /dev/null
+  deploy-sabit-prod:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Run container
+          command: |
+            ssh  $SSH_USERNAME@$PROD_SERVER 'bash -s' < deploy/sabit-prod.sh > /dev/null
   deploy-notification-prod:
     <<: *defaults
     steps:
@@ -370,6 +378,12 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - deploy-sabit-prod:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - clear-cache-prod:
           requires:
             - deploy-webapi-prod
@@ -383,6 +397,7 @@ workflows:
             - deploy-webapi-prod
             - deploy-notification-prod
             - deploy-report-prod
+            - deploy-sabit-prod
           filters:
             tags:
               only: /^v.*/
