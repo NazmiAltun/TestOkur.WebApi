@@ -252,7 +252,10 @@
 
         private void AddMessageBus(IServiceCollection services)
         {
-            AddMassTransit(services);
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumers(Assembly.GetExecutingAssembly());
+            });
             services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
                 var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
@@ -285,14 +288,6 @@
                 });
                 cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
             }));
-        }
-
-        private void AddMassTransit(IServiceCollection services)
-        {
-            services.AddMassTransit(x =>
-            {
-                x.AddConsumers(GetConsumerTypes());
-            });
         }
 
         private void AddHttpClients(IServiceCollection services)
@@ -340,15 +335,6 @@
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .CircuitBreakerAsync(20, TimeSpan.FromSeconds(30));
-        }
-
-        private Type[] GetConsumerTypes()
-        {
-            return Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => t.IsClass &&
-                            typeof(IConsumer).IsAssignableFrom(t))
-                .ToArray();
         }
     }
 }

@@ -156,7 +156,7 @@ namespace TestOkur.Report
             var configure = services.BuildServiceProvider().GetService<Action<IRabbitMqReceiveEndpointConfigurator>>();
             services.AddMassTransit(m =>
             {
-                m.AddConsumers(GetConsumerTypes());
+                m.AddConsumers(Assembly.GetExecutingAssembly());
                 m.AddBus(provider =>
                     Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
@@ -282,15 +282,6 @@ namespace TestOkur.Report
 
             services.AddSingleton(resolver =>
                 resolver.GetRequiredService<IOptions<OAuthConfiguration>>().Value);
-        }
-
-        private Type[] GetConsumerTypes()
-        {
-            return Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => t.IsClass &&
-                            typeof(IConsumer).IsAssignableFrom(t))
-                .ToArray();
         }
     }
 }
