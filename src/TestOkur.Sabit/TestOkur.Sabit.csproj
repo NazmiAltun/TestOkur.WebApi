@@ -28,4 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
 </Project>

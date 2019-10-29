@@ -16,6 +16,7 @@
     using System;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
+    using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     public class Startup
     {
@@ -27,13 +28,13 @@
             Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
         }
 
-        public OAuthConfiguration OAuthConfiguration { get;  }
+        private OAuthConfiguration OAuthConfiguration { get;  }
 
         private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
-        public IWebHostEnvironment Environment { get; }
+        private IWebHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
