@@ -63,13 +63,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{F2A3E8
 		deploy\report-prod.sh = deploy\report-prod.sh
 		deploy\report-qa.sh = deploy\report-qa.sh
 		deploy\retry.sh = deploy\retry.sh
+		deploy\sabit-prod.sh = deploy\sabit-prod.sh
 		deploy\webapi-prod.sh = deploy\webapi-prod.sh
 		deploy\webapi-qa.sh = deploy\webapi-qa.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Sabit", "src\TestOkur.Sabit\TestOkur.Sabit.csproj", "{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit", "src\TestOkur.Sabit\TestOkur.Sabit.csproj", "{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Sabit.Integration.Tests", "tests\TestOkur.Sabit.Integration.Tests\TestOkur.Sabit.Integration.Tests.csproj", "{1BE47627-8339-44B7-9EFA-3497AB215170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit.Integration.Tests", "tests\TestOkur.Sabit.Integration.Tests\TestOkur.Sabit.Integration.Tests.csproj", "{1BE47627-8339-44B7-9EFA-3497AB215170}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

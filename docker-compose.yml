@@ -1,6 +1,19 @@
 version: '3.6'
 
 services:
+  sabit:
+    image: testokur-sabit:latest
+    build:
+      context: .
+      dockerfile: src/TestOkur.Sabit/Dockerfile
+      target: final
+    ports:
+      - '9158:80'
+    depends_on:
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMqConfiguration__Uri=rabbitmq      
   webapi:
     image: testokur-webapi:latest
     build:

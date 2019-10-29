@@ -73,6 +73,26 @@ services:
       - /p:CoverletOutputFormat="opencover"
     volumes:
       - ./coverage:/coverage
+  sabit-integration-test:
+    image: testokur-sabit-integration-test
+    container_name: sabit-integration-test
+    build:
+      context: .
+      dockerfile: src/TestOkur.Sabit/Dockerfile
+      target: integrationtest
+    entrypoint:
+      - dotnet
+      - test
+      - /p:CollectCoverage=true 
+      - /p:CoverletOutput=../../../coverage/sabit-integration-test
+      - /p:CoverletOutputFormat="opencover"
+    volumes:
+      - ./coverage:/coverage
+    depends_on:
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RabbitMqConfiguration__Uri=rabbitmq
   webapi-integration-test:
     image: testokur-webapi-integration-test
     container_name: webapi-integration-test

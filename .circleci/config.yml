@@ -61,6 +61,26 @@ jobs:
           root: ~/repo
           paths:
             - coverage/*
+  sabit-integration-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Run
+          command: |
+            mkdir ~/repo/coverage
+            docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit sabit-integration-test
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - coverage/*
   webapi-integration-tests:
     <<: *defaults
     steps:
@@ -100,6 +120,34 @@ jobs:
             docker-compose -f docker-compose.tests.yml up --build --abort-on-container-exit coverage-merger
       - codecov/upload:
           file: ./coverage/Cobertura.xml
+  build-sabit:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - run:
+          name: Build Image
+          command: |
+            docker-compose build sabit
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                IMAGE_TAG="0.0.${CIRCLE_BUILD_NUM}"
+                docker tag testokur-sabit:latest nazmialtun/testokur-sabit:$IMAGE_TAG
+                docker tag testokur-sabit:latest nazmialtun/testokur-sabit:latest
+                docker push nazmialtun/testokur-sabit:latest
+                docker push nazmialtun/testokur-sabit:$IMAGE_TAG
+      - persist_to_workspace:
+          root: .
+          paths:
+            - deploy/*
   build-webapi:
     <<: *defaults
     steps:
@@ -276,6 +324,7 @@ workflows:
       - unit-tests
       - notification-report-integration-tests
       - webapi-integration-tests
+      - sabit-integration-tests
       - code-coverage:
           requires:
             - static-code-analysis
@@ -292,6 +341,10 @@ workflows:
             - unit-tests
             - static-code-analysis
             - notification-report-integration-tests
+      - build-sabit:
+          requires:
+            - static-code-analysis
+            - sabit-integration-tests
       - build-report:
           requires:
             - unit-tests
