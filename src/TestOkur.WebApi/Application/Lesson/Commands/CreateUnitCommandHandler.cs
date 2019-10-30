@@ -56,12 +56,12 @@
             }
         }
 
-        private async Task<Lesson> GetLessonAsync(
+        private Task<Lesson> GetLessonAsync(
             ApplicationDbContext dbContext,
             CreateUnitCommand command,
             CancellationToken cancellationToken = default)
         {
-            return await dbContext.Lessons.FirstAsync(
+            return dbContext.Lessons.FirstAsync(
                 l => l.Id == command.LessonId &&
                      (EF.Property<int>(l, "CreatedBy") == command.UserId ||
                       EF.Property<int>(l, "CreatedBy") == default),

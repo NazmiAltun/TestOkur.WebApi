@@ -29,12 +29,10 @@
                                "WHERE created_by=@userId " +
                                "ORDER BY grade_value,name_value";
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<ClassroomReadModel>(
-                    sql,
-                    new { userId = query.UserId })).ToList();
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<ClassroomReadModel>(
+                sql,
+                new { userId = query.UserId })).ToList();
         }
     }
 }

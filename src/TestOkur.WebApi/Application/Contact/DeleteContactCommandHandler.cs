@@ -36,12 +36,12 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task<Contact> GetContactAsync(
+        private Task<Contact> GetContactAsync(
             ApplicationDbContext dbContext,
             DeleteContactCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Contacts.FirstOrDefaultAsync(
+            return dbContext.Contacts.FirstOrDefaultAsync(
                 l => l.Id == command.ContactId && EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }

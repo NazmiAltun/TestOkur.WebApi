@@ -17,7 +17,7 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        public override async Task<UserRecords> ExecuteAsync(
+        public override Task<UserRecords> ExecuteAsync(
             GetUserRecordCountsQuery query,
             CancellationToken cancellationToken = default)
         {
@@ -26,12 +26,10 @@
 								(SELECT COUNT(*) from students WHERE created_by=@userId) as student_count,
 								(SELECT COUNT(*) from exams WHERE created_by=@userId) as exam_count
 								";
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return await connection.QuerySingleAsync<UserRecords>(
-                    sql,
-                    new { userId = query.UserId });
-            }
+            using var connection = new NpgsqlConnection(_connectionString);
+            return connection.QuerySingleAsync<UserRecords>(
+                sql,
+                new { userId = query.UserId });
         }
     }
 }

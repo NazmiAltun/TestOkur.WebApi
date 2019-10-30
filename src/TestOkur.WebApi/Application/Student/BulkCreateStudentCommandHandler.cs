@@ -55,12 +55,12 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task<Classroom> GetClassroomAsync(
+        private Task<Classroom> GetClassroomAsync(
             ApplicationDbContext dbContext,
             int classroomId,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Classrooms
+            return dbContext.Classrooms
                 .FirstAsync(c => c.Id == classroomId, cancellationToken);
         }
     }

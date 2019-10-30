@@ -42,9 +42,9 @@
             return await response.ReadAsync<IEnumerable<ExamReadModel>>();
         }
 
-        protected async Task<HttpResponseMessage> DeleteExamAsync(HttpClient client, int id)
+        protected Task<HttpResponseMessage> DeleteExamAsync(HttpClient client, int id)
         {
-            return await client.DeleteAsync($"{ApiPath}/{id}");
+            return client.DeleteAsync($"{ApiPath}/{id}");
         }
 
         protected async Task<ExamTypeReadModel> GetRandomExamTypeAsync(HttpClient client)

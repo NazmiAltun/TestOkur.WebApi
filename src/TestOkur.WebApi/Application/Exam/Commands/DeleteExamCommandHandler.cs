@@ -47,12 +47,12 @@
                 cancellationToken);
         }
 
-        private async Task<Domain.Model.ExamModel.Exam> GetAsync(
+        private Task<Domain.Model.ExamModel.Exam> GetAsync(
             ApplicationDbContext dbContext,
             DeleteExamCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Exams.FirstOrDefaultAsync(
+            return dbContext.Exams.FirstOrDefaultAsync(
                 l => l.Id == command.ExamId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

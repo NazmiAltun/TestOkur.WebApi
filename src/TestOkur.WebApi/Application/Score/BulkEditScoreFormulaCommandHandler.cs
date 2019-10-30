@@ -45,13 +45,13 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task<ScoreFormula> GetAsync(
+        private Task<ScoreFormula> GetAsync(
             ApplicationDbContext dbContext,
             int id,
             int userId,
             CancellationToken cancellationToken)
         {
-            return await dbContext.ScoreFormulas
+            return dbContext.ScoreFormulas
                 .Include(s => s.Coefficients)
                 .FirstAsync(
                     f => f.Id == id &&

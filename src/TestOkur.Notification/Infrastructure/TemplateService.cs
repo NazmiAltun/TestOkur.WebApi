@@ -13,7 +13,7 @@
             _engine = engine;
         }
 
-        public async Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
+        public Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
         {
             var template = File.ReadAllText(Path.Combine("Templates", filePath));
             var name = Path.Combine("Templates", filePath)
@@ -23,7 +23,7 @@
                 .Replace(Path.AltDirectorySeparatorChar, '_')
                 .Replace(Path.DirectorySeparatorChar, '_');
 
-            return await _engine.CompileRenderAsync(name, template, viewModel);
+            return _engine.CompileRenderAsync(name, template, viewModel);
         }
     }
 }

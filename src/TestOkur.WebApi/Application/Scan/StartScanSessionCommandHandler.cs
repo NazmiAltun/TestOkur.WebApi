@@ -41,12 +41,12 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task<Exam> GetExamAsync(
+        private Task<Exam> GetExamAsync(
             ApplicationDbContext dbContext,
             int examId,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Exams
+            return dbContext.Exams
                 .FirstOrDefaultAsync(
                     l => l.Id == examId, cancellationToken);
         }

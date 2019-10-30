@@ -33,11 +33,11 @@
             await _context.Smses.ReplaceOneAsync(filter, sms);
         }
 
-        public async Task<IEnumerable<Sms>> GetTodaysSmsesAsync()
+        public Task<List<Sms>> GetTodaysSmsesAsync()
         {
             var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date);
 
-            return await _context.Smses
+            return _context.Smses
                 .Find(filter)
                 .SortByDescending(e => e.CreatedOnDateTimeUtc)
                 .ToListAsync();
@@ -50,12 +50,12 @@
             return (await _context.Smses.Find(filter).ToListAsync()).OrderByDescending(s => s.CreatedOnDateTimeUtc);
         }
 
-        public async Task<IEnumerable<Sms>> GetPendingOrFailedSmsesAsync()
+        public Task<List<Sms>> GetPendingOrFailedSmsesAsync()
         {
             var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date.AddDays(-2));
             filter &= Builders<Sms>.Filter.In(x => x.Status, new[] { SmsStatus.Pending, SmsStatus.Failed });
 
-            return await _context.Smses
+            return _context.Smses
                 .Find(filter)
                 .ToListAsync();
         }

@@ -25,9 +25,9 @@
             _oAuthClient = oAuthClient;
         }
 
-        public async Task<StatisticsReadModel> GetStatisticsAsync()
+        public Task<StatisticsReadModel> GetStatisticsAsync()
         {
-            return await GetAsync<StatisticsReadModel>(StatisticsEndpoint);
+            return GetAsync<StatisticsReadModel>(StatisticsEndpoint);
         }
 
         public async Task ReEvaluateAllExamsAsync()
@@ -43,9 +43,9 @@
                 .First(t => t.Name == name);
         }
 
-        public async Task<IEnumerable<UserModel>> GetUsersAsync()
+        public Task<IEnumerable<UserModel>> GetUsersAsync()
         {
-            return await GetAsync<IEnumerable<UserModel>>(UsersEndpoint);
+            return GetAsync<IEnumerable<UserModel>>(UsersEndpoint);
         }
 
         private async Task<TModel> GetAsync<TModel>(string requestUri)

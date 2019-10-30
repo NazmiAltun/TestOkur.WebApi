@@ -69,12 +69,12 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task PublishEventAsync(
+        private Task PublishEventAsync(
             Exam exam,
             IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            return _publishEndpoint.Publish(
                 new ExamCreated(exam, answerKeyOpticalForms),
                 cancellationToken);
         }

@@ -47,13 +47,11 @@
             };
         }
 
-        private async Task<IEnumerable<Sms>> GetTodaysSmsesAsync()
+        private Task<List<Sms>> GetTodaysSmsesAsync()
         {
             var filter = Builders<Sms>.Filter.Gte(x => x.CreatedOnDateTimeUtc, DateTime.UtcNow.Date);
 
-            return await _context.Smses
-                .Find(filter)
-                .ToListAsync();
+            return _context.Smses.Find(filter).ToListAsync();
         }
     }
 }

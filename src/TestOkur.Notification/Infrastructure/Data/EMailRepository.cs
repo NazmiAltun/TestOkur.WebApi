@@ -21,12 +21,12 @@
             await _context.Emails.InsertOneAsync(email);
         }
 
-        public async Task<List<EMail>> GetEmailsAsync(DateTime from, DateTime to)
+        public Task<List<EMail>> GetEmailsAsync(DateTime from, DateTime to)
         {
             var filter = Builders<EMail>.Filter.Gte(e => e.SentOnUtc, from.ToUniversalTime());
             filter &= Builders<EMail>.Filter.Lte(e => e.SentOnUtc, to.ToUniversalTime());
 
-            return await _context.Emails.Find(filter)
+            return _context.Emails.Find(filter)
                 .SortByDescending(e => e.SentOnUtc)
                 .ToListAsync();
         }

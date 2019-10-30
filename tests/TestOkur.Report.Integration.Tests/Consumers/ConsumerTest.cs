@@ -15,9 +15,9 @@
 
     public abstract class ConsumerTest : OpticalFormTest
     {
-        protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer)
+        protected Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer)
         {
-            return await ExecuteExamCreatedConsumerAsync(
+            return ExecuteExamCreatedConsumerAsync(
                 testServer,
                 GenerateAnswerKeyOpticalForms(4).ToList());
         }

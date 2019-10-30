@@ -164,10 +164,10 @@
             await _context.StudentOpticalForms.DeleteManyAsync(filter);
         }
 
-        public async Task<StudentOpticalForm> DeleteOneAsync(string id)
+        public Task<StudentOpticalForm> DeleteOneAsync(string id)
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.Id, id);
-            return await _context.StudentOpticalForms.FindOneAndDeleteAsync(filter);
+            return _context.StudentOpticalForms.FindOneAndDeleteAsync(filter);
         }
 
         private async Task UpdateStudentOpticalFormsSubject(int subjectId, string newSubjectName)

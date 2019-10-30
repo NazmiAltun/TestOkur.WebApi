@@ -47,12 +47,12 @@
                 cancellationToken);
         }
 
-        private async Task<Student> GetStudentAsync(
+        private Task<Student> GetStudentAsync(
             ApplicationDbContext dbContext,
             DeleteStudentCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Students.FirstOrDefaultAsync(
+            return dbContext.Students.FirstOrDefaultAsync(
                 l => l.Id == command.StudentId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);

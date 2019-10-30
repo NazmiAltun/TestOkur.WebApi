@@ -69,23 +69,23 @@
                 cancellationToken);
         }
 
-        private async Task<Classroom> GetClassroomAsync(
+        private Task<Classroom> GetClassroomAsync(
             ApplicationDbContext dbContext,
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Classrooms.FirstAsync(
+            return dbContext.Classrooms.FirstAsync(
                 l => l.Id == command.NewClassroomId &&
                      EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }
 
-        private async Task<Student> GetStudentAsync(
+        private Task<Student> GetStudentAsync(
             ApplicationDbContext dbContext,
             EditStudentCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Students
+            return dbContext.Students
                 .Include(s => s.Contacts)
                 .FirstOrDefaultAsync(
                     l => l.Id == command.StudentId &&

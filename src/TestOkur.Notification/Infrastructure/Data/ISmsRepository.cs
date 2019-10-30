@@ -12,10 +12,10 @@
 
         Task UpdateSmsAsync(Sms sms);
 
-        Task<IEnumerable<Sms>> GetTodaysSmsesAsync();
+        Task<List<Sms>> GetTodaysSmsesAsync();
 
         Task<IEnumerable<Sms>> GetUserSmsesAsync(string userSubjectId);
 
-        Task<IEnumerable<Sms>> GetPendingOrFailedSmsesAsync();
+        Task<List<Sms>> GetPendingOrFailedSmsesAsync();
     }
 }

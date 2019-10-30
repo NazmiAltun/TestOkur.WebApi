@@ -64,7 +64,7 @@
                 .Where(e => e.Message == "Uzun mesaj metni");
         }
 
-        private async Task<string> SendAsync(SmsClient smsClient, string subject, string body, string phone)
+        private Task<string> SendAsync(SmsClient smsClient, string subject, string body, string phone)
         {
             var sms = new Sms()
             {
@@ -74,7 +74,7 @@
                 Phone = phone,
             };
 
-            return await smsClient.SendAsync(sms);
+            return smsClient.SendAsync(sms);
         }
 
         private SmsClient CreateSmsClient(HttpStatusCode httpStatusCode)

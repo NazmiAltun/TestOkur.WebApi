@@ -21,9 +21,9 @@
             _oAuthClient = oAuthClient;
         }
 
-        public async Task<ReportStatisticsModel> GetStatisticsAsync()
+        public Task<ReportStatisticsModel> GetStatisticsAsync()
         {
-            return await GetAsync<ReportStatisticsModel>(StatisticsEndpoint);
+            return GetAsync<ReportStatisticsModel>(StatisticsEndpoint);
         }
 
         private async Task<TModel> GetAsync<TModel>(string requestUri)

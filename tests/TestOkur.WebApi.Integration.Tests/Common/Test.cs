@@ -118,9 +118,9 @@
                 captcha?.Code ?? "NONONO");
         }
 
-        private async Task<TestServer> CreateAsync()
+        private Task<TestServer> CreateAsync()
         {
-            return await TestServerFactory.CreateAsync();
+            return TestServerFactory.CreateAsync();
         }
     }
 }

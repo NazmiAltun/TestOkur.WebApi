@@ -90,12 +90,12 @@
                 await dbContext.Lessons.FirstAsync(l => l.Id == id);
         }
 
-        private async Task<Exam> GetExamAsync(
+        private Task<Exam> GetExamAsync(
             ApplicationDbContext dbContext,
             EditExamCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Exams
+            return dbContext.Exams
                 .FirstOrDefaultAsync(
                     l => l.Id == command.ExamId &&
                          EF.Property<int>(l, "CreatedBy") == command.UserId,

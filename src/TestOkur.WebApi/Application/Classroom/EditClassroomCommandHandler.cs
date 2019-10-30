@@ -74,12 +74,12 @@
             }
         }
 
-        private async Task<Classroom> GetClassroomAsync(
+        private Task<Classroom> GetClassroomAsync(
             ApplicationDbContext dbContext,
             EditClassroomCommand command,
             CancellationToken cancellationToken)
         {
-            return await dbContext.Classrooms.FirstOrDefaultAsync(
+            return dbContext.Classrooms.FirstOrDefaultAsync(
                 l => l.Id == command.ClassroomId && EF.Property<int>(l, "CreatedBy") == command.UserId,
                 cancellationToken);
         }

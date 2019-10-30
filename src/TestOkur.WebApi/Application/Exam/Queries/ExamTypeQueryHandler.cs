@@ -68,9 +68,9 @@
             }
         }
 
-        private async Task<IReadOnlyCollection<OpticalFormTypeReadModel>> GetOpticalFormTypesAsync(CancellationToken cancellationToken)
+        private Task<IReadOnlyCollection<OpticalFormTypeReadModel>> GetOpticalFormTypesAsync(CancellationToken cancellationToken)
         {
-            return await _queryProcessor
+            return _queryProcessor
                 .ExecuteAsync(new GetAllOpticalFormTypesQuery(), cancellationToken);
         }
     }
