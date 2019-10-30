@@ -21,7 +21,6 @@
     using Prometheus;
     using RazorLight;
     using System;
-    using System.Linq;
     using System.Net.Http;
     using System.Reflection;
     using TestOkur.Common;

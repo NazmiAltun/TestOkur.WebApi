@@ -2,7 +2,6 @@
 {
     using CacheManager.Core;
     using HealthChecks.UI.Client;
-    using IdentityModel;
     using MassTransit;
     using MassTransit.RabbitMqTransport;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -83,7 +82,10 @@
 
         private void AddHealthChecks(IServiceCollection services)
         {
-            services.AddHealthChecks();
+            var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+            services.AddHealthChecks()
+                .AddRabbitMQ(rabbitMqUri)
+                .AddIdentityServer(new Uri(OAuthConfiguration.Authority));
         }
 
         private void AddCache(IServiceCollection services)

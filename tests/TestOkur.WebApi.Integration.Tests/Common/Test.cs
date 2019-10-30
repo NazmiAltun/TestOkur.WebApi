@@ -13,7 +13,6 @@
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.City;
-    using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Commands;
 
     public abstract class Test
