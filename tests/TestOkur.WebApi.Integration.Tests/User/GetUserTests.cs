@@ -17,29 +17,25 @@
 
     public class GetUserTests : UserTest
     {
-        private const string Numbers = "123456789";
-
         [Fact]
         public async Task GivenGetRecords_ShouldReturnCountOfUserRecords()
         {
-            using (var testServer = await CreateWithUserAsync())
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            for (var i = 0; i < 2; i++)
             {
-                var client = testServer.CreateClient();
-                for (var i = 0; i < 2; i++)
-                {
-                    await CreateClassroomAsync(client);
-                    await CreateLessonAsync(client);
-                    await CreateStudentAsync(client);
-                }
-
-                var response = await client.GetAsync($"{ApiPath}/record-counts");
-                response.EnsureSuccessStatusCode();
-                var records = await response.ReadAsync<UserRecords>();
-                records.ClassroomCount.Should().Be(2);
-                records.LessonCount.Should().Be(2);
-                records.StudentCount.Should().Be(2);
-                records.ExamCount.Should().Be(0);
+                await CreateClassroomAsync(client);
+                await CreateLessonAsync(client);
+                await CreateStudentAsync(client);
             }
+
+            var response = await client.GetAsync($"{ApiPath}/record-counts");
+            response.EnsureSuccessStatusCode();
+            var records = await response.ReadAsync<UserRecords>();
+            records.ClassroomCount.Should().Be(2);
+            records.LessonCount.Should().Be(2);
+            records.StudentCount.Should().Be(2);
+            records.ExamCount.Should().Be(0);
         }
 
         [Fact]
