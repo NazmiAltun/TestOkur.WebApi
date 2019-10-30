@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Error
 {
     using FluentAssertions;
-    using Microsoft.AspNetCore.Http;
     using System.IO;
     using System.Net.Http;
     using System.Threading.Tasks;
