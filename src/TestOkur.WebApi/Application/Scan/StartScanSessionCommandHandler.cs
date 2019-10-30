@@ -24,7 +24,7 @@
             StartScanSessionCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var exam = await GetExamAsync(dbContext, command.ExamId, cancellationToken);
                 var session = new ExamScanSession(

@@ -40,32 +40,30 @@
             GetUserUnitsQuery query,
             CancellationToken cancellationToken = default)
         {
-            await using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                var dictionary = new Dictionary<int, UnitReadModel>();
+            await using var connection = new NpgsqlConnection(_connectionString);
+            var dictionary = new Dictionary<int, UnitReadModel>();
 
-                return (await connection.QueryAsync<UnitReadModel, SubjectReadModel, UnitReadModel>(
-                        Sql,
-                        (unit, subject) =>
+            return (await connection.QueryAsync<UnitReadModel, SubjectReadModel, UnitReadModel>(
+                    Sql,
+                    (unit, subject) =>
+                    {
+                        if (!dictionary.TryGetValue(unit.Id, out var unitEntry))
                         {
-                            if (!dictionary.TryGetValue(unit.Id, out var unitEntry))
-                            {
-                                unitEntry = unit;
-                                dictionary.Add(unitEntry.Id, unitEntry);
-                            }
+                            unitEntry = unit;
+                            dictionary.Add(unitEntry.Id, unitEntry);
+                        }
 
-                            if (subject != null)
-                            {
-                                unitEntry.Subjects.Add(subject);
-                            }
+                        if (subject != null)
+                        {
+                            unitEntry.Subjects.Add(subject);
+                        }
 
-                            return unitEntry;
-                        },
-                        new { query.UserId },
-                        splitOn: "subject_id"))
-                    .Distinct()
-                    .ToList();
-            }
+                        return unitEntry;
+                    },
+                    new { query.UserId },
+                    splitOn: "subject_id"))
+                .Distinct()
+                .ToList();
         }
     }
 }

@@ -105,24 +105,24 @@
             }
         }
 
-        private async Task PublishEventAsync(
+        private Task PublishEventAsync(
             CreateUserCommand command,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
-                new NewUserRegistered(
-                    command.Email,
-                    command.RegistrarFullName,
-                    command.RegistrarPhone,
-                    command.UserFirstName,
-                    command.UserLastName,
-                    command.SchoolName,
-                    command.UserPhone,
-                    command.LicenseTypeName,
-                    command.DistrictName,
-                    command.CityName,
-                    command.Password,
-                    command.Referrer), cancellationToken);
+            return _publishEndpoint.Publish(
+                 new NewUserRegistered(
+                     command.Email,
+                     command.RegistrarFullName,
+                     command.RegistrarPhone,
+                     command.UserFirstName,
+                     command.UserLastName,
+                     command.SchoolName,
+                     command.UserPhone,
+                     command.LicenseTypeName,
+                     command.DistrictName,
+                     command.CityName,
+                     command.Password,
+                     command.Referrer), cancellationToken);
         }
 
         private async Task ValidateReferrerAsync(ApplicationDbContext dbContext, CreateUserCommand command)

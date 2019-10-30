@@ -33,7 +33,7 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureLessonDoesNotExistAsync(command, cancellationToken);
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 dbContext.Lessons.Add(command.ToDomainModel());
                 await dbContext.SaveChangesAsync(cancellationToken);

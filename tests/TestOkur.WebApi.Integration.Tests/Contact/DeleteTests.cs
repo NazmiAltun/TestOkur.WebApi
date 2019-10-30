@@ -12,16 +12,14 @@
         {
             const string ApiPath = "api/v1/contacts";
 
-            using (var testServer = await CreateWithUserAsync())
-            {
-                var client = testServer.CreateClient();
-                var command = await CreateContactAsync(client);
-                var id = (await GetListAsync(client))
-                    .First(c => c.Phone == command.Phone).Id;
-                await client.DeleteAsync($"{ApiPath}/{id}");
-                (await GetListAsync(client)).Should()
-                    .NotContain(l => l.Phone == command.Phone);
-            }
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            var command = await CreateContactAsync(client);
+            var id = (await GetListAsync(client))
+                .First(c => c.Phone == command.Phone).Id;
+            await client.DeleteAsync($"{ApiPath}/{id}");
+            (await GetListAsync(client)).Should()
+                .NotContain(l => l.Phone == command.Phone);
         }
     }
 }

@@ -18,52 +18,50 @@
         [Fact]
         public async Task WhenNotExistingValuesPosted_Then_ShouldEdit()
         {
-            using (var testServer = await CreateWithUserAsync())
-            {
-                var client = testServer.CreateClient();
-                var createCommand = await CreateStudentAsync(client);
-                var list = await GetListAsync(client);
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            var createCommand = await CreateStudentAsync(client);
+            var list = await GetListAsync(client);
 
-                var editCommand = new EditStudentCommand(
-                    Guid.NewGuid(),
-                    list.First(s => s.StudentNumber == createCommand.StudentNumber).Id,
-                    Random.RandomString(5),
-                    Random.RandomString(5),
-                    Random.Next(StudentNumber.Min, StudentNumber.Max),
-                    createCommand.ClassroomId,
-                    Random.RandomString(300),
-                    new[]
-                    {
-                        new CreateContactCommand(
-                            Guid.NewGuid(),
-                            Random.RandomString(10),
-                            Random.RandomString(10),
-                            RandomGen.Phone(),
-                            1),
-                        new CreateContactCommand(
-                            Guid.NewGuid(),
-                            Random.RandomString(10),
-                            Random.RandomString(10),
-                            RandomGen.Phone(),
-                            2),
-                    }.ToList());
-                await client.PutAsync(ApiPath, editCommand.ToJsonContent());
-                list = await GetListAsync(client);
-                list.Should().Contain(s => s.StudentNumber == editCommand.NewStudentNumber &&
-                                           s.Contacts.Count == editCommand.Contacts.Count &&
-                                           s.ClassroomId == editCommand.NewClassroomId &&
-                                           s.Contacts.Any(c => c.Phone == editCommand.Contacts.First().Phone) &&
-                                           s.FirstName == editCommand.NewFirstName &&
-                                           s.LastName == editCommand.NewLastName)
-                    .And
-                    .NotContain(s => s.StudentNumber == createCommand.StudentNumber);
-                var @event = Consumer.Instance.GetFirst<IStudentUpdated>();
-                @event.StudentId.Should().Be(editCommand.StudentId);
-                @event.ClassroomId.Should().Be(editCommand.NewClassroomId);
-                @event.FirstName.Should().Be(editCommand.NewFirstName);
-                @event.LastName.Should().Be(editCommand.NewLastName);
-                @event.StudentNumber.Should().Be(editCommand.NewStudentNumber);
-            }
+            var editCommand = new EditStudentCommand(
+                Guid.NewGuid(),
+                list.First(s => s.StudentNumber == createCommand.StudentNumber).Id,
+                Random.RandomString(5),
+                Random.RandomString(5),
+                Random.Next(StudentNumber.Min, StudentNumber.Max),
+                createCommand.ClassroomId,
+                Random.RandomString(300),
+                new[]
+                {
+                    new CreateContactCommand(
+                        Guid.NewGuid(),
+                        Random.RandomString(10),
+                        Random.RandomString(10),
+                        RandomGen.Phone(),
+                        1),
+                    new CreateContactCommand(
+                        Guid.NewGuid(),
+                        Random.RandomString(10),
+                        Random.RandomString(10),
+                        RandomGen.Phone(),
+                        2),
+                }.ToList());
+            await client.PutAsync(ApiPath, editCommand.ToJsonContent());
+            list = await GetListAsync(client);
+            list.Should().Contain(s => s.StudentNumber == editCommand.NewStudentNumber &&
+                                       s.Contacts.Count == editCommand.Contacts.Count &&
+                                       s.ClassroomId == editCommand.NewClassroomId &&
+                                       s.Contacts.Any(c => c.Phone == editCommand.Contacts.First().Phone) &&
+                                       s.FirstName == editCommand.NewFirstName &&
+                                       s.LastName == editCommand.NewLastName)
+                .And
+                .NotContain(s => s.StudentNumber == createCommand.StudentNumber);
+            var @event = Consumer.Instance.GetFirst<IStudentUpdated>();
+            @event.StudentId.Should().Be(editCommand.StudentId);
+            @event.ClassroomId.Should().Be(editCommand.NewClassroomId);
+            @event.FirstName.Should().Be(editCommand.NewFirstName);
+            @event.LastName.Should().Be(editCommand.NewLastName);
+            @event.StudentNumber.Should().Be(editCommand.NewStudentNumber);
         }
     }
 }

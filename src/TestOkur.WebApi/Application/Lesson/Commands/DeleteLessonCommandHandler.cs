@@ -22,7 +22,7 @@
             DeleteLessonCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var lesson = await GetAsync(dbContext, command, cancellationToken);
 

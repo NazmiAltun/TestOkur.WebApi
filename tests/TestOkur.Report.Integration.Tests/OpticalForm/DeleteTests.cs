@@ -18,34 +18,32 @@
         {
             var userId = RandomGen.Next(10000);
 
-            using (var testServer = Create(userId))
-            {
-                var client = testServer.CreateClient();
+            using var testServer = Create(userId);
+            var client = testServer.CreateClient();
 
-                var forms = new List<StudentOpticalForm>
+            var forms = new List<StudentOpticalForm>
+            {
+                new StudentOpticalForm('A')
                 {
-                    new StudentOpticalForm('A')
+                    ExamId = RandomGen.Next(),
+                    StudentId = RandomGen.Next(),
+                    UserId = userId.ToString(),
+                    Sections = new List<StudentOpticalFormSection>
                     {
-                        ExamId = RandomGen.Next(),
-                        StudentId = RandomGen.Next(),
-                        UserId = userId.ToString(),
-                        Sections = new List<StudentOpticalFormSection>
-                        {
-                            new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(1, "TEST")),
-                        },
+                        new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(1, "TEST")),
                     },
-                };
-                var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-                var form = (await GetListAsync<StudentOpticalForm>(
-                    client, forms.First().ExamId)).First();
-                await client.DeleteAsync($"{ApiPath}/{form.Id}");
-                form = (await GetListAsync<StudentOpticalForm>(
-                    client, forms.First().ExamId)).FirstOrDefault();
-                form.Should().BeNull();
-                var events = Consumer.Instance.GetAll<IEvaluateExam>().ToList();
-                events.Should().Contain(e => e.ExamId == forms.First().ExamId);
-            }
+                },
+            };
+            var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
+            response.EnsureSuccessStatusCode();
+            var form = (await GetListAsync<StudentOpticalForm>(
+                client, forms.First().ExamId)).First();
+            await client.DeleteAsync($"{ApiPath}/{form.Id}");
+            form = (await GetListAsync<StudentOpticalForm>(
+                client, forms.First().ExamId)).FirstOrDefault();
+            form.Should().BeNull();
+            var events = Consumer.Instance.GetAll<IEvaluateExam>().ToList();
+            events.Should().Contain(e => e.ExamId == forms.First().ExamId);
         }
     }
 }

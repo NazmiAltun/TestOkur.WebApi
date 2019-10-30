@@ -10,12 +10,10 @@
         [Fact]
         public async Task PersistAnswerKeyForms_When_ValidMessagePassed()
         {
-            using (var testServer = Create())
-            {
-                var examId = await ExecuteExamCreatedConsumerAsync(testServer);
-                var list = await GetListAsync<AnswerKeyOpticalForm>(testServer.CreateClient(), examId);
-                list.Should().NotBeEmpty();
-            }
+            using var testServer = Create();
+            var examId = await ExecuteExamCreatedConsumerAsync(testServer);
+            var list = await GetListAsync<AnswerKeyOpticalForm>(testServer.CreateClient(), examId);
+            list.Should().NotBeEmpty();
         }
     }
 }

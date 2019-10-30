@@ -29,7 +29,7 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureContactDoesNotExist(command, cancellationToken);
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 dbContext.Contacts.Add(command.ToDomainModel());
                 dbContext.Attach(command.ToDomainModel().ContactType);

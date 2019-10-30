@@ -45,10 +45,8 @@
                 "uploads",
                 file.FileName);
 
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
+            await using var stream = new FileStream(path, FileMode.Create);
+            await file.CopyToAsync(stream);
         }
     }
 }

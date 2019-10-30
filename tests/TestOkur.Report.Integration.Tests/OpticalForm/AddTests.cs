@@ -49,17 +49,15 @@
             studentForm.UserId = userId.ToString();
             studentForm.ExamId = RandomGen.Next();
 
-            using (var testServer = Create(userId))
-            {
-                var client = testServer.CreateClient();
+            using var testServer = Create(userId);
+            var client = testServer.CreateClient();
 
-                var forms = new List<StudentOpticalForm>
-                {
-                    studentForm,
-                };
-                var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-            }
+            var forms = new List<StudentOpticalForm>
+            {
+                studentForm,
+            };
+            var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
+            response.EnsureSuccessStatusCode();
         }
 
         [Fact]
@@ -100,29 +98,27 @@
         public async Task ShouldAddStudentOpticalForms()
         {
             var userId = RandomGen.Next(10000);
-            using (var testServer = Create(userId))
+            using var testServer = Create(userId);
+            var examId = RandomGen.Next();
+            var client = testServer.CreateClient();
+            var forms = new List<StudentOpticalForm>
             {
-                var examId = RandomGen.Next();
-                var client = testServer.CreateClient();
-                var forms = new List<StudentOpticalForm>
-                {
-                    GenerateStudentForm(examId, userId),
-                    GenerateStudentForm(examId, userId),
-                    GenerateStudentForm(examId, userId),
-                    GenerateStudentForm(examId, userId),
-                    GenerateStudentForm(examId, userId),
-                    GenerateStudentForm(examId, userId),
-                };
-                var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-                var examForms = await GetListAsync<StudentOpticalForm>(client, examId);
-                examForms.Select(e => e.StudentNumber)
-                    .Should().BeEquivalentTo(forms.Select(e => e.StudentNumber));
-                examForms.Select(e => e.ExamId)
-                    .Should().BeEquivalentTo(forms.Select(e => e.ExamId));
-                examForms.Select(e => e.Booklet)
-                    .Should().BeEquivalentTo(forms.Select(e => e.Booklet));
-            }
+                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(examId, userId),
+            };
+            var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
+            response.EnsureSuccessStatusCode();
+            var examForms = await GetListAsync<StudentOpticalForm>(client, examId);
+            examForms.Select(e => e.StudentNumber)
+                .Should().BeEquivalentTo(forms.Select(e => e.StudentNumber));
+            examForms.Select(e => e.ExamId)
+                .Should().BeEquivalentTo(forms.Select(e => e.ExamId));
+            examForms.Select(e => e.Booklet)
+                .Should().BeEquivalentTo(forms.Select(e => e.Booklet));
         }
 
         private List<AnswerKeyQuestionAnswer> ParseAnswers(string answers)

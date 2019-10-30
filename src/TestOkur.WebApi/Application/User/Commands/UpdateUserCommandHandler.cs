@@ -32,20 +32,18 @@
 
         public async Task UpdateAsync(UpdateUserCommand command, int userId, CancellationToken cancellationToken)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using var dbContext = _dbContextFactory.Create(command.UserId);
+            var user = await GetUserAsync(dbContext, userId, cancellationToken);
+
+            if (user.Email == "demo@testokur.com")
             {
-                var user = await GetUserAsync(dbContext, userId, cancellationToken);
-
-                if (user.Email == "demo@testokur.com")
-                {
-                    return;
-                }
-
-                var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
-                var district = city.Districts.First(d => d.Id == command.DistrictId);
-                user.Update(city, district, command.SchoolName, command.MobilePhone);
-                await dbContext.SaveChangesAsync(cancellationToken);
+                return;
             }
+
+            var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
+            var district = city.Districts.First(d => d.Id == command.DistrictId);
+            user.Update(city, district, command.SchoolName, command.MobilePhone);
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         private async Task<User> GetUserAsync(

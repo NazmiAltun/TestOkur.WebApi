@@ -34,12 +34,10 @@
 							   WHERE c.created_by=@userId
 							   ORDER BY c.first_name_value , c.last_name_value";
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<ContactReadModel>(
-                    sql,
-                    new { userId = query.UserId })).ToList();
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<ContactReadModel>(
+                sql,
+                new { userId = query.UserId })).ToList();
         }
     }
 }

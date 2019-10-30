@@ -26,7 +26,7 @@
             CloneScoreFormulaCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var scoreFormulas = await dbContext.ScoreFormulas
                     .Include(s => s.FormulaType)

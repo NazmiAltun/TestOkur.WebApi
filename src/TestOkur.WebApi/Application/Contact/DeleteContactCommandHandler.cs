@@ -22,7 +22,7 @@
             DeleteContactCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var contact = await GetContactAsync(dbContext, command, cancellationToken);
 

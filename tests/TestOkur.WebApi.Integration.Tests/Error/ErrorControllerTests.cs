@@ -20,52 +20,38 @@
         [Fact]
         public async Task When_ErrorPosted_Then_EventShouldBePublished()
         {
-            using (var testServer = await CreateWithUserAsync())
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            var imagePath = string.Empty;
+
+            await using (var stream = File.OpenRead(Path.Combine("Error", "ss.png")))
             {
-                var client = testServer.CreateClient();
-                var imagePath = string.Empty;
-
-                using (var stream = File.OpenRead(Path.Combine("Error", "ss.png")))
+                var response = await client.PostAsync($"{ApiPath}/upload", new MultipartFormDataContent()
                 {
-                    var response = await client.PostAsync($"{ApiPath}/upload", new MultipartFormDataContent()
-                    {
-                        { new ByteArrayContent(stream.ToByteArray()), "file", "ss.png" },
-                    });
-                    response.EnsureSuccessStatusCode();
-                    imagePath = await response.ReadAsync<string>();
-                }
-
-                var model = new ErrorModel(
-                    $"{RandomGen.String(20)}@gmail.com",
-                    RandomGen.Next().ToString(),
-                    RandomGen.Next(),
-                    RandomGen.Next(),
-                    RandomGen.String(20),
-                    imagePath,
-                    null,
-                    null,
-                    "Houston!We've a problem");
-                await client.PostAsync(ApiPath, model.ToJsonContent());
-                Consumer.Instance.GetAll<IUserErrorReceived>()
-                    .Should().Contain(x =>
-                        x.ReporterUserId == model.ReporterUserId &&
-                        x.Description == model.Description &&
-                        x.ExamId == model.ExamId &&
-                        x.Image1FilePath == imagePath &&
-                        x.ExamName == model.ExamName);
+                    { new ByteArrayContent(stream.ToByteArray()), "file", "ss.png" },
+                });
+                response.EnsureSuccessStatusCode();
+                imagePath = await response.ReadAsync<string>();
             }
-        }
 
-        private FormFile GetFormFile()
-        {
-            using (var stream = File.OpenRead(@"Error\ErrorSS.png"))
-            {
-                return new FormFile(stream, 0, stream.Length, null, Path.GetFileName(stream.Name))
-                {
-                    Headers = new HeaderDictionary(),
-                    ContentType = "application/png",
-                };
-            }
+            var model = new ErrorModel(
+                $"{RandomGen.String(20)}@gmail.com",
+                RandomGen.Next().ToString(),
+                RandomGen.Next(),
+                RandomGen.Next(),
+                RandomGen.String(20),
+                imagePath,
+                null,
+                null,
+                "Houston!We've a problem");
+            await client.PostAsync(ApiPath, model.ToJsonContent());
+            Consumer.Instance.GetAll<IUserErrorReceived>()
+                .Should().Contain(x =>
+                    x.ReporterUserId == model.ReporterUserId &&
+                    x.Description == model.Description &&
+                    x.ExamId == model.ExamId &&
+                    x.Image1FilePath == imagePath &&
+                    x.ExamName == model.ExamName);
         }
     }
 }

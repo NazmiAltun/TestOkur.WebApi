@@ -25,7 +25,7 @@
             DeleteUserCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var user = await dbContext.Users.FirstOrDefaultAsync(
                     l => l.Id == command.DeleteUserId, cancellationToken);

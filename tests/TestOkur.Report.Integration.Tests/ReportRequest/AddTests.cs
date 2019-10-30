@@ -16,26 +16,24 @@
         {
             var userId = RandomGen.Next(10000);
 
-            using (var testServer = Create(userId))
+            using var testServer = Create(userId);
+            var client = testServer.CreateClient();
+            var request = new ReportRequest()
             {
-                var client = testServer.CreateClient();
-                var request = new ReportRequest()
-                {
-                    Booklet = "A",
-                    Classroom = "All",
-                    ExamId = RandomGen.Next(),
-                    ExamName = RandomGen.String(100),
-                    ExportType = RandomGen.String(100),
-                    Id = Guid.NewGuid(),
-                    ReportType = RandomGen.String(100),
-                    RequestDateTimeUtc = DateTime.UtcNow.AddSeconds(-2),
-                    ResponseDateTimeUtc = DateTime.UtcNow.AddSeconds(1),
-                    UserId = userId.ToString(),
-                    UserEmail = RandomGen.String(100),
-                };
-                var response = await client.PostAsync(ApiPath, request.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-            }
+                Booklet = "A",
+                Classroom = "All",
+                ExamId = RandomGen.Next(),
+                ExamName = RandomGen.String(100),
+                ExportType = RandomGen.String(100),
+                Id = Guid.NewGuid(),
+                ReportType = RandomGen.String(100),
+                RequestDateTimeUtc = DateTime.UtcNow.AddSeconds(-2),
+                ResponseDateTimeUtc = DateTime.UtcNow.AddSeconds(1),
+                UserId = userId.ToString(),
+                UserEmail = RandomGen.String(100),
+            };
+            var response = await client.PostAsync(ApiPath, request.ToJsonContent());
+            response.EnsureSuccessStatusCode();
         }
     }
 }

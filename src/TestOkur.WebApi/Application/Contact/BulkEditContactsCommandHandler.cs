@@ -26,7 +26,7 @@
             CancellationToken cancellationToken = default)
         {
             var contactTypes = Domain.SeedWork.Enumeration.GetAll<ContactType>();
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 foreach (var subCommand in command.Commands)
                 {

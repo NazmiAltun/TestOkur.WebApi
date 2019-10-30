@@ -33,7 +33,7 @@
             EditStudentCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 await EnsureNotExistsAsync(command, cancellationToken);
                 var student = await GetStudentAsync(dbContext, command, cancellationToken);

@@ -17,21 +17,19 @@
         [Fact]
         public async Task FormulaShouldBeUpdated()
         {
-            using (var testServer = await CreateWithUserAsync())
-            {
-                var client = testServer.CreateClient();
-                var formulas = await GetScoreFormulaList(client);
-                await EditScoreFormulaAsync(client, formulas);
-                formulas = await GetScoreFormulaList(client);
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            var formulas = await GetScoreFormulaList(client);
+            await EditScoreFormulaAsync(client, formulas);
+            formulas = await GetScoreFormulaList(client);
 
-                foreach (var formula in formulas)
-                {
-                    formula.BasePoint.Should().Be(BasePoint);
-                    formula.Coefficients
-                        .Select(c => c.Coefficient)
-                        .Should()
-                        .AllBeEquivalentTo(Coefficient);
-                }
+            foreach (var formula in formulas)
+            {
+                formula.BasePoint.Should().Be(BasePoint);
+                formula.Coefficients
+                    .Select(c => c.Coefficient)
+                    .Should()
+                    .AllBeEquivalentTo(Coefficient);
             }
         }
 

@@ -42,14 +42,12 @@
 
         private async Task UpdateWebApiUserAsync(UpdateUserByAdminCommand command, CancellationToken cancellationToken)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
-            {
-                var user = await GetUserAsync(dbContext, command.UpdatedUserId, cancellationToken);
-                var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
-                var district = city.Districts.First(d => d.Id == command.DistrictId);
-                user.Update(command.Email, command.FirstName, command.LastName, city, district, command.SchoolName, command.MobilePhone, command.Referrer, command.Notes);
-                await dbContext.SaveChangesAsync(cancellationToken);
-            }
+            await using var dbContext = _dbContextFactory.Create(command.UserId);
+            var user = await GetUserAsync(dbContext, command.UpdatedUserId, cancellationToken);
+            var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
+            var district = city.Districts.First(d => d.Id == command.DistrictId);
+            user.Update(command.Email, command.FirstName, command.LastName, city, district, command.SchoolName, command.MobilePhone, command.Referrer, command.Notes);
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         private async Task<User> GetUserAsync(ApplicationDbContext dbContext, int userId, CancellationToken cancellationToken)

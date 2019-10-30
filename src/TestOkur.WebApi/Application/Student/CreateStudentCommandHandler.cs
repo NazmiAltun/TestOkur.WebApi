@@ -29,7 +29,7 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureStudentDoesNotExists(command, cancellationToken);
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var classroom = await dbContext.Classrooms.FirstAsync(c => c.Id == command.ClassroomId, cancellationToken);
                 dbContext.Students.Add(command.ToDomainModel(classroom));

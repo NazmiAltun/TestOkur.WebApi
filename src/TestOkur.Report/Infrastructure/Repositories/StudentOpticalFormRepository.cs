@@ -175,19 +175,17 @@
             var filter = Builders<StudentOpticalForm>.Filter.Eq(
                 "Sections.Answers.SubjectId", subjectId);
 
-            using (var cursor = await _context.StudentOpticalForms.FindAsync(filter))
+            using var cursor = await _context.StudentOpticalForms.FindAsync(filter);
+            await cursor.ForEachAsync(form =>
             {
-                await cursor.ForEachAsync(form =>
+                foreach (var answer in form.Sections.SelectMany(s => s.Answers)
+                    .Where(a => a.SubjectId == subjectId))
                 {
-                    foreach (var answer in form.Sections.SelectMany(s => s.Answers)
-                        .Where(a => a.SubjectId == subjectId))
-                    {
-                        answer.SubjectName = newSubjectName;
-                    }
+                    answer.SubjectName = newSubjectName;
+                }
 
-                    _context.StudentOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
-                });
-            }
+                _context.StudentOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
+            });
         }
 
         private async Task DeleteStudentOpticalFormsByExamIdAsync(int examId)

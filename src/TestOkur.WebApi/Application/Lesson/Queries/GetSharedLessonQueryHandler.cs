@@ -26,12 +26,10 @@
 							   WHERE created_by=0
 	                           ORDER BY name_value";
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection
                     .QueryAsync<LessonReadModel>(sql))
-                    .ToList();
-            }
+                .ToList();
         }
     }
 }

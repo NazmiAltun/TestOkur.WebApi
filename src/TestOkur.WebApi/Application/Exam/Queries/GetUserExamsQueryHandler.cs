@@ -52,12 +52,10 @@
 								WHERE e.created_by=@userId OR e.shared=true
 								ORDER BY e.shared DESC, e.created_on_utc DESC";
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<ExamReadModel>(
-                    sql,
-                    new { userId = query.UserId })).ToList();
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<ExamReadModel>(
+                sql,
+                new { userId = query.UserId })).ToList();
         }
     }
 }

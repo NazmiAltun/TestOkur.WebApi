@@ -23,10 +23,8 @@
             GetAllExamIdsQuery query,
             CancellationToken cancellationToken = default)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<int>("SELECT id FROM exams")).ToList();
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<int>("SELECT id FROM exams")).ToList();
         }
     }
 }

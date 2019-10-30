@@ -10,16 +10,14 @@
         [Fact]
         public async Task ShouldDelete()
         {
-            using (var testServer = await CreateWithUserAsync())
-            {
-                var client = testServer.CreateClient();
-                var command = await CreateLessonAsync(client);
-                var id = (await GetLessonListAsync(client))
-                    .First(l => l.Name == command.Name).Id;
-                await client.DeleteAsync($"{ApiPath}/{id}");
-                (await GetLessonListAsync(client)).Should()
-                    .NotContain(l => l.Name == command.Name);
-            }
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            var command = await CreateLessonAsync(client);
+            var id = (await GetLessonListAsync(client))
+                .First(l => l.Name == command.Name).Id;
+            await client.DeleteAsync($"{ApiPath}/{id}");
+            (await GetLessonListAsync(client)).Should()
+                .NotContain(l => l.Name == command.Name);
         }
     }
 }

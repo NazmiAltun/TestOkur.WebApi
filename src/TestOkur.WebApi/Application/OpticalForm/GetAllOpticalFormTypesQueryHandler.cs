@@ -54,12 +54,10 @@
         public override async Task<IReadOnlyCollection<OpticalFormTypeReadModel>> ExecuteAsync(
             GetAllOpticalFormTypesQuery query, CancellationToken cancellationToken = default)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                var definitions = await GetDefinitionsAsync(connection);
-                var formTypes = await GetFormTypesAsync(connection);
-                return PopulateFormTypes(formTypes, definitions);
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            var definitions = await GetDefinitionsAsync(connection);
+            var formTypes = await GetFormTypesAsync(connection);
+            return PopulateFormTypes(formTypes, definitions);
         }
 
         private IReadOnlyCollection<OpticalFormTypeReadModel> PopulateFormTypes(List<OpticalFormTypeReadModel> formTypes, List<OpticalFormDefinitionReadModel> definitions)

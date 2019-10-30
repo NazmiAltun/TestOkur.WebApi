@@ -20,19 +20,17 @@
 
         public async Task SendAsync(MailMessage mailMessage)
         {
-            using (var client = new SmtpClient(_smtpConfiguration.Host, _smtpConfiguration.Port))
-            {
-                client.EnableSsl = _smtpConfiguration.EnableSsl;
-                client.UseDefaultCredentials = _smtpConfiguration.UseDefaultCredentials;
-                client.Credentials = new NetworkCredential(_smtpConfiguration.Username, _smtpConfiguration.Password);
-                mailMessage.From = new MailAddress(_smtpConfiguration.Username, _smtpConfiguration.FromName);
-                mailMessage.IsBodyHtml = true;
-                mailMessage.Priority = MailPriority.Normal;
-                mailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            using var client = new SmtpClient(_smtpConfiguration.Host, _smtpConfiguration.Port);
+            client.EnableSsl = _smtpConfiguration.EnableSsl;
+            client.UseDefaultCredentials = _smtpConfiguration.UseDefaultCredentials;
+            client.Credentials = new NetworkCredential(_smtpConfiguration.Username, _smtpConfiguration.Password);
+            mailMessage.From = new MailAddress(_smtpConfiguration.Username, _smtpConfiguration.FromName);
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Priority = MailPriority.Normal;
+            mailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
-                await client.SendMailAsync(mailMessage);
-                await _emailRepository.AddAsync(mailMessage.ToEMail());
-            }
+            await client.SendMailAsync(mailMessage);
+            await _emailRepository.AddAsync(mailMessage.ToEMail());
         }
     }
 }

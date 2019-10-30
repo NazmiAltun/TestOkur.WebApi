@@ -37,7 +37,7 @@
         {
             List<StudentReadModel> students;
 
-            using (var connection = new NpgsqlConnection(_connectionString))
+            await using (var connection = new NpgsqlConnection(_connectionString))
             {
                 students = (await connection.QueryAsync<StudentReadModel>(
                     Sql,

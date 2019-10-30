@@ -20,10 +20,8 @@
             var response = await client.GetAsync($"{ApiPath}/{id}");
             response.EnsureSuccessStatusCode();
             var stream = await response.Content.ReadAsStreamAsync();
-            using (var image = Image.FromStream(stream))
-            {
-                image.RawFormat.Should().Be(ImageFormat.Png);
-            }
+            using var image = Image.FromStream(stream);
+            image.RawFormat.Should().Be(ImageFormat.Png);
         }
     }
 }

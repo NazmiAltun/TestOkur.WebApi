@@ -57,19 +57,17 @@
             var filter = Builders<AnswerKeyOpticalForm>.Filter.Eq(
                 "Sections.Answers.SubjectId", subjectId);
 
-            using (var cursor = await _context.AnswerKeyOpticalForms.FindAsync(filter))
+            using var cursor = await _context.AnswerKeyOpticalForms.FindAsync(filter);
+            await cursor.ForEachAsync(form =>
             {
-                await cursor.ForEachAsync(form =>
+                foreach (var answer in form.Sections.SelectMany(s => s.Answers)
+                    .Where(a => a.SubjectId == subjectId))
                 {
-                    foreach (var answer in form.Sections.SelectMany(s => s.Answers)
-                        .Where(a => a.SubjectId == subjectId))
-                    {
-                        answer.SubjectName = newSubjectName;
-                    }
+                    answer.SubjectName = newSubjectName;
+                }
 
-                    _context.AnswerKeyOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
-                });
-            }
+                _context.AnswerKeyOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
+            });
         }
     }
 }

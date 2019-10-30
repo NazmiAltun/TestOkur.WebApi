@@ -60,18 +60,16 @@
 
         protected async Task<CreateUserCommand> CreateUserAsync(Func<Task<TestServer>> testServerFactory)
         {
-            using (var testServer = await testServerFactory())
-            {
-                var client = testServer.CreateClient();
-                var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
-                var city = await GetRandomCityAsync(client);
-                var model = GenerateCreateUserCommand(captcha, city);
+            using var testServer = await testServerFactory();
+            var client = testServer.CreateClient();
+            var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
+            var city = await GetRandomCityAsync(client);
+            var model = GenerateCreateUserCommand(captcha, city);
 
-                var response = await client.PostAsync(UserApiPath, model.ToJsonContent());
-                response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync(UserApiPath, model.ToJsonContent());
+            response.EnsureSuccessStatusCode();
 
-                return model;
-            }
+            return model;
         }
 
         protected async Task<CityReadModel> GetRandomCityAsync(HttpClient client)

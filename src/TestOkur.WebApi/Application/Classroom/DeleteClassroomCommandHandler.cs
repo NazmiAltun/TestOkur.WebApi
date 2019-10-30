@@ -26,7 +26,7 @@
             DeleteClassroomCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var classroom = await GetClassroomAsync(dbContext, command, cancellationToken);
 

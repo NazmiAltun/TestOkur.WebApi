@@ -31,12 +31,10 @@
 								WHERE created_by=@userId
 								ORDER BY Name";
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                return (await connection.QueryAsync<LessonReadModel>(
-                    sql,
-                    new { userId = query.UserId })).ToList();
-            }
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return (await connection.QueryAsync<LessonReadModel>(
+                sql,
+                new { userId = query.UserId })).ToList();
         }
     }
 }

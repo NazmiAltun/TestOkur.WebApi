@@ -33,7 +33,7 @@
             EditSubjectCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var unit = await GetAsync(dbContext, command, cancellationToken);
                 unit.Subjects.First(s => s.Id == command.SubjectId)

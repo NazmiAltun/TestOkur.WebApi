@@ -27,7 +27,7 @@
             CancellationToken cancellationToken = default)
         {
             var contactTypes = new List<ContactType>();
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 foreach (var subCommand in command.Commands)
                 {

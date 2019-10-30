@@ -23,7 +23,7 @@
             DeleteUserScoreFormulasCommand command,
             CancellationToken cancellationToken = default)
         {
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var formulas = dbContext.ScoreFormulas
                     .Where(s => EF.Property<int>(s, "CreatedBy") == command.UserId &&

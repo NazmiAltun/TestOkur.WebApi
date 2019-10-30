@@ -25,7 +25,7 @@
 
         public static async Task SeedAsync(ApplicationDbContext context, IServiceProvider services)
         {
-            using (context)
+            await using (context)
             {
                 foreach (var seeder in Seeders)
                 {

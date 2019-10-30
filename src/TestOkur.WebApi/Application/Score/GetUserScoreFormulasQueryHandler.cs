@@ -49,30 +49,28 @@
             GetUserScoreFormulasQuery query,
             CancellationToken cancellationToken = default)
         {
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                var dict = new Dictionary<int, ScoreFormulaReadModel>();
+            await using var connection = new NpgsqlConnection(_connectionString);
+            var dict = new Dictionary<int, ScoreFormulaReadModel>();
 
-                return (await connection
-                        .QueryAsync<ScoreFormulaReadModel, LessonCoefficientReadModel, ScoreFormulaReadModel>(
-                            Sql,
-                            (scoreFormula, coefficient) =>
+            return (await connection
+                    .QueryAsync<ScoreFormulaReadModel, LessonCoefficientReadModel, ScoreFormulaReadModel>(
+                        Sql,
+                        (scoreFormula, coefficient) =>
+                        {
+                            if (!dict.TryGetValue(scoreFormula.Id, out var scoreFormulaEntry))
                             {
-                                if (!dict.TryGetValue(scoreFormula.Id, out var scoreFormulaEntry))
-                                {
-                                    scoreFormulaEntry = scoreFormula;
-                                    dict.Add(scoreFormulaEntry.Id, scoreFormulaEntry);
-                                }
+                                scoreFormulaEntry = scoreFormula;
+                                dict.Add(scoreFormulaEntry.Id, scoreFormulaEntry);
+                            }
 
-                                scoreFormulaEntry.Coefficients.Add(coefficient);
+                            scoreFormulaEntry.Coefficients.Add(coefficient);
 
-                                return scoreFormulaEntry;
-                            },
-                            new { query.UserId },
-                            splitOn: "lesson_coefficient_id"))
-                    .Distinct()
-                    .ToList();
-            }
+                            return scoreFormulaEntry;
+                        },
+                        new { query.UserId },
+                        splitOn: "lesson_coefficient_id"))
+                .Distinct()
+                .ToList();
         }
     }
 }

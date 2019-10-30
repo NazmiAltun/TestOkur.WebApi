@@ -37,7 +37,7 @@
             CancellationToken cancellationToken = default)
         {
             await EnsureNotExistsAsync(command, cancellationToken);
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 var classroom = await GetClassroomAsync(dbContext, command, cancellationToken);
 

@@ -11,19 +11,17 @@
         [Fact]
         public async Task WhenValidValuesPosted_ThenUserShouldBeUpdated()
         {
-            using (var testServer = await CreateWithUserAsync())
-            {
-                var client = testServer.CreateClient();
-                var city = await GetRandomCityAsync(client);
-                var updateCommand = new UpdateUserCommand(
-                    Guid.NewGuid(),
-                    "BlackSchool",
-                    "5324258289",
-                    city.Id,
-                    city.Districts.Random().Id);
-                var response = await client.PutAsync(ApiPath, updateCommand.ToJsonContent());
-                response.EnsureSuccessStatusCode();
-            }
+            using var testServer = await CreateWithUserAsync();
+            var client = testServer.CreateClient();
+            var city = await GetRandomCityAsync(client);
+            var updateCommand = new UpdateUserCommand(
+                Guid.NewGuid(),
+                "BlackSchool",
+                "5324258289",
+                city.Id,
+                city.Districts.Random().Id);
+            var response = await client.PutAsync(ApiPath, updateCommand.ToJsonContent());
+            response.EnsureSuccessStatusCode();
         }
     }
 }

@@ -45,7 +45,7 @@
             await EnsureNotExistsAsync(command, cancellationToken);
             Exam exam = null;
 
-            using (var dbContext = _dbContextFactory.Create(command.UserId))
+            await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
                 exam = new Exam(
                     command.Name,

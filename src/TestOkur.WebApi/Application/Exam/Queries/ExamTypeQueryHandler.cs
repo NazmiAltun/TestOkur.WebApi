@@ -40,9 +40,8 @@
             var formTypes = await GetOpticalFormTypesAsync(cancellationToken);
             var dictionary = new Dictionary<int, ExamTypeReadModel>();
 
-            using (var connection = new NpgsqlConnection(_connectionString))
-            {
-                var examTypes = (await connection.QueryAsync<ExamTypeReadModel, dynamic, ExamTypeReadModel>(
+            await using var connection = new NpgsqlConnection(_connectionString);
+            var examTypes = (await connection.QueryAsync<ExamTypeReadModel, dynamic, ExamTypeReadModel>(
                     ExamTypesSelectSql,
                     (type, _) =>
                     {
@@ -61,11 +60,10 @@
                         return examTypeEntry;
                     },
                     splitOn: "optical_form_type_id"))
-                    .Distinct()
-                    .ToList();
+                .Distinct()
+                .ToList();
 
-                return examTypes;
-            }
+            return examTypes;
         }
 
         private Task<IReadOnlyCollection<OpticalFormTypeReadModel>> GetOpticalFormTypesAsync(CancellationToken cancellationToken)
