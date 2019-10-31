@@ -1,9 +1,13 @@
 .dockerignore
+.circleci
 .env
 .git
 .gitignore
+.gitattributes
 .vs
 .vscode
+.bettercodehub.yml
+.codecov.yml
 docker-compose.yml
 docker-compose.*.yml
 **/node_modules/
@@ -22,3 +26,4 @@ coverage/
 deploy-*.sh
 tmp/
 start-dev.ps1
+deploy
