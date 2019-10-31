@@ -49,6 +49,7 @@ th,
 td {
     padding-right: 0.15rem;
     padding-left: 0.15rem;
+    text-align: left;
 }
 
 tbody tr:nth-child(even) {
