@@ -49,7 +49,6 @@ th,
 td {
     padding-right: 0.15rem;
     padding-left: 0.15rem;
-    text-align: left;
 }
 
 tbody tr:nth-child(even) {
@@ -136,4 +135,13 @@ table.answer-table {
 }
 .lesson-chart{
     max-width: 40%;
+}
+table.subject-details-table {
+	
+}
+
+table.subject-details-table th, table.subject-details-table td {
+    padding-right: 0.15rem;
+    padding-left: 0.15rem;
+    text-align: left;
 }
