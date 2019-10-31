@@ -6,13 +6,18 @@
     <title>{{examName}} MADDE ANALİZİ</title>
     <link rel="stylesheet" href="{#asset assets/main.css @encoding=link}">
     <style type='text/css'>
-       html {
-            font-size: {{fontSizePercent}}%;
-        }     
+        html {
+            font-size: 50%;
+        }
+
         h3 {
             background: #1db1d6;
             border: 1px solid;
             margin-top: 20px;
+        }
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
         }
     </style>
     <script src="{#asset assets/Chart.min.js @encoding=link}"></script>
@@ -23,9 +28,9 @@
 </head>
 
 <body>
-        {{#if html}}
-        <button class="print-button" onclick="window.print();">Yazdir</button>
-        {{/if}}
+    {{#if html}}
+    <button class="print-button" onclick="window.print();">Yazdir</button>
+    {{/if}}
     <h1>
         {{examName}} MADDE ANALİZİ
     </h1>
@@ -43,7 +48,7 @@
             <strong>Sınav Tarihi :</strong>
             {{../examDate}}
         </div>
-        
+
         <div class='grid-item'>
             <strong>Kitapcik :</strong>
             {{booklet}}
@@ -78,6 +83,7 @@
             				data: data,
         			    	options: {
         			    	    responsive: true,
+                                maintainAspectRatio: false,
                 				legend: {
                 					display:true,
                 					position:'right',
@@ -131,16 +137,6 @@
                 </tr>
             </table>
         </div>
-        {{#ifFirstPageBreak @index}}
-            <div class='line-breaker-firstpage'></div>
-            <div class='line-breaker-firstpage'></div>
-            <div class='line-breaker-firstpage'></div>
-        {{/ifFirstPageBreak}}
-        {{#ifPageBreak @index}}
-            <div class='line-breaker'></div>
-            <div class='line-breaker'></div>
-            <div class='line-breaker'></div>
-        {{/ifPageBreak}}
         {{/each}}
     </div>
     <div style='page-break-before: always;'></div>

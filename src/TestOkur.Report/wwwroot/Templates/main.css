@@ -89,15 +89,6 @@ td.empty {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
-.line-breaker-firstpage{
-    display:block;
-    height:120px;
-}
-
-.line-breaker{
-    display:block;
-    height:140px;
-}
 .question-container {
     border: 1px solid;
     display: block;

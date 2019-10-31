@@ -42,19 +42,3 @@ function ifTooManySections(secondaryLessons, lessons, opts) {
         return opts.inverse(this);
     }
 }
-
-function ifFirstPageBreak(index, opts) {
-    if (index + 1 === 15) {
-        return opts.fn(this);
-    } else {
-        return opts.inverse(this);
-    }
-}
-
-function ifPageBreak(index, opts) {
-    if (index > 16 && (index - 14) % 18 === 0) {
-        return opts.fn(this);
-    } else {
-        return opts.inverse(this);
-    }
-}
