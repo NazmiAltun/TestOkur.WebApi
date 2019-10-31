@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using TestOkur.Data;
-    using TestOkur.WebApi.Application.City;
     using TestOkur.WebApi.Application.Exam;
     using TestOkur.WebApi.Application.Lesson;
     using TestOkur.WebApi.Application.OpticalForm;
@@ -14,7 +13,6 @@
     {
         private static readonly IEnumerable<ISeeder> Seeders = new ISeeder[]
         {
-            new CitySeeder(),
             new LessonSeeder(),
             new SubjectSeeder(),
             new OpticalFormsSeeder(),

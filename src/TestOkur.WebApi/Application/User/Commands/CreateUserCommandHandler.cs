@@ -85,12 +85,7 @@
             CreateUserCommand command,
             CancellationToken cancellationToken)
         {
-            var city = await dbContext.Cities
-                .Include(c => c.Districts)
-                .FirstAsync(c => c.Id == command.CityId, cancellationToken);
-            var district = city.Districts.First(d => d.Id == command.DistrictId);
-
-            dbContext.Users.Add(command.ToDomainModel(city, district));
+            dbContext.Users.Add(command.ToDomainModel());
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 

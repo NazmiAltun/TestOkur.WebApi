@@ -1,15 +1,14 @@
 ﻿namespace TestOkur.Domain.Model.UserModel
 {
     using System.Collections.Generic;
-    using TestOkur.Domain.Model.CityModel;
     using TestOkur.Domain.SeedWork;
 
     public class User : Entity, IAuditable
     {
         public User(
             string subjectId,
-            City city,
-            District district,
+            int cityId,
+            int districtId,
             Email email,
             Phone phone,
             Name firstName,
@@ -22,8 +21,8 @@
         : this()
         {
             SubjectId = subjectId;
-            City = city;
-            District = district;
+            CityId = cityId;
+            DistrictId = districtId;
             Email = email;
             Phone = phone;
             FirstName = firstName;
@@ -44,9 +43,9 @@
 
         public int SmsBalance { get; private set; }
 
-        public City City { get; private set; }
+        public int CityId { get; private set; }
 
-        public District District { get; private set; }
+        public int DistrictId { get; private set; }
 
         public Email Email { get; private set; }
 
@@ -94,10 +93,10 @@
             SmsBalance -= amount;
         }
 
-        public void Update(City city, District district, Name schoolName, Phone phone)
+        public void Update(int cityId, int districtId, Name schoolName, Phone phone)
         {
-            City = city;
-            District = district;
+            CityId = cityId;
+            DistrictId = districtId;
             Phone = phone;
             SchoolName = schoolName;
         }
@@ -106,8 +105,8 @@
             Email email,
             Name firstName,
             Name lastName,
-            City city,
-            District district,
+            int city,
+            int district,
             Name schoolName,
             Phone phone,
             string referrer,

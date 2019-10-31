@@ -18,8 +18,7 @@
             IServiceProvider serviceProvider)
         {
             var captcha = await GetCaptchaAsync(client, serviceProvider);
-            var city = await GetRandomCityAsync(client);
-            var command = GenerateCreateUserCommand(captcha, city);
+            var command = GenerateCreateUserCommand(captcha);
             var response = await client.PostAsync(ApiPath, command.ToJsonContent());
             response.EnsureSuccessStatusCode();
 

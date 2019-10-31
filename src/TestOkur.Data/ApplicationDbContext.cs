@@ -9,7 +9,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Data.Extensions;
-    using TestOkur.Domain.Model.CityModel;
     using TestOkur.Domain.Model.ClassroomModel;
     using TestOkur.Domain.Model.ExamModel;
     using TestOkur.Domain.Model.LessonModel;
@@ -32,8 +31,6 @@
         {
             _currentUserId = currentUserId;
         }
-
-        public DbSet<City> Cities { get; set; }
 
         public DbSet<OpticalFormType> OpticalFormTypes { get; set; }
 

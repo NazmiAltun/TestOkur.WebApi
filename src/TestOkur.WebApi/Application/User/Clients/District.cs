@@ -1,6 +1,6 @@
-﻿namespace TestOkur.WebApi.Application.City
+﻿namespace TestOkur.WebApi.Application.User.Clients
 {
-    public class DistrictReadModel
+    public class District
     {
         public int Id { get; set; }
 

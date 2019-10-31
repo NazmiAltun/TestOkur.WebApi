@@ -12,6 +12,10 @@
       "options": 204,
       "get": "license-types.json"
     },
+	"/api/v1/cities": {
+      "options": 204,
+      "get": "cities.json"
+    },
     "/api/v1/users": {
       "options": 204,
       "get": "users.json"

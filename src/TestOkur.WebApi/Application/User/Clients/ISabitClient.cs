@@ -6,5 +6,7 @@
     public interface ISabitClient
     {
         Task<IEnumerable<LicenseType>> GetLicenseTypesAsync();
+
+        Task<IEnumerable<City>> GetCitiesAsync();
     }
 }

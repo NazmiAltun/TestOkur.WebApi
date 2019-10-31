@@ -1,14 +1,12 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-    using System;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestOkur.Data;
     using TestOkur.Infrastructure.CommandsQueries;
-    using City = TestOkur.Domain.Model.CityModel.City;
     using User = TestOkur.Domain.Model.UserModel.User;
 
     public sealed class UpdateUserCommandHandler : RequestHandlerAsync<UpdateUserCommand>
@@ -40,9 +38,7 @@
                 return;
             }
 
-            var city = await GetCityAsync(dbContext, command.CityId, cancellationToken);
-            var district = city.Districts.First(d => d.Id == command.DistrictId);
-            user.Update(city, district, command.SchoolName, command.MobilePhone);
+            user.Update(command.CityId, command.DistrictId, command.SchoolName, command.MobilePhone);
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
@@ -57,20 +53,6 @@
                     cancellationToken);
 
             return user ?? throw new ArgumentException("User does not exist", nameof(userId));
-        }
-
-        private async Task<City> GetCityAsync(
-            ApplicationDbContext dbContext,
-            int cityId,
-            CancellationToken cancellationToken)
-        {
-            var city = await dbContext.Cities
-                            .Include(c => c.Districts)
-                            .FirstOrDefaultAsync(
-                                u => u.Id == cityId,
-                                cancellationToken);
-
-            return city ?? throw new ArgumentException("City does not exist", nameof(cityId));
         }
     }
 }

@@ -11,12 +11,6 @@
             builder.ToTable("users");
             builder.Property(_ => _.Id)
                 .UseHiLo("user_seq");
-            builder.HasOne(_ => _.City)
-                .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
-            builder.HasOne(_ => _.District)
-                .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
             builder.Property(_ => _.SubjectId).IsRequired();
             builder.OwnsEmail(_ => _.Email);
             builder.OwnsName(_ => _.FirstName, 100);

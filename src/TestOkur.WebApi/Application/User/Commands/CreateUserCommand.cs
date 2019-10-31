@@ -3,9 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using TestOkur.Domain.Model.CityModel;
     using TestOkur.Infrastructure.CommandsQueries;
-    using City = TestOkur.Domain.Model.CityModel.City;
     using User = TestOkur.Domain.Model.UserModel.User;
 
     [DataContract]
@@ -102,12 +100,12 @@
         [DataMember]
         public string Referrer { get; private set; }
 
-        public User ToDomainModel(City city, District district)
+        public User ToDomainModel()
         {
             return new User(
                 Id.ToString(),
-                city,
-                district,
+                CityId,
+                DistrictId,
                 Email,
                 UserPhone,
                 UserFirstName,

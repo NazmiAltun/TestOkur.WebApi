@@ -5,14 +5,12 @@
     using Microsoft.AspNetCore.TestHost;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-    using System.Collections.Generic;
     using System.Net.Http;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Captcha;
-    using TestOkur.WebApi.Application.City;
     using TestOkur.WebApi.Application.User.Commands;
 
     public abstract class Test
@@ -21,9 +19,7 @@
         protected static readonly TestServerFactory TestServerFactory = new TestServerFactory();
 
         private const string UserApiPath = "api/v1/users";
-        private const string CitiesApiPath = "api/v1/cities";
         private const string CaptchaApiPath = "api/v1/captcha";
-        private const string LicenseTypesApiPath = "api/v1/license-types";
         private static TestServer _testServer;
         private TestServer _testServerWithUser;
 
@@ -63,8 +59,7 @@
             using var testServer = await testServerFactory();
             var client = testServer.CreateClient();
             var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
-            var city = await GetRandomCityAsync(client);
-            var model = GenerateCreateUserCommand(captcha, city);
+            var model = GenerateCreateUserCommand(captcha);
 
             var response = await client.PostAsync(UserApiPath, model.ToJsonContent());
             response.EnsureSuccessStatusCode();
@@ -72,13 +67,6 @@
             return model;
         }
 
-        protected async Task<CityReadModel> GetRandomCityAsync(HttpClient client)
-        {
-            var response = await client.GetAsync(CitiesApiPath);
-            var cities = await response.ReadAsync<IEnumerable<CityReadModel>>();
-
-            return cities.Random();
-        }
 
         protected async Task<Captcha> GetCaptchaAsync(HttpClient client, IServiceProvider serviceProvider)
         {
@@ -91,11 +79,8 @@
 
         protected CreateUserCommand GenerateCreateUserCommand(
             Captcha captcha = null,
-            CityReadModel city = null,
             string phone = null)
         {
-            var district = city?.Districts?.Random();
-
             return new CreateUserCommand(
                 Guid.NewGuid(),
                 "Jack",
@@ -107,11 +92,11 @@
                 phone ?? RandomGen.Phone(),
                 Random.Next(99999, int.MaxValue).ToString(),
                 1 + Random.Next(4),
-                city?.Id ?? 0,
-                district?.Id ?? 0,
+                20,
+                466,
                 "test",
-                city?.Name ?? "test",
-                district?.Name ?? "test",
+                Random.RandomString(10),
+                Random.RandomString(10),
                 captcha?.Id ?? Guid.Empty,
                 captcha?.Code ?? "NONONO");
         }

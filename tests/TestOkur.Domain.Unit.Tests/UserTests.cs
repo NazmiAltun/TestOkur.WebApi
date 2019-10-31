@@ -2,7 +2,6 @@
 {
     using System;
     using FluentAssertions;
-    using TestOkur.Domain.Model.CityModel;
     using TestOkur.Domain.Model.UserModel;
     using TestOkur.Domain.SeedWork;
     using Xunit;
@@ -15,8 +14,8 @@
         {
             _user = new User(
                 Guid.NewGuid().ToString(),
-                new City(34, "Istanbul"),
-                new District(450, "Pendik"),
+                20,
+                466,
                 "nazmi@testokur.com",
                 "5544205163",
                 "Nazmi",
@@ -80,12 +79,12 @@
         public void Update_UpdatesUser()
         {
             _user.Update(
-                new City(20, "Denizli"),
-                new District(500, "Pamukkale"),
+                20,
+            500,
                 "TestSchool",
                 "5324256878");
-            _user.City.Id.Should().Be(20);
-            _user.District.Id.Should().Be(500);
+            _user.CityId.Should().Be(20);
+            _user.DistrictId.Should().Be(500);
             _user.SchoolName.Value.Should().Be("TestSchool");
         }
     }

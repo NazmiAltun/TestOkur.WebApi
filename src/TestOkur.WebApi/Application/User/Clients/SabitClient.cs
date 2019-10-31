@@ -1,14 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.User.Clients
 {
+    using IdentityModel.Client;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using IdentityModel.Client;
-    using Newtonsoft.Json;
 
     public class SabitClient : ISabitClient
     {
         private const string LicenseTypesEndpoint = "api/v1/license-types";
+        private const string CitiesEndpoint = "api/v1/cities";
 
         private readonly HttpClient _httpClient;
         private readonly IIdentityClient _identityClient;
@@ -19,13 +20,17 @@
             _identityClient = identityClient;
         }
 
-        public async Task<IEnumerable<LicenseType>> GetLicenseTypesAsync()
+        public Task<IEnumerable<LicenseType>> GetLicenseTypesAsync() => GetAsync<IEnumerable<LicenseType>>(LicenseTypesEndpoint);
+
+        public Task<IEnumerable<City>> GetCitiesAsync() => GetAsync<IEnumerable<City>>(CitiesEndpoint);
+
+        private async Task<T> GetAsync<T>(string path)
         {
             _httpClient.SetBearerToken(await _identityClient.GetBearerTokenAsync());
-            var response = await _httpClient.GetAsync(LicenseTypesEndpoint);
+            var response = await _httpClient.GetAsync(path);
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IEnumerable<LicenseType>>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

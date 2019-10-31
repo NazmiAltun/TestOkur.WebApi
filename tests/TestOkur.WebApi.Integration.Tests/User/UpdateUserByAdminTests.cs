@@ -22,7 +22,6 @@
             var response = await client.GetAsync(ApiPath);
             var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
             var user = users.First(u => u.Email == createUserCommand.Email);
-            var city = await GetRandomCityAsync(client);
             var command = new UpdateUserByAdminCommand(
                 Guid.NewGuid(),
                 user.Id,
@@ -31,8 +30,8 @@
                 user.SubjectId,
                 RandomGen.String(100),
                 "5544205163",
-                city.Id,
-                city.Districts.Random().Id,
+                Random.Next(60),
+                Random.Next(2000),
                 $"{RandomGen.String(120)}@hotmail.com",
                 RandomGen.Next(10),
                 RandomGen.Next(300) + 100,
