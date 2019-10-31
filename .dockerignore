@@ -21,3 +21,4 @@ test.Dockerfile
 coverage/
 deploy-*.sh
 tmp/
+start-dev.ps1

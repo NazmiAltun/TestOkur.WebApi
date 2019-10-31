@@ -3,12 +3,9 @@ LABEL "Maintainer"="Nazmi Altun <nazmialtun@windowslive.com>"
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
-COPY ./*.sln ./
-COPY ./*.props ./
-COPY src/*/*.csproj ./ 
+COPY ./*.sln ./*.props src/*/*.csproj  ./
 RUN for file in $(ls *.csproj); do mkdir -p src/${file%.*}/ && mv $file src/${file%.*}/; done
-COPY tests/*/*.csproj ./  
-COPY tests/*.props ./  
+COPY tests/*/*.csproj tests/*.props  ./   
 RUN for file in $(ls *.csproj); do mkdir -p tests/${file%.*}/ && mv $file tests/${file%.*}/; done
 RUN dotnet restore
 COPY . .
