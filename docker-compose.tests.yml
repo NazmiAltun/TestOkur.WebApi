@@ -90,9 +90,11 @@ services:
       - ./coverage:/coverage
     depends_on:
       - rabbitmq
+      - mockserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMqConfiguration__Uri=rabbitmq
+      - OAuthConfiguration__Authority=http://mockserver:8080/
   webapi-integration-test:
     image: testokur-webapi-integration-test
     container_name: webapi-integration-test
