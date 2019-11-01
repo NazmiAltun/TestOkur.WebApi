@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
-namespace TestOkur.WebApi.Integration.Tests.User
+﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
     using System;
     using System.Net;
     using System.Threading.Tasks;
+    using FluentAssertions;
     using TestOkur.WebApi.Application.User.Commands;
     using Xunit;
 

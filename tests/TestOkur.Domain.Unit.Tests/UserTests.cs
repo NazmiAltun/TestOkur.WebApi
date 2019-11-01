@@ -80,7 +80,7 @@
         {
             _user.Update(
                 20,
-            500,
+                500,
                 "TestSchool",
                 "5324256878");
             _user.CityId.Should().Be(20);

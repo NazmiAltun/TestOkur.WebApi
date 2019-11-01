@@ -61,7 +61,7 @@
         public async Task When_UserHasEnoughSmsLimit_SmsEventIsPushed()
         {
             using var testServer = await CreateWithUserAsync();
-            //Add Some SMS Credits
+
             var user = await testServer.GetCurrentUserInSession();
             var client = testServer.CreateClient();
             var addSmsCreditsCommand = new AddSmsCreditsCommand(Guid.NewGuid(), user.Id, 2, false);

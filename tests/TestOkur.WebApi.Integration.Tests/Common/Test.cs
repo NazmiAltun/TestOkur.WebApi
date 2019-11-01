@@ -67,7 +67,6 @@
             return model;
         }
 
-
         protected async Task<Captcha> GetCaptchaAsync(HttpClient client, IServiceProvider serviceProvider)
         {
             var id = Guid.NewGuid();
