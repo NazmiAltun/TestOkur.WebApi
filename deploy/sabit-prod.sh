@@ -7,5 +7,4 @@ docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
 	--restart=always \
 	--network=testokur \
 	--network-alias=sabit \
-	-m=128M \
 	nazmialtun/testokur-sabit:latest
