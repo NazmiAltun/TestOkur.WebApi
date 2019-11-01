@@ -1,12 +1,12 @@
-﻿using System.Text.Json;
-
-namespace TestOkur.Notification.Infrastructure.Clients
+﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
-    using IdentityModel.Client;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Text.Json;
     using System.Threading.Tasks;
+    using IdentityModel.Client;
+    using TestOkur.Common;
     using TestOkur.Notification.Models;
 
     public class WebApiClient : IWebApiClient
@@ -56,7 +56,7 @@ namespace TestOkur.Notification.Infrastructure.Clients
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<TModel>(json);
+            return JsonSerializer.Deserialize<TModel>(json, DefaultJsonSerializerSettings.Instance);
         }
 
         private async Task SetBearerToken()

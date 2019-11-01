@@ -1,4 +1,4 @@
-﻿namespace TestOkur.Sabit
+﻿namespace TestOkur.Common
 {
     using System.Text.Json;
 

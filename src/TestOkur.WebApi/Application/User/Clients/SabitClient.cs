@@ -1,10 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.User.Clients
 {
-    using IdentityModel.Client;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using IdentityModel.Client;
+    using TestOkur.Common;
 
     public class SabitClient : ISabitClient
     {
@@ -30,7 +31,7 @@
             var response = await _httpClient.GetAsync(path);
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json, DefaultJsonSerializerSettings.Instance);
         }
     }
 }

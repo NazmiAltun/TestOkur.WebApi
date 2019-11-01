@@ -73,7 +73,7 @@
                 throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
             }
 
-            return JsonSerializer.Deserialize<string>(await response.Content.ReadAsStringAsync());
+            return JsonSerializer.Deserialize<string>(await response.Content.ReadAsStringAsync(), DefaultJsonSerializerSettings.Instance);
         }
 
         public async Task<string> GetBearerTokenAsync()
