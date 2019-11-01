@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
+    using IdentityModel.Client;
     using System.Collections.Generic;
     using System.Net.Http;
+    using System.Text.Json;
     using System.Threading.Tasks;
-    using IdentityModel.Client;
-    using Newtonsoft.Json;
     using TestOkur.Common.Configuration;
     using TestOkur.Notification.Models;
 
@@ -41,7 +41,7 @@
             var response = await _httpClient.GetAsync(UsersEndpoint);
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IEnumerable<IdentityUser>>(json);
+            return JsonSerializer.Deserialize<IEnumerable<IdentityUser>>(json);
         }
 
         public async Task<IdentityStatisticsModel> GetDailyStatsAsync()
@@ -50,7 +50,7 @@
             var response = await _httpClient.GetAsync(StatsEndpoint);
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<IdentityStatisticsModel>(json);
+            return JsonSerializer.Deserialize<IdentityStatisticsModel>(json);
         }
     }
 }

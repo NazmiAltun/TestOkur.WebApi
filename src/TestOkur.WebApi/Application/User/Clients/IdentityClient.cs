@@ -4,10 +4,10 @@
     using System.ComponentModel.DataAnnotations;
     using System.Net;
     using System.Net.Http;
+    using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
     using IdentityModel.Client;
-    using Newtonsoft.Json;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
 
@@ -73,7 +73,7 @@
                 throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
             }
 
-            return JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+            return JsonSerializer.Deserialize<string>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<string> GetBearerTokenAsync()

@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
     using IdentityModel.Client;
-    using Newtonsoft.Json;
     using System.Net.Http;
+    using System.Text.Json;
     using System.Threading.Tasks;
     using TestOkur.Notification.Models;
 
@@ -33,7 +33,7 @@
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<TModel>(json);
+            return JsonSerializer.Deserialize<TModel>(json);
         }
 
         private async Task SetBearerToken()
