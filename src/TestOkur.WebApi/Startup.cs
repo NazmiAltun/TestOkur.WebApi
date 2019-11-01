@@ -49,6 +49,8 @@
     [ExcludeFromCodeCoverage]
     public class Startup
     {
+        private const string CorsPolicyName = "EnableCorsToAll";
+
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -69,7 +71,12 @@
         {
             AddOptions(services);
 
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddMemoryCache();
             services.AddApplicationInsightsTelemetry();
             services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
@@ -99,7 +106,7 @@
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors();
+            app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
             app.UseMetricServer("/metrics-core");
 

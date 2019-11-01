@@ -47,6 +47,8 @@ namespace TestOkur.Report
     [ExcludeFromCodeCoverage]
     public class Startup
     {
+        private const string CorsPolicyName = "EnableCorsToAll";
+
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -68,7 +70,12 @@ namespace TestOkur.Report
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             RegisterMappings();
             AddHealthCheck(services);
             AddCache(services);
@@ -92,7 +99,7 @@ namespace TestOkur.Report
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors();
+            app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
             app.UseMetricServer("/metrics-core");
 
