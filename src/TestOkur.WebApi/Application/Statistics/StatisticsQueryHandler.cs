@@ -16,7 +16,7 @@
             _connectionString = configurationOptions.Postgres;
         }
 
-        public override Task<StatisticsReadModel> ExecuteAsync(StatisticsQuery query, CancellationToken cancellationToken = default)
+        public override async Task<StatisticsReadModel> ExecuteAsync(StatisticsQuery query, CancellationToken cancellationToken = default)
         {
             const string sql = @"SELECT * FROM 
                                 (SELECT COUNT(*) AS total_eschool_student_count FROM students WHERE source='ESchool') Q1,
@@ -32,8 +32,8 @@
                                 (SELECT SUM(scanned_student_count) AS today_scanned_student_form_count_by_file FROM exam_scan_sessions WHERE by_file=true AND created_on_utc > timezone('utc',  now()::date)) Q11,
                                 (SELECT COUNT(*) AS today_exam_count FROM exams WHERE created_on_utc > timezone('utc',  now()::date)) Q12
                                 ";
-            using var connection = new NpgsqlConnection(_connectionString);
-            return connection.QuerySingleAsync<StatisticsReadModel>(sql);
+            await using var connection = new NpgsqlConnection(_connectionString);
+            return await connection.QuerySingleAsync<StatisticsReadModel>(sql);
         }
     }
 }
