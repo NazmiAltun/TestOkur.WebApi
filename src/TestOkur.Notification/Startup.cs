@@ -253,7 +253,7 @@
         {
             services.AddMassTransit(x =>
             {
-                x.AddConsumers(Assembly.GetExecutingAssembly());
+                x.AddConsumersFromNamespaceContaining<Startup>();
             });
             services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
             {

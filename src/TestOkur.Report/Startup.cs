@@ -155,7 +155,7 @@ namespace TestOkur.Report
             var configure = services.BuildServiceProvider().GetService<Action<IRabbitMqReceiveEndpointConfigurator>>();
             services.AddMassTransit(m =>
             {
-                m.AddConsumers(Assembly.GetExecutingAssembly());
+                m.AddConsumersFromNamespaceContaining<Startup>();
                 m.AddBus(provider =>
                     Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
