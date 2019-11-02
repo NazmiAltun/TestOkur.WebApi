@@ -21,6 +21,7 @@
     using Prometheus;
     using RazorLight;
     using System;
+    using System.Linq;
     using System.Net.Http;
     using System.Reflection;
     using TestOkur.Common;
@@ -253,7 +254,7 @@
         {
             services.AddMassTransit(x =>
             {
-                x.AddConsumersFromNamespaceContaining<Startup>();
+                x.AddConsumers(GetConsumerTypes());
             });
             services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
@@ -334,6 +335,15 @@
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .CircuitBreakerAsync(20, TimeSpan.FromSeconds(30));
+        }
+
+        private Type[] GetConsumerTypes()
+        {
+            return Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.IsClass &&
+                            typeof(IConsumer).IsAssignableFrom(t))
+                .ToArray();
         }
     }
 }

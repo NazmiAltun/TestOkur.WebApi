@@ -29,6 +29,7 @@ namespace TestOkur.Report
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
@@ -155,7 +156,7 @@ namespace TestOkur.Report
             var configure = services.BuildServiceProvider().GetService<Action<IRabbitMqReceiveEndpointConfigurator>>();
             services.AddMassTransit(m =>
             {
-                m.AddConsumersFromNamespaceContaining<Startup>();
+                m.AddConsumers(GetConsumerTypes());
                 m.AddBus(provider =>
                     Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
@@ -281,6 +282,15 @@ namespace TestOkur.Report
 
             services.AddSingleton(resolver =>
                 resolver.GetRequiredService<IOptions<OAuthConfiguration>>().Value);
+        }
+
+        private Type[] GetConsumerTypes()
+        {
+            return Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.IsClass &&
+                            typeof(IConsumer).IsAssignableFrom(t))
+                .ToArray();
         }
     }
 }
