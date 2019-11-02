@@ -268,7 +268,7 @@
                 cfg.ReceiveEndpoint(host, "notification-queue", e =>
                 {
                     e.PrefetchCount = 16;
-                    e.UseMessageRetry(x => x.Interval(2, 100));
+                    e.UseMessageRetry(x => x.Interval(2000, 1000));
 
                     if (!Environment.IsDevelopment())
                     {

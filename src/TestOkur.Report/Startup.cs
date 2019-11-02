@@ -174,7 +174,7 @@ namespace TestOkur.Report
                         cfg.ReceiveEndpoint(host, "report-queue", e =>
                         {
                             e.PrefetchCount = 16;
-                            e.UseMessageRetry(x => x.Interval(2, 100));
+                            e.UseMessageRetry(x => x.Interval(2000, 1000));
                             e.RegisterConsumers(provider, Environment.IsDevelopment());
                         });
                         cfg.UseExtensionsLogging(new LoggerFactory());
