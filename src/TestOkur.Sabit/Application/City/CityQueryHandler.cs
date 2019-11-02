@@ -14,7 +14,9 @@
             CityQuery query,
             CancellationToken cancellationToken = default)
         {
-            return JsonUtils.ReadAsync<IEnumerable<City>>("cities.json", cancellationToken);
+            return JsonUtils.ReadAsync<IEnumerable<City>>(
+                "cities.json",
+                cancellationToken);
         }
     }
 }

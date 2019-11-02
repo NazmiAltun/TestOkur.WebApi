@@ -265,7 +265,7 @@
                     hc.Password(RabbitMqConfiguration.Password);
                 });
 
-                cfg.ReceiveEndpoint(host, e =>
+                cfg.ReceiveEndpoint(host, "notification-queue", e =>
                 {
                     e.PrefetchCount = 16;
                     e.UseMessageRetry(x => x.Interval(2, 100));
