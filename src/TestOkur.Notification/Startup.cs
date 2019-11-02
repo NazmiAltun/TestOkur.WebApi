@@ -255,39 +255,39 @@
             services.AddMassTransit(x =>
             {
                 x.AddConsumers(GetConsumerTypes());
-            });
-            services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-            {
-                var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                var host = cfg.Host(new Uri(uriStr), hc =>
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    hc.Username(RabbitMqConfiguration.Username);
-                    hc.Password(RabbitMqConfiguration.Password);
-                });
-
-                cfg.ReceiveEndpoint(host, "notification-queue", e =>
-                {
-                    e.PrefetchCount = 16;
-                    e.UseMessageRetry(x => x.Interval(2000, 1000));
-
-                    if (!Environment.IsDevelopment())
+                    var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
+                    var host = cfg.Host(new Uri(uriStr), hc =>
                     {
-                        e.Consumer<DefaultFaultConsumer>(provider);
-                    }
+                        hc.Username(RabbitMqConfiguration.Username);
+                        hc.Password(RabbitMqConfiguration.Password);
+                    });
 
-                    e.Consumer<NewUserRegisteredConsumer>(provider);
-                    e.Consumer<SendSmsRequestReceivedConsumer>(provider);
-                    e.Consumer<SendSmsRequestFailedConsumer>(provider);
-                    e.Consumer<UserActivatedConsumer>(provider);
-                    e.Consumer<UserSubscriptionExtendedConsumer>(provider);
-                    e.Consumer<SmsCreditAddedConsumer>(provider);
-                    e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
-                    e.Consumer<UserErrorReceivedConsumer>(provider);
-                    e.Consumer<CommandQueryLogEventConsumer>(provider);
-                    e.Consumer<ReferredUserActivatedConsumer>(provider);
-                });
-                cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
-            }));
+                    cfg.ReceiveEndpoint(host, "notification-queue", e =>
+                    {
+                        e.PrefetchCount = 16;
+                        e.UseMessageRetry(x => x.Interval(2000, 1000));
+
+                        if (!Environment.IsDevelopment())
+                        {
+                            e.Consumer<DefaultFaultConsumer>(provider);
+                        }
+
+                        e.Consumer<NewUserRegisteredConsumer>(provider);
+                        e.Consumer<SendSmsRequestReceivedConsumer>(provider);
+                        e.Consumer<SendSmsRequestFailedConsumer>(provider);
+                        e.Consumer<UserActivatedConsumer>(provider);
+                        e.Consumer<UserSubscriptionExtendedConsumer>(provider);
+                        e.Consumer<SmsCreditAddedConsumer>(provider);
+                        e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
+                        e.Consumer<UserErrorReceivedConsumer>(provider);
+                        e.Consumer<CommandQueryLogEventConsumer>(provider);
+                        e.Consumer<ReferredUserActivatedConsumer>(provider);
+                    });
+                    cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
+                }));
+            });
         }
 
         private void AddHttpClients(IServiceCollection services)
