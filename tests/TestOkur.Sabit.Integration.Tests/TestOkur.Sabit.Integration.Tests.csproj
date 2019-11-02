@@ -7,9 +7,15 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.0.0" />
+    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.2" />
     <PackageReference Include="TestOkur.TestHelper" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.Sabit\TestOkur.Sabit.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ss.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

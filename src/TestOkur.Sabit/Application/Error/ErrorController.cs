@@ -1,4 +1,4 @@
-﻿namespace TestOkur.WebApi.Application.Error
+﻿namespace TestOkur.Sabit.Application.Error
 {
     using System.IO;
     using System.Threading.Tasks;
@@ -10,7 +10,7 @@
     using TestOkur.Common;
 
     [Route("api/v1/error")]
-    [Authorize(AuthorizationPolicies.Customer)]
+    [Authorize(AuthorizationPolicies.Public)]
     [ApiController]
     public class ErrorController : ControllerBase
     {

@@ -133,8 +133,6 @@
 
         private void AddMessageBus(IServiceCollection services)
         {
-            var configure = services.BuildServiceProvider().GetService<Action<IRabbitMqReceiveEndpointConfigurator>>();
-
             services.AddMassTransit(x =>
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(
@@ -146,11 +144,7 @@
                             hc.Username(RabbitMqConfiguration.Username);
                             hc.Password(RabbitMqConfiguration.Password);
                         });
-
-                        if (configure != null)
-                        {
-                            cfg.ReceiveEndpoint(host, configure);
-                        }
+                        services.AddSingleton(host);
                     }));
             });
 

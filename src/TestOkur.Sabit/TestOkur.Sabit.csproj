@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
+    <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

@@ -1,10 +1,8 @@
-﻿namespace TestOkur.WebApi.Application.Error
+﻿namespace TestOkur.Sabit.Application.Error
 {
-    using System.Runtime.Serialization;
     using TestOkur.Contracts;
     using TestOkur.Contracts.Alert;
 
-    [DataContract]
     public class ErrorModel : IntegrationEvent, IUserErrorReceived
     {
         public ErrorModel(
@@ -29,31 +27,26 @@
             Description = description;
         }
 
-        [DataMember]
-        public string UserEmail { get; private set; }
+        private ErrorModel()
+        {
+        }
 
-        [DataMember]
-        public string UserPhone { get; private set; }
+        public string UserEmail { get; set; }
 
-        [DataMember]
-        public int ReporterUserId { get; private set; }
+        public string UserPhone { get; set; }
 
-        [DataMember]
-        public int ExamId { get; private set; }
+        public int ReporterUserId { get; set; }
 
-        [DataMember]
-        public string ExamName { get; private set; }
+        public int ExamId { get; set; }
 
-        [DataMember]
-        public string Description { get; private set; }
+        public string ExamName { get; set; }
 
-        [DataMember]
-        public string Image1FilePath { get; private set; }
+        public string Description { get; set; }
 
-        [DataMember]
-        public string Image2FilePath { get; private set; }
+        public string Image1FilePath { get; set; }
 
-        [DataMember]
-        public string Image3FilePath { get; private set; }
+        public string Image2FilePath { get; set; }
+
+        public string Image3FilePath { get; set; }
     }
 }
