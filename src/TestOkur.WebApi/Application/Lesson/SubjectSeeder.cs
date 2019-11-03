@@ -19,7 +19,9 @@ namespace TestOkur.WebApi.Application.Lesson
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
         {
-            if (await dbContext.Units.AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default))
+            if (await dbContext.Units
+                .AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default &&
+                               l.Lesson.Name == Lessons.Religion))
             {
                 return;
             }
@@ -40,6 +42,12 @@ namespace TestOkur.WebApi.Application.Lesson
                         lessons.First(l => l.Name.Value == row.Lesson.Trim()),
                         Convert.ToInt32(row.Grade.First().ToString()),
                         true);
+
+                if (unit.Lesson.Name != Lessons.Religion)
+                {
+                    continue;
+                }
+
                 unit.AddSubject(row.Subject.Trim(), true);
 
                 if (!unitDictionary.TryAdd(row.Key, unit))
