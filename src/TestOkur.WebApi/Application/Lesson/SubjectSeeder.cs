@@ -21,7 +21,7 @@ namespace TestOkur.WebApi.Application.Lesson
         {
             if (await dbContext.Units
                 .AnyAsync(l => EF.Property<int>(l, "CreatedBy") == default &&
-                               l.Lesson.Name == Lessons.Religion))
+                               l.Lesson.Name.Value == Lessons.Religion))
             {
                 return;
             }
@@ -43,7 +43,7 @@ namespace TestOkur.WebApi.Application.Lesson
                         Convert.ToInt32(row.Grade.First().ToString()),
                         true);
 
-                if (unit.Lesson.Name != Lessons.Religion)
+                if (unit.Lesson.Name.Value != Lessons.Religion)
                 {
                     continue;
                 }
