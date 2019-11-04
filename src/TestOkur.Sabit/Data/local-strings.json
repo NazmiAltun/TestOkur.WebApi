@@ -301,7 +301,7 @@
     },
     {
       "name": "ErrorSubmitted",
-      "value": "Mesajiniz iletildi. 24 saat icinde size geri donus yapilacaktir."
+      "value": "Mesajiniz iletildi. En yakin zamanda sorun giderilip, size geri donus yapilacaktir."
     },
     {
       "name": "FileSizeTooBig",
