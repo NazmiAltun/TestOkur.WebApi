@@ -1,6 +1,8 @@
 ﻿namespace TestOkur.Report.Integration.Tests.ReportRequest
 {
+    using FluentAssertions;
     using System;
+    using System.Net;
     using System.Threading.Tasks;
     using TestOkur.Report.Integration.Tests.Common;
     using TestOkur.Report.Models;
@@ -33,7 +35,7 @@
                 UserEmail = RandomGen.String(100),
             };
             var response = await client.PostAsync(ApiPath, request.ToJsonContent());
-            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }
