@@ -42,7 +42,7 @@
             SendResetPasswordLinkCommand command,
             CancellationToken cancellationToken = default)
         {
-            ValidateCaptcha(command);
+            await ValidateCaptchaAsync(command);
             var token = await _identityClient.GeneratePasswordResetTokenAsync(command.Email, cancellationToken);
             await PublishEventAsync(command.Email, token, cancellationToken);
 
@@ -64,9 +64,10 @@
                 cancellationToken);
         }
 
-        private void ValidateCaptcha(SendResetPasswordLinkCommand command)
+        private async Task ValidateCaptchaAsync(SendResetPasswordLinkCommand command)
         {
-            if (!_captchaService.Validate(command.CaptchaId, command.CaptchaCode))
+            if (!await _captchaService
+                .ValidateAsync(command.CaptchaId, command.CaptchaCode))
             {
                 throw new ValidationException(ErrorCodes.InvalidCaptcha);
             }

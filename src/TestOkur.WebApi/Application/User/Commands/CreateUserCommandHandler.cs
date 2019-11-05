@@ -48,7 +48,7 @@
             CreateUserCommand command,
             CancellationToken cancellationToken = default)
         {
-            ValidateCaptcha(command);
+            await ValidateCaptchaAsync(command);
 
             await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
@@ -138,9 +138,10 @@
             }
         }
 
-        private void ValidateCaptcha(CreateUserCommand command)
+        private async Task ValidateCaptchaAsync(CreateUserCommand command)
         {
-            if (!_captchaService.Validate(command.CaptchaId, command.CaptchaCode))
+            if (!await _captchaService
+                .ValidateAsync(command.CaptchaId, command.CaptchaCode))
             {
                 throw new ValidationException(ErrorCodes.InvalidCaptcha);
             }
