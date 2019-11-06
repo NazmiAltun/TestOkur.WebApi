@@ -15,6 +15,7 @@
             StudentNumber studentNumber,
             Classroom classroom,
             IEnumerable<Contact> contacts,
+            string citizenshipIdentity,
             string notes,
             string source)
         {
@@ -22,6 +23,7 @@
             LastName = lastName;
             StudentNumber = studentNumber;
             Classroom = classroom;
+            CitizenshipIdentity = citizenshipIdentity;
             _contacts.AddRange(contacts);
             Notes = notes;
             Source = source;
@@ -39,6 +41,8 @@
 
         public Classroom Classroom { get; private set; }
 
+        public string CitizenshipIdentity { get; private set; }
+
         public string Notes { get; private set; }
 
         public string Source { get; private set; }
@@ -51,6 +55,7 @@
             StudentNumber studentNumber,
             Classroom newClassroom,
             IEnumerable<Contact> contacts,
+            string citizenshipNumber,
             string notes)
         {
             FirstName = newFirstName;
@@ -58,6 +63,7 @@
             StudentNumber = studentNumber;
             Classroom = newClassroom;
             Notes = notes;
+            CitizenshipIdentity = citizenshipNumber;
             _contacts.Clear();
 
             if (contacts != null && contacts.Any())

@@ -47,6 +47,7 @@
                         command.NewStudentNumber,
                         await GetClassroomAsync(dbContext, command, cancellationToken),
                         command.Contacts?.Select(c => c.ToDomainModel()),
+                        command.CitizenshipIdentity,
                         command.NewNotes);
                     dbContext.AttachRange(student.Contacts.Select(c => c.ContactType));
                     await dbContext.SaveChangesAsync(cancellationToken);

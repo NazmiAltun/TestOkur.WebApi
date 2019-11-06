@@ -31,6 +31,7 @@
                 Random.Next(StudentNumber.Min, StudentNumber.Max),
                 createCommand.ClassroomId,
                 Random.RandomString(300),
+                null,
                 new[]
                 {
                     new CreateContactCommand(

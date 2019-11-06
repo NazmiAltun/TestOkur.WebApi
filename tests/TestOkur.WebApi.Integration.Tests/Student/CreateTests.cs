@@ -32,6 +32,7 @@
                         classroomId,
                         null,
                         "Single",
+                        null,
                         new[]
                         {
                             new CreateContactCommand(
@@ -102,6 +103,7 @@
                 classroomId,
                 Random.RandomString(200),
                 "Single",
+                null,
                 null);
 
             var response = await client.PostAsync(ApiPath, command.ToJsonContent());

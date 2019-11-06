@@ -12,6 +12,7 @@
             builder.OwnsName(_ => _.FirstName, 50);
             builder.OwnsName(_ => _.LastName, 50);
             builder.OwnsOne(u => u.StudentNumber);
+            builder.Property(_ => _.CitizenshipIdentity).HasMaxLength(12);
             builder.Property(_ => _.Notes).HasMaxLength(500);
             builder.HasMany(_ => _.Contacts)
                 .WithOne()

@@ -90,6 +90,7 @@
                 classroomId,
                 Random.RandomString(200),
                 "Single",
+                null,
                 contacts);
         }
     }

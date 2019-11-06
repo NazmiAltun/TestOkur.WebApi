@@ -20,6 +20,7 @@
             int classroomId,
             string notes,
             string source,
+            string citizenshipIdentity,
             IEnumerable<CreateContactCommand> contacts)
          : base(id)
         {
@@ -28,6 +29,7 @@
             StudentNumber = studentNumber;
             Notes = notes;
             Source = source;
+            CitizenshipIdentity = citizenshipIdentity;
             ClassroomId = classroomId;
             Contacts = contacts;
         }
@@ -57,6 +59,9 @@
         public string Source { get; private set; }
 
         [DataMember]
+        public string CitizenshipIdentity { get; private set; }
+
+        [DataMember]
         public IEnumerable<CreateContactCommand> Contacts { get; private set; }
 
         public Student ToDomainModel(Classroom classroom) => ToDomainModel(classroom, UserId);
@@ -69,6 +74,7 @@
                 StudentNumber,
                 classroom,
                 Contacts?.Select(c => c.ToDomainModel()).Where(x => x != null) ?? Enumerable.Empty<Domain.Model.StudentModel.Contact>(),
+                CitizenshipIdentity,
                 Notes,
                 Source);
         }

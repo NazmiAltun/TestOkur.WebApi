@@ -17,6 +17,7 @@
             int newStudentNumber,
             int newClassroomId,
             string newNotes,
+            string citizenshipIdentity,
             List<CreateContactCommand> contacts)
             : base(id)
         {
@@ -26,6 +27,7 @@
             NewStudentNumber = newStudentNumber;
             NewClassroomId = newClassroomId;
             NewNotes = newNotes;
+            CitizenshipIdentity = citizenshipIdentity;
             Contacts = contacts;
         }
 
@@ -52,6 +54,9 @@
 
         [DataMember]
         public string NewNotes { get; private set; }
+
+        [DataMember]
+        public string CitizenshipIdentity { get; private set; }
 
         [DataMember]
         public List<CreateContactCommand> Contacts { get; private set; }
