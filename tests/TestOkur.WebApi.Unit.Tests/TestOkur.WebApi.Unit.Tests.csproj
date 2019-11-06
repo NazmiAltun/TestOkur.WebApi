@@ -4,5 +4,8 @@
     <ProjectReference Include="..\..\src\TestOkur.Domain\TestOkur.Domain.csproj" />
     <ProjectReference Include="..\..\src\TestOkur.WebApi\TestOkur.WebApi.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+  </ItemGroup>
 
 </Project>

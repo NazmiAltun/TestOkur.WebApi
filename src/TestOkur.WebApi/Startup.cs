@@ -220,7 +220,7 @@
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
                 .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"))
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
-                .AddRabbitMQ(rabbitMqUri);
+                .AddRabbitMQ(rabbitMqUri, null, "rabbitmq");
         }
 
         private void AddCache(IServiceCollection services)

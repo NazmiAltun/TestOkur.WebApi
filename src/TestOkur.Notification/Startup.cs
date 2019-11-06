@@ -217,7 +217,7 @@
         {
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
-                .AddRabbitMQ(rabbitMqUri)
+                .AddRabbitMQ(rabbitMqUri, null, "rabbitmq")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"))
                 .AddMongoDb(
