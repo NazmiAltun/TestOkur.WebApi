@@ -3,7 +3,6 @@
     using CacheManager.Core;
     using HealthChecks.UI.Client;
     using MassTransit;
-    using MassTransit.RabbitMqTransport;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
