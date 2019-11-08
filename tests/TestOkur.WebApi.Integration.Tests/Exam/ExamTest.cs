@@ -49,8 +49,7 @@
 
         protected async Task<ExamTypeReadModel> GetRandomExamTypeAsync(HttpClient client)
         {
-            const string ApiPath = "api/v1/exam-types";
-            var response = await client.GetAsync(ApiPath);
+            var response = await client.GetAsync("api/v1/exam-types");
             var examTypes = await response.ReadAsync<IEnumerable<ExamTypeReadModel>>();
 
             return examTypes.Random();

@@ -3,10 +3,5 @@
 const fs = require('fs');
 
 module.exports = function(req, res) {
-    fs.readFile('./mocks/captcha.png',(err,data) =>{
-        if(err){
-            console.log(err);
-        }
-        res.header('Text', 'iWr3').type('png').send(data);
-    });
+    res.status(200).send(true);
 };

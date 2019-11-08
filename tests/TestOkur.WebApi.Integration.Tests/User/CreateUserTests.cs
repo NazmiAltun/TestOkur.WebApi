@@ -1,8 +1,8 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
+    using FluentAssertions;
     using System;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Common;
     using TestOkur.Contracts.User;
     using TestOkur.TestHelper.Extensions;
@@ -11,20 +11,12 @@
 
     public class CreateUserTests : UserTest
     {
-        [Fact]
-        public async Task When_InvalidCaptchaPosted_Then_BadRequest_Should_Return()
-        {
-            var client = (await GetTestServer()).CreateClient();
-            var model = GenerateCreateUserCommand();
-            var response = await client.PostAsync(ApiPath, model.ToJsonContent());
-            await response.Should().BeBadRequestAsync(ErrorCodes.InvalidCaptcha);
-        }
-
+        
         [Fact]
         public async Task When_BadDataPosted_Then_BadRequest_Should_Return()
         {
             var client = (await GetTestServer()).CreateClient();
-            var model = GenerateCreateUserCommand(null, string.Empty);
+            var model = GenerateCreateUserCommand(Random.RandomString(5));
 
             var response = await client.PostAsync(ApiPath, model.ToJsonContent());
             await response.Should().BeBadRequestAsync(ErrorCodes.InvalidPhoneNumber);
@@ -35,7 +27,7 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var model = await CreateUserAsync(client, testServer.Host.Services);
+            var model = await CreateUserAsync(client);
             (await GetUsersAsync(client)).Should()
                     .Contain(u => u.Email == model.Email);
             var events = Consumer.Instance.GetAll<INewUserRegistered>();
@@ -47,7 +39,7 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var model = await CreateUserAsync(client, testServer.Host.Services);
+            var model = await CreateUserAsync(client);
             var response = await client.PostAsync(ApiPath, model.ToJsonContent());
             await response.Should().BeBadRequestAsync(ErrorCodes.UserAlreadyExists);
         }

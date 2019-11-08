@@ -20,7 +20,7 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var model = await CreateUserAsync(client, testServer.Host.Services);
+            var model = await CreateUserAsync(client);
             var additionAmount = RandomGen.Next(1000);
             var response = await client.GetAsync($"api/v1/users/{model.Email}");
             var user = await response.ReadAsync<Domain.Model.UserModel.User>();

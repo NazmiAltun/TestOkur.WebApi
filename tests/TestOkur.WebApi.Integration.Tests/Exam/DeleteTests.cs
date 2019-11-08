@@ -15,7 +15,6 @@
             using var testServer = await CreateWithUserAsync();
             var client = testServer.CreateClient();
             var command = await CreateExamAsync(client);
-            var exams = await GetExamListAsync(client);
             var id = (await GetExamListAsync(client))
                 .First(l => l.Name == command.Name).Id;
             await DeleteExamAsync(client, id);

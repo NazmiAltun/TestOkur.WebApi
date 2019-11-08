@@ -19,10 +19,9 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
 
             var command = new SendResetPasswordLinkCommand(
-                Guid.NewGuid(), email, captcha.Id, captcha.Code);
+                Guid.NewGuid(), email, Guid.NewGuid(), Random.RandomString(4));
 
             var response = await client.PostAsync($"{ApiPath}/send-reset-password-link", command.ToJsonContent());
             await response.Should().BeBadRequestAsync(ErrorCodes.InvalidEmailAddress);
@@ -33,11 +32,10 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var model = await CreateUserAsync(client, testServer.Host.Services);
-            var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
+            var model = await CreateUserAsync(client);
 
             var command = new SendResetPasswordLinkCommand(
-                Guid.NewGuid(), model.Email, captcha.Id, captcha.Code);
+                Guid.NewGuid(), model.Email, Guid.NewGuid(), Random.RandomString(4));
 
             var response = await client.PostAsync($"{ApiPath}/send-reset-password-link", command.ToJsonContent());
             response.EnsureSuccessStatusCode();

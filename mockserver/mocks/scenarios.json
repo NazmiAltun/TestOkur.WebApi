@@ -56,8 +56,8 @@
     "/hc": {
       "get": "hc.json"
     },
-    "/captcha" :{
-      "get" : "captcha.js"
+    "/captcha/:id" :{
+      "post" : "captcha.js"
     },
     "/captcha/hc": {
       "get": 200

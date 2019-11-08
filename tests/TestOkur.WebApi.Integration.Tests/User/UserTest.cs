@@ -13,12 +13,9 @@
     {
         protected const string ApiPath = "api/v1/users";
 
-        protected async Task<CreateUserCommand> CreateUserAsync(
-            HttpClient client,
-            IServiceProvider serviceProvider)
+        protected async Task<CreateUserCommand> CreateUserAsync(HttpClient client)
         {
-            var captcha = await GetCaptchaAsync(client, serviceProvider);
-            var command = GenerateCreateUserCommand(captcha);
+            var command = GenerateCreateUserCommand();
             var response = await client.PostAsync(ApiPath, command.ToJsonContent());
             response.EnsureSuccessStatusCode();
 

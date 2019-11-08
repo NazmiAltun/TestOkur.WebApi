@@ -18,7 +18,7 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var createUserCommand = await CreateUserAsync(client, testServer.Host.Services);
+            var createUserCommand = await CreateUserAsync(client);
             var response = await client.GetAsync(ApiPath);
             var users = await response.ReadAsync<IReadOnlyCollection<UserReadModel>>();
             var user = users.First(u => u.Email == createUserCommand.Email);

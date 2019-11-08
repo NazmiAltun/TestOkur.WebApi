@@ -1,16 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Common
 {
-    using CacheManager.Core;
     using IdentityModel;
     using Microsoft.AspNetCore.TestHost;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-    using System.Net.Http;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
-    using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.User.Commands;
 
     public abstract class Test
@@ -19,7 +16,6 @@
         protected static readonly TestServerFactory TestServerFactory = new TestServerFactory();
 
         private const string UserApiPath = "api/v1/users";
-        private const string CaptchaApiPath = "api/v1/captcha";
         private static TestServer _testServer;
         private TestServer _testServerWithUser;
 
@@ -58,26 +54,15 @@
         {
             using var testServer = await testServerFactory();
             var client = testServer.CreateClient();
-            var captcha = await GetCaptchaAsync(client, testServer.Host.Services);
-            var model = GenerateCreateUserCommand(captcha);
+            var model = GenerateCreateUserCommand();
 
             var response = await client.PostAsync(UserApiPath, model.ToJsonContent());
             response.EnsureSuccessStatusCode();
 
             return model;
         }
-
-        protected async Task<Captcha> GetCaptchaAsync(HttpClient client, IServiceProvider serviceProvider)
-        {
-            var id = Guid.NewGuid();
-            await client.GetAsync($"{CaptchaApiPath}/{id}");
-            var cache = serviceProvider.GetRequiredService<ICacheManager<Captcha>>();
-
-            return cache.Get($"Captcha_{id}");
-        }
-
+        
         protected CreateUserCommand GenerateCreateUserCommand(
-            Captcha captcha = null,
             string phone = null)
         {
             return new CreateUserCommand(
@@ -96,8 +81,8 @@
                 "test",
                 Random.RandomString(10),
                 Random.RandomString(10),
-                captcha?.Id ?? Guid.Empty,
-                captcha?.Code ?? "NONONO");
+                Guid.NewGuid(), 
+                Random.RandomString(4));
         }
 
         private Task<TestServer> CreateAsync()
@@ -106,3 +91,4 @@
         }
     }
 }
+ 

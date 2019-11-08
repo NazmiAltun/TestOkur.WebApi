@@ -12,7 +12,7 @@
         {
             var testServer = await GetTestServer();
             var client = testServer.CreateClient();
-            var model = await CreateUserAsync(client, testServer.Host.Services);
+            var model = await CreateUserAsync(client);
             var user = (await GetUsersAsync(client)).FirstOrDefault(u => u.Email == model.Email);
             user.Should().NotBeNull();
             await client.DeleteAsync($"{ApiPath}/{user.Id}");
