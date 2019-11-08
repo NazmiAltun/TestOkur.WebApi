@@ -49,7 +49,7 @@
                 .Find(Builders<SchoolResult>.Filter.Eq(x => x.ExamId, examId))
                 .ToListAsync();
             _cache.Add(new CacheItem<IEnumerable<SchoolResult>>(
-                key, results, ExpirationMode.Absolute, TimeSpan.MaxValue));
+                key, results, ExpirationMode.Absolute, TimeSpan.FromDays(30)));
             return results;
         }
     }
