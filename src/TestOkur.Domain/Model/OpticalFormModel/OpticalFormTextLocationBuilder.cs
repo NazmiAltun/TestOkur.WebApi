@@ -11,6 +11,7 @@
         private Location _title1 = Location.Empty;
         private Location _title2 = Location.Empty;
         private Location _courseName = Location.Empty;
+        private Location _citizenshipIdentity = Location.Empty;
 
         public OpticalFormTextLocation Build()
         {
@@ -23,7 +24,8 @@
                 _studentNoFillingPart,
                 _title1,
                 _title2,
-                _courseName);
+                _courseName,
+                _citizenshipIdentity);
         }
 
         public OpticalFormTextLocationBuilder SetStudentNoFillingPartLocation(int x, int y)
@@ -77,6 +79,12 @@
         public OpticalFormTextLocationBuilder SetCourseNameLocation(int x, int y)
         {
             _courseName = Location.From(x, y);
+            return this;
+        }
+
+        public OpticalFormTextLocationBuilder SetCitizenshipIdentityLocation(int x, int y)
+        {
+            _citizenshipIdentity = Location.From(x, y);
             return this;
         }
     }

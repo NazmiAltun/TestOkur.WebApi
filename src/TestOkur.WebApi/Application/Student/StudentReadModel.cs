@@ -19,6 +19,8 @@
 
         public string ClassroomName { get; set; }
 
+        public string CitizenshipIdentity { get; set; }
+
         public string Notes { get; set; }
 
         public string Source { get; set; }

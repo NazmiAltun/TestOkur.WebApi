@@ -64,9 +64,7 @@
         [DataMember]
         public IEnumerable<CreateContactCommand> Contacts { get; private set; }
 
-        public Student ToDomainModel(Classroom classroom) => ToDomainModel(classroom, UserId);
-
-        public Student ToDomainModel(Classroom classroom, int userId)
+        public Student ToDomainModel(Classroom classroom)
         {
             return new Student(
                 FirstName,

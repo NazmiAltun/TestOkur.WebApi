@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TestOkur.WebApi.Migrations
+﻿namespace TestOkur.WebApi.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class CitizenshipAddedToStudent : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

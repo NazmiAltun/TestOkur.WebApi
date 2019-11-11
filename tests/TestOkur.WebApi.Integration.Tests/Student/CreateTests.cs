@@ -77,6 +77,7 @@
                                        s.FirstName == command.FirstName &&
                                        s.StudentNumber == command.StudentNumber &&
                                        s.ClassroomId == command.ClassroomId &&
+                                       s.CitizenshipIdentity == command.CitizenshipIdentity &&
                                        s.Contacts.Any(c => c.Phone == command.Contacts.First().Phone) &&
                                        s.Contacts.Any(c => c.Phone == command.Contacts.Last().Phone));
         }

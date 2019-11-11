@@ -54,7 +54,8 @@
                                        s.ClassroomId == editCommand.NewClassroomId &&
                                        s.Contacts.Any(c => c.Phone == editCommand.Contacts.First().Phone) &&
                                        s.FirstName == editCommand.NewFirstName &&
-                                       s.LastName == editCommand.NewLastName)
+                                       s.LastName == editCommand.NewLastName &&
+                                       s.CitizenshipIdentity == editCommand.CitizenshipIdentity)
                 .And
                 .NotContain(s => s.StudentNumber == createCommand.StudentNumber);
             var @event = Consumer.Instance.GetFirst<IStudentUpdated>();

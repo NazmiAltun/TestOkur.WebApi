@@ -643,6 +643,25 @@
                     .Build())
                 .Build();
 
+        private OpticalFormDefinition Vocc =>
+            new OpticalFormDefinitionBuilder(OpticalFormDefinitions.Vocc)
+                .HasBoxForStudentNumber()
+                .SetStudentNoXInterval(62)
+                .SetStudentNoYInterval(53)
+                .SetStudentNoFillWidth(45)
+                .SetDescription("Mesleki Yeterlilik Sinavi Optik Formu")
+                .PrimarySchool()
+                .SetFilename(@"VOCC.jpg")
+                .SetStudentNumberFillDirection(Direction.ToBottom)
+                .SetTextDirection(Direction.ToRight)
+                .AddTextLocation(new OpticalFormTextLocationBuilder()
+                    .SetCitizenshipIdentityLocation(620, 2140)
+                    .SetNameLocation(620, 2220)
+                    .SetSurnameLocation(620, 2295)
+                    .SetExamNameLocation(1240, 195)
+                    .Build())
+                .Build();
+
         private OpticalFormDefinition Abcd30 =>
             new OpticalFormDefinitionBuilder(OpticalFormDefinitions.Abcd30)
                 .HasBoxForStudentNumber()
@@ -740,6 +759,7 @@
                 Lgs,
                 ScholarshipPrimary,
                 Src,
+                Vocc,
                 High20,
                 High30,
                 High60,
@@ -1066,6 +1086,16 @@
                 60));
             formTypes.Last().AddOpticalFormDefinition(
                 formDefinitions.First(f => f.Name == OpticalFormDefinitions.SRC));
+
+            formTypes.Add(new OpticalFormType(
+                OpticalFormTypes.Names.FrmVocc,
+                OpticalFormTypes.Codes.FrmVocc,
+                "ilk-orta-4sinif.yap",
+                SchoolType.PrimaryAndSecondary,
+                null,
+                100));
+            formTypes.Last().AddOpticalFormDefinition(
+                formDefinitions.First(f => f.Name == OpticalFormDefinitions.Vocc));
 
             dbContext.FormTypes.AddRange(formTypes);
 

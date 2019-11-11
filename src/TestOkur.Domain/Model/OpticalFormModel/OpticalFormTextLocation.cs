@@ -13,7 +13,8 @@
             Location studentNoFillingPart,
             Location title1,
             Location title2,
-            Location courseName)
+            Location courseName,
+            Location citizenshipIdentity)
         {
             Name = name;
             Surname = surname;
@@ -24,6 +25,7 @@
             Title1 = title1;
             Title2 = title2;
             CourseName = courseName;
+            CitizenshipIdentity = citizenshipIdentity;
         }
 
         protected OpticalFormTextLocation()
@@ -47,5 +49,7 @@
         public Location Title2 { get; private set; }
 
         public Location CourseName { get; private set; }
+
+        public Location CitizenshipIdentity { get; private set; }
     }
 }

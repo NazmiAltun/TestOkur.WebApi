@@ -18,6 +18,7 @@
             public const string FrmLgs = "LGS Deneme Sınavi- Tek Oturum";
             public const string FrmLgsTwoPiece = "LGS Deneme Sınavı- 2 Oturum(Sözel-Sayısal)";
             public const string FrmSrc = "SRC & Is Makinalari Optik Form";
+            public const string FrmVocc = "Mesleki Yeterlilik Sinavi Optik Formu";
 
             //HighSchool
             public const string Frm20ABCDE = "20 Soruluk ABCDE Seçenekli";
@@ -45,6 +46,8 @@
             public const string FrmTeog = "FrmTeog";
             public const string FrmLgs = "FrmLgs";
             public const string FrmLgsTwoPiece = "FrmLgsTwoPiece";
+            public const string FrmSrc = "FrmSrc";
+            public const string FrmVocc = "FrmVocc";
 
             //HighSchool
             public const string Frm20ABCDE = "Frm20ABCDE";
@@ -55,7 +58,6 @@
             public const string FrmAyt = "FrmAyt";
             public const string FrmAytLang = "FrmAytLang";
             public const string FrmScholarshipHigh = "FrmScholarshipHigh";
-            public const string FrmSrc = "FrmSrc";
         }
     }
 }

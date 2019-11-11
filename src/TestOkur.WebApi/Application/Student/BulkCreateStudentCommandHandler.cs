@@ -42,9 +42,9 @@
                         dbContext.Remove(existingStudent);
                     }
 
-                    dbContext.Students.Add(subCommand.ToDomainModel(classroom, command.UserId));
+                    dbContext.Students.Add(subCommand.ToDomainModel(classroom));
                     contactTypes.AddRange(subCommand
-                        .ToDomainModel(classroom, command.UserId)
+                        .ToDomainModel(classroom)
                         .Contacts.Select(c => c.ContactType));
                 }
 
