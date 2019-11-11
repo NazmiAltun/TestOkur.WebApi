@@ -46,6 +46,7 @@
                     OpticalFormTypes.Codes.FrmAytLang,
                     OpticalFormTypes.Codes.FrmScholarshipHigh,
                     OpticalFormTypes.Codes.FrmSrc,
+                    OpticalFormTypes.Codes.FrmVocc
             };
 
             list.Select(f => f.Code)

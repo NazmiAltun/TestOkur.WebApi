@@ -20,6 +20,7 @@
             builder.OwnsOne(_ => _.CourseName);
             builder.OwnsOne(_ => _.Title1);
             builder.OwnsOne(_ => _.Title2);
+            builder.OwnsOne(_ => _.CitizenshipIdentity);
         }
     }
 }
