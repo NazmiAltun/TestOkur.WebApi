@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using TestOkur.Domain.SeedWork;
-
-namespace TestOkur.WebApi.Application.OpticalForm
+﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
     using System;
     using System.Collections.Generic;
@@ -12,6 +9,7 @@ namespace TestOkur.WebApi.Application.OpticalForm
     using TestOkur.Domain.Model;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.Domain.SeedWork;
     using TestOkur.WebApi.Data;
 
     internal class OpticalFormsSeeder : ISeeder
@@ -777,10 +775,9 @@ namespace TestOkur.WebApi.Application.OpticalForm
                     continue;
                 }
 
-                dbContext.AttachRange(Enumeration.GetAll<Direction>());
                 dbContext.OpticalFormDefinitions.Add(formDef);
             }
-
+            await dbContext.Set<Direction>().ToListAsync();
             await dbContext.SaveChangesAsync();
             return formDefinitions;
         }
@@ -1107,7 +1104,6 @@ namespace TestOkur.WebApi.Application.OpticalForm
                     continue;
                 }
 
-                dbContext.AttachRange(formType.SchoolType);
                 dbContext.FormTypes.Add(formType);
             }
 
@@ -1122,6 +1118,7 @@ namespace TestOkur.WebApi.Application.OpticalForm
                 }
             }
 
+            await dbContext.Set<SchoolType>().ToListAsync();
             await dbContext.SaveChangesAsync();
         }
     }
