@@ -777,7 +777,14 @@
 
                 dbContext.OpticalFormDefinitions.Add(formDef);
             }
-            await dbContext.Set<Direction>().ToListAsync();
+
+            var directions = await dbContext.Set<Direction>().AsNoTracking().ToListAsync();
+
+            if (directions.Any())
+            {
+               dbContext.AttachRange(directions);
+            }
+
             await dbContext.SaveChangesAsync();
             return formDefinitions;
         }
@@ -1118,7 +1125,13 @@
                 }
             }
 
-            await dbContext.Set<SchoolType>().ToListAsync();
+            var schoolTypes = await dbContext.Set<SchoolType>().AsNoTracking().ToListAsync();
+
+            if (schoolTypes.Any())
+            {
+                dbContext.AttachRange(schoolTypes);
+            }
+
             await dbContext.SaveChangesAsync();
         }
     }
