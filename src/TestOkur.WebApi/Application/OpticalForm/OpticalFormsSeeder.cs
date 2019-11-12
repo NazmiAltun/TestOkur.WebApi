@@ -776,6 +776,10 @@ namespace TestOkur.WebApi.Application.OpticalForm
                     continue;
                 }
 
+                dbContext.AttachRange(Direction.ToBottom);
+                dbContext.AttachRange(Direction.ToLeft);
+                dbContext.AttachRange(Direction.ToRight);
+                dbContext.AttachRange(Direction.ToTop);
                 dbContext.OpticalFormDefinitions.Add(formDef);
             }
 
@@ -1105,6 +1109,7 @@ namespace TestOkur.WebApi.Application.OpticalForm
                     continue;
                 }
 
+                dbContext.AttachRange(formType.SchoolType);
                 dbContext.FormTypes.Add(formType);
             }
 
