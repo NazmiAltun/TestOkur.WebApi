@@ -655,7 +655,7 @@
                 .SetStudentNumberFillDirection(Direction.ToBottom)
                 .SetTextDirection(Direction.ToRight)
                 .AddTextLocation(new OpticalFormTextLocationBuilder()
-                    .SetCitizenshipIdentityLocation(620, 2140)
+                    .SetCitizenshipIdentityLocation(620, 2120)
                     .SetNameLocation(620, 2200)
                     .SetSurnameLocation(620, 2270)
                     .SetExamNameLocation(1240, 195)
