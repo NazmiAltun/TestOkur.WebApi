@@ -656,9 +656,10 @@
                 .SetTextDirection(Direction.ToRight)
                 .AddTextLocation(new OpticalFormTextLocationBuilder()
                     .SetCitizenshipIdentityLocation(620, 2140)
-                    .SetNameLocation(620, 2220)
-                    .SetSurnameLocation(620, 2295)
+                    .SetNameLocation(620, 2200)
+                    .SetSurnameLocation(620, 2270)
                     .SetExamNameLocation(1240, 195)
+                    .SetStudentNoFillingPartLocation(496, 640)
                     .Build())
                 .Build();
 
