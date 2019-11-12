@@ -1,15 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
     using TestOkur.Data;
     using TestOkur.Domain.Model;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Domain.Model.OpticalFormModel;
-    using TestOkur.Domain.SeedWork;
     using TestOkur.WebApi.Data;
 
     internal class OpticalFormsSeeder : ISeeder
@@ -770,7 +769,7 @@
 
             foreach (var formDef in formDefinitions)
             {
-                if (await dbContext.OpticalFormDefinitions.AnyAsync(o => o.Name == formDef.Name))
+                if (await dbContext.OpticalFormDefinitions.AsNoTracking().AnyAsync(o => o.Name == formDef.Name))
                 {
                     continue;
                 }
@@ -778,14 +777,10 @@
                 dbContext.OpticalFormDefinitions.Add(formDef);
             }
 
-            var directions = await dbContext.Set<Direction>().AsNoTracking().ToListAsync();
-
-            if (directions.Any())
-            {
-               dbContext.AttachRange(directions);
-            }
-
+            await dbContext.Set<SchoolType>().ToListAsync();
+            await dbContext.Set<Direction>().ToListAsync();
             await dbContext.SaveChangesAsync();
+
             return formDefinitions;
         }
 
@@ -1123,13 +1118,6 @@
                     dbContext.Entry(section).Property("ListOrder").CurrentValue =
                         sections.IndexOf(section) + 1;
                 }
-            }
-
-            var schoolTypes = await dbContext.Set<SchoolType>().AsNoTracking().ToListAsync();
-
-            if (schoolTypes.Any())
-            {
-                dbContext.AttachRange(schoolTypes);
             }
 
             await dbContext.SaveChangesAsync();

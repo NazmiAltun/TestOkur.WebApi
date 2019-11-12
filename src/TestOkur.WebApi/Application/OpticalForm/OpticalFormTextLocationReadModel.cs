@@ -19,5 +19,7 @@
         public Location Title1 { get; set; }
 
         public Location Title2 { get; set; }
+
+        public Location CitizenshipIdentity { get; set; }
     }
 }
