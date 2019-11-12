@@ -85,6 +85,7 @@
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm60ABCDE))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm100ABCDE))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmSrc))
+                    .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmVocc))
                     .WithOrder(10)
                     .AvailableForAllSchoolTypes()
                     .Build();
