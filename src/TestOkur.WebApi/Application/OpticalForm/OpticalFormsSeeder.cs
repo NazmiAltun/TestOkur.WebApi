@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi.Application.OpticalForm
+﻿using System.Security.Cryptography;
+
+namespace TestOkur.WebApi.Application.OpticalForm
 {
     using System;
     using System.Collections.Generic;
@@ -731,11 +733,6 @@
 
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider services)
         {
-            if (await dbContext.FormTypes.AnyAsync())
-            {
-                return;
-            }
-
             var definitions = await SeedFormDefinitions(dbContext);
             await SeedFormTypes(dbContext, definitions);
         }
@@ -771,13 +768,17 @@
                 Aytlang,
                 ScholarshipHigh,
             };
+
             foreach (var formDef in formDefinitions)
             {
-                dbContext.Entry(formDef).Property("ListOrder").CurrentValue =
-                    formDefinitions.IndexOf(formDef) + 1;
+                if (await dbContext.OpticalFormDefinitions.AnyAsync(o => o.Name == formDef.Name))
+                {
+                    continue;
+                }
+
+                dbContext.OpticalFormDefinitions.Add(formDef);
             }
 
-            dbContext.OpticalFormDefinitions.AddRange(formDefinitions);
             await dbContext.SaveChangesAsync();
             return formDefinitions;
         }
@@ -1097,7 +1098,15 @@
             formTypes.Last().AddOpticalFormDefinition(
                 formDefinitions.First(f => f.Name == OpticalFormDefinitions.Vocc));
 
-            dbContext.FormTypes.AddRange(formTypes);
+            foreach (var formType in formTypes)
+            {
+                if (await dbContext.FormTypes.AnyAsync(f => f.Code == formType.Code))
+                {
+                    continue;
+                }
+
+                dbContext.FormTypes.Add(formType);
+            }
 
             foreach (var formType in dbContext.FormTypes.Local)
             {
