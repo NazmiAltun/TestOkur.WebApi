@@ -25,7 +25,6 @@
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm60ABCDE))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm100ABCDE))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmSrc))
-                    .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmVocc))
                     .WithOrder(20)
                     .AvailableForAllSchoolTypes()
                     .Build();
@@ -64,6 +63,7 @@
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm3rdGradeTrial))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm4thGradeTrial))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmTeog))
+                    .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmVocc))
                     .WithOrder(30)
                     .AvailableForPrimarySchool()
                     .Build();
@@ -87,7 +87,6 @@
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm60ABCDE))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.Frm100ABCDE))
                     .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmSrc))
-                    .AddFormType(_formTypes.First(f => f.Code == OpticalFormTypes.Codes.FrmVocc))
                     .WithOrder(10)
                     .AvailableForAllSchoolTypes()
                     .Build();
