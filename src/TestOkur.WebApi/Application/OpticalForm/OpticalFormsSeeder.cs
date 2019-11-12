@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using TestOkur.Domain.SeedWork;
 
 namespace TestOkur.WebApi.Application.OpticalForm
 {
@@ -776,10 +777,7 @@ namespace TestOkur.WebApi.Application.OpticalForm
                     continue;
                 }
 
-                dbContext.AttachRange(Direction.ToBottom);
-                dbContext.AttachRange(Direction.ToLeft);
-                dbContext.AttachRange(Direction.ToRight);
-                dbContext.AttachRange(Direction.ToTop);
+                dbContext.AttachRange(Enumeration.GetAll<Direction>());
                 dbContext.OpticalFormDefinitions.Add(formDef);
             }
 
