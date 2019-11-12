@@ -1095,7 +1095,14 @@
                 OpticalFormTypes.Codes.FrmVocc,
                 "ilk-orta-4sinif.yap",
                 SchoolType.PrimaryAndSecondary,
-                null,
+                new List<FormLessonSection>
+                {
+                    new FormLessonSection(trLesson, 20),
+                    new FormLessonSection(matLesson, 20),
+                    new FormLessonSection(scienceLesson, 20),
+                    new FormLessonSection(socLesson, 20),
+                    new FormLessonSection(langLesson, 20),
+                },
                 100));
             formTypes.Last().AddOpticalFormDefinition(
                 formDefinitions.First(f => f.Name == OpticalFormDefinitions.Vocc));
