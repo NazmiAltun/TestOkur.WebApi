@@ -41,8 +41,8 @@
                 Answers = ParseAnswers("DBCCEEBAEECAACBBDECE"),
             });
             var studentForm = new StudentOpticalForm('A');
-            studentForm.SetFromScanOutput(new ScanOutput("CE EEE       C   EA DAE  ADEBEDEDCADEBAEDBE     D  B DEAEAAA", 1), answerKeyForm);
-            studentForm.SetFromScanOutput(new ScanOutput("CB                                      A     CE  D         ", 2), answerKeyForm);
+            studentForm.SetFromScanOutput(new ScanOutput("CE EEE       C   EA DAE  ADEBEDEDCADEBAEDBE     D  B DEAEAAA", 1, 0, 'A'), answerKeyForm);
+            studentForm.SetFromScanOutput(new ScanOutput("CB                                      A     CE  D         ", 2, 0, 'A'), answerKeyForm);
             studentForm.Evaluate(4, answerKeyForm.ScoreFormulas);
 
             var userId = RandomGen.Next(10000);
@@ -57,7 +57,7 @@
                 studentForm,
             };
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
-            response.EnsureSuccessStatusCode();
+            response.IsSuccessStatusCode.Should().BeTrue();
         }
 
         [Fact]

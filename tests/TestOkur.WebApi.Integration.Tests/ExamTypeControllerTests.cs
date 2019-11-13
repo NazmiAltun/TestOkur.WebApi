@@ -26,13 +26,13 @@
                 .Contain(e => e.Name == ExamTypes.LessonExam &&
                               e.AvailableForHighSchool &&
                               e.AvailableForPrimarySchool &&
-                              e.OpticalFormTypes.Count() >= 9);
+                              e.OpticalFormTypes.Count >= 9);
             examTypes.Should().Contain(e => e.Name == ExamTypes.EvaluationExam)
                 .And
                 .Contain(e => e.Name == ExamTypes.EvaluationExam &&
                               e.AvailableForHighSchool &&
                               e.AvailableForPrimarySchool &&
-                              e.OpticalFormTypes.Count() == 9);
+                              e.OpticalFormTypes.Count >= 9);
             examTypes.Should().Contain(e => e.Name == ExamTypes.Tyt &&
                               e.AvailableForHighSchool &&
                               !e.AvailableForPrimarySchool);

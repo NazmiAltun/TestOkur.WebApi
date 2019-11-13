@@ -40,14 +40,14 @@
                 DistrictId = 20,
                 DistrictName = "Bayrakli",
             };
-            studentForm.SetFromScanOutput(new ScanOutput("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 1), answerKeyForms.First());
+            studentForm.SetFromScanOutput(new ScanOutput("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", 1, 0, 'A'), answerKeyForms.First());
             evaluator.FillMissingSections(studentForm, answerKeyForms.First());
             studentForm.Sections.Count.Should().Be(answerKeyForms.First().Sections.Count);
 
             foreach (var section in answerKeyForms.First().Sections)
             {
                 studentForm.Sections.First(s => s.LessonId == section.LessonId)
-                    .Answers.Count().Should().Be(section.Answers.Count);
+                    .Answers.Count.Should().Be(section.Answers.Count);
             }
         }
 
@@ -79,8 +79,8 @@
                 DistrictId = 20,
                 DistrictName = "Bayrakli",
             };
-            studentForm.SetFromScanOutput(new ScanOutput("EDCBAABDABCADBCCDECEDBDEDEBCEAACBADCCDEADEECBCCBCACEEBADBCDC", 1), answerKeyForms.First());
-            studentForm.SetFromScanOutput(new ScanOutput("DDBBDAE BECBBDCAECEDBECCEB DACCDCB A  CDCDDABACDBCAEBEDBCABA", 2), answerKeyForms.First());
+            studentForm.SetFromScanOutput(new ScanOutput("EDCBAABDABCADBCCDECEDBDEDEBCEAACBADCCDEADEECBCCBCACEEBADBCDC", 1, 0, 'A'), answerKeyForms.First());
+            studentForm.SetFromScanOutput(new ScanOutput("DDBBDAE BECBBDCAECEDBECCEB DACCDCB A  CDCDDABACDBCAEBEDBCABA", 2, 0, 'A'), answerKeyForms.First());
             studentForms.Add(studentForm);
             studentForm = new StudentOpticalForm('B')
             {
@@ -99,8 +99,8 @@
                 DistrictId = 20,
                 DistrictName = "Bayrakli",
             };
-            studentForm.SetFromScanOutput(new ScanOutput("EDCDEAEECEAACBAECCDEAEDCBAABDBBC DBB DECCABDEBCAEBADCEEABDBD", 1), answerKeyForms.Last());
-            studentForm.SetFromScanOutput(new ScanOutput("AAECEDBECC BD A       AB                                    ", 2), answerKeyForms.Last());
+            studentForm.SetFromScanOutput(new ScanOutput("EDCDEAEECEAACBAECCDEAEDCBAABDBBC DBB DECCABDEBCAEBADCEEABDBD", 1, 0, 'A'), answerKeyForms.Last());
+            studentForm.SetFromScanOutput(new ScanOutput("AAECEDBECC BD A       AB                                    ", 2, 0, 'A'), answerKeyForms.Last());
             studentForms.Add(studentForm);
 
             studentForms = evaluator.Evaluate(answerKeyForms, studentForms).ToList();

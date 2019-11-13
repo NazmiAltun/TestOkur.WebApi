@@ -40,8 +40,8 @@
                     ExamId = examId,
                 },
             };
-            studentForms.First().SetFromScanOutput(new ScanOutput("BABABABACADADADADACA", 0), list.First());
-            studentForms.Last().SetFromScanOutput(new ScanOutput("ABCABDABCABDAC", 0), list.Last());
+            studentForms.First().SetFromScanOutput(new ScanOutput("BABABABACADADADADACA", 0,0,'A'), list.First());
+            studentForms.Last().SetFromScanOutput(new ScanOutput("ABCABDABCABDAC", 0, 0, 'A'), list.Last());
             await client.PostAsync(ApiPath, studentForms.ToJsonContent());
             var newAnswerKeyForms = GenerateAnswerKeyOpticalForms(4).ToList();
             var repository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository));

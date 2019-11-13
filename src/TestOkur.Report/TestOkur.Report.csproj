@@ -19,11 +19,11 @@
     <PackageReference Include="MassTransit.RabbitMQ" Version="5.5.6" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.9.3" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.3.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.0" />
     <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.2" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.72" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.73" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
