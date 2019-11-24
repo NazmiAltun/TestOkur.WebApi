@@ -1,4 +1,7 @@
-﻿namespace TestOkur.Report.Infrastructure.Repositories
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+
+namespace TestOkur.Report.Infrastructure.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -13,9 +16,11 @@
     public class StudentOpticalFormRepository : IStudentOpticalFormRepository
     {
         private readonly TestOkurContext _context;
+        private readonly ILogger<StudentOpticalFormRepository> _logger;
 
-        public StudentOpticalFormRepository(ReportConfiguration configuration)
+        public StudentOpticalFormRepository(ReportConfiguration configuration, ILogger<StudentOpticalFormRepository> logger)
         {
+            _logger = logger;
             _context = new TestOkurContext(configuration);
         }
 
@@ -105,10 +110,12 @@
 
         public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId)
         {
+            var sw = Stopwatch.StartNew();
             var list = await _context.StudentOpticalForms
                 .Find(Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId))
                 .ToListAsync();
-
+            _logger.LogWarning($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
+            sw = Stopwatch.StartNew();
             foreach (var item in list)
             {
                 item.Sections = item.Sections.OrderBy(s => s.FormPart)
@@ -116,6 +123,7 @@
                     .ToList();
             }
 
+            _logger.LogWarning($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
             return list;
         }
 
