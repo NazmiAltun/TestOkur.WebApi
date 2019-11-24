@@ -129,9 +129,13 @@ namespace TestOkur.Report.Infrastructure.Repositories
 
         public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId)
         {
+            var sw = Stopwatch.StartNew();
+
             var list = await _context.StudentOpticalForms
                 .Find(Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId))
                 .ToListAsync();
+            _logger.LogWarning($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
+            sw = Stopwatch.StartNew();
 
             foreach (var item in list)
             {
@@ -139,6 +143,7 @@ namespace TestOkur.Report.Infrastructure.Repositories
                     .ThenBy(s => s.ListOrder)
                     .ToList();
             }
+            _logger.LogWarning($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
 
             return list;
         }
