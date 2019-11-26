@@ -651,7 +651,7 @@
                 .SetStudentNoFillWidth(45)
                 .SetDescription("Mesleki Yeterlilik Sinavi Optik Formu")
                 .PrimarySchool()
-                .SetFilename(@"VOCC.jpg")
+                .SetFilename(@"VOCC-2.jpg")
                 .SetStudentNumberFillDirection(Direction.ToBottom)
                 .SetTextDirection(Direction.ToRight)
                 .AddTextLocation(new OpticalFormTextLocationBuilder()
