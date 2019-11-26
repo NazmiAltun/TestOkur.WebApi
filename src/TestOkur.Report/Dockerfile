@@ -18,15 +18,15 @@ FROM build AS publish
 WORKDIR /src
 RUN dotnet publish "./src/TestOkur.Report/TestOkur.Report.csproj" --no-restore -c Release -o /app
 
-FROM golang:latest as minifier
-RUN go get -v github.com/tdewolff/minify/cmd/minify
-WORKDIR /minify
-COPY /src/TestOkur.Report/wwwroot/Templates .
-RUN minify -o out/ .
+#FROM golang:latest as minifier
+#RUN go get -v github.com/tdewolff/minify/cmd/minify
+#WORKDIR /minify
+#COPY /src/TestOkur.Report/wwwroot/Templates .
+#RUN minify -o out/ .
 
 FROM base as final
 WORKDIR /app
 EXPOSE 80
 COPY --from=publish /app .
-COPY --from=minifier /minify/out wwwroot/Templates/
+#COPY --from=minifier /minify/out wwwroot/Templates/
 ENTRYPOINT ["dotnet", "TestOkur.Report.dll"]
