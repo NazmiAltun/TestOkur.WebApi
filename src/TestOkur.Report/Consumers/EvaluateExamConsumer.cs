@@ -1,15 +1,19 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System.Collections.Concurrent;
     using MassTransit;
     using Microsoft.Extensions.Logging;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestOkur.Report.Domain;
     using TestOkur.Report.Events;
     using TestOkur.Report.Infrastructure.Repositories;
 
     public class EvaluateExamConsumer : IConsumer<IEvaluateExam>
     {
+        private static readonly ConcurrentDictionary<int, int> ExamIdsInProcess = new ConcurrentDictionary<int, int>();
+
         private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
         private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
         private readonly ISchoolResultRepository _schoolResultRepository;
@@ -36,6 +40,14 @@
         }
 
         public async Task ConsumeAsync(int examId)
+        {
+            SpinWait.SpinUntil(() => !ExamIdsInProcess.TryGetValue(examId, out _));
+            ExamIdsInProcess.TryAdd(examId, examId);
+            await RunAsync(examId);
+            ExamIdsInProcess.TryRemove(examId, out _);
+        }
+
+        private async Task RunAsync(int examId)
         {
             _logger.LogInformation($"Evaluation for exam {examId} started...");
             var answerKeyForms = (await _answerKeyOpticalFormRepository.GetByExamIdAsync(examId))

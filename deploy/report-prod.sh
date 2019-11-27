@@ -7,4 +7,5 @@ docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
 	--restart=unless-stopped  \
 	--network=testokur \
 	--network-alias=report \
+	-m=512M \
 	nazmialtun/testokur-report:latest
