@@ -15,6 +15,8 @@
 
         Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
 
+        Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId, string userId);
+
         Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId);
 
         Task<IEnumerable<int>> GetExamIdsAsync(

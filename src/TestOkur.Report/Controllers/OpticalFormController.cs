@@ -46,10 +46,11 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<StudentOpticalForm>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetStudentFormsByExamIdAsync(int examId)
         {
-            var forms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId);
-
-            return Ok(forms.Where(f => f.UserId == _httpContextAccessor.GetUserId() ||
-                                       _httpContextAccessor.CheckIfAdmin()));
+            return _httpContextAccessor.CheckIfAdmin()
+                ? Ok(await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId))
+                : Ok(await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(
+                examId,
+                _httpContextAccessor.GetUserId()));
         }
 
         [HttpGet("student/{studentId}")]
