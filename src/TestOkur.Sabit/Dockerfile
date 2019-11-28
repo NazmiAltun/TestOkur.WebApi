@@ -5,6 +5,11 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 COPY . .
 RUN dotnet build "./src/TestOkur.Sabit/TestOkur.Sabit.csproj" -c Release -o /app
+RUN dotnet tool install --global dotnet-trace
+RUN dotnet tool install --global dotnet-dump
+RUN dotnet tool install --global dotnet-counters
+RUN dotnet tool install --global dotnet-sos
+ENV PATH="/root/.dotnet/tools:${PATH}"
 
 FROM build as integrationtest
 WORKDIR /src/tests/TestOkur.Sabit.Integration.Tests
@@ -17,4 +22,6 @@ FROM base as final
 WORKDIR /app
 EXPOSE 80
 COPY --from=publish /app .
+COPY --from=build /root/.dotnet/tools/ /opt/bin
+ENV PATH="/opt/bin:${PATH}"
 ENTRYPOINT ["dotnet", "TestOkur.Sabit.dll"]

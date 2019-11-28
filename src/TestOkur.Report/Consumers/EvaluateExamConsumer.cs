@@ -1,10 +1,9 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-    using System.Collections.Concurrent;
     using MassTransit;
     using Microsoft.Extensions.Logging;
+    using System.Collections.Concurrent;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Report.Domain;
     using TestOkur.Report.Events;
