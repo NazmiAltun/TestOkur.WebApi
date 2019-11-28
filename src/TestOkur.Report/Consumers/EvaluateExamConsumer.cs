@@ -41,10 +41,19 @@
 
         public async Task ConsumeAsync(int examId)
         {
-            SpinWait.SpinUntil(() => !ExamIdsInProcess.TryGetValue(examId, out _));
-            ExamIdsInProcess.TryAdd(examId, examId);
-            await RunAsync(examId);
-            ExamIdsInProcess.TryRemove(examId, out _);
+            while (!ExamIdsInProcess.TryAdd(examId, examId))
+            {
+                await Task.Delay(100);
+            }
+
+            try
+            {
+                await RunAsync(examId);
+            }
+            finally
+            {
+                ExamIdsInProcess.TryRemove(examId, out _);
+            }
         }
 
         private async Task RunAsync(int examId)
