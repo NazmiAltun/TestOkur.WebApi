@@ -55,6 +55,9 @@
                 {{#if srcExam}}
                 <th rowspan='2'>Basari Durumu</th>} {{else}}
                 <th rowspan='2'>Okul Sıra</th>} {{/if}}
+                {{#if shared}}
+                    <th rowspan='2'>Turkiye Sıra</th>
+                {{/if}}
             </tr>
             <tr>
                 {{#each lessons}}
@@ -110,6 +113,9 @@
                 <td>{{status}}</td>
                 {{else}}
                 <td>{{schoolOrder}}</td>
+                {{/if}}
+                {{#if ../shared}}
+                <td>{{generalOrder}}</td>
                 {{/if}}
             </tr>
             {{/each}}
