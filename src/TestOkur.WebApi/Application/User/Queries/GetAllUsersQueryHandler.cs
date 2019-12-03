@@ -45,9 +45,10 @@
             GetAllUsersQuery query,
             CancellationToken cancellationToken = default)
         {
+            var cityDict = (await _sabitClient.GetCitiesAsync()).ToDictionary(x => x.Id, x => x);
+
             await using var connection = new NpgsqlConnection(_connectionString);
             var userList = (await connection.QueryAsync<UserReadModel>(Sql)).ToList();
-            var cityDict = (await _sabitClient.GetCitiesAsync()).ToDictionary(x => x.Id, x => x);
 
             foreach (var user in userList)
             {
