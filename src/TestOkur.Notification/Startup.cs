@@ -2,6 +2,7 @@
 {
     using GreenPipes;
     using Hangfire;
+    using Hangfire.MemoryStorage;
     using Hangfire.Mongo;
     using HealthChecks.UI.Client;
     using IdentityModel;
@@ -45,19 +46,18 @@
     {
         private const string CorsPolicyName = "EnableCorsToAll";
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment, IWebHostEnvironment webHostEnvironment)
         {
-            Configuration = configuration;
-            Environment = environment;
+            _configuration = configuration;
+            _environment = environment;
             configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
-            Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
-            Configuration.GetSection("ApplicationConfiguration").Bind(ApplicationConfiguration);
-            Configuration.GetSection("HangfireConfiguration").Bind(HangfireConfiguration);
+            configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
+            configuration.GetSection("ApplicationConfiguration").Bind(ApplicationConfiguration);
+            configuration.GetSection("HangfireConfiguration").Bind(HangfireConfiguration);
         }
-
-        private IWebHostEnvironment Environment { get; }
-
-        private IConfiguration Configuration { get; }
 
         private ApplicationConfiguration ApplicationConfiguration { get; } = new ApplicationConfiguration();
 
@@ -171,19 +171,26 @@
         {
             services.AddHangfire(config =>
             {
-                config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Debug);
-                var migrationOptions = new MongoStorageOptions
+                if (_environment.IsDevelopment())
                 {
-                    MigrationOptions = new MongoMigrationOptions
+                    config.UseMemoryStorage();
+                }
+                else
+                {
+                    config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Warn);
+                    var migrationOptions = new MongoStorageOptions
                     {
-                        Strategy = MongoMigrationStrategy.Migrate,
-                        BackupStrategy = MongoBackupStrategy.None,
-                    },
-                };
-                config.UseMongoStorage(
-                    ApplicationConfiguration.ConnectionString,
-                    $"{ApplicationConfiguration.Database}-Hangfire",
-                    migrationOptions);
+                        MigrationOptions = new MongoMigrationOptions
+                        {
+                            Strategy = MongoMigrationStrategy.Migrate,
+                            BackupStrategy = MongoBackupStrategy.None,
+                        },
+                    };
+                    config.UseMongoStorage(
+                        ApplicationConfiguration.ConnectionString,
+                        $"{ApplicationConfiguration.Database}-Hangfire",
+                        migrationOptions);
+                }
             });
         }
 
@@ -199,10 +206,10 @@
         private void AddOptions(IServiceCollection services)
         {
             services.AddOptions();
-            services.ConfigureAndValidate<SmtpConfiguration>(Configuration);
-            services.ConfigureAndValidate<ApplicationConfiguration>(Configuration);
-            services.ConfigureAndValidate<SmsConfiguration>(Configuration);
-            services.ConfigureAndValidate<OAuthConfiguration>(Configuration);
+            services.ConfigureAndValidate<SmtpConfiguration>(_configuration);
+            services.ConfigureAndValidate<ApplicationConfiguration>(_configuration);
+            services.ConfigureAndValidate<SmsConfiguration>(_configuration);
+            services.ConfigureAndValidate<OAuthConfiguration>(_configuration);
             services.AddSingleton(resolver =>
                 resolver.GetRequiredService<IOptions<SmtpConfiguration>>().Value);
             services.AddSingleton(resolver =>
@@ -219,7 +226,7 @@
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
-                .AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"), "WebApi")
+                .AddUrlGroup(new Uri(_configuration.GetValue<string>("WebApiUrl") + "hc"), "WebApi")
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
                     ApplicationConfiguration.Database,
@@ -269,7 +276,7 @@
                         e.PrefetchCount = 16;
                         e.UseMessageRetry(x => x.Interval(2000, 1000));
 
-                        if (!Environment.IsDevelopment())
+                        if (!_environment.IsDevelopment())
                         {
                             e.Consumer<DefaultFaultConsumer>(provider);
                         }
@@ -295,28 +302,28 @@
             services.AddTransient<SmsServiceLoggingHandler>();
             services.AddHttpClient<IOAuthClient, OAuthClient>(client =>
                 {
-                    client.BaseAddress = new Uri(Configuration.GetValue<string>("OAuthConfiguration:Authority"));
+                    client.BaseAddress = new Uri(_configuration.GetValue<string>("OAuthConfiguration:Authority"));
                 })
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IWebApiClient, WebApiClient>(client =>
             {
-                client.BaseAddress = new Uri(Configuration.GetValue<string>("WebApiUrl"));
+                client.BaseAddress = new Uri(_configuration.GetValue<string>("WebApiUrl"));
             })
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IReportClient, ReportClient>(client =>
                 {
-                    client.BaseAddress = new Uri(Configuration.GetValue<string>("ReportUrl"));
+                    client.BaseAddress = new Uri(_configuration.GetValue<string>("ReportUrl"));
                 })
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<ISmsClient, SmsClient>(client =>
             {
-                client.BaseAddress = new Uri(Configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
+                client.BaseAddress = new Uri(_configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
             })
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddHttpMessageHandler<SmsServiceLoggingHandler>()
