@@ -335,7 +335,7 @@ workflows:
       - sabit-integration-tests
       - code-coverage:
           requires:
-            - static-code-analysis
+            #- static-code-analysis
             - unit-tests
             - notification-report-integration-tests
             - webapi-integration-tests
@@ -343,20 +343,20 @@ workflows:
           requires:
             - webapi-integration-tests
             - unit-tests
-            - static-code-analysis
+            #- static-code-analysis
       - build-notification:
           requires:
             - unit-tests
-            - static-code-analysis
+            #- static-code-analysis
             - notification-report-integration-tests
       - build-sabit:
           requires:
-            - static-code-analysis
+            #- static-code-analysis
             - sabit-integration-tests
       - build-report:
           requires:
             - unit-tests
-            - static-code-analysis
+            #- static-code-analysis
             - notification-report-integration-tests
   deploy-prod:
     jobs:
