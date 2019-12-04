@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;
     using Prometheus.DotNetRuntime;
+    using Serilog;
     using System;
     using System.Threading.Tasks;
     using TestOkur.Data;
@@ -31,7 +32,13 @@
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                            .ReadFrom.Configuration(hostingContext.Configuration)
+                            .MinimumLevel.Warning()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console())
+                        .UseStartup<Startup>();
                 });
     }
 }
