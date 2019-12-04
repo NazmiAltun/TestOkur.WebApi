@@ -8,7 +8,6 @@
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Sabit.Application.Error;
     using TestOkur.TestHelper;
-    using TestOkur.TestHelper.Extensions;
     using Xunit;
 
     public class ErrorControllerTests : IClassFixture<WebApplicationFactory>

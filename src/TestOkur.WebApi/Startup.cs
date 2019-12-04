@@ -141,7 +141,7 @@
                     cfg =>
                     {
                         var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                        var host = cfg.Host(new Uri(uriStr), hc =>
+                        cfg.Host(new Uri(uriStr), hc =>
                         {
                             hc.Username(RabbitMqConfiguration.Username);
                             hc.Password(RabbitMqConfiguration.Password);
@@ -149,7 +149,7 @@
 
                         if (configure != null)
                         {
-                            cfg.ReceiveEndpoint(host, configure);
+                            cfg.ReceiveEndpoint(configure);
                         }
                     }));
             });
@@ -218,7 +218,7 @@
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
-                .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"))
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"), "CaptchaService")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq");
         }

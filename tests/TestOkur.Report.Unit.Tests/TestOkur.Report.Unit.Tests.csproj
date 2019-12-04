@@ -1,4 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
   <Import Project="..\testing.targets" />
   <ItemGroup>   
     <PackageReference Include="TestOkur.Optic" Version="1.0.73" />

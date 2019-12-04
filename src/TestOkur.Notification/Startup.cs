@@ -219,7 +219,7 @@
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
-                .AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"))
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("WebApiUrl") + "hc"), "WebApi")
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
                     ApplicationConfiguration.Database,
@@ -258,13 +258,13 @@
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                    var host = cfg.Host(new Uri(uriStr), hc =>
+                    cfg.Host(new Uri(uriStr), hc =>
                     {
                         hc.Username(RabbitMqConfiguration.Username);
                         hc.Password(RabbitMqConfiguration.Password);
                     });
 
-                    cfg.ReceiveEndpoint(host, "notification-queue", e =>
+                    cfg.ReceiveEndpoint("notification-queue", e =>
                     {
                         e.PrefetchCount = 16;
                         e.UseMessageRetry(x => x.Interval(2000, 1000));
@@ -285,7 +285,7 @@
                         e.Consumer<CommandQueryLogEventConsumer>(provider);
                         e.Consumer<ReferredUserActivatedConsumer>(provider);
                     });
-                    cfg.UseExtensionsLogging(provider.GetRequiredService<ILoggerFactory>());
+                    cfg.SetLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                 }));
             });
         }

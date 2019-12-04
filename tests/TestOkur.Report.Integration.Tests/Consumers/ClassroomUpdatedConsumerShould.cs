@@ -46,7 +46,6 @@
             studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
             studentOpticalForms.Select(s => s.Classroom)
                 .Distinct()
-                .ToList()
                 .Should()
                 .HaveCount(1)
                 .And

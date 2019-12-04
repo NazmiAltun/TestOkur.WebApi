@@ -161,23 +161,23 @@ namespace TestOkur.Report
                     Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
                         var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                        var host = cfg.Host(new Uri(uriStr), hc =>
+                        cfg.Host(new Uri(uriStr), hc =>
                         {
                             hc.Username(RabbitMqConfiguration.Username);
                             hc.Password(RabbitMqConfiguration.Password);
                         });
                         if (configure != null)
                         {
-                            cfg.ReceiveEndpoint(host, configure);
+                            cfg.ReceiveEndpoint(configure);
                         }
 
-                        cfg.ReceiveEndpoint(host, "report-queue", e =>
+                        cfg.ReceiveEndpoint("report-queue", e =>
                         {
                             e.PrefetchCount = 16;
                             e.UseMessageRetry(x => x.Interval(2000, 1000));
                             e.RegisterConsumers(provider, Environment.IsDevelopment());
                         });
-                        cfg.UseExtensionsLogging(new LoggerFactory());
+                        cfg.SetLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
                     }));
             });
 

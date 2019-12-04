@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
 	<CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)StyleCopRules.ruleset</CodeAnalysisRuleSet>
+	<LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
 	<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
