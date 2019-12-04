@@ -2,7 +2,6 @@
 {
     using GreenPipes;
     using Hangfire;
-    using Hangfire.MemoryStorage;
     using Hangfire.Mongo;
     using HealthChecks.UI.Client;
     using IdentityModel;
@@ -171,26 +170,19 @@
         {
             services.AddHangfire(config =>
             {
-                if (_environment.IsDevelopment())
+                config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Warn);
+                var migrationOptions = new MongoStorageOptions
                 {
-                    config.UseMemoryStorage();
-                }
-                else
-                {
-                    config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Warn);
-                    var migrationOptions = new MongoStorageOptions
+                    MigrationOptions = new MongoMigrationOptions
                     {
-                        MigrationOptions = new MongoMigrationOptions
-                        {
-                            Strategy = MongoMigrationStrategy.Migrate,
-                            BackupStrategy = MongoBackupStrategy.None,
-                        },
-                    };
-                    config.UseMongoStorage(
-                        ApplicationConfiguration.ConnectionString,
-                        $"{ApplicationConfiguration.Database}-Hangfire",
-                        migrationOptions);
-                }
+                        Strategy = MongoMigrationStrategy.Migrate,
+                        BackupStrategy = MongoBackupStrategy.None,
+                    },
+                };
+                config.UseMongoStorage(
+                    ApplicationConfiguration.ConnectionString,
+                    $"{ApplicationConfiguration.Database}-Hangfire",
+                    migrationOptions);
             });
         }
 
