@@ -1,15 +1,17 @@
 ﻿namespace TestOkur.WebApi.Application.Student
 {
+    using Microsoft.EntityFrameworkCore;
+    using Paramore.Brighter;
+    using Paramore.Darker;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Paramore.Brighter;
-    using Paramore.Darker;
     using TestOkur.Common;
     using TestOkur.Data;
+    using TestOkur.Domain.Model;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.WebApi.Application.Classroom;
 
     public sealed class CreateStudentCommandHandler : RequestHandlerAsync<CreateStudentCommand>
     {
@@ -49,12 +51,22 @@
             CreateStudentCommand command,
             CancellationToken cancellationToken)
         {
-            var query = new GetUserStudentsQuery(command.UserId);
-            var list = await _queryProcessor.ExecuteAsync(query, cancellationToken);
+            var getUserStudentsQuery = new GetUserStudentsQuery(command.UserId);
+            var studentList = await _queryProcessor.ExecuteAsync(getUserStudentsQuery, cancellationToken);
+            var existingStudent = studentList.FirstOrDefault(x => x.StudentNumber == command.StudentNumber);
 
-            if (list.Any(c => c.StudentNumber == command.StudentNumber))
+            if (existingStudent != null)
             {
-                throw new ValidationException(ErrorCodes.StudentExists);
+                var getUserClassroomsQuery = new GetUserClassroomsQuery(command.UserId);
+                var classroomList = await _queryProcessor.ExecuteAsync(getUserClassroomsQuery, cancellationToken);
+                var newStudentGrade = classroomList.First(c => c.Id == command.ClassroomId).Grade;
+
+                if ((Grade.CheckIfHighSchool(existingStudent.ClassroomGrade) &&
+                    Grade.CheckIfHighSchool(newStudentGrade)) ||
+                    (Grade.CheckIfSecondarySchool(existingStudent.ClassroomGrade) && Grade.CheckIfSecondarySchool(newStudentGrade)))
+                {
+                    throw new ValidationException(ErrorCodes.StudentExists);
+                }
             }
         }
     }

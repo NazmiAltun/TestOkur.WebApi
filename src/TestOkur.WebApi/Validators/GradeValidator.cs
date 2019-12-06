@@ -15,7 +15,7 @@
         {
             var value = Convert.ToInt32(context.PropertyValue);
 
-            return Grade.IsValid(value);
+            return Grade.CheckIfValid(value);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.Domain.Model
 {
     using System;
-    using System.Collections.Generic;
     using TestOkur.Domain.SeedWork;
 
     public class Grade : ValueObject
@@ -9,16 +8,13 @@
         public const int Min = 1;
         public const int Max = 12;
 
-        public static readonly IEnumerable<Grade> HighSchool = new Grade[] { 9, 10, 11, 12 };
-        public static readonly IEnumerable<Grade> SecondarySchool = new Grade[] { 5, 6, 7, 8 };
-
         protected Grade()
         {
         }
 
         private Grade(int value)
         {
-            if (!IsValid(value))
+            if (!CheckIfValid(value))
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
@@ -48,7 +44,11 @@
             return x.Value > y.Value;
         }
 
-        public static bool IsValid(int value) => value >= Min && value <= Max;
+        public static bool CheckIfValid(int value) => value >= Min && value <= Max;
+
+        public static bool CheckIfHighSchool(int value) => value > 8;
+
+        public static bool CheckIfSecondarySchool(int value) => value < 9;
 
         public override string ToString()
         {
