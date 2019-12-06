@@ -27,7 +27,6 @@
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Mvc.Extensions;
-    using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Consumers;
     using TestOkur.Notification.Dtos;
@@ -97,8 +96,6 @@
             services.AddTransient<ISmsLogRepository, SmsLogRepository>();
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddTransient<IStatsRepository, StatsRepository>();
-            services.AddApplicationInsightsTelemetry();
-            services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddResponseCompression();

@@ -78,8 +78,6 @@
                     .AllowAnyHeader();
             }));
             services.AddMemoryCache();
-            services.AddApplicationInsightsTelemetry();
-            services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllers(options =>
                 {
                     options.Filters.Add(new ProducesAttribute("application/json"));

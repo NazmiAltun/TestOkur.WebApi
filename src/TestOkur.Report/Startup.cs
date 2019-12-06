@@ -35,7 +35,6 @@ namespace TestOkur.Report
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.Mvc;
     using TestOkur.Infrastructure.Mvc.Extensions;
-    using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
     using TestOkur.Report.Domain;
@@ -81,8 +80,6 @@ namespace TestOkur.Report
             AddHealthCheck(services);
             AddCache(services);
             AddOptions(services);
-            services.AddApplicationInsightsTelemetry();
-            services.AddApplicationInsightsTelemetryProcessor<ClientErrorFilter>();
             services.AddControllers(options =>
                 {
                     options.Filters.Add(new ProducesAttribute("application/json"));
