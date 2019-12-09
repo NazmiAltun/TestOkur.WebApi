@@ -29,6 +29,7 @@
         {
             _httpClient.SetBearerToken(await _identityClient.GetBearerTokenAsync());
             var response = await _httpClient.GetAsync(path);
+            response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
 
             return JsonSerializer.Deserialize<T>(json, DefaultJsonSerializerSettings.Instance);
