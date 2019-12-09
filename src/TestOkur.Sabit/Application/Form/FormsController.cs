@@ -21,6 +21,7 @@
         }
 
         [HttpPost]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
             await SaveFileAsync(file);
