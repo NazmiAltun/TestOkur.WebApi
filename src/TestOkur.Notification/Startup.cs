@@ -175,9 +175,11 @@
                         Strategy = MongoMigrationStrategy.Migrate,
                         BackupStrategy = MongoBackupStrategy.None,
                     },
+                    CheckConnection = false,
                 };
                 config.UseMongoStorage(
-                    $"{ApplicationConfiguration.ConnectionString}/{ApplicationConfiguration.Database}-Hangfire",
+                    $"{ApplicationConfiguration.ConnectionString}",
+                    $"{ApplicationConfiguration.Database}_Hangfire",
                     storageOptions);
             });
         }
@@ -217,8 +219,8 @@
                 .AddUrlGroup(new Uri(_configuration.GetValue<string>("WebApiUrl") + "hc"), "WebApi")
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
-                    ApplicationConfiguration.Database,
-                    "mongodb",
+                    "config",
+                    "mongo",
                     null);
         }
 
