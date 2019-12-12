@@ -167,8 +167,8 @@
         {
             services.AddHangfire(config =>
             {
-                config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Warn);
-                var migrationOptions = new MongoStorageOptions
+                config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Debug);
+                var storageOptions = new MongoStorageOptions
                 {
                     MigrationOptions = new MongoMigrationOptions
                     {
@@ -177,9 +177,8 @@
                     },
                 };
                 config.UseMongoStorage(
-                    ApplicationConfiguration.ConnectionString,
-                    $"{ApplicationConfiguration.Database}-Hangfire",
-                    migrationOptions);
+                    $"{ApplicationConfiguration.ConnectionString}/{ApplicationConfiguration.Database}-Hangfire",
+                    storageOptions);
             });
         }
 

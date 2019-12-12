@@ -64,15 +64,9 @@
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        public void Migrate()
-        {
-            Database.Migrate();
-        }
+        public void Migrate() => Database.Migrate();
 
-        public async Task MigrateAsync()
-        {
-            await Database.MigrateAsync();
-        }
+        public Task MigrateAsync() => Database.MigrateAsync();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

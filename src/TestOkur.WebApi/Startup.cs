@@ -164,6 +164,7 @@
             var connectionString = Configuration.GetConnectionString("Postgres");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .EnableSensitiveDataLogging()
                 .UseNpgsql(
                     connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly)).Options;

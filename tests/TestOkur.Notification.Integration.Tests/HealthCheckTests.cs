@@ -18,7 +18,7 @@
             _testOutputHelper = testOutputHelper;
         }
 
-        [Fact(Skip = "WTF!")]
+        [Fact]
         public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()
         {
             var response = await _factory.CreateClient().GetAsync("hc");
