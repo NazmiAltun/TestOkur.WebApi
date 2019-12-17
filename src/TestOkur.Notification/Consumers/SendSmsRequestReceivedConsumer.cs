@@ -1,11 +1,12 @@
 ﻿namespace TestOkur.Notification.Consumers
 {
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
-    using MassTransit;
-    using Microsoft.Extensions.Logging;
     using TestOkur.Common;
     using TestOkur.Contracts.Sms;
     using TestOkur.Notification.Dtos;
@@ -16,6 +17,8 @@
 
     public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>
     {
+        private const int MaxThreadCount = 50;
+
         private readonly ILogger<SendSmsRequestReceivedConsumer> _logger;
         private readonly ISmsClient _smsClient;
         private readonly IPublishEndpoint _publishEndpoint;
@@ -41,20 +44,32 @@
             await _smsLogRepository.LogAsync(SmsLog.CreateUsageLog(context.Message));
             var smsList = ToSmsList(context);
             await StoreAsync(smsList);
+            var throttler = new SemaphoreSlim(MaxThreadCount);
+            var sendSmsTasks = new List<Task>();
 
             foreach (var message in smsList)
             {
-                try
+                await throttler.WaitAsync();
+                sendSmsTasks.Add(Task.Run(async () =>
                 {
-                    await _smsClient.SendAsync(message);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error while sending sms");
-                    await UpdateSmsStatusAsync(ex, message);
-                    await PublishSmsRequestFailedEventAsync(context, message, ex);
-                }
+                    try
+                    {
+                        await _smsClient.SendAsync(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Error while sending sms");
+                        await UpdateSmsStatusAsync(ex, message);
+                        await PublishSmsRequestFailedEventAsync(context, message, ex);
+                    }
+                    finally
+                    {
+                        throttler.Release();
+                    }
+                }));
             }
+
+            await Task.WhenAll(sendSmsTasks);
         }
 
         private async Task UpdateSmsStatusAsync(Exception ex, Sms message)
