@@ -44,32 +44,20 @@
             await _smsLogRepository.LogAsync(SmsLog.CreateUsageLog(context.Message));
             var smsList = ToSmsList(context);
             await StoreAsync(smsList);
-            var throttler = new SemaphoreSlim(MaxThreadCount);
-            var sendSmsTasks = new List<Task>();
 
             foreach (var message in smsList)
             {
-                await throttler.WaitAsync();
-                sendSmsTasks.Add(Task.Run(async () =>
+                try
                 {
-                    try
-                    {
-                        await _smsClient.SendAsync(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Error while sending sms");
-                        await UpdateSmsStatusAsync(ex, message);
-                        await PublishSmsRequestFailedEventAsync(context, message, ex);
-                    }
-                    finally
-                    {
-                        throttler.Release();
-                    }
-                }));
+                    await _smsClient.SendAsync(message);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error while sending sms");
+                    await UpdateSmsStatusAsync(ex, message);
+                    await PublishSmsRequestFailedEventAsync(context, message, ex);
+                }
             }
-
-            await Task.WhenAll(sendSmsTasks);
         }
 
         private Task UpdateSmsStatusAsync(Exception ex, Sms message)
