@@ -90,11 +90,11 @@
             }
         }
 
-        private async Task<Lesson> GetLessonAsync(ApplicationDbContext dbContext, int id)
+        private Task<Lesson> GetLessonAsync(ApplicationDbContext dbContext, int id)
         {
             return id <= 0 ?
-                null :
-                await dbContext.Lessons.FirstAsync(l => l.Id == id);
+                Task.FromResult<Lesson>(null) :
+                dbContext.Lessons.FirstAsync(l => l.Id == id);
         }
     }
 }

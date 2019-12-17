@@ -14,14 +14,14 @@
             _busControl = busControl;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
-            await _busControl.StartAsync(cancellationToken);
+            return _busControl.StartAsync(cancellationToken);
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public Task StopAsync(CancellationToken cancellationToken)
         {
-            await _busControl.StopAsync(cancellationToken);
+            return _busControl.StopAsync(cancellationToken);
         }
     }
 }

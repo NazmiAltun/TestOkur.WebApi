@@ -33,9 +33,9 @@
             _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
-        public async Task Consume(ConsumeContext<IEvaluateExam> context)
+        public Task Consume(ConsumeContext<IEvaluateExam> context)
         {
-            await ConsumeAsync(context.Message.ExamId);
+            return ConsumeAsync(context.Message.ExamId);
         }
 
         public async Task ConsumeAsync(int examId)

@@ -16,9 +16,9 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task Consume(ConsumeContext<ICommandQueryLogEvent> context)
+        public Task Consume(ConsumeContext<ICommandQueryLogEvent> context)
         {
-            await _context.CommandQueryLogs.InsertOneAsync(new CommandQueryLog(context.Message));
+            return _context.CommandQueryLogs.InsertOneAsync(new CommandQueryLog(context.Message));
         }
     }
 }

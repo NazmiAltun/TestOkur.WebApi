@@ -16,9 +16,9 @@
             _notificationFacade = notificationFacade;
         }
 
-        public async Task Consume(ConsumeContext<IResetPasswordTokenGenerated> context)
+        public Task Consume(ConsumeContext<IResetPasswordTokenGenerated> context)
         {
-            await _notificationFacade.SendEmailAsync(
+            return _notificationFacade.SendEmailAsync(
                 context.Message,
                 Template.PasswordResetEmailUser,
                 context.Message.Email);

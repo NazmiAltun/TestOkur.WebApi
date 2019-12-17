@@ -1,7 +1,7 @@
 ﻿namespace TestOkur.Report.Consumers
 {
-    using System.Threading.Tasks;
     using MassTransit;
+    using System.Threading.Tasks;
     using TestOkur.Contracts.Exam;
     using TestOkur.Report.Infrastructure.Repositories;
 
@@ -14,7 +14,7 @@
             _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
-        public async Task Consume(ConsumeContext<IExamCreated> context)
+        public Task Consume(ConsumeContext<IExamCreated> context)
         {
             var forms = context.Message.AnswerKeyOpticalForms;
 
@@ -28,7 +28,7 @@
                 form.ExamTypeName = context.Message.ExamTypeName;
             }
 
-            await _answerKeyOpticalFormRepository.AddManyAsync(forms);
+            return _answerKeyOpticalFormRepository.AddManyAsync(forms);
         }
     }
 }

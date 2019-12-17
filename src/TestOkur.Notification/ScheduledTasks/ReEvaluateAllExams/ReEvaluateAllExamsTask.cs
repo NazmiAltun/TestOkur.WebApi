@@ -12,9 +12,9 @@
             _webApiClient = webApiClient;
         }
 
-        public async Task SendRequestAsync()
+        public Task SendRequestAsync()
         {
-            await _webApiClient.ReEvaluateAllExamsAsync();
+            return _webApiClient.ReEvaluateAllExamsAsync();
         }
     }
 }

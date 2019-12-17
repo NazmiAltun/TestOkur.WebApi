@@ -72,7 +72,7 @@
             await Task.WhenAll(sendSmsTasks);
         }
 
-        private async Task UpdateSmsStatusAsync(Exception ex, Sms message)
+        private Task UpdateSmsStatusAsync(Exception ex, Sms message)
         {
             if (ex is SmsException smsException)
             {
@@ -81,7 +81,7 @@
 
             message.Error = ex.ToString();
             message.Status = SmsStatus.Failed;
-            await _smsRepository.UpdateSmsAsync(message);
+            return _smsRepository.UpdateSmsAsync(message);
         }
 
         private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)
@@ -90,12 +90,9 @@
                 .Select(s => new Sms(context.Message, s)).ToList();
         }
 
-        private async Task StoreAsync(IEnumerable<Sms> list)
-        {
-            await _smsRepository.AddManyAsync(list);
-        }
+        private Task StoreAsync(IEnumerable<Sms> list) => _smsRepository.AddManyAsync(list);
 
-        private async Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
+        private Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
         {
             var userFriendlyMessage = ErrorCodes.SmsSystemFailure;
 
@@ -112,7 +109,7 @@
                 userFriendlyMessage,
                 context.Message.UserEmail);
 
-            await _publishEndpoint.Publish(@event);
+            return _publishEndpoint.Publish(@event);
         }
     }
 }

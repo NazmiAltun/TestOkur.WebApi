@@ -41,9 +41,9 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task PublishEventAsync(int id, CancellationToken cancellationToken)
+        private Task PublishEventAsync(int id, CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            return _publishEndpoint.Publish(
                 new ClassroomDeleted(id),
                 cancellationToken);
         }

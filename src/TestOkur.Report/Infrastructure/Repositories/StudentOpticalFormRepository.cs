@@ -23,11 +23,11 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms)
+        public Task AddOrUpdateManyAsync(IEnumerable<StudentOpticalForm> forms)
         {
             if (forms == null || !forms.Any())
             {
-                return;
+                return Task.CompletedTask;
             }
 
             var writeModels = new List<WriteModel<StudentOpticalForm>>();
@@ -45,7 +45,7 @@
                 writeModels.Add(model);
             }
 
-            await _context.StudentOpticalForms.BulkWriteAsync(writeModels);
+            return _context.StudentOpticalForms.BulkWriteAsync(writeModels);
         }
 
         public async Task<IEnumerable<int>> GetExamIdsAsync(
@@ -66,12 +66,12 @@
             return examIdList.Distinct();
         }
 
-        public async Task UpdateSubjectNameAsync(int subjectId, string newSubjectName)
+        public Task UpdateSubjectNameAsync(int subjectId, string newSubjectName)
         {
-            await UpdateStudentOpticalFormsSubject(subjectId, newSubjectName);
+            return UpdateStudentOpticalFormsSubject(subjectId, newSubjectName);
         }
 
-        public async Task UpdateStudentAsync(IStudentUpdated studentUpdatedEvent)
+        public Task UpdateStudentAsync(IStudentUpdated studentUpdatedEvent)
         {
             var filter = Builders<StudentOpticalForm>.Filter
                 .Eq(x => x.StudentId, studentUpdatedEvent.StudentId);
@@ -80,31 +80,31 @@
                 .Set(x => x.StudentFirstName, studentUpdatedEvent.FirstName)
                 .Set(x => x.StudentLastName, studentUpdatedEvent.LastName)
                 .Set(x => x.StudentNumber, studentUpdatedEvent.StudentNumber);
-            await _context.StudentOpticalForms.UpdateManyAsync(filter, update);
+            return _context.StudentOpticalForms.UpdateManyAsync(filter, update);
         }
 
-        public async Task UpdateClassroomAsync(int classroomId, int grade, string name)
+        public Task UpdateClassroomAsync(int classroomId, int grade, string name)
         {
             var filter = Builders<StudentOpticalForm>.Filter
                 .Eq(x => x.ClassroomId, classroomId);
             var update = Builders<StudentOpticalForm>.Update
                 .Set(x => x.Classroom, $"{grade}/{name}");
 
-            await _context.StudentOpticalForms.UpdateManyAsync(filter, update);
+            return _context.StudentOpticalForms.UpdateManyAsync(filter, update);
         }
 
-        public async Task UpdateLessonNameAsync(int lessonId, string newLessonName)
+        public Task UpdateLessonNameAsync(int lessonId, string newLessonName)
         {
             var filter = Builders<StudentOpticalForm>.Filter
                     .ElemMatch(x => x.Sections, s => s.LessonId == lessonId);
             var update = Builders<StudentOpticalForm>.Update
                 .Set("Sections.$.LessonName", newLessonName);
-            await _context.StudentOpticalForms.UpdateManyAsync(filter, update);
+            return _context.StudentOpticalForms.UpdateManyAsync(filter, update);
         }
 
-        public async Task AddManyAsync(IEnumerable<StudentOpticalForm> forms)
+        public Task AddManyAsync(IEnumerable<StudentOpticalForm> forms)
         {
-            await _context.StudentOpticalForms.InsertManyAsync(forms);
+            return _context.StudentOpticalForms.InsertManyAsync(forms);
         }
 
         public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalByStudentIdAsync(int studentId)
@@ -172,33 +172,33 @@
             return list;
         }
 
-        public async Task DeleteByStudentIdAsync(int studentId)
+        public Task DeleteByStudentIdAsync(int studentId)
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId);
-            await _context.StudentOpticalForms.DeleteManyAsync(filter);
+            return _context.StudentOpticalForms.DeleteManyAsync(filter);
         }
 
-        public async Task DeleteByClassroomIdAsync(int classroomId)
+        public Task DeleteByClassroomIdAsync(int classroomId)
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ClassroomId, classroomId);
-            await _context.StudentOpticalForms.DeleteManyAsync(filter);
+            return _context.StudentOpticalForms.DeleteManyAsync(filter);
         }
 
-        public async Task DeleteByExamIdAsync(int examId)
+        public Task DeleteByExamIdAsync(int examId)
         {
-            await DeleteStudentOpticalFormsByExamIdAsync(examId);
+            return DeleteStudentOpticalFormsByExamIdAsync(examId);
         }
 
-        public async Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms)
+        public Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms)
         {
             if (forms == null || !forms.Any())
             {
-                return;
+                return Task.CompletedTask;
             }
 
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, forms.First().ExamId);
             filter &= Builders<StudentOpticalForm>.Filter.In(x => x.StudentId, forms.Select(x => x.StudentId));
-            await _context.StudentOpticalForms.DeleteManyAsync(filter);
+            return _context.StudentOpticalForms.DeleteManyAsync(filter);
         }
 
         public Task<StudentOpticalForm> DeleteOneAsync(string id)
@@ -225,10 +225,10 @@
             });
         }
 
-        private async Task DeleteStudentOpticalFormsByExamIdAsync(int examId)
+        private Task DeleteStudentOpticalFormsByExamIdAsync(int examId)
         {
             var sFilter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId);
-            await _context.StudentOpticalForms.DeleteManyAsync(sFilter);
+            return _context.StudentOpticalForms.DeleteManyAsync(sFilter);
         }
     }
 }

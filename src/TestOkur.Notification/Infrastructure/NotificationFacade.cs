@@ -47,17 +47,17 @@
             await _smsClient.SendAsync(sms);
         }
 
-        public async Task SendEmailToSystemAdminsAsync<TModel>(TModel model, Template template)
+        public Task SendEmailToSystemAdminsAsync<TModel>(TModel model, Template template)
         {
-            await SendEmailAsync(
+            return SendEmailAsync(
                 model,
                 template,
                 _applicationConfiguration.SystemAdminEmails);
         }
 
-        public async Task SendEmailToProductOwnersAsync<TModel>(TModel model, Template template)
+        public Task SendEmailToProductOwnersAsync<TModel>(TModel model, Template template)
         {
-            await SendEmailAsync(
+            return SendEmailAsync(
                 model,
                 template,
                 _applicationConfiguration.ProductOwnersEmails);

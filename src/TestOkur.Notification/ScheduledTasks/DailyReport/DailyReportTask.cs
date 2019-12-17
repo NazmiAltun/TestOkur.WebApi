@@ -54,17 +54,23 @@
 
         private async Task<DailyReportModel> GetDailyReportAsync()
         {
-            var apiUsers = await _webApiClient.GetUsersAsync();
+            var getUsersTask = _webApiClient.GetUsersAsync();
+            var webApiStatisticsTask = _webApiClient.GetStatisticsAsync();
+            var reportStatisticsTask = _reportClient.GetStatisticsAsync();
+            var notificationStatisticsTask = _statsRepository.GetStatisticsAsync();
+            var identityStatisticsTask = _oAuthClient.GetDailyStatsAsync();
+
+            await Task.WhenAll(getUsersTask, webApiStatisticsTask, reportStatisticsTask, notificationStatisticsTask, identityStatisticsTask);
 
             var model = new DailyReportModel()
             {
-                Statistics = await _webApiClient.GetStatisticsAsync(),
-                ReportStatistics = await _reportClient.GetStatisticsAsync(),
-                NotificationStatistics = await _statsRepository.GetStatisticsAsync(),
-                IdentityStatistics = await _oAuthClient.GetDailyStatsAsync(),
+                Statistics = await webApiStatisticsTask,
+                ReportStatistics = await reportStatisticsTask,
+                NotificationStatistics = await notificationStatisticsTask,
+                IdentityStatistics = await identityStatisticsTask,
             };
             model.NotificationStatistics.TopSmsSenderEmailInDay =
-                apiUsers.FirstOrDefault(u => u.Id == model.NotificationStatistics.TopSmsSenderIdInDay)
+                getUsersTask.Result.FirstOrDefault(u => u.Id == model.NotificationStatistics.TopSmsSenderIdInDay)
                 ?.Email;
 
             return model;

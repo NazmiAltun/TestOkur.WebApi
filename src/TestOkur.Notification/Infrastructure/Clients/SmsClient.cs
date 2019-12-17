@@ -21,7 +21,7 @@
         {
             var request = CreateRequest(sms, sms.Body);
             var response = await _httpClient.SendAsync(request);
-            await EnsureSuccess(response);
+            await EnsureSuccessAsync(response);
 
             return sms.Body;
         }
@@ -45,7 +45,7 @@
             return request;
         }
 
-        private async Task EnsureSuccess(HttpResponseMessage response)
+        private async Task EnsureSuccessAsync(HttpResponseMessage response)
         {
             response.EnsureSuccessStatusCode();
             var message = await response.Content.ReadAsStringAsync();

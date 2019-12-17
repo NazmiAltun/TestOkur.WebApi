@@ -53,11 +53,11 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task PublishEventAsync(
+        private Task PublishEventAsync(
             EditLessonCommand command,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            return _publishEndpoint.Publish(
                 new LessonNameChanged(command.LessonId, command.NewName),
                 cancellationToken);
         }

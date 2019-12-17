@@ -16,9 +16,9 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms)
+        public Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms)
         {
-            await _context.AnswerKeyOpticalForms.InsertManyAsync(forms);
+            return _context.AnswerKeyOpticalForms.InsertManyAsync(forms);
         }
 
         public async Task<IEnumerable<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId)
@@ -37,19 +37,19 @@
             return list;
         }
 
-        public async Task DeleteByExamIdAsync(int examId)
+        public Task DeleteByExamIdAsync(int examId)
         {
             var aFilter = Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.ExamId, examId);
-            await _context.AnswerKeyOpticalForms.DeleteManyAsync(aFilter);
+            return _context.AnswerKeyOpticalForms.DeleteManyAsync(aFilter);
         }
 
-        public async Task UpdateLessonNameAsync(int lessonId, string newLessonName)
+        public Task UpdateLessonNameAsync(int lessonId, string newLessonName)
         {
             var filter = Builders<AnswerKeyOpticalForm>.Filter
                 .ElemMatch(x => x.Sections, s => s.LessonId == lessonId);
             var aUpdate = Builders<AnswerKeyOpticalForm>.Update
                 .Set("Sections.$.LessonName", newLessonName);
-            await _context.AnswerKeyOpticalForms.UpdateManyAsync(filter, aUpdate);
+            return _context.AnswerKeyOpticalForms.UpdateManyAsync(filter, aUpdate);
         }
 
         public async Task UpdateSubjectNameAsync(int subjectId, string newSubjectName)

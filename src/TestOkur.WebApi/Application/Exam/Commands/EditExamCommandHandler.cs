@@ -73,21 +73,21 @@
                 command.NewNotes);
         }
 
-        private async Task PublishEventAsync(
+        private Task PublishEventAsync(
             Exam exam,
             EditExamCommand command,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            return _publishEndpoint.Publish(
                 new ExamUpdated(exam, command.AnswerKeyOpticalForms),
                 cancellationToken);
         }
 
-        private async Task<Lesson> GetLessonAsync(ApplicationDbContext dbContext, int id)
+        private Task<Lesson> GetLessonAsync(ApplicationDbContext dbContext, int id)
         {
             return id <= 0 ?
-                null :
-                await dbContext.Lessons.FirstAsync(l => l.Id == id);
+                Task.FromResult<Lesson>(null) :
+                dbContext.Lessons.FirstAsync(l => l.Id == id);
         }
 
         private Task<Exam> GetExamAsync(

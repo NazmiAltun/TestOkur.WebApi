@@ -13,9 +13,9 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task PersistAsync(RequestResponseLog log)
+        public Task PersistAsync(RequestResponseLog log)
         {
-            await _context.RequestResponseLogs.InsertOneAsync(log);
+            return _context.RequestResponseLogs.InsertOneAsync(log);
         }
     }
 }

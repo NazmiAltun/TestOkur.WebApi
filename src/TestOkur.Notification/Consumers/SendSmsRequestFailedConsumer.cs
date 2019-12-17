@@ -15,9 +15,9 @@
             _notificationFacade = notificationFacade;
         }
 
-        public async Task Consume(ConsumeContext<ISendSmsRequestFailed> context)
+        public Task Consume(ConsumeContext<ISendSmsRequestFailed> context)
         {
-            await _notificationFacade.SendEmailToSystemAdminsAsync(
+            return _notificationFacade.SendEmailToSystemAdminsAsync(
                 context.Message,
                 Template.SmsFailureEmailAdmin);
         }

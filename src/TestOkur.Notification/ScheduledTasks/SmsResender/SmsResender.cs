@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks.SmsResender
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Infrastructure.Data;
@@ -8,23 +9,18 @@
     {
         private readonly ISmsRepository _smsRepository;
         private readonly ISmsClient _smsClient;
-        private readonly IWebApiClient _webApiClient;
 
-        public SmsResender(ISmsRepository smsRepository, ISmsClient smsClient, IWebApiClient webApiClient)
+        public SmsResender(ISmsRepository smsRepository, ISmsClient smsClient)
         {
             _smsRepository = smsRepository;
             _smsClient = smsClient;
-            _webApiClient = webApiClient;
         }
 
         public async Task TryResendAsync()
         {
             var smses = await _smsRepository.GetPendingOrFailedSmsesAsync();
-
-            foreach (var sms in smses)
-            {
-                await _smsClient.SendAsync(sms);
-            }
+            var tasks = smses.Select(sms => _smsClient.SendAsync(sms));
+            await Task.WhenAll(tasks);
         }
     }
 }

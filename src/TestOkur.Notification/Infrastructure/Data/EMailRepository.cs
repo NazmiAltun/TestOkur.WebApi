@@ -16,9 +16,9 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task AddAsync(EMail email)
+        public Task AddAsync(EMail email)
         {
-            await _context.Emails.InsertOneAsync(email);
+            return _context.Emails.InsertOneAsync(email);
         }
 
         public Task<List<EMail>> GetEmailsAsync(DateTime from, DateTime to)

@@ -45,11 +45,11 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task PublishEventAsync(
+        private Task PublishEventAsync(
             EditSubjectCommand command,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            return _publishEndpoint.Publish(
                 new SubjectChanged(command.SubjectId, command.NewName),
                 cancellationToken);
         }

@@ -14,9 +14,9 @@
             _studentOpticalFormRepository = studentOpticalFormRepository;
         }
 
-        public async Task Consume(ConsumeContext<IStudentUpdated> context)
+        public Task Consume(ConsumeContext<IStudentUpdated> context)
         {
-            await _studentOpticalFormRepository.UpdateStudentAsync(context.Message);
+            return _studentOpticalFormRepository.UpdateStudentAsync(context.Message);
         }
     }
 }

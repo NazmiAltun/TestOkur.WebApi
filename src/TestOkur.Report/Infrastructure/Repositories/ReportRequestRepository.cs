@@ -17,9 +17,9 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task AddAsync(ReportRequest reportRequest)
+        public Task AddAsync(ReportRequest reportRequest)
         {
-            await _context.ReportRequests.InsertOneAsync(reportRequest);
+            return _context.ReportRequests.InsertOneAsync(reportRequest);
         }
 
         public async Task<ReportStatisticsModel> GetStatisticsAsync()
