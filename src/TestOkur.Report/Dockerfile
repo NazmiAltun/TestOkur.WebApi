@@ -33,7 +33,7 @@ FROM base as final
 WORKDIR /app
 EXPOSE 80
 COPY --from=publish /app .
-COPY --from=minifier /minify/out wwwroot/Templates/
+#COPY --from=minifier /minify/out wwwroot/Templates/
 COPY --from=build /root/.dotnet/tools/ /opt/bin
 ENV PATH="/opt/bin:${PATH}"
 ENTRYPOINT ["dotnet", "TestOkur.Report.dll"]
