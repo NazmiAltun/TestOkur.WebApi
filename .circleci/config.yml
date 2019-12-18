@@ -122,6 +122,7 @@ jobs:
       - run:
           name: Build Image
           command: |
+            echo "SHA1 :  $CIRCLE_SHA1 "
             docker-compose build --build-arg=COMMIT=$CIRCLE_SHA1 sabit
       - run:
           name: Publish Docker Image to Docker Hub
@@ -150,6 +151,7 @@ jobs:
       - run:
           name: Build Image
           command: |
+            echo "SHA1 :  $CIRCLE_SHA1 "
             docker-compose build --build-arg=COMMIT=$CIRCLE_SHA1 webapi
       - run:
           name: Publish Docker Image to Docker Hub
@@ -178,6 +180,7 @@ jobs:
       - run:
           name: Build Image
           command: |
+            echo "SHA1 :  $CIRCLE_SHA1 "
             docker-compose build --build-arg=COMMIT=$CIRCLE_SHA1 report
       - run:
           name: Publish Docker Image to Docker Hub
@@ -206,6 +209,7 @@ jobs:
       - run:
           name: Build Image
           command: |
+            echo "SHA1 :  $CIRCLE_SHA1 "
             docker-compose build --build-arg=COMMIT=$CIRCLE_SHA1 notification
       - run:
           name: Publish Docker Image to Docker Hub
