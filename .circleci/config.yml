@@ -180,7 +180,7 @@ jobs:
       - run:
           name: Build Image
           command: |
-            echo "SHA1 :  $CIRCLE_SHA1 "
+            echo "SHA1 :  $CIRCLE_SHA1"
             docker-compose build --build-arg COMMIT=$CIRCLE_SHA1 report
       - run:
           name: Publish Docker Image to Docker Hub

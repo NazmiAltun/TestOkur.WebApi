@@ -1,7 +1,8 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as base
 ARG COMMIT=""
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as base
 LABEL "Maintainer"="Nazmi Altun <nazmialtun@windowslive.com>"
-LABEL commit=${COMMIT}
+LABEL Commit=${COMMIT}
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
