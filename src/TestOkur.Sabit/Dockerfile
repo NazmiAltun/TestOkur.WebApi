@@ -28,4 +28,5 @@ COPY --from=publish /app .
 COPY --from=build /root/.dotnet/tools/ /opt/bin
 ENV PATH="/opt/bin:${PATH}"
 ENV COMMIT_SHA=${COMMIT}
+RUN echo ${COMMIT}
 ENTRYPOINT ["dotnet", "TestOkur.Sabit.dll"]
