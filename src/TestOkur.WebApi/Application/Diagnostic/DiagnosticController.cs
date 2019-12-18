@@ -20,8 +20,8 @@
         public IActionResult Get([FromQuery, Required] string key)
         {
             return _applicationConfiguration.Key != key
-                ? (IActionResult)Unauthorized()
-                : Ok(DiagnosticReport.Generate());
+                ? (IActionResult) Unauthorized()
+                : Content(DiagnosticReport.Generate().ToString());
         }
     }
 }

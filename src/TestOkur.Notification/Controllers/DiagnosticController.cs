@@ -21,7 +21,7 @@
         {
             return _applicationConfiguration.Key != key
                 ? (IActionResult)Unauthorized()
-                : Ok(DiagnosticReport.Generate());
+                : Content(DiagnosticReport.Generate().ToString());
         }
     }
 }

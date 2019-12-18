@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as base
+ARG COMMIT=""
 LABEL "Maintainer"="Nazmi Altun <nazmialtun@windowslive.com>"
+LABEL commit=${COMMIT}
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
@@ -24,4 +26,5 @@ EXPOSE 80
 COPY --from=publish /app .
 COPY --from=build /root/.dotnet/tools/ /opt/bin
 ENV PATH="/opt/bin:${PATH}"
+ENV COMMIT_SHA=${COMMIT}
 ENTRYPOINT ["dotnet", "TestOkur.Sabit.dll"]
