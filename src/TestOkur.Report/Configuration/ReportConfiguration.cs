@@ -9,5 +9,8 @@
 
         [Required]
         public string Database { get; set; }
+
+        [Required]
+        public string Key { get; set; }
     }
 }

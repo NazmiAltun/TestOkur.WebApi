@@ -18,5 +18,8 @@
 
         [Required]
         public string SystemAdminEmails { get; set; }
+
+        [Required]
+        public string Key { get; set; }
     }
 }
