@@ -10,6 +10,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Options;
     using Prometheus;
     using System;
     using System.Reflection;
@@ -18,6 +19,8 @@
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.Infrastructure.CommandsQueries.Extensions;
+    using TestOkur.Infrastructure.Mvc.Extensions;
+    using TestOkur.Sabit.Configuration;
     using TestOkur.Sabit.Infrastructure;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
@@ -50,6 +53,7 @@
                     .AllowAnyHeader();
             }));
             AddHealthChecks(services);
+            AddOptions(services);
             AddAuthentication(services);
             AddAuthorization(services);
             AddCache(services);
@@ -84,6 +88,14 @@
                 });
                 endpoints.MapDefaultControllerRoute();
             });
+        }
+
+        private void AddOptions(IServiceCollection services)
+        {
+            services.AddOptions();
+            services.ConfigureAndValidate<ApplicationConfiguration>(Configuration);
+            services.AddSingleton(resolver =>
+                resolver.GetRequiredService<IOptions<ApplicationConfiguration>>().Value);
         }
 
         private void AddHealthChecks(IServiceCollection services)

@@ -2,15 +2,26 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.ComponentModel.DataAnnotations;
     using TestOkur.Infrastructure.Mvc.Diagnostic;
+    using TestOkur.Sabit.Configuration;
 
     [Route("api/diagnostic")]
     [AllowAnonymous]
     public class DiagnosticController : ControllerBase
     {
-        public IActionResult Get()
+        private readonly ApplicationConfiguration _applicationConfiguration;
+
+        public DiagnosticController(ApplicationConfiguration applicationConfiguration)
         {
-            return Ok(DiagnosticReport.Generate());
+            _applicationConfiguration = applicationConfiguration;
+        }
+
+        public IActionResult Get([FromQuery, Required] string key)
+        {
+            return _applicationConfiguration.Key != key
+                ? (IActionResult)Unauthorized()
+                : Ok(DiagnosticReport.Generate());
         }
     }
 }
