@@ -44,5 +44,6 @@ EXPOSE 80
 COPY --from=publish /app .
 COPY --from=build /root/.dotnet/tools/ /opt/bin
 ENV PATH="/opt/bin:${PATH}"
+ARG COMMIT
 ENV COMMIT_SHA=${COMMIT}
 ENTRYPOINT ["dotnet", "TestOkur.WebApi.dll"]
