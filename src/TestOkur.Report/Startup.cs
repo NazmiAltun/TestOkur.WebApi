@@ -248,8 +248,7 @@ namespace TestOkur.Report
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddMongoDb(
                     ReportConfiguration.ConnectionString,
-                    ReportConfiguration.Database,
-                    "mongodb",
+                    name: "mongodb",
                     null);
         }
 

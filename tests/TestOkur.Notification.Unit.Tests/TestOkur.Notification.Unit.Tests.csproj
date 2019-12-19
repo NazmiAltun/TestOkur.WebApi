@@ -11,6 +11,11 @@
     <ProjectReference Include="..\..\src\TestOkur.Notification\TestOkur.Notification.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Templates\Email\dummy.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
 </Project>
