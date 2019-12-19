@@ -1,25 +1,28 @@
-﻿namespace TestOkur.Notification.Consumers
+﻿using Microsoft.Extensions.Logging;
+using System.Text.Json;
+
+namespace TestOkur.Notification.Consumers
 {
-    using System.Threading.Tasks;
     using MassTransit;
+    using System.Threading.Tasks;
     using TestOkur.Contracts.Sms;
     using TestOkur.Notification.Infrastructure;
-    using TestOkur.Notification.Models;
 
     internal class SendSmsRequestFailedConsumer : IConsumer<ISendSmsRequestFailed>
     {
+        private readonly ILogger<SendSmsRequestFailedConsumer> _logger;
         private readonly INotificationFacade _notificationFacade;
 
-        public SendSmsRequestFailedConsumer(INotificationFacade notificationFacade)
+        public SendSmsRequestFailedConsumer(INotificationFacade notificationFacade, ILogger<SendSmsRequestFailedConsumer> logger)
         {
             _notificationFacade = notificationFacade;
+            _logger = logger;
         }
 
         public Task Consume(ConsumeContext<ISendSmsRequestFailed> context)
         {
-            return _notificationFacade.SendEmailToSystemAdminsAsync(
-                context.Message,
-                Template.SmsFailureEmailAdmin);
+            _logger.LogError($"{JsonSerializer.Serialize(context.Message)}");
+            return Task.CompletedTask;
         }
     }
 }
