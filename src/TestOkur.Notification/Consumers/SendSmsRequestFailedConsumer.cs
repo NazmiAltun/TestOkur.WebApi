@@ -1,21 +1,17 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Text.Json;
-
-namespace TestOkur.Notification.Consumers
+﻿namespace TestOkur.Notification.Consumers
 {
     using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using System.Text.Json;
     using System.Threading.Tasks;
     using TestOkur.Contracts.Sms;
-    using TestOkur.Notification.Infrastructure;
 
     internal class SendSmsRequestFailedConsumer : IConsumer<ISendSmsRequestFailed>
     {
         private readonly ILogger<SendSmsRequestFailedConsumer> _logger;
-        private readonly INotificationFacade _notificationFacade;
 
-        public SendSmsRequestFailedConsumer(INotificationFacade notificationFacade, ILogger<SendSmsRequestFailedConsumer> logger)
+        public SendSmsRequestFailedConsumer(ILogger<SendSmsRequestFailedConsumer> logger)
         {
-            _notificationFacade = notificationFacade;
             _logger = logger;
         }
 
