@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Report.Controllers
+﻿using TestOkur.Infrastructure.Mvc.Extensions;
+
+namespace TestOkur.Report.Controllers
 {
     using MassTransit;
     using Microsoft.AspNetCore.Authorization;

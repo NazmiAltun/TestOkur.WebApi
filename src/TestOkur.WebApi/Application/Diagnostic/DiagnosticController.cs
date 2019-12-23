@@ -20,7 +20,7 @@
         public IActionResult Get([FromQuery, Required] string key)
         {
             return _applicationConfiguration.Key != key
-                ? (IActionResult) Unauthorized()
+                ? (IActionResult)Unauthorized()
                 : Content(DiagnosticReport.Generate().ToString());
         }
     }

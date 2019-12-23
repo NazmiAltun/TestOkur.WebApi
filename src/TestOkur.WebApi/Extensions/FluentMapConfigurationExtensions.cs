@@ -11,7 +11,9 @@
     {
         public static void AddMapFromCurrentAssembly(this FluentMapConfiguration configuration)
         {
-            var method = configuration.GetType().GetMethod("AddMap");
+            var method = configuration.GetType().GetMethod("AddMap") ??
+                         throw new ArgumentNullException($"AddMap not found in {configuration.GetType()}");
+
             Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => typeof(IEntityMap).IsAssignableFrom(t))
                 .Each(t =>

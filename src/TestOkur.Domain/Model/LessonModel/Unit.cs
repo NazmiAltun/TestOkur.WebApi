@@ -48,7 +48,7 @@
                 }
             }
 
-            return null;
+            throw DomainException.With("Subject id {0} does not exist in {1} - {2} unit", id, Id, Name);
         }
 
         public void AddSubject(Name subjectName) => AddSubject(subjectName, false);

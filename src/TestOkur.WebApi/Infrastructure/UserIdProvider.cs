@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.WebApi
 {
-    using CacheManager.Core;
-    using Dapper;
-    using IdentityModel;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
-    using Npgsql;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CacheManager.Core;
+    using Dapper;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+    using Npgsql;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.WebApi.Application.User.Queries;
     using TestOkur.WebApi.Configuration;
 
@@ -41,8 +41,7 @@
 
         public async Task<int> GetAsync()
         {
-            var subjectId = _httpContextAccessor.HttpContext?.User?
-                .FindFirst(JwtClaimTypes.Subject)?.Value;
+            var subjectId = _httpContextAccessor.GetUserId();
 
             if (subjectId == null)
             {

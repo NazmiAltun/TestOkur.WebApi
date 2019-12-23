@@ -30,8 +30,9 @@
             {
                 var classroom = await GetClassroomAsync(dbContext, command, cancellationToken);
 
-                if (classroom != null)
+                if (classroom == null)
                 {
+                    await base.HandleAsync(command, cancellationToken);
                     dbContext.Remove(classroom);
                     await dbContext.SaveChangesAsync(cancellationToken);
                     await PublishEventAsync(command.ClassroomId, cancellationToken);

@@ -1,6 +1,5 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
-    using IdentityModel;
     using MassTransit;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,7 @@
     using TestOkur.Data;
     using TestOkur.Domain.Model.SmsModel;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.WebApi.Application.User.Queries;
 
     public sealed class SendSmsCommandHandler : RequestHandlerAsync<SendSmsCommand>
@@ -66,7 +66,7 @@
             var user = await GetUserAsync(userId, cancellationToken);
             var @event = new SendSmsRequestReceived(
                 userId,
-                GetUserSubjectId(),
+                _httpContextAccessor.GetUserId(),
                 messages,
                 user.Email);
 
@@ -98,12 +98,6 @@
 
             user.DeductSmsBalance(totalCredit);
             await dbContext.SaveChangesAsync(cancellationToken);
-        }
-
-        private string GetUserSubjectId()
-        {
-            return _httpContextAccessor.HttpContext?.User?
-                .FindFirst(JwtClaimTypes.Subject)?.Value;
         }
     }
 }

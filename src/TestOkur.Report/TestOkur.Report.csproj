@@ -21,7 +21,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.3.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.0" />
-    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.3" />
+    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.4" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.73" />
   </ItemGroup>
   <ItemGroup>
