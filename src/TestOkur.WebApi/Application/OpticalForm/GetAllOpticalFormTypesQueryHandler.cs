@@ -1,14 +1,14 @@
 ﻿namespace TestOkur.WebApi.Application.OpticalForm
 {
+    using Dapper;
+    using Microsoft.AspNetCore.Hosting;
+    using Npgsql;
+    using Paramore.Darker;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Dapper;
-    using Microsoft.AspNetCore.Hosting;
-    using Npgsql;
-    using Paramore.Darker;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.Infrastructure.Mvc.Helpers;
     using TestOkur.WebApi.Configuration;
