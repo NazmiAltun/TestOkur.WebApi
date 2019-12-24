@@ -3,6 +3,7 @@
     using System.IO;
     using System.Threading.Tasks;
     using RazorLight;
+    using TestOkur.Infrastructure.Mvc.Helpers;
 
     public class TemplateService : ITemplateService
     {
@@ -13,9 +14,9 @@
             _engine = engine;
         }
 
-        public Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
+        public async Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
         {
-            var template = File.ReadAllText(Path.Combine("Templates", filePath));
+            var template = await FileEx.ReadAllTextAsync(Path.Combine("Templates", filePath));
             var name = Path.Combine("Templates", filePath)
                 .Replace('.', '_')
                 .Replace(Path.PathSeparator, '_')
@@ -23,7 +24,7 @@
                 .Replace(Path.AltDirectorySeparatorChar, '_')
                 .Replace(Path.DirectorySeparatorChar, '_');
 
-            return _engine.CompileRenderAsync(name, template, viewModel);
+            return await _engine.CompileRenderAsync(name, template, viewModel);
         }
     }
 }

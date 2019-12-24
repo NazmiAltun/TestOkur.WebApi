@@ -30,7 +30,7 @@
                 return Task.CompletedTask;
             }
 
-            var writeModels = new List<WriteModel<StudentOpticalForm>>();
+            var writeModels = new List<WriteModel<StudentOpticalForm>>(forms.Count());
 
             foreach (var form in forms)
             {
@@ -186,7 +186,8 @@
 
         public Task DeleteByExamIdAsync(int examId)
         {
-            return DeleteStudentOpticalFormsByExamIdAsync(examId);
+            var sFilter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId);
+            return _context.StudentOpticalForms.DeleteManyAsync(sFilter);
         }
 
         public Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms)
@@ -221,14 +222,8 @@
                     answer.SubjectName = newSubjectName;
                 }
 
-                _context.StudentOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
+                return _context.StudentOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
             });
-        }
-
-        private Task DeleteStudentOpticalFormsByExamIdAsync(int examId)
-        {
-            var sFilter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId);
-            return _context.StudentOpticalForms.DeleteManyAsync(sFilter);
         }
     }
 }

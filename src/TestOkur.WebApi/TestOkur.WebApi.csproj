@@ -43,8 +43,8 @@
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.1.5" />
-    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.4" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.73" />
+    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.6" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.74" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />

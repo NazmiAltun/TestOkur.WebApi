@@ -1,15 +1,14 @@
-﻿using TestOkur.Infrastructure.Mvc.Extensions;
-
-namespace TestOkur.Report.Controllers
+﻿namespace TestOkur.Report.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using MassTransit;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using TestOkur.Common;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Events;
     using TestOkur.Report.Extensions;

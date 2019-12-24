@@ -66,7 +66,7 @@
                     answer.SubjectName = newSubjectName;
                 }
 
-                _context.AnswerKeyOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
+                return _context.AnswerKeyOpticalForms.ReplaceOneAsync(f => f.Id == form.Id, form);
             });
         }
     }

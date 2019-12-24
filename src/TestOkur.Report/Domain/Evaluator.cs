@@ -12,17 +12,11 @@ namespace TestOkur.Report.Domain
     {
         public IEnumerable<StudentOpticalForm> JoinSets(IEnumerable<StudentOpticalForm> firstSet, IEnumerable<StudentOpticalForm> secondSet)
         {
-            foreach (var form in firstSet)
-            {
-                var matchedForm = secondSet.FirstOrDefault(x => x.StudentId == form.StudentId);
-
-                if (matchedForm != null)
-                {
-                    form.AddSections(matchedForm.Sections);
-                }
-            }
-
-            return firstSet;
+            return firstSet.Join(
+                secondSet,
+                first => first.StudentId,
+                second => second.StudentId,
+                (first, second) => first.Merge(second));
         }
 
         public IEnumerable<SchoolResult> EvaluateSchoolResults(IEnumerable<StudentOpticalForm> forms)

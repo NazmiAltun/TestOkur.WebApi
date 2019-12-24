@@ -2,15 +2,16 @@
 
 namespace TestOkur.WebApi.Application.Lesson
 {
+    using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json;
     using TestOkur.Data;
     using TestOkur.Domain.Model.LessonModel;
+    using TestOkur.Infrastructure.Mvc.Helpers;
     using TestOkur.WebApi.Data;
 
     internal class SubjectSeeder : ISeeder
@@ -28,7 +29,7 @@ namespace TestOkur.WebApi.Application.Lesson
 
             var rows = JsonConvert
                 .DeserializeObject<List<SubjectUnitRow>>(
-                    File.ReadAllText(Path.Combine("Data", FilePath)));
+                    await FileEx.ReadAllTextAsync(Path.Combine("Data", FilePath)));
 
             var unitDictionary = new Dictionary<string, Unit>();
             var lessons = await dbContext.Lessons.

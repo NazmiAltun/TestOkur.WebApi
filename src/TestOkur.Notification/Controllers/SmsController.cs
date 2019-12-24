@@ -1,14 +1,13 @@
-﻿using TestOkur.Infrastructure.Mvc.Extensions;
-
-namespace TestOkur.Notification.Controllers
+﻿namespace TestOkur.Notification.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using TestOkur.Common;
+    using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Notification.Dtos;
     using TestOkur.Notification.Infrastructure.Data;
     using TestOkur.Notification.Models;
