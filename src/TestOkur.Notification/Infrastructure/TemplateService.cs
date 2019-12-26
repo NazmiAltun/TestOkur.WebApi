@@ -16,7 +16,7 @@
 
         public async Task<string> RenderTemplateAsync<TViewModel>(string filePath, TViewModel viewModel)
         {
-            var template = File.ReadAllText(Path.Combine("Templates", filePath)); //await FileEx.ReadAllTextAsync(Path.Combine("Templates", filePath));
+            var template = await FileEx.ReadAllTextAsync(Path.Combine("Templates", filePath)); //await FileEx.ReadAllTextAsync(Path.Combine("Templates", filePath));
             var name = Path.Combine("Templates", filePath)
                 .Replace('.', '_')
                 .Replace(Path.PathSeparator, '_')

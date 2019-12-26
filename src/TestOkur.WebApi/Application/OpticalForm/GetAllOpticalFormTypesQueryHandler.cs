@@ -58,10 +58,10 @@
             await using var connection = new NpgsqlConnection(_connectionString);
             var definitions = await GetDefinitionsAsync(connection);
             var formTypes = await GetFormTypesAsync(connection);
-            return PopulateFormTypes(formTypes, definitions);
+            return await PopulateFormTypes(formTypes, definitions);
         }
 
-        private IReadOnlyCollection<OpticalFormTypeReadModel> PopulateFormTypes(List<OpticalFormTypeReadModel> formTypes, List<OpticalFormDefinitionReadModel> definitions)
+        private async Task<IReadOnlyCollection<OpticalFormTypeReadModel>> PopulateFormTypes(List<OpticalFormTypeReadModel> formTypes, List<OpticalFormDefinitionReadModel> definitions)
         {
             foreach (var formType in formTypes)
             {
@@ -69,7 +69,7 @@
                     _hostingEnvironment.WebRootPath,
                     "yap",
                     formType.ConfigurationFile);
-                formType.Configuration = File.ReadAllText(path);
+                formType.Configuration = await FileEx.ReadAllTextAsync(path);
                 formType.OpticalFormDefinitions =
                     definitions.Where(d => d.OpticalFormTypeId == formType.Id)
                         .ToList();

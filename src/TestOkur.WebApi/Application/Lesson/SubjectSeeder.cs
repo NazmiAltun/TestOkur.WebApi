@@ -29,7 +29,7 @@ namespace TestOkur.WebApi.Application.Lesson
 
             var rows = JsonConvert
                 .DeserializeObject<List<SubjectUnitRow>>(
-                    File.ReadAllText(Path.Combine("Data", FilePath)));
+                    await FileEx.ReadAllTextAsync(Path.Combine("Data", FilePath)));
 
             var unitDictionary = new Dictionary<string, Unit>();
             var lessons = await dbContext.Lessons.
