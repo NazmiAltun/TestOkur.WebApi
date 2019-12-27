@@ -37,6 +37,7 @@
 
         [HttpGet("shared")]
         [ProducesResponseType(typeof(IReadOnlyCollection<LessonReadModel>), StatusCodes.Status200OK)]
+        [ResponseCache(Duration = 100000)]
         public async Task<IActionResult> GetSharedLessonListAsync()
         {
             return Ok(await _queryProcessor.ExecuteAsync(new GetSharedLessonQuery()));

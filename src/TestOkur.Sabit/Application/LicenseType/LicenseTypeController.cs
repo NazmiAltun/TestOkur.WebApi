@@ -21,6 +21,7 @@
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<LicenseType>), StatusCodes.Status200OK)]
+        [ResponseCache(Duration = 100000)]
         public async Task<IActionResult> GetAsync()
         {
             return Ok(await _queryProcessor.ExecuteAsync(new LicenseTypeQuery()));
