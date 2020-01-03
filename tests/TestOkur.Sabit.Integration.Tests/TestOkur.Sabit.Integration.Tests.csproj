@@ -22,6 +22,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Update="FluentAssertions" Version="5.10.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
 </Project>
