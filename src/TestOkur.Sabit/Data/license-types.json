@@ -3,7 +3,7 @@
       "id": 1,
       "name": "İLKOKUL-ORTAOKUL – (BİREYSEL)",
       "maxAllowedDeviceCount": 1000,
-      "maxAllowedRecordCount": 500,
+      "maxAllowedRecordCount": 250,
       "canScan": true
     },
     {
@@ -17,7 +17,7 @@
       "id": 3,
       "name": "LİSE – (BİREYSEL)",
       "maxAllowedDeviceCount": 1,
-      "maxAllowedRecordCount": 500,
+      "maxAllowedRecordCount": 250,
       "canScan": true
     },
     {
