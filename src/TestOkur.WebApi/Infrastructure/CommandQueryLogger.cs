@@ -1,11 +1,14 @@
 ﻿namespace TestOkur.WebApi.Infrastructure
 {
-    using System;
-    using System.Threading.Tasks;
     using MassTransit;
     using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
+    using Paramore.Brighter;
+    using Paramore.Darker;
+    using System;
+    using System.Threading.Tasks;
+    using TestOkur.Common.Helpers;
     using TestOkur.Infrastructure.CommandsQueries;
+    using TestOkur.Serializer;
 
     public class CommandQueryLogger : ICommandQueryLogger
     {
@@ -18,19 +21,62 @@
             _logger = logger;
         }
 
-        public async Task LogAsync(object message)
+        public async Task LogQueryAsync<TQuery>(TQuery query)
+            where TQuery : IQuery
         {
             try
             {
                 await _publishEndpoint.Publish(new CommandQueryLogEvent(
-                    JsonConvert.SerializeObject(message), message.GetType().ToString()));
+                    JsonUtils.Serialize(query), query.GetType().ToString()));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occured while logging command/query");
+                _logger.LogError(ex, "Error occured while logging query");
             }
         }
 
-        public void Log(object message) => LogAsync(message).RunSynchronously();
+        public void LogQuery<TQuery>(TQuery query)
+            where TQuery : IQuery
+        {
+            try
+            {
+                AsyncHelper.RunSync(() =>
+                    _publishEndpoint.Publish(new CommandQueryLogEvent(
+                    JsonUtils.Serialize(query), query.GetType().ToString())));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occured while logging query");
+            }
+        }
+
+        public async Task LogCommandAsync<TCommand>(TCommand command)
+            where TCommand : IRequest
+        {
+            try
+            {
+                await _publishEndpoint.Publish(new CommandQueryLogEvent(
+                    JsonUtils.Serialize(command), command.GetType().ToString()));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occured while logging query");
+            }
+        }
+
+        public void LogCommand<TCommand>(TCommand command)
+            where TCommand : IRequest
+        {
+            try
+            {
+                AsyncHelper.RunSync(() =>
+                    _publishEndpoint.Publish(new CommandQueryLogEvent(
+                        JsonUtils.Serialize(command), command.GetType().ToString())));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occured while logging query");
+            }
+        }
     }
 }

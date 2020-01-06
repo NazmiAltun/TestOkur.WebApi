@@ -32,5 +32,7 @@
                 Options,
                 cancellationToken);
         }
+
+        public static string Serialize<T>(T obj) => JsonSerializer.Serialize<T>(obj, Options);
     }
 }

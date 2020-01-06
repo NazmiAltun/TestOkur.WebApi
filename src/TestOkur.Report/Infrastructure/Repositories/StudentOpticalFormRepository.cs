@@ -1,15 +1,13 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace TestOkur.Report.Infrastructure.Repositories
+﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
+    using Microsoft.Extensions.Logging;
+    using MongoDB.Driver;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Microsoft.Extensions.Logging;
-    using MongoDB.Driver;
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
