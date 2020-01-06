@@ -4,6 +4,7 @@
     using Paramore.Brighter;
     using System;
     using System.Collections.Concurrent;
+    using System.Runtime.CompilerServices;
 
     public class UpdateUserOnlineStatusCommandHandler : RequestHandler<UpdateUserOnlineStatusCommand>
     {
@@ -16,6 +17,7 @@
             _userCacheManager = userCacheManager;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         public override UpdateUserOnlineStatusCommand Handle(UpdateUserOnlineStatusCommand command)
         {
             var usersDictionary = _userCacheManager.Get(CacheKey) ?? new ConcurrentDictionary<string, DateTime>();

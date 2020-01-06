@@ -101,6 +101,7 @@ namespace TestOkur.Report.Domain
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
         private void SetAttendance(IReadOnlyCollection<StudentOpticalForm> forms)
         {
             foreach (var form in forms)
