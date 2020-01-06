@@ -1,8 +1,5 @@
 ﻿namespace TestOkur.WebApi.Application.Sms
 {
-    using System.Runtime.Serialization;
-
-    [DataContract]
     public class SmsMessageModel
     {
         public SmsMessageModel(string receiver, string subject, string body)
@@ -12,19 +9,18 @@
             Body = body;
         }
 
-        [DataMember]
-        public string Subject { get; private set; }
+        public SmsMessageModel()
+        {
+        }
 
-        [DataMember]
-        public string Body { get; private set; }
+        public string Subject { get; set; }
 
-        [DataMember]
-        public string Receiver { get; private set; }
+        public string Body { get; set; }
 
-        [DataMember]
-        public string StudentOpticalFormId { get; private set; }
+        public string Receiver { get; set; }
 
-        [DataMember]
-        public int ExamId { get; private set; }
+        public string StudentOpticalFormId { get; set; }
+
+        public int ExamId { get; set; }
     }
 }

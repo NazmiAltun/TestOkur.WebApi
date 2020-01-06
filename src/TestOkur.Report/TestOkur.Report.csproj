@@ -21,8 +21,10 @@
     <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.4.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.0" />
+    <PackageReference Include="SpanJson" Version="3.0.1" />
+    <PackageReference Include="SpanJson.AspNetCore.Formatter" Version="3.0.1" />
     <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.7" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.74" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.75" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />

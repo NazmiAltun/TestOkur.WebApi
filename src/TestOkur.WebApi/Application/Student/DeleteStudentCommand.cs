@@ -10,6 +10,10 @@
             StudentId = studentId;
         }
 
+        public DeleteStudentCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[]
         {
             $"Students_{UserId}",

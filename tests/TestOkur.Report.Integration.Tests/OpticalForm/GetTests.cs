@@ -1,10 +1,11 @@
-﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
+﻿using TestOkur.Serializer;
+
+namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-    using System;
+    using FluentAssertions;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Integration.Tests.Consumers;
     using TestOkur.TestHelper;

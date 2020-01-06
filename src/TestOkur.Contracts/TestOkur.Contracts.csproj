@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="TestOkur.Optic" Version="1.0.74" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.75" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Domain\TestOkur.Domain.csproj" />

@@ -20,10 +20,11 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using Polly;
     using Polly.Extensions.Http;
     using Prometheus;
+    using SpanJson.AspNetCore.Formatter;
+    using SpanJson.Resolvers;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -83,11 +84,9 @@
                     options.Filters.Add(new ProducesAttribute("application/json"));
                     options.Filters.Add(new ValidateInputFilter());
                 })
-               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-               .AddNewtonsoftJson(options =>
-               {
-                   options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-               });
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
+
             services.AddCommandsAndQueries(Assembly.GetExecutingAssembly());
             AddHealthChecks(services);
             AddCache(services);

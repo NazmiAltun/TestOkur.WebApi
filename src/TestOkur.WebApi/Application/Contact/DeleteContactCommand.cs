@@ -10,6 +10,10 @@
             ContactId = contactId;
         }
 
+        public DeleteContactCommand()
+        {
+        }
+
         public int ContactId { get; }
 
         public IEnumerable<string> CacheKeys => new[]

@@ -2,12 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Infrastructure.CommandsQueries;
     using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
-    [DataContract]
     public class CreateUnitCommand : CommandBase, IClearCache
     {
         public CreateUnitCommand(Guid id, string name, int lessonId, int grade)
@@ -18,16 +16,17 @@
             Grade = grade;
         }
 
+        public CreateUnitCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
 
-        [DataMember]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        [DataMember]
-        public int Grade { get; private set; }
+        public int Grade { get; set; }
 
-        [DataMember]
-        public int LessonId { get; private set; }
+        public int LessonId { get; set; }
 
         public Unit ToDomainModel(Lesson lesson) => new Unit(Name, lesson, Grade, false);
     }

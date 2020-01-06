@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public sealed class EditLessonCommand : CommandBase, IClearCache
     {
         public EditLessonCommand(Guid id, int lessonId, string newName)
@@ -15,12 +13,14 @@
             NewName = newName;
         }
 
+        public EditLessonCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Lessons_{UserId}" };
 
-        [DataMember]
-        public int LessonId { get; private set; }
+        public int LessonId { get; set; }
 
-        [DataMember]
-        public string NewName { get; private set; }
+        public string NewName { get; set; }
     }
 }

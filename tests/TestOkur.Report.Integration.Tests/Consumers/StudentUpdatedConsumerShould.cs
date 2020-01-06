@@ -1,16 +1,16 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using FluentAssertions;
     using MassTransit;
     using NSubstitute;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
+    using TestOkur.Serializer;
     using TestOkur.TestHelper;
     using Xunit;
 

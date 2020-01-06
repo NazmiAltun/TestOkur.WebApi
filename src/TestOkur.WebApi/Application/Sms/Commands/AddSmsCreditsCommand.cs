@@ -1,12 +1,10 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
+    using Paramore.Brighter;
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
-    using Paramore.Brighter;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class AddSmsCreditsCommand : Command, IClearCache
     {
         public AddSmsCreditsCommand(Guid commandId, int userId, int amount, bool gift)
@@ -17,14 +15,16 @@
             Gift = gift;
         }
 
-        [DataMember]
-        public int UserId { get; private set; }
+        public AddSmsCreditsCommand()
+         : base(Guid.NewGuid())
+        {
+        }
 
-        [DataMember]
-        public int Amount { get; private set; }
+        public int UserId { get; set; }
 
-        [DataMember]
-        public bool Gift { get; private set; }
+        public int Amount { get; set; }
+
+        public bool Gift { get; set; }
 
         public IEnumerable<string> CacheKeys => new[] { "Users" };
     }

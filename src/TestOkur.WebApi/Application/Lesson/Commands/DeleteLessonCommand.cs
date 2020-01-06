@@ -10,8 +10,12 @@
             LessonId = lessonId;
         }
 
+        public DeleteLessonCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Lessons_{UserId}" };
 
-        public int LessonId { get; private set; }
+        public int LessonId { get; set; }
     }
 }

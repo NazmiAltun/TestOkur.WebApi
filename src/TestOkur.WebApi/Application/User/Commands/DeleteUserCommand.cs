@@ -10,6 +10,10 @@
             DeleteUserId = deleteUserId;
         }
 
+        public DeleteUserCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { "Users", "UserIdMap" };
 
         public int DeleteUserId { get; }

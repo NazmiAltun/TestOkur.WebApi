@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Contact;
 
-    [DataContract]
     public class EditStudentCommand : CommandBase, IClearCache
     {
         public EditStudentCommand(
@@ -31,34 +29,30 @@
             Contacts = contacts;
         }
 
+        public EditStudentCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[]
         {
             $"Students_{UserId}",
             $"Contacts_{UserId}",
         };
 
-        [DataMember]
-        public int StudentId { get; private set; }
+        public int StudentId { get; set; }
 
-        [DataMember]
-        public string NewFirstName { get; private set; }
+        public string NewFirstName { get; set; }
 
-        [DataMember]
-        public string NewLastName { get; private set; }
+        public string NewLastName { get; set; }
 
-        [DataMember]
-        public int NewStudentNumber { get; private set; }
+        public int NewStudentNumber { get; set; }
 
-        [DataMember]
-        public int NewClassroomId { get; private set; }
+        public int NewClassroomId { get; set; }
 
-        [DataMember]
-        public string NewNotes { get; private set; }
+        public string NewNotes { get; set; }
 
-        [DataMember]
-        public string CitizenshipIdentity { get; private set; }
+        public string CitizenshipIdentity { get; set; }
 
-        [DataMember]
-        public List<CreateContactCommand> Contacts { get; private set; }
+        public List<CreateContactCommand> Contacts { get; set; }
     }
 }

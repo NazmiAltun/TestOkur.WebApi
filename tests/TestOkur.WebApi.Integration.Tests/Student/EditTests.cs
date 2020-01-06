@@ -1,11 +1,12 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Student
 {
+    using FluentAssertions;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Contracts.Student;
     using TestOkur.Domain.Model;
+    using TestOkur.Serializer;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Contact;

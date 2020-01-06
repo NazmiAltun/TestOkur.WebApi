@@ -1,10 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Score
 {
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class EditScoreFormulaCommand : CommandBase
     {
         public EditScoreFormulaCommand(
@@ -22,13 +20,10 @@
             Coefficients = new Dictionary<int, float>();
         }
 
-        [DataMember]
-        public int ScoreFormulaId { get; private set; }
+        public int ScoreFormulaId { get; set; }
 
-        [DataMember]
-        public float BasePoint { get; private set; }
+        public float BasePoint { get; set; }
 
-        [DataMember]
-        public Dictionary<int, float> Coefficients { get; private set; }
+        public Dictionary<int, float> Coefficients { get; set; }
     }
 }

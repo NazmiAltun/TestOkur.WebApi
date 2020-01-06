@@ -8,11 +8,10 @@
 
     public static class JsonUtils
     {
-        private static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
+        public static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true,
         };
 
         public static async ValueTask<T> DeserializerFromHttpContent<T>(
@@ -33,6 +32,6 @@
                 cancellationToken);
         }
 
-        public static string Serialize<T>(T obj) => JsonSerializer.Serialize<T>(obj, Options);
+        public static string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, Options);
     }
 }

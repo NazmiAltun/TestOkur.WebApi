@@ -9,6 +9,10 @@
             Email = email;
         }
 
-        public string Email { get; }
+        public UpdateUserOnlineStatusCommand()
+        {
+        }
+
+        public string Email { get; set; }
     }
 }

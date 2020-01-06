@@ -1,10 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Sms.Commands
 {
     using System;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class SendSmsAdminCommand : CommandBase
     {
         public SendSmsAdminCommand(Guid id, string receiver, string body)
@@ -14,10 +12,12 @@
             Body = body;
         }
 
-        [DataMember]
-        public string Body { get; private set; }
+        public SendSmsAdminCommand()
+        {
+        }
 
-        [DataMember]
-        public string Receiver { get; private set; }
+        public string Body { get; set; }
+
+        public string Receiver { get; set; }
     }
 }

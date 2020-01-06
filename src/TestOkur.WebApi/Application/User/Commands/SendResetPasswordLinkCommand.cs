@@ -1,11 +1,9 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
+    using Paramore.Brighter;
     using System;
-    using System.Runtime.Serialization;
-    using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
-    public class SendResetPasswordLinkCommand : CommandBase
+    public class SendResetPasswordLinkCommand : Command
     {
         public SendResetPasswordLinkCommand(
             Guid id,
@@ -19,13 +17,15 @@
             CaptchaCode = captchaCode;
         }
 
-        [DataMember]
-        public string Email { get; }
+        public SendResetPasswordLinkCommand()
+            : base(Guid.NewGuid())
+        {
+        }
 
-        [DataMember]
-        public Guid CaptchaId { get; private set; }
+        public string Email { get; set; }
 
-        [DataMember]
-        public string CaptchaCode { get; private set; }
+        public Guid CaptchaId { get; set; }
+
+        public string CaptchaCode { get; set; }
     }
 }

@@ -3,13 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.Contact;
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
     using Student = TestOkur.Domain.Model.StudentModel.Student;
 
-    [DataContract]
     public class CreateStudentCommand : CommandBase, IClearCache
     {
         public CreateStudentCommand(
@@ -34,35 +32,31 @@
             Contacts = contacts;
         }
 
+        public CreateStudentCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[]
         {
             $"Students_{UserId}",
             $"Contacts_{UserId}",
         };
 
-        [DataMember]
-        public string FirstName { get; private set; }
+        public string FirstName { get; set; }
 
-        [DataMember]
-        public string LastName { get; private set; }
+        public string LastName { get; set; }
 
-        [DataMember]
-        public int StudentNumber { get; private set; }
+        public int StudentNumber { get; set; }
 
-        [DataMember]
-        public int ClassroomId { get; private set; }
+        public int ClassroomId { get; set; }
 
-        [DataMember]
-        public string Notes { get; private set; }
+        public string Notes { get; set; }
 
-        [DataMember]
-        public string Source { get; private set; }
+        public string Source { get; set; }
 
-        [DataMember]
-        public string CitizenshipIdentity { get; private set; }
+        public string CitizenshipIdentity { get; set; }
 
-        [DataMember]
-        public IEnumerable<CreateContactCommand> Contacts { get; private set; }
+        public IEnumerable<CreateContactCommand> Contacts { get; set; }
 
         public Student ToDomainModel(Classroom classroom)
         {

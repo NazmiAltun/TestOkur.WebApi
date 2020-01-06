@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.User
 {
     using FluentAssertions;
-    using System;
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Contracts.User;
+    using TestOkur.Serializer;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Integration.Tests.Common;
     using Xunit;

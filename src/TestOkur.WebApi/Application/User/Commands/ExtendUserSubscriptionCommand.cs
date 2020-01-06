@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class ExtendUserSubscriptionCommand : CommandBase, IClearCache
     {
         public ExtendUserSubscriptionCommand(string email, DateTime currentExpiryDateTimeUtc)
@@ -14,11 +12,13 @@
             CurrentExpiryDateTimeUtc = currentExpiryDateTimeUtc;
         }
 
-        [DataMember]
-        public string Email { get; private set; }
+        public ExtendUserSubscriptionCommand()
+        {
+        }
 
-        [DataMember]
-        public DateTime CurrentExpiryDateTimeUtc { get; private set; }
+        public string Email { get; set; }
+
+        public DateTime CurrentExpiryDateTimeUtc { get; set; }
 
         public IEnumerable<string> CacheKeys => new[] { "Users", "UserIdMap" };
     }

@@ -6,11 +6,12 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.0" />
     <PackageReference Include="NSubstitute" Version="4.2.1" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.74" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.75" />
     <PackageReference Include="TestOkur.TestHelper" Version="1.1.1" />  
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.Report\TestOkur.Report.csproj" />
+    <ProjectReference Include="..\..\src\TestOkur.Serializer\TestOkur.Serializer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="coverlet.msbuild" Version="2.8.0">

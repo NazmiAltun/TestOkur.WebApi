@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class SendSmsCommand : CommandBase, IClearCache
     {
         public SendSmsCommand(
@@ -16,9 +14,12 @@
             Messages = messages;
         }
 
+        public SendSmsCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { "Users" };
 
-        [DataMember]
-        public IEnumerable<SmsMessageModel> Messages { get; private set; }
+        public IEnumerable<SmsMessageModel> Messages { get; set; }
     }
 }

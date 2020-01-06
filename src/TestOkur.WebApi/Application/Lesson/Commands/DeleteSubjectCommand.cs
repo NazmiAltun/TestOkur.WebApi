@@ -11,6 +11,10 @@
             SubjectId = subjectId;
         }
 
+        public DeleteSubjectCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
 
         public int UnitId { get; }

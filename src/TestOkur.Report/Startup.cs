@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using SpanJson.AspNetCore.Formatter;
+using SpanJson.Resolvers;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
@@ -84,7 +86,8 @@ namespace TestOkur.Report
                 {
                     options.Filters.Add(new ProducesAttribute("application/json"));
                     options.Filters.Add(new ValidateInputFilter());
-                }).AddNewtonsoftJson();
+                })
+                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
             AddAuthentication(services);
             AddPolicies(services);
             AddMessageBus(services);

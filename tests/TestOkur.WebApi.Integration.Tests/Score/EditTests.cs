@@ -1,11 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Score
 {
-    using System;
+    using FluentAssertions;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using FluentAssertions;
+    using TestOkur.Serializer;
     using TestOkur.WebApi.Application.Score;
     using Xunit;
 
@@ -53,7 +53,8 @@
             }
 
             var command = new BulkEditScoreFormulaCommand(commandList);
-            await client.PutAsync(ApiPath, command.ToJsonContent());
+            var response = await client.PutAsync(ApiPath, command.ToJsonContent());
+            response.EnsureSuccessStatusCode();
         }
     }
 }

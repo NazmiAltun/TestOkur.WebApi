@@ -1,8 +1,11 @@
-﻿namespace TestOkur.WebApi.Integration.Tests.Exam
+﻿using FluentAssertions;
+
+namespace TestOkur.WebApi.Integration.Tests.Exam
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using TestOkur.Serializer;
     using TestOkur.WebApi.Application.Scan;
     using Xunit;
 
@@ -28,7 +31,7 @@
             response.EnsureSuccessStatusCode();
             var endCommand = new EndScanSessionCommand(startCommand.Id, Random.Next());
             response = await client.PutAsync(ApiPath, endCommand.ToJsonContent());
-            response.EnsureSuccessStatusCode();
+            response.IsSuccessStatusCode.Should().BeTrue();
         }
     }
 }

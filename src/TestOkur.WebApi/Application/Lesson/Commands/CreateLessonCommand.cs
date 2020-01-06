@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using Lesson = TestOkur.Domain.Model.LessonModel.Lesson;
 
-    [DataContract]
     public class CreateLessonCommand : CommandBase, IClearCache
     {
         public CreateLessonCommand(Guid id, string name)
@@ -15,10 +13,13 @@
             Name = name;
         }
 
+        public CreateLessonCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Lessons_{UserId}" };
 
-        [DataMember]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         public Lesson ToDomainModel() => new Lesson(Name);
     }

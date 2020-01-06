@@ -20,6 +20,8 @@
     using Polly.Extensions.Http;
     using Prometheus;
     using RazorLight;
+    using SpanJson.AspNetCore.Formatter;
+    using SpanJson.Resolvers;
     using System;
     using System.Linq;
     using System.Net.Http;
@@ -96,7 +98,8 @@
             services.AddTransient<ISmsLogRepository, SmsLogRepository>();
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddTransient<IStatsRepository, StatsRepository>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
             services.AddHttpContextAccessor();
             services.AddResponseCompression();
         }

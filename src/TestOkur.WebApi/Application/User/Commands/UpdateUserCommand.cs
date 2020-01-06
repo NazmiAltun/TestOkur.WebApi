@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class UpdateUserCommand : CommandBase, IClearCache
     {
         public UpdateUserCommand(
@@ -22,18 +20,18 @@
             DistrictId = districtId;
         }
 
+        public UpdateUserCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { "Users" };
 
-        [DataMember]
-        public string SchoolName { get; private set; }
+        public string SchoolName { get; set; }
 
-        [DataMember]
-        public string MobilePhone { get; private set; }
+        public string MobilePhone { get; set; }
 
-        [DataMember]
-        public int CityId { get; private set; }
+        public int CityId { get; set; }
 
-        [DataMember]
-        public int DistrictId { get; private set; }
+        public int DistrictId { get; set; }
     }
 }

@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.Serialization;
     using TestOkur.Domain.Model.StudentModel;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class CreateContactCommand : CommandBase, IClearCache
     {
         public CreateContactCommand(Guid id, string firstName, string lastName, string phone, int contactType)
@@ -29,20 +27,15 @@
         {
         }
 
-        [DataMember]
-        public string FirstName { get; private set; }
+        public string FirstName { get; set; }
 
-        [DataMember]
-        public string LastName { get; private set; }
+        public string LastName { get; set; }
 
-        [DataMember]
-        public string Phone { get; private set; }
+        public string Phone { get; set; }
 
-        [DataMember]
-        public int ContactType { get; private set; }
+        public int ContactType { get; set; }
 
-        [DataMember]
-        public string Labels { get; private set; }
+        public string Labels { get; set; }
 
         public IEnumerable<string> CacheKeys => new[] { $"Contacts_{UserId}" };
 

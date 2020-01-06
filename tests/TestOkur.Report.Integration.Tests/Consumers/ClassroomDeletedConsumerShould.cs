@@ -12,6 +12,7 @@
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.TestHelper;
     using Xunit;
+    using TestOkur.Serializer;
 
     public class ClassroomDeletedConsumerShould : ConsumerTest
     {

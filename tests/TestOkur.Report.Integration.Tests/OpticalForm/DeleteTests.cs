@@ -1,13 +1,13 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
-    using System;
+    using FluentAssertions;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Events;
     using TestOkur.Report.Integration.Tests.Common;
+    using TestOkur.Serializer;
     using TestOkur.TestHelper;
     using Xunit;
 

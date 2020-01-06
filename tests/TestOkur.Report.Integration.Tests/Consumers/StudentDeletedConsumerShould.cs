@@ -1,17 +1,17 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using FluentAssertions;
     using MassTransit;
     using NSubstitute;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.TestHelper;
     using Xunit;
+    using TestOkur.Serializer;
 
     public class StudentDeletedConsumerShould : ConsumerTest
     {

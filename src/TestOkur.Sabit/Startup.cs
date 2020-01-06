@@ -12,9 +12,10 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
     using Prometheus;
+    using SpanJson.AspNetCore.Formatter;
+    using SpanJson.Resolvers;
     using System;
     using System.Reflection;
-    using System.Text.Json;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Infrastructure.CommandsQueries;
@@ -61,10 +62,7 @@
             services.AddSingleton<IUserIdProvider, StubUserIdProvider>();
             services.AddSingleton<ICommandQueryLogger, StubCommandQueryLogger>();
             services.AddControllers()
-                .AddJsonOptions(cfg =>
-                {
-                    cfg.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                });
+                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
             services.AddQueries(Assembly.GetExecutingAssembly());
             services.AddResponseCompression();
         }

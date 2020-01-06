@@ -1,9 +1,7 @@
 ﻿namespace TestOkur.WebApi.Application.Contact
 {
     using System;
-    using System.Runtime.Serialization;
 
-    [DataContract]
     public class EditContactCommand : CreateContactCommand
     {
         public EditContactCommand(Guid id, string firstName, string lastName, string phone, int contactType, string labels, int contactId)
@@ -12,7 +10,10 @@
             ContactId = contactId;
         }
 
-        [DataMember]
-        public int ContactId { get; private set; }
+        public EditContactCommand()
+        {
+        }
+
+        public int ContactId { get; set; }
     }
 }

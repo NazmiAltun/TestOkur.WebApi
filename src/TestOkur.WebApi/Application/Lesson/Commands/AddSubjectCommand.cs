@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public sealed class AddSubjectCommand : CommandBase, IClearCache
     {
         public AddSubjectCommand(Guid id, string name, int unitId)
@@ -15,12 +13,14 @@
             UnitId = unitId;
         }
 
+        public AddSubjectCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Units_{UserId}" };
 
-        [DataMember]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        [DataMember]
         public int UnitId { get; set; }
     }
 }

@@ -11,12 +11,16 @@
             Shared = shared;
         }
 
+        public DeleteExamCommand()
+        {
+        }
+
         public string Region => Shared ? "Exams" : string.Empty;
 
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
-        public int ExamId { get; private set; }
+        public int ExamId { get; set; }
 
-        public bool Shared { get; private set; }
+        public bool Shared { get; set; }
     }
 }

@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.Optic.Form;
 
-    [DataContract]
     public class CreateExamCommand : CommandBase, IClearCacheWithRegion
     {
         public CreateExamCommand(
@@ -37,41 +35,34 @@
             Shared = shared;
         }
 
+        public CreateExamCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
         public string Region => Shared ? "Exams" : string.Empty;
 
-        [DataMember]
-        public DateTime ExamDate { get; private set; }
+        public DateTime ExamDate { get; set; }
 
-        [DataMember]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        [DataMember]
-        public int ExamTypeId { get; private set; }
+        public int ExamTypeId { get; set; }
 
-        [DataMember]
-        public int IncorrectEliminationRate { get; private set; }
+        public int IncorrectEliminationRate { get; set; }
 
-        [DataMember]
-        public string Notes { get; private set; }
+        public string Notes { get; set; }
 
-        [DataMember]
-        public string ApplicableFormTypeCode { get; private set; }
+        public string ApplicableFormTypeCode { get; set; }
 
-        [DataMember]
-        public int AnswerFormFormat { get; private set; }
+        public int AnswerFormFormat { get; set; }
 
-        [DataMember]
-        public int LessonId { get; private set; }
+        public int LessonId { get; set; }
 
-        [DataMember]
-        public int ExamBookletTypeId { get; private set; }
+        public int ExamBookletTypeId { get; set; }
 
-        [DataMember]
-        public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; private set; }
+        public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; set; }
 
-        [DataMember]
         public bool Shared { get; set; }
     }
 }

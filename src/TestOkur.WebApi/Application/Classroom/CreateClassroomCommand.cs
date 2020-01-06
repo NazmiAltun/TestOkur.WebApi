@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using Classroom = TestOkur.Domain.Model.ClassroomModel.Classroom;
 
-    [DataContract]
     public class CreateClassroomCommand : CommandBase, IClearCache
     {
         public CreateClassroomCommand(Guid id, int grade, string name)
@@ -16,13 +14,15 @@
             Name = name;
         }
 
+        public CreateClassroomCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { $"Classrooms_{UserId}" };
 
-        [DataMember]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        [DataMember]
-        public int Grade { get; private set; }
+        public int Grade { get; set; }
 
         public Classroom ToDomainModel()
         {

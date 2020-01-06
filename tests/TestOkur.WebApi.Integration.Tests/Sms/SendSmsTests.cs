@@ -1,12 +1,13 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Sms
 {
+    using FluentAssertions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Common;
     using TestOkur.Contracts.Sms;
+    using TestOkur.Serializer;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Sms;
     using TestOkur.WebApi.Application.Sms.Commands;

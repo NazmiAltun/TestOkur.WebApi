@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using User = TestOkur.Domain.Model.UserModel.User;
 
-    [DataContract]
     public class CreateUserCommand : CommandBase, IClearCache
     {
         public CreateUserCommand(
@@ -47,58 +45,45 @@
             DistrictName = districtName;
         }
 
+        public CreateUserCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { "Users", "UserIdMap" };
 
-        [DataMember]
-        public string RegistrarFullName { get; private set; }
+        public string RegistrarFullName { get; set; }
 
-        [DataMember]
-        public string RegistrarPhone { get; private set; }
+        public string RegistrarPhone { get; set; }
 
-        [DataMember]
-        public string UserFirstName { get; private set; }
+        public string UserFirstName { get; set; }
 
-        [DataMember]
-        public string UserLastName { get; private set; }
+        public string UserLastName { get; set; }
 
-        [DataMember]
-        public string SchoolName { get; private set; }
+        public string SchoolName { get; set; }
 
-        [DataMember]
-        public string Email { get; private set; }
+        public string Email { get; set; }
 
-        [DataMember]
-        public string UserPhone { get; private set; }
+        public string UserPhone { get; set; }
 
-        [DataMember]
-        public string Password { get; private set; }
+        public string Password { get; set; }
 
-        [DataMember]
-        public int LicenseTypeId { get; private set; }
+        public int LicenseTypeId { get; set; }
 
-        [DataMember]
-        public string LicenseTypeName { get; private set; }
+        public string LicenseTypeName { get; set; }
 
-        [DataMember]
-        public int CityId { get; private set; }
+        public int CityId { get; set; }
 
-        [DataMember]
-        public string CityName { get; private set; }
+        public string CityName { get; set; }
 
-        [DataMember]
-        public int DistrictId { get; private set; }
+        public int DistrictId { get; set; }
 
-        [DataMember]
-        public string DistrictName { get; private set; }
+        public string DistrictName { get; set; }
 
-        [DataMember]
-        public Guid CaptchaId { get; private set; }
+        public Guid CaptchaId { get; set; }
 
-        [DataMember]
-        public string CaptchaCode { get; private set; }
+        public string CaptchaCode { get; set; }
 
-        [DataMember]
-        public string Referrer { get; private set; }
+        public string Referrer { get; set; }
 
         public User ToDomainModel()
         {

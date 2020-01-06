@@ -13,6 +13,7 @@
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.TestHelper;
     using Xunit;
+    using TestOkur.Serializer;
 
     public class LessonNameChangedConsumerShould : ConsumerTest
     {
@@ -56,7 +57,6 @@
             studentOpticalForms.SelectMany(f => f.Sections)
                 .Select(s => s.LessonName)
                 .Distinct()
-                .ToList()
                 .Should()
                 .HaveCount(1)
                 .And
@@ -65,7 +65,6 @@
             answerKeyOpticalForms.SelectMany(f => f.Sections)
                 .Select(s => s.LessonName)
                 .Distinct()
-                .ToList()
                 .Should()
                 .HaveCount(1)
                 .And

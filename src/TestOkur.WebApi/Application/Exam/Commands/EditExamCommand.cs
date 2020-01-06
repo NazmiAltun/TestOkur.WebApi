@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.Optic.Form;
 
-    [DataContract]
     public class EditExamCommand : CommandBase, IClearCacheWithRegion
     {
         public EditExamCommand(
@@ -37,44 +35,36 @@
             AnswerKeyOpticalForms = answerKeyOpticalForms;
         }
 
+        public EditExamCommand()
+        {
+        }
+
         public string Region => Shared ? "Exams" : string.Empty;
 
         public IEnumerable<string> CacheKeys => new[] { $"Exams_{UserId}" };
 
-        [DataMember]
-        public int ExamId { get; private set; }
+        public int ExamId { get; set; }
 
-        [DataMember]
-        public DateTime NewExamDate { get; private set; }
+        public DateTime NewExamDate { get; set; }
 
-        [DataMember]
-        public string NewName { get; private set; }
+        public string NewName { get; set; }
 
-        [DataMember]
-        public int NewExamTypeId { get; private set; }
+        public int NewExamTypeId { get; set; }
 
-        [DataMember]
-        public int NewIncorrectEliminationRate { get; private set; }
+        public int NewIncorrectEliminationRate { get; set; }
 
-        [DataMember]
-        public string NewNotes { get; private set; }
+        public string NewNotes { get; set; }
 
-        [DataMember]
-        public string NewApplicableFormTypeCode { get; private set; }
+        public string NewApplicableFormTypeCode { get; set; }
 
-        [DataMember]
-        public int NewAnswerFormFormat { get; private set; }
+        public int NewAnswerFormFormat { get; set; }
 
-        [DataMember]
-        public int NewLessonId { get; private set; }
+        public int NewLessonId { get; set; }
 
-        [DataMember]
-        public int NewExamBookletTypeId { get; private set; }
+        public int NewExamBookletTypeId { get; set; }
 
-        [DataMember]
         public bool Shared { get; set; }
 
-        [DataMember]
-        public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; private set; }
+        public IEnumerable<AnswerKeyOpticalForm> AnswerKeyOpticalForms { get; set; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Lesson.Unit
 {
+    using FluentAssertions;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Contracts.Lesson;
+    using TestOkur.Serializer;
     using TestOkur.WebApi.Application.Lesson.Commands;
     using TestOkur.WebApi.Integration.Tests.Common;
     using Xunit;

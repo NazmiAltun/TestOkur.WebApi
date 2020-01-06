@@ -1,10 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Scan
 {
     using System;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class StartScanSessionCommand : CommandBase
     {
         public StartScanSessionCommand(
@@ -21,16 +19,16 @@
             Source = source;
         }
 
-        [DataMember]
-        public int ExamId { get; private set; }
+        public StartScanSessionCommand()
+        {
+        }
 
-        [DataMember]
-        public bool ByCamera { get; private set; }
+        public int ExamId { get; set; }
 
-        [DataMember]
-        public bool ByFile { get; private set; }
+        public bool ByCamera { get; set; }
 
-        [DataMember]
-        public string Source { get; private set; }
+        public bool ByFile { get; set; }
+
+        public string Source { get; set; }
     }
 }

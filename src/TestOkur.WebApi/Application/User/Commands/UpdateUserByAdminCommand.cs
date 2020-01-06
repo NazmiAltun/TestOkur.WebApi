@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Clients;
 
-    [DataContract]
     public class UpdateUserByAdminCommand : CommandBase, IClearCache
     {
         public UpdateUserByAdminCommand(
@@ -47,58 +45,45 @@
             Active = active;
         }
 
+        public UpdateUserByAdminCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[] { "Users" };
 
-        [DataMember]
-        public int UpdatedUserId { get; private set; }
+        public int UpdatedUserId { get; set; }
 
-        [DataMember]
-        public string SubjectId { get; private set; }
+        public string SubjectId { get; set; }
 
-        [DataMember]
-        public string SchoolName { get; private set; }
+        public string SchoolName { get; set; }
 
-        [DataMember]
-        public string MobilePhone { get; private set; }
+        public string MobilePhone { get; set; }
 
-        [DataMember]
-        public int CityId { get; private set; }
+        public int CityId { get; set; }
 
-        [DataMember]
-        public int DistrictId { get; private set; }
+        public int DistrictId { get; set; }
 
-        [DataMember]
-        public string FirstName { get; private set; }
+        public string FirstName { get; set; }
 
-        [DataMember]
-        public string LastName { get; private set; }
+        public string LastName { get; set; }
 
-        [DataMember]
-        public string Email { get; private set; }
+        public string Email { get; set; }
 
-        [DataMember]
-        public int MaxAllowedDeviceCount { get; private set; }
+        public int MaxAllowedDeviceCount { get; set; }
 
-        [DataMember]
-        public int MaxAllowedStudentCount { get; private set; }
+        public int MaxAllowedStudentCount { get; set; }
 
-        [DataMember]
-        public bool CanScan { get; private set; }
+        public bool CanScan { get; set; }
 
-        [DataMember]
-        public int LicenseTypeId { get; private set; }
+        public int LicenseTypeId { get; set; }
 
-        [DataMember]
-        public DateTime? ExpiryDateUtc { get; private set; }
+        public DateTime? ExpiryDateUtc { get; set; }
 
-        [DataMember]
-        public bool Active { get; private set; }
+        public bool Active { get; set; }
 
-        [DataMember]
-        public string Referrer { get; private set; }
+        public string Referrer { get; set; }
 
-        [DataMember]
-        public string Notes { get; private set; }
+        public string Notes { get; set; }
 
         internal UpdateUserModel ToIdentityUpdateUserModel()
         {

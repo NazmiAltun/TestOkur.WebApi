@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class BulkCreateStudentCommand : CommandBase, IClearCache
     {
         public BulkCreateStudentCommand(Guid id, IEnumerable<CreateStudentCommand> commands)
@@ -14,13 +12,16 @@
             Commands = commands;
         }
 
+        public BulkCreateStudentCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[]
         {
             $"Students_{UserId}",
             $"Contacts_{UserId}",
         };
 
-        [DataMember]
-        public IEnumerable<CreateStudentCommand> Commands { get; private set; }
+        public IEnumerable<CreateStudentCommand> Commands { get; set; }
     }
 }

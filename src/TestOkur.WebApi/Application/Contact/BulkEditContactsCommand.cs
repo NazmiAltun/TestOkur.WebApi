@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     using TestOkur.Infrastructure.CommandsQueries;
 
-    [DataContract]
     public class BulkEditContactsCommand : CommandBase, IClearCache
     {
         public BulkEditContactsCommand(Guid id, IEnumerable<EditContactCommand> commands)
@@ -14,13 +12,16 @@
             Commands = commands;
         }
 
+        public BulkEditContactsCommand()
+        {
+        }
+
         public IEnumerable<string> CacheKeys => new[]
         {
             $"Students_{UserId}",
             $"Contacts_{UserId}",
         };
 
-        [DataMember]
-        public IEnumerable<EditContactCommand> Commands { get; private set; }
+        public IEnumerable<EditContactCommand> Commands { get; set; }
     }
 }

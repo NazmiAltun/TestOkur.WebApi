@@ -1,10 +1,11 @@
 ﻿namespace TestOkur.WebApi.Integration.Tests.Exam
 {
+    using FluentAssertions;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Contracts.Exam;
+    using TestOkur.Serializer;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Exam.Commands;
     using TestOkur.WebApi.Integration.Tests.Common;

@@ -10,6 +10,10 @@
             ClassroomId = classroomId;
         }
 
+        public DeleteClassroomCommand()
+        {
+        }
+
         public int ClassroomId { get; }
 
         public IEnumerable<string> CacheKeys => new[]
