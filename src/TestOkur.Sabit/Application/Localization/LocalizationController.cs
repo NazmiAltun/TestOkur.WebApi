@@ -24,7 +24,7 @@
         [ResponseCache(Duration = 100000)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new LocalStringQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(LocalStringQuery.Default));
         }
     }
 }

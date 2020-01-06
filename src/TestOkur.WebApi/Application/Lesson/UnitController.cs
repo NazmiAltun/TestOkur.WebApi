@@ -41,7 +41,7 @@
         public async Task<IActionResult> GetAsync()
         {
             var userUnits = await _queryProcessor.ExecuteAsync(new GetUserUnitsQuery());
-            var sharedUnits = await _queryProcessor.ExecuteAsync(new GetSharedUnitsQuery());
+            var sharedUnits = await _queryProcessor.ExecuteAsync(GetSharedUnitsQuery.Default);
 
             return Ok(userUnits.Concat(sharedUnits));
         }

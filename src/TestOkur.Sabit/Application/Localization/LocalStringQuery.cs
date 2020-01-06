@@ -5,5 +5,6 @@
 
     public class LocalStringQuery : QueryWithCaching<IEnumerable<LocalString>>
     {
+        public static LocalStringQuery Default { get; } = new LocalStringQuery();
     }
 }

@@ -9,6 +9,8 @@
         IQuery<IReadOnlyCollection<UnitReadModel>>,
         ICacheResult
     {
+        public static GetSharedUnitsQuery Default { get; } = new GetSharedUnitsQuery();
+
         public string CacheKey => "SharedUnits";
 
         public TimeSpan CacheDuration => TimeSpan.FromDays(1);

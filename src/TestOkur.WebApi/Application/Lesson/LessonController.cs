@@ -40,7 +40,7 @@
         [ResponseCache(Duration = 100000)]
         public async Task<IActionResult> GetSharedLessonListAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new GetSharedLessonQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(GetSharedLessonQuery.Default));
         }
 
         [HttpDelete("{id}")]

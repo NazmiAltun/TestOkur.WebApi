@@ -146,7 +146,7 @@
         [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
         public IActionResult GetOnlineUsersAsync()
         {
-            return Ok(_queryProcessor.Execute(new GetOnlineUsersQuery()));
+            return Ok(_queryProcessor.Execute(GetOnlineUsersQuery.Default));
         }
     }
 }

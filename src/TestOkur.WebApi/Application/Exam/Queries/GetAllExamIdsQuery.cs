@@ -5,5 +5,6 @@
 
     public class GetAllExamIdsQuery : QueryBase<IEnumerable<int>>
     {
+        public static GetAllExamIdsQuery Default = new GetAllExamIdsQuery();
     }
 }

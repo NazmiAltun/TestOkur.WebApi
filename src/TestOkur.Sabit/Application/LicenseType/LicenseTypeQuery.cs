@@ -5,5 +5,6 @@
 
     public class LicenseTypeQuery : QueryWithCaching<IEnumerable<LicenseType>>
     {
+        public static LicenseTypeQuery Default { get; } = new LicenseTypeQuery();
     }
 }

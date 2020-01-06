@@ -9,6 +9,8 @@
         ICacheResult,
         ISkipLogging
     {
+        public static GetAllUsersQuery Default { get; } = new GetAllUsersQuery();
+
         public string CacheKey => "Users";
 
         public TimeSpan CacheDuration => TimeSpan.FromHours(4);

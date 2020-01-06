@@ -25,7 +25,7 @@
         [ProducesResponseType(typeof(IReadOnlyCollection<ExamTypeReadModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new ExamTypeQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(ExamTypeQuery.Default));
         }
     }
 }

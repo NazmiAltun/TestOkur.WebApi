@@ -9,6 +9,8 @@
         IQuery<IReadOnlyCollection<OpticalFormTypeReadModel>>,
         ICacheResult
     {
+        public static GetAllOpticalFormTypesQuery Default { get; } = new GetAllOpticalFormTypesQuery();
+
         public string CacheKey => "OpticalFormTypes";
 
         public TimeSpan CacheDuration => TimeSpan.FromDays(1);

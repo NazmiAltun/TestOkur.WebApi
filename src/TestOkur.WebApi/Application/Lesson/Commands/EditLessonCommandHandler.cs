@@ -84,9 +84,8 @@
 
         private async Task EnsureNotExistsInSharedAsync(EditLessonCommand command, CancellationToken cancellationToken)
         {
-            var sharedQuery = new GetSharedLessonQuery();
             var sharedLessons = await _queryProcessor
-                .ExecuteAsync(sharedQuery, cancellationToken);
+                .ExecuteAsync(GetSharedLessonQuery.Default, cancellationToken);
 
             if (sharedLessons.Any(l => string.Equals(l.Name, command.NewName, StringComparison.InvariantCultureIgnoreCase) &&
                                        l.Id != command.LessonId))

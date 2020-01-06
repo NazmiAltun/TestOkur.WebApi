@@ -9,6 +9,8 @@
         IQuery<IReadOnlyCollection<LessonReadModel>>,
         ICacheResult
     {
+        public static GetSharedLessonQuery Default { get; } = new GetSharedLessonQuery();
+
         public string CacheKey => "SharedLessons";
 
         public TimeSpan CacheDuration => TimeSpan.FromDays(1);

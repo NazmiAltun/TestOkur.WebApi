@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Report.Infrastructure.Repositories
+﻿using System.Runtime.CompilerServices;
+
+namespace TestOkur.Report.Infrastructure.Repositories
 {
     using System;
     using System.Collections.Generic;

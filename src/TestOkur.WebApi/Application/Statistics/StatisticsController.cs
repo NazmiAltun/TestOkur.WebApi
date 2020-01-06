@@ -23,7 +23,7 @@
         [ProducesResponseType(typeof(StatisticsReadModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new StatisticsQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(StatisticsQuery.Default));
         }
     }
 }

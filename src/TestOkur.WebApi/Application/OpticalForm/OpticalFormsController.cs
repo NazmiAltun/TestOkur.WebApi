@@ -25,7 +25,7 @@
         [ResponseCache(Duration = 100000)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _queryProcessor.ExecuteAsync(new GetAllOpticalFormTypesQuery()));
+            return Ok(await _queryProcessor.ExecuteAsync(GetAllOpticalFormTypesQuery.Default));
         }
     }
 }

@@ -48,7 +48,7 @@
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<IActionResult> ReEvaluateAsync()
         {
-            var examIds = await _queryProcessor.ExecuteAsync(new GetAllExamIdsQuery());
+            var examIds = await _queryProcessor.ExecuteAsync(GetAllExamIdsQuery.Default);
             await _publishEndpoint.Publish(new ReEvaluateMultipleExams(examIds));
             return Accepted();
         }

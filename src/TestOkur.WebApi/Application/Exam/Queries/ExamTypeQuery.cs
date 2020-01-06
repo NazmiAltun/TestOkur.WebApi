@@ -7,6 +7,8 @@
 
     public sealed class ExamTypeQuery : IQuery<IReadOnlyCollection<ExamTypeReadModel>>, ICacheResult
     {
+        public static ExamTypeQuery Default { get; } = new ExamTypeQuery();
+
         public string CacheKey => "ExamTypes";
 
         public TimeSpan CacheDuration => TimeSpan.FromDays(1);
