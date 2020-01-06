@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
+    <ProjectReference Include="..\TestOkur.Serializer\TestOkur.Serializer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Templates\Admin_Daily_Report.html">

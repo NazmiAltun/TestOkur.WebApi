@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Net.Http;
-    using System.Text.Json;
     using System.Threading.Tasks;
     using IdentityModel.Client;
-    using TestOkur.Common;
     using TestOkur.Common.Configuration;
     using TestOkur.Notification.Models;
+    using TestOkur.Serializer;
 
     public class OAuthClient : IOAuthClient
     {
@@ -40,18 +39,14 @@
         {
             _httpClient.SetBearerToken(await GetTokenAsync());
             var response = await _httpClient.GetAsync(UsersEndpoint);
-            var json = await response.Content.ReadAsStringAsync();
-
-            return JsonSerializer.Deserialize<IEnumerable<IdentityUser>>(json, DefaultJsonSerializerSettings.Instance);
+            return await JsonUtils.DeserializerFromHttpContent<IEnumerable<IdentityUser>>(response.Content);
         }
 
         public async Task<IdentityStatisticsModel> GetDailyStatsAsync()
         {
             _httpClient.SetBearerToken(await GetTokenAsync());
             var response = await _httpClient.GetAsync(StatsEndpoint);
-            var json = await response.Content.ReadAsStringAsync();
-
-            return JsonSerializer.Deserialize<IdentityStatisticsModel>(json, DefaultJsonSerializerSettings.Instance);
+            return await JsonUtils.DeserializerFromHttpContent<IdentityStatisticsModel>(response.Content);
         }
     }
 }

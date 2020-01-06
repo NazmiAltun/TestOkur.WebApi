@@ -51,6 +51,7 @@
     <ProjectReference Include="..\TestOkur.Data\TestOkur.Data.csproj" />
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
     <ProjectReference Include="..\TestOkur.Domain\TestOkur.Domain.csproj" />
+    <ProjectReference Include="..\TestOkur.Serializer\TestOkur.Serializer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Data\cities-districts.xlsx">

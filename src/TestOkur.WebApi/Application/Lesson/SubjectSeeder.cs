@@ -61,6 +61,7 @@ namespace TestOkur.WebApi.Application.Lesson
             await dbContext.SaveChangesAsync();
         }
 
+#pragma warning disable S3459 // Unassigned members should be removed
         private class SubjectUnitRow
         {
             public string Subject { get; set; }
@@ -74,5 +75,7 @@ namespace TestOkur.WebApi.Application.Lesson
             [JsonIgnore]
             public string Key => $"{UnitName}_{Grade}_{Lesson}";
         }
+#pragma warning restore S3459 // Unassigned members should be removed
+
     }
 }

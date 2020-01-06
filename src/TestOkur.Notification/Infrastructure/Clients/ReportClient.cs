@@ -1,10 +1,10 @@
 ﻿namespace TestOkur.Notification.Infrastructure.Clients
 {
     using IdentityModel.Client;
-    using Newtonsoft.Json;
     using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Notification.Models;
+    using TestOkur.Serializer;
 
     public class ReportClient : IReportClient
     {
@@ -31,9 +31,7 @@
             await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<TModel>(json);
+            return await JsonUtils.DeserializerFromHttpContent<TModel>(response.Content);
         }
 
         private async Task SetBearerToken()

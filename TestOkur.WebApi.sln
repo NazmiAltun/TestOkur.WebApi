@@ -72,6 +72,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit", "src\TestO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit.Integration.Tests", "tests\TestOkur.Sabit.Integration.Tests\TestOkur.Sabit.Integration.Tests.csproj", "{1BE47627-8339-44B7-9EFA-3497AB215170}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Serializer", "src\TestOkur.Serializer\TestOkur.Serializer.csproj", "{F930EFE5-C9C5-41CB-832B-3790932D7E9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,10 @@ Global
 		{1BE47627-8339-44B7-9EFA-3497AB215170}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BE47627-8339-44B7-9EFA-3497AB215170}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BE47627-8339-44B7-9EFA-3497AB215170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F930EFE5-C9C5-41CB-832B-3790932D7E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F930EFE5-C9C5-41CB-832B-3790932D7E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F930EFE5-C9C5-41CB-832B-3790932D7E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F930EFE5-C9C5-41CB-832B-3790932D7E9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +171,7 @@ Global
 		{F2A3E842-195F-4313-B417-A57353A05112} = {4DC8C14D-84F4-42CC-913F-D45CB12CA317}
 		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A} = {BF44ED5D-0258-46C1-BA87-F6833CA75720}
 		{1BE47627-8339-44B7-9EFA-3497AB215170} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
+		{F930EFE5-C9C5-41CB-832B-3790932D7E9B} = {BF44ED5D-0258-46C1-BA87-F6833CA75720}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D101CF9D-F29C-49EC-A59E-021C88B68A94}

@@ -1,15 +1,15 @@
 ﻿namespace TestOkur.WebApi.Application.User.Clients
 {
+    using IdentityModel.Client;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Net;
     using System.Net.Http;
-    using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
-    using IdentityModel.Client;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
+    using TestOkur.Serializer;
 
     public class IdentityClient : IIdentityClient
     {
@@ -73,7 +73,9 @@
                 throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
             }
 
-            return JsonSerializer.Deserialize<string>(await response.Content.ReadAsStringAsync(), DefaultJsonSerializerSettings.Instance);
+            return await JsonUtils.DeserializerFromHttpContent<string>(
+                response.Content,
+                cancellationToken);
         }
 
         public async Task<string> GetBearerTokenAsync()

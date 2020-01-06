@@ -2,10 +2,11 @@
 {
     using Paramore.Darker;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.Sabit.Utils;
+    using TestOkur.Serializer;
 
     public class LicenseTypeQueryHandler : QueryHandlerAsync<LicenseTypeQuery, IEnumerable<LicenseType>>
     {
@@ -14,8 +15,8 @@
             LicenseTypeQuery query,
             CancellationToken cancellationToken = default)
         {
-            return JsonUtils.ReadAsync<IEnumerable<LicenseType>>(
-                "license-types.json",
+            return JsonUtils.DeserializeFromFileAsync<IEnumerable<LicenseType>>(
+                Path.Join("Data", "license-types.json"),
                 cancellationToken);
         }
     }

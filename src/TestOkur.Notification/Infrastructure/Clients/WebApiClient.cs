@@ -3,11 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
-    using System.Text.Json;
     using System.Threading.Tasks;
     using IdentityModel.Client;
-    using TestOkur.Common;
     using TestOkur.Notification.Models;
+    using TestOkur.Serializer;
 
     public class WebApiClient : IWebApiClient
     {
@@ -54,9 +53,8 @@
             await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<TModel>(json, DefaultJsonSerializerSettings.Instance);
+            return await JsonUtils.DeserializerFromHttpContent<TModel>(response.Content);
         }
 
         private async Task SetBearerToken()

@@ -2,10 +2,11 @@
 {
     using Paramore.Darker;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.Sabit.Utils;
+    using TestOkur.Serializer;
 
     public class CityQueryHandler : QueryHandlerAsync<CityQuery, IEnumerable<City>>
     {
@@ -14,8 +15,8 @@
             CityQuery query,
             CancellationToken cancellationToken = default)
         {
-            return JsonUtils.ReadAsync<IEnumerable<City>>(
-                "cities.json",
+            return JsonUtils.DeserializeFromFileAsync<IEnumerable<City>>(
+                Path.Join("Data", "cities.json"),
                 cancellationToken);
         }
     }

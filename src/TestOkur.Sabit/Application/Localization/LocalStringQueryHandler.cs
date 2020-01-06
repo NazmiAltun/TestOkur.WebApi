@@ -1,11 +1,12 @@
 ﻿namespace TestOkur.Sabit.Application.Localization
 {
+    using Paramore.Darker;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
-    using Paramore.Darker;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.Sabit.Utils;
+    using TestOkur.Serializer;
 
     public class LocalStringQueryHandler : QueryHandlerAsync<LocalStringQuery, IEnumerable<LocalString>>
     {
@@ -14,8 +15,8 @@
             LocalStringQuery query,
             CancellationToken cancellationToken = default)
         {
-            return JsonUtils.ReadAsync<IEnumerable<LocalString>>(
-                "local-strings.json",
+            return JsonUtils.DeserializeFromFileAsync<IEnumerable<LocalString>>(
+                Path.Join("Data", "local-strings.json"),
                 cancellationToken);
         }
     }

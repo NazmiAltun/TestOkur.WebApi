@@ -2,10 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Net.Http;
-    using System.Text.Json;
     using System.Threading.Tasks;
     using IdentityModel.Client;
-    using TestOkur.Common;
+    using TestOkur.Serializer;
 
     public class SabitClient : ISabitClient
     {
@@ -30,9 +29,7 @@
             _httpClient.SetBearerToken(await _identityClient.GetBearerTokenAsync());
             var response = await _httpClient.GetAsync(path);
             response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-
-            return JsonSerializer.Deserialize<T>(json, DefaultJsonSerializerSettings.Instance);
+            return await JsonUtils.DeserializerFromHttpContent<T>(response.Content);
         }
     }
 }
