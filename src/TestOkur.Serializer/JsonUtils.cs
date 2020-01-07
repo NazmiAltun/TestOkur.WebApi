@@ -1,37 +1,40 @@
 ﻿namespace TestOkur.Serializer
 {
+    using SpanJson;
+    using SpanJson.Resolvers;
     using System.IO;
     using System.Net.Http;
-    using System.Text.Json;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
     public static class JsonUtils
     {
-        public static readonly JsonSerializerOptions Options = new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        };
-
         public static async ValueTask<T> DeserializerFromHttpContent<T>(
             HttpContent content,
             CancellationToken cancellationToken = default)
         {
-            await using var utf8Json = await content.ReadAsStreamAsync();
+            await using var stream = await content.ReadAsStreamAsync();
 
-            return await JsonSerializer.DeserializeAsync<T>(utf8Json, Options, cancellationToken);
+            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsCamelCaseResolver<byte>>(
+                stream,
+                cancellationToken);
         }
 
         public static async Task<T> DeserializeFromFileAsync<T>(string path, CancellationToken cancellationToken = default)
         {
             await using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-            return await JsonSerializer.DeserializeAsync<T>(
+            var result = await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsCamelCaseResolver<byte>>(
                 stream,
-                Options,
                 cancellationToken);
+
+            return result;
         }
 
-        public static string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, Options);
+        public static string Serialize<T>(T obj)
+        {
+            var bytes = JsonSerializer.Generic.Utf8.Serialize<T>(obj);
+            return Encoding.UTF8.GetString(bytes);
+        }
     }
 }
