@@ -1,14 +1,16 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
+    using CacheManager.Core;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using CacheManager.Core;
-    using Dapper;
-    using Npgsql;
-    using Paramore.Darker;
+    using TestOkur.Common.Collections;
+    using TestOkur.Common.Extensions;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Configuration;
@@ -37,12 +39,12 @@
 
         private readonly ISabitClient _sabitClient;
         private readonly string _connectionString;
-        private readonly ICacheManager<Dictionary<int, City>> _cityCacheManager;
+        private readonly ICacheManager<EasyDictionary<int, City>> _cityCacheManager;
 
         public GetAllUsersQueryHandler(
             ApplicationConfiguration configurationOptions,
             ISabitClient sabitClient,
-            ICacheManager<Dictionary<int, City>> cityCacheManager)
+            ICacheManager<EasyDictionary<int, City>> cityCacheManager)
         {
             _sabitClient = sabitClient;
             _cityCacheManager = cityCacheManager;
@@ -68,7 +70,7 @@
             return userList;
         }
 
-        private async Task<Dictionary<int, City>> GetCityDictionaryAsync()
+        private async Task<EasyDictionary<int, City>> GetCityDictionaryAsync()
         {
             var cityDict = _cityCacheManager.Get(CityCacheKey);
 
@@ -77,11 +79,10 @@
                 return cityDict;
             }
 
-            // TODO: A better dictionary approach
             cityDict = (await _sabitClient.GetCitiesAsync())
-                .ToDictionary(x => x.Id, x => x);
+                .ToEasyDictionary(x => x.Id);
 
-            _cityCacheManager.Add(new CacheItem<Dictionary<int, City>>(
+            _cityCacheManager.Add(new CacheItem<EasyDictionary<int, City>>(
                 CityCacheKey,
                 cityDict,
                 ExpirationMode.Absolute,
