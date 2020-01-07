@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi
+﻿using System.Net;
+
+namespace TestOkur.WebApi
 {
     using CacheManager.Core;
     using Dapper;
@@ -285,20 +287,34 @@
         private void AddHttpClients(IServiceCollection services)
         {
             services.AddHttpClient<ICaptchaService, CaptchaService>(client =>
-            {
-                client.BaseAddress = new Uri(Configuration.GetValue<string>("CaptchaServiceUrl"));
-            });
+                {
+                    client.BaseAddress = new Uri(Configuration.GetValue<string>("CaptchaServiceUrl"));
+                })
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                    AutomaticDecompression = DecompressionMethods.All,
+                });
 
             services.AddHttpClient<ISabitClient, SabitClient>(client =>
-                {
-                    client.BaseAddress = new Uri(Configuration.GetValue<string>("SabitApiUrl"));
-                }).AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("SabitApiUrl"));
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.All,
+            })
+            .AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IIdentityClient, IdentityClient>(client =>
             {
                 client.BaseAddress = new Uri(OAuthConfiguration.Authority);
-            }).AddPolicyHandler(GetRetryPolicy())
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.All,
+            })
+            .AddPolicyHandler(GetRetryPolicy())
             .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 

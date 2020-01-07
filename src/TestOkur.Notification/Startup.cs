@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Notification
+﻿using System.Net;
+
+namespace TestOkur.Notification
 {
     using GreenPipes;
     using Hangfire;
@@ -294,33 +296,45 @@
         {
             services.AddTransient<SmsServiceLoggingHandler>();
             services.AddHttpClient<IOAuthClient, OAuthClient>(client =>
-                {
-                    client.BaseAddress = new Uri(_configuration.GetValue<string>("OAuthConfiguration:Authority"));
-                })
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+            {
+                client.BaseAddress = new Uri(_configuration.GetValue<string>("OAuthConfiguration:Authority"));
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.All,
+            })
+            .AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IWebApiClient, WebApiClient>(client =>
             {
                 client.BaseAddress = new Uri(_configuration.GetValue<string>("WebApiUrl"));
             })
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.All,
+            })
+            .AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IReportClient, ReportClient>(client =>
-                {
-                    client.BaseAddress = new Uri(_configuration.GetValue<string>("ReportUrl"));
-                })
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+            {
+                client.BaseAddress = new Uri(_configuration.GetValue<string>("ReportUrl"));
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.All,
+            })
+            .AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<ISmsClient, SmsClient>(client =>
             {
                 client.BaseAddress = new Uri(_configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
             })
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddHttpMessageHandler<SmsServiceLoggingHandler>()
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+            .AddPolicyHandler(GetRetryPolicy())
+            .AddHttpMessageHandler<SmsServiceLoggingHandler>()
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 
         private IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
