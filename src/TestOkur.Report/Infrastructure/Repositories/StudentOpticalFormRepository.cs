@@ -113,7 +113,7 @@
             var list = await _context.StudentOpticalForms
                 .Find(Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId))
                 .ToListAsync();
-            _logger.LogWarning($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
+            _logger.LogTrace($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
             sw = Stopwatch.StartNew();
             foreach (var item in list)
             {
@@ -122,7 +122,7 @@
                     .ToList();
             }
 
-            _logger.LogWarning($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
+            _logger.LogTrace($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
             return list;
         }
 
@@ -135,7 +135,7 @@
             var list = await _context.StudentOpticalForms
                 .Find(filter)
                 .ToListAsync();
-            _logger.LogWarning($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
+            _logger.LogTrace($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
             sw = Stopwatch.StartNew();
 
             foreach (var item in list)
@@ -145,7 +145,7 @@
                     .ToList();
             }
 
-            _logger.LogWarning($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
+            _logger.LogTrace($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
 
             return list;
         }
@@ -157,7 +157,7 @@
             var list = await _context.StudentOpticalForms
                 .Find(Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId))
                 .ToListAsync();
-            _logger.LogWarning($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
+            _logger.LogTrace($"Fetching student optical forms took {sw.ElapsedMilliseconds} ms");
             sw = Stopwatch.StartNew();
 
             foreach (var item in list)
@@ -167,7 +167,7 @@
                     .ToList();
             }
 
-            _logger.LogWarning($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
+            _logger.LogTrace($"Re-ordering sections took {sw.ElapsedMilliseconds} ms");
 
             return list;
         }

@@ -20,7 +20,7 @@
         private const string CacheKey = "UserIdMap";
 
         private static readonly TimeSpan CacheDuration = TimeSpan.FromHours(4);
-        private static readonly SemaphoreSlim WriteSemaphore = new SemaphoreSlim(1, 1);
+        private static readonly ReaderWriterLockSlim ReaderWriterLockSlim = new ReaderWriterLockSlim();
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager<object> _cacheManager;
         private readonly ILogger<UserIdProvider> _logger;
@@ -50,21 +50,23 @@
             }
 
             var idDictionary = (Dictionary<string, int>)_cacheManager.Get(CacheKey);
+            ReaderWriterLockSlim.EnterUpgradeableReadLock();
 
-            await WriteSemaphore.WaitAsync();
             if (idDictionary == null)
             {
+                ReaderWriterLockSlim.EnterWriteLock();
                 idDictionary = await ReadIdsFromDbAsync();
                 StoreToCache(idDictionary);
+                ReaderWriterLockSlim.ExitWriteLock();
             }
 
-            WriteSemaphore.Release(1);
+            ReaderWriterLockSlim.ExitUpgradeableReadLock();
             _logger.LogInformation($"idDictionary.ContainsKey(${subjectId}) : {idDictionary.ContainsKey(subjectId)}");
 
             return idDictionary.TryGetValue(subjectId, out var id) ? id : 0;
         }
 
-        public int Get() => GetAsync().Result;
+        public int Get() => GetAsync().GetAwaiter().GetResult();
 
         private async Task<Dictionary<string, int>> ReadIdsFromDbAsync()
         {

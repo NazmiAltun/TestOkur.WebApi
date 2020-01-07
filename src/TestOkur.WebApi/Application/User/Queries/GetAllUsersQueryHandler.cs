@@ -1,18 +1,22 @@
 ﻿namespace TestOkur.WebApi.Application.User.Queries
 {
-    using Dapper;
-    using Npgsql;
-    using Paramore.Darker;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using CacheManager.Core;
+    using Dapper;
+    using Npgsql;
+    using Paramore.Darker;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Configuration;
 
     public sealed class GetAllUsersQueryHandler : QueryHandlerAsync<GetAllUsersQuery, IReadOnlyCollection<UserReadModel>>
     {
+        private const string CityCacheKey = "CityCacheKey";
+
         private const string Sql = @"
 								SELECT
 								id,
@@ -33,10 +37,15 @@
 
         private readonly ISabitClient _sabitClient;
         private readonly string _connectionString;
+        private readonly ICacheManager<Dictionary<int, City>> _cityCacheManager;
 
-        public GetAllUsersQueryHandler(ApplicationConfiguration configurationOptions, ISabitClient sabitClient)
+        public GetAllUsersQueryHandler(
+            ApplicationConfiguration configurationOptions,
+            ISabitClient sabitClient,
+            ICacheManager<Dictionary<int, City>> cityCacheManager)
         {
             _sabitClient = sabitClient;
+            _cityCacheManager = cityCacheManager;
             _connectionString = configurationOptions.Postgres;
         }
 
@@ -45,7 +54,7 @@
             GetAllUsersQuery query,
             CancellationToken cancellationToken = default)
         {
-            var cityDict = (await _sabitClient.GetCitiesAsync()).ToDictionary(x => x.Id, x => x);
+            var cityDict = await GetCityDictionaryAsync();
 
             await using var connection = new NpgsqlConnection(_connectionString);
             var userList = (await connection.QueryAsync<UserReadModel>(Sql)).ToList();
@@ -57,6 +66,28 @@
             }
 
             return userList;
+        }
+
+        private async Task<Dictionary<int, City>> GetCityDictionaryAsync()
+        {
+            var cityDict = _cityCacheManager.Get(CityCacheKey);
+
+            if (cityDict != null)
+            {
+                return cityDict;
+            }
+
+            // TODO: A better dictionary approach
+            cityDict = (await _sabitClient.GetCitiesAsync())
+                .ToDictionary(x => x.Id, x => x);
+
+            _cityCacheManager.Add(new CacheItem<Dictionary<int, City>>(
+                CityCacheKey,
+                cityDict,
+                ExpirationMode.Absolute,
+                TimeSpan.FromDays(30)));
+
+            return cityDict;
         }
     }
 }
