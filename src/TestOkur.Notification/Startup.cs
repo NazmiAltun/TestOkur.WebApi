@@ -21,7 +21,6 @@
     using Prometheus;
     using RazorLight;
     using SpanJson.AspNetCore.Formatter;
-    using SpanJson.Resolvers;
     using System;
     using System.Linq;
     using System.Net;
@@ -42,6 +41,7 @@
     using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
     using TestOkur.Notification.ScheduledTasks.ReEvaluateAllExams;
     using TestOkur.Notification.ScheduledTasks.SmsResender;
+    using TestOkur.Serializer;
 
     public class Startup
     {
@@ -100,7 +100,7 @@
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddTransient<IStatsRepository, StatsRepository>();
             services.AddControllersWithViews()
-                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
+                .AddSpanJsonCustom<ApiResolver<byte>>();
             services.AddHttpContextAccessor();
             services.AddResponseCompression();
         }

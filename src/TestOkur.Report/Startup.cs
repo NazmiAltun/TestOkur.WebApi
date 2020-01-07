@@ -1,6 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using SpanJson.AspNetCore.Formatter;
-using SpanJson.Resolvers;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
@@ -28,6 +26,7 @@ namespace TestOkur.Report
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Bson.Serialization.Serializers;
     using Prometheus;
+    using SpanJson.AspNetCore.Formatter;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -44,6 +43,7 @@ namespace TestOkur.Report
     using TestOkur.Report.Infrastructure;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Models;
+    using TestOkur.Serializer;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     [ExcludeFromCodeCoverage]
@@ -87,7 +87,7 @@ namespace TestOkur.Report
                     options.Filters.Add(new ProducesAttribute("application/json"));
                     options.Filters.Add(new ValidateInputFilter());
                 })
-                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
+                .AddSpanJsonCustom<ApiResolver<byte>>();
             AddAuthentication(services);
             AddPolicies(services);
             AddMessageBus(services);

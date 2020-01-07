@@ -24,7 +24,6 @@
     using Polly.Extensions.Http;
     using Prometheus;
     using SpanJson.AspNetCore.Formatter;
-    using SpanJson.Resolvers;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -41,6 +40,7 @@
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Infrastructure.Mvc.Threading;
+    using TestOkur.Serializer;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Configuration;
@@ -86,7 +86,7 @@
                     options.Filters.Add(new ValidateInputFilter());
                 })
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
+                .AddSpanJsonCustom<ApiResolver<byte>>();
 
             services.AddCommandsAndQueries(Assembly.GetExecutingAssembly());
             AddHealthChecks(services);

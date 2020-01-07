@@ -13,7 +13,6 @@
     using Microsoft.Extensions.Options;
     using Prometheus;
     using SpanJson.AspNetCore.Formatter;
-    using SpanJson.Resolvers;
     using System;
     using System.Reflection;
     using TestOkur.Common;
@@ -23,6 +22,7 @@
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Sabit.Configuration;
     using TestOkur.Sabit.Infrastructure;
+    using TestOkur.Serializer;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     public class Startup
@@ -62,7 +62,7 @@
             services.AddSingleton<IUserIdProvider, StubUserIdProvider>();
             services.AddSingleton<ICommandQueryLogger, StubCommandQueryLogger>();
             services.AddControllers()
-                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
+                .AddSpanJsonCustom<ApiResolver<byte>>();
             services.AddQueries(Assembly.GetExecutingAssembly());
             services.AddResponseCompression();
         }

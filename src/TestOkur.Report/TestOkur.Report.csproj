@@ -30,5 +30,6 @@
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
     <ProjectReference Include="..\TestOkur.Domain\TestOkur.Domain.csproj" />
+    <ProjectReference Include="..\TestOkur.Serializer\TestOkur.Serializer.csproj" />
   </ItemGroup>
 </Project>
