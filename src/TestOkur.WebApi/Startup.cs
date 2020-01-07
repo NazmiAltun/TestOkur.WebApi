@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace TestOkur.WebApi
+﻿namespace TestOkur.WebApi
 {
     using CacheManager.Core;
     using Dapper;
@@ -30,6 +28,7 @@ namespace TestOkur.WebApi
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using System.Net;
     using System.Net.Http;
     using System.Reflection;
     using TestOkur.Common;
@@ -87,7 +86,7 @@ namespace TestOkur.WebApi
                     options.Filters.Add(new ValidateInputFilter());
                 })
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
+                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
 
             services.AddCommandsAndQueries(Assembly.GetExecutingAssembly());
             AddHealthChecks(services);

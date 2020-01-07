@@ -46,7 +46,7 @@
                 null,
                 null,
                 "Houston!We've a problem");
-            response = await client.PostAsync(ApiPath, model.ToJsonContent());
+            response = await client.PostAsync(ApiPath, Serializer.ObjectExtensions.ToJsonContent(model));
             response.EnsureSuccessStatusCode();
             Consumer.Instance.GetAll<IUserErrorReceived>()
                 .Should().Contain(x =>

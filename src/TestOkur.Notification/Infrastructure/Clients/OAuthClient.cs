@@ -39,14 +39,14 @@
         {
             _httpClient.SetBearerToken(await GetTokenAsync());
             var response = await _httpClient.GetAsync(UsersEndpoint);
-            return await JsonUtils.DeserializerFromHttpContentAsyncWithCamelCaseResolver<IEnumerable<IdentityUser>>(response.Content);
+            return await JsonUtils.DeserializerFromHttpContentAsync<IEnumerable<IdentityUser>>(response.Content);
         }
 
         public async Task<IdentityStatisticsModel> GetDailyStatsAsync()
         {
             _httpClient.SetBearerToken(await GetTokenAsync());
             var response = await _httpClient.GetAsync(StatsEndpoint);
-            return await JsonUtils.DeserializerFromHttpContentAsyncWithCamelCaseResolver<IdentityStatisticsModel>(response.Content);
+            return await JsonUtils.DeserializerFromHttpContentAsync<IdentityStatisticsModel>(response.Content);
         }
     }
 }

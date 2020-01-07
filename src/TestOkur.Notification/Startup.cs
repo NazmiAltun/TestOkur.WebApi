@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace TestOkur.Notification
+﻿namespace TestOkur.Notification
 {
     using GreenPipes;
     using Hangfire;
@@ -26,6 +24,7 @@ namespace TestOkur.Notification
     using SpanJson.Resolvers;
     using System;
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Reflection;
     using TestOkur.Common;
@@ -101,7 +100,7 @@ namespace TestOkur.Notification
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddTransient<IStatsRepository, StatsRepository>();
             services.AddControllersWithViews()
-                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
+                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
             services.AddHttpContextAccessor();
             services.AddResponseCompression();
         }

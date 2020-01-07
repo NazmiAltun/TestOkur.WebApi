@@ -72,7 +72,7 @@
                 throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
             }
 
-            return await JsonUtils.DeserializerFromHttpContentAsyncWithCamelCaseResolver<string>(
+            return await JsonUtils.DeserializerFromHttpContentAsync<string>(
                 response.Content,
                 cancellationToken);
         }

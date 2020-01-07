@@ -62,7 +62,7 @@
             services.AddSingleton<IUserIdProvider, StubUserIdProvider>();
             services.AddSingleton<ICommandQueryLogger, StubCommandQueryLogger>();
             services.AddControllers()
-                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
+                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
             services.AddQueries(Assembly.GetExecutingAssembly());
             services.AddResponseCompression();
         }

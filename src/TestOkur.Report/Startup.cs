@@ -87,7 +87,7 @@ namespace TestOkur.Report
                     options.Filters.Add(new ProducesAttribute("application/json"));
                     options.Filters.Add(new ValidateInputFilter());
                 })
-                .AddSpanJsonCustom<ExcludeNullsOriginalCaseResolver<byte>>();
+                .AddSpanJsonCustom<ExcludeNullsCamelCaseResolver<byte>>();
             AddAuthentication(services);
             AddPolicies(services);
             AddMessageBus(services);
