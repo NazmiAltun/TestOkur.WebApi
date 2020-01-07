@@ -85,7 +85,7 @@
         [Authorize(AuthorizationPolicies.Private)]
         public async Task<IActionResult> GetUsersAsync()
         {
-            var users = await _queryProcessor.ExecuteAsync(new GetAllUsersQuery());
+            var users = await _queryProcessor.ExecuteAsync(GetAllUsersQuery.Default);
 
             return Ok(users);
         }

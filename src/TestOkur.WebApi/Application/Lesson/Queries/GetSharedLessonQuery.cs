@@ -9,6 +9,10 @@
         IQuery<IReadOnlyCollection<LessonReadModel>>,
         ICacheResult
     {
+        public GetSharedLessonQuery()
+        {
+        }
+
         public static GetSharedLessonQuery Default { get; } = new GetSharedLessonQuery();
 
         public string CacheKey => "SharedLessons";

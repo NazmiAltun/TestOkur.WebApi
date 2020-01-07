@@ -4,6 +4,10 @@
 
     public class StatisticsQuery : IQuery<StatisticsReadModel>
     {
+        private StatisticsQuery()
+        {
+        }
+
         public static StatisticsQuery Default { get; } = new StatisticsQuery();
     }
 }

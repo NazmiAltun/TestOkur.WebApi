@@ -7,6 +7,10 @@
 
     public sealed class ExamTypeQuery : IQuery<IReadOnlyCollection<ExamTypeReadModel>>, ICacheResult
     {
+        private ExamTypeQuery()
+        {
+        }
+
         public static ExamTypeQuery Default { get; } = new ExamTypeQuery();
 
         public string CacheKey => "ExamTypes";

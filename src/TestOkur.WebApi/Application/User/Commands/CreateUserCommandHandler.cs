@@ -93,7 +93,7 @@
             CreateUserCommand command,
             CancellationToken cancellationToken = default)
         {
-            var users = await _queryProcessor.ExecuteAsync(new GetAllUsersQuery(), cancellationToken);
+            var users = await _queryProcessor.ExecuteAsync(GetAllUsersQuery.Default, cancellationToken);
             if (users.Any(l => l.Email == command.Email))
             {
                 throw new ValidationException(ErrorCodes.UserAlreadyExists);

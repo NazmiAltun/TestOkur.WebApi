@@ -77,7 +77,7 @@
 
         private async Task<UserReadModel> GetUserAsync(int userId, CancellationToken cancellationToken)
         {
-            var users = await _queryProcessor.ExecuteAsync(new GetAllUsersQuery(), cancellationToken);
+            var users = await _queryProcessor.ExecuteAsync(GetAllUsersQuery.Default, cancellationToken);
             var user = users.First(u => u.Id == userId);
             return user;
         }

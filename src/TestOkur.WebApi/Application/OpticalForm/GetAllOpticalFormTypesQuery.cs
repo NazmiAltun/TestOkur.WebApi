@@ -9,6 +9,10 @@
         IQuery<IReadOnlyCollection<OpticalFormTypeReadModel>>,
         ICacheResult
     {
+        private GetAllOpticalFormTypesQuery()
+        {
+        }
+
         public static GetAllOpticalFormTypesQuery Default { get; } = new GetAllOpticalFormTypesQuery();
 
         public string CacheKey => "OpticalFormTypes";

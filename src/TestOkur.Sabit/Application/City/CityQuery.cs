@@ -5,6 +5,10 @@
 
     public class CityQuery : QueryWithCaching<IEnumerable<City>>
     {
+        private CityQuery()
+        {
+        }
+
         public static CityQuery Default { get; } = new CityQuery();
     }
 }

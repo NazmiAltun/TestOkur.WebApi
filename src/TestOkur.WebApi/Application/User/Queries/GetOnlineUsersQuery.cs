@@ -7,6 +7,10 @@
         QueryBase<IEnumerable<string>>,
         ISkipLogging
     {
+        private GetOnlineUsersQuery()
+        {
+        }
+
         public static GetOnlineUsersQuery Default { get; } = new GetOnlineUsersQuery();
     }
 }

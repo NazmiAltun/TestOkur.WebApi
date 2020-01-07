@@ -9,6 +9,10 @@
         IQuery<IReadOnlyCollection<UnitReadModel>>,
         ICacheResult
     {
+        private GetSharedUnitsQuery()
+        {
+        }
+
         public static GetSharedUnitsQuery Default { get; } = new GetSharedUnitsQuery();
 
         public string CacheKey => "SharedUnits";
