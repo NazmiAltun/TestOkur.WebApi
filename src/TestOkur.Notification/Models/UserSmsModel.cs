@@ -17,6 +17,10 @@
             Status = sms.Status;
         }
 
+        public UserSmsModel()
+        {
+        }
+
         public DateTime CreatedOnDateTimeUtc { get; set; }
 
         public string Phone { get; set; }
