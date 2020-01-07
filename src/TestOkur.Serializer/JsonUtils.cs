@@ -16,7 +16,7 @@
         {
             await using var stream = await content.ReadAsStreamAsync();
 
-            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsOriginalCaseResolver<byte>>(
+            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsCamelCaseResolver<byte>>(
                 stream,
                 cancellationToken);
         }
