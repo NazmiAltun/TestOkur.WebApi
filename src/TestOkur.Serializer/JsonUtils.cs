@@ -10,7 +10,7 @@
 
     public static class JsonUtils
     {
-        public static async ValueTask<T> DeserializerFromHttpContentAsync<T>(
+        public static async ValueTask<T> DeserializerFromHttpContentAsyncWithCamelCaseResolver<T>(
             HttpContent content,
             CancellationToken cancellationToken = default)
         {
@@ -20,6 +20,18 @@
                 stream,
                 cancellationToken);
         }
+
+        public static async ValueTask<T> DeserializerFromHttpContentAsyncWithOriginalCaseResolver<T>(
+            HttpContent content,
+            CancellationToken cancellationToken = default)
+        {
+            await using var stream = await content.ReadAsStreamAsync();
+
+            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsOriginalCaseResolver<byte>>(
+                stream,
+                cancellationToken);
+        }
+
 
         public static async Task<T> DeserializeFromFileAsync<T>(string path, CancellationToken cancellationToken = default)
         {

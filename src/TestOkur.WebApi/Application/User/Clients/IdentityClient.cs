@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi.Application.User.Clients
 {
     using IdentityModel.Client;
-    using System;
     using System.ComponentModel.DataAnnotations;
     using System.Net;
     using System.Net.Http;
@@ -73,7 +72,7 @@
                 throw new ValidationException(ErrorCodes.PasswordResetUserNotFound);
             }
 
-            return await JsonUtils.DeserializerFromHttpContentAsync<string>(
+            return await JsonUtils.DeserializerFromHttpContentAsyncWithCamelCaseResolver<string>(
                 response.Content,
                 cancellationToken);
         }
