@@ -31,7 +31,7 @@
             await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
-            return await JsonUtils.DeserializerFromHttpContent<TModel>(response.Content);
+            return await JsonUtils.DeserializerFromHttpContentAsync<TModel>(response.Content);
         }
 
         private async Task SetBearerToken()

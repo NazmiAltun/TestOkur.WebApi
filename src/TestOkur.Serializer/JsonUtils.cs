@@ -10,13 +10,13 @@
 
     public static class JsonUtils
     {
-        public static async ValueTask<T> DeserializerFromHttpContent<T>(
+        public static async ValueTask<T> DeserializerFromHttpContentAsync<T>(
             HttpContent content,
             CancellationToken cancellationToken = default)
         {
             await using var stream = await content.ReadAsStreamAsync();
 
-            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsCamelCaseResolver<byte>>(
+            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsOriginalCaseResolver<byte>>(
                 stream,
                 cancellationToken);
         }

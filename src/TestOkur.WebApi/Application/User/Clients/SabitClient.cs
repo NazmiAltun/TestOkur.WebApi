@@ -29,7 +29,7 @@
             _httpClient.SetBearerToken(await _identityClient.GetBearerTokenAsync());
             var response = await _httpClient.GetAsync(path);
             response.EnsureSuccessStatusCode();
-            return await JsonUtils.DeserializerFromHttpContent<T>(response.Content);
+            return await JsonUtils.DeserializerFromHttpContentAsync<T>(response.Content);
         }
     }
 }
