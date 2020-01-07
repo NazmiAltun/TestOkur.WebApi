@@ -33,7 +33,8 @@ namespace TestOkur.Report.Integration.Tests.OpticalForm
             }
 
             var client = testServer.CreateClient();
-            await client.PostAsync(ApiPath, forms.ToJsonContent());
+            var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
+            response.EnsureSuccessStatusCode();
             var returnedForms = await GetStudentFormsByStudentIdAsync(client, studentId);
             returnedForms.Should().HaveCount(forms.Count);
         }

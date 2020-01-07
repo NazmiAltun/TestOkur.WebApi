@@ -16,7 +16,7 @@
         {
             await using var stream = await content.ReadAsStreamAsync();
 
-            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsCamelCaseResolver<byte>>(
+            return await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ApiResolver<byte>>(
                 stream,
                 cancellationToken);
         }
@@ -24,7 +24,7 @@
         public static async Task<T> DeserializeFromFileAsync<T>(string path, CancellationToken cancellationToken = default)
         {
             await using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-            var result = await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ExcludeNullsCamelCaseResolver<byte>>(
+            var result = await JsonSerializer.Generic.Utf8.DeserializeAsync<T, ApiResolver<byte>>(
                 stream,
                 cancellationToken);
 
