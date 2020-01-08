@@ -42,7 +42,7 @@
         {
             while (!ExamIdsInProcess.TryAdd(examId, examId))
             {
-                await Task.Delay(100);
+                await Task.Delay(500);
             }
 
             try

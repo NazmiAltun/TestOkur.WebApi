@@ -21,7 +21,6 @@
             _logger = logger;
         }
 
-        [Idempotent(1)]
         public override async Task<EndScanSessionCommand> HandleAsync(
             EndScanSessionCommand command,
             CancellationToken cancellationToken = default)

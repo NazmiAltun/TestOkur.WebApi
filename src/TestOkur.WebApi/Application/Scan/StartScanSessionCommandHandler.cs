@@ -19,7 +19,6 @@
             _dbContextFactory = dbContextFactory;
         }
 
-        [Idempotent(1)]
         public override async Task<StartScanSessionCommand> HandleAsync(
             StartScanSessionCommand command,
             CancellationToken cancellationToken = default)
