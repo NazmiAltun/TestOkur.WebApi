@@ -24,6 +24,8 @@
 
         public async Task<ReportStatisticsModel> GetStatisticsAsync()
         {
+            //TODO: Check this one out
+            //TODO: Add optical form stats here.
             var all = await _context.ReportRequests.Find(Builders<ReportRequest>.Filter.Empty).ToListAsync();
 
             return new ReportStatisticsModel
