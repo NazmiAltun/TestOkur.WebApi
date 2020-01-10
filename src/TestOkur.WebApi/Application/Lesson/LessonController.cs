@@ -35,6 +35,7 @@
             return Ok();
         }
 
+        [Obsolete("we dont use this anymore?")]
         [HttpGet("shared")]
         [ProducesResponseType(typeof(IReadOnlyCollection<LessonReadModel>), StatusCodes.Status200OK)]
         [ResponseCache(Duration = 100000)]

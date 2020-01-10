@@ -43,12 +43,12 @@
             return await base.HandleAsync(command, cancellationToken);
         }
 
-        private async Task PublishEventAsync(
+        private Task PublishEventAsync(
             UserReadModel model,
             DateTime expiryDateTimeUtc,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            return _publishEndpoint.Publish(
                 new UserSubscriptionExtended(
                     model.FirstName,
                     model.LastName,
