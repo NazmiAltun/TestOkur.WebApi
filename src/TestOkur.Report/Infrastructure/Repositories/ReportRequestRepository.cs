@@ -24,39 +24,67 @@
 
         public async Task<ReportStatisticsModel> GetStatisticsAsync()
         {
-            //TODO: Check this one out
-            //TODO: Add optical form stats here.
             var all = await _context.ReportRequests.Find(Builders<ReportRequest>.Filter.Empty).ToListAsync();
 
-            return new ReportStatisticsModel
+            var model = new ReportStatisticsModel()
             {
                 TotalCount = all.Count,
-                TodayCount = all.Count(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
-                CountByReportTypeTotal = ByCount(all, x => x.ReportType),
-                CountByExportTypeTotal = ByCount(all, x => x.ExportType),
-                CountByExportTypeToday = ByCount(
-                    all.Where(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
-                    x => x.ExportType),
-                CountByReportTypeToday = ByCount(
-                    all.Where(x => x.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today),
-                    x => x.ReportType),
-                AverageReportRenderTimeByReportType = all.GroupBy(x => x.ReportType)
-                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
-                    .OrderByDescending(x => x.Value)
-                    .ToList(),
-                AverageReportRenderTimeByExportType = all.GroupBy(x => x.ExportType)
-                    .ToDictionary(x => x.Key, x => (int)x.Average(y => y.ResponseDateTimeUtc.Subtract(y.RequestDateTimeUtc).TotalMilliseconds))
-                    .OrderByDescending(x => x.Value)
-                    .ToList(),
             };
-        }
+            var countByReportTypeTotal = new Dictionary<string, int>(20);
+            var countByExportTypeTotal = new Dictionary<string, int>(10);
+            var countByReportTypeToday = new Dictionary<string, int>(20);
+            var countByExportTypeToday = new Dictionary<string, int>(10);
+            var reportRenderTimeByReportType = new Dictionary<string, List<int>>(20);
+            var reportRenderTimeByExportType = new Dictionary<string, List<int>>(10);
 
-        private IEnumerable<KeyValuePair<string, int>> ByCount(IEnumerable<ReportRequest> all, Func<ReportRequest, string> selector)
-        {
-            return all.GroupBy(selector)
-                .ToDictionary(x => x.Key, x => x.Count())
-                .OrderByDescending(x => x.Value)
-                .ToList();
+            foreach (var request in all)
+            {
+                var today = request.RequestDateTimeUtc.ToLocalTime().Date == DateTime.Today;
+
+                if (today)
+                {
+                    model.TodayCount++;
+                    if (!countByReportTypeToday.TryAdd(request.ReportType, 1))
+                    {
+                        countByReportTypeToday[request.ReportType]++;
+                    }
+
+                    if (!countByExportTypeToday.TryAdd(request.ExportType, 1))
+                    {
+                        countByExportTypeToday[request.ExportType]++;
+                    }
+                }
+
+                if (!countByReportTypeTotal.TryAdd(request.ReportType, 1))
+                {
+                    countByReportTypeTotal[request.ReportType]++;
+                }
+
+                if (!countByExportTypeTotal.TryAdd(request.ExportType, 1))
+                {
+                    countByExportTypeTotal[request.ExportType]++;
+                }
+
+                var renderTime = (int)request.ResponseDateTimeUtc.Subtract(request.RequestDateTimeUtc).TotalMilliseconds;
+                reportRenderTimeByReportType.TryAdd(request.ReportType, new List<int>());
+                reportRenderTimeByReportType[request.ReportType].Add(renderTime);
+
+                reportRenderTimeByExportType.TryAdd(request.ExportType, new List<int>());
+                reportRenderTimeByExportType[request.ExportType].Add(renderTime);
+            }
+
+            model.CountByExportTypeTotal = countByExportTypeTotal.OrderByDescending(x => x.Value);
+            model.CountByReportTypeTotal = countByReportTypeTotal.OrderByDescending(x => x.Value);
+            model.CountByExportTypeToday = countByExportTypeToday.OrderByDescending(x => x.Value);
+            model.CountByReportTypeToday = countByReportTypeToday.OrderByDescending(x => x.Value);
+            model.AverageReportRenderTimeByExportType =
+                reportRenderTimeByExportType.Select(pair =>
+                    new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()));
+            model.AverageReportRenderTimeByReportType =
+                reportRenderTimeByReportType.Select(pair =>
+                    new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()));
+
+            return model;
         }
     }
 }
