@@ -8,8 +8,6 @@
     {
         Task<IEnumerable<UserModel>> GetUsersAsync();
 
-        Task<AppSettingReadModel> GetAppSettingAsync(string name);
-
         Task<StatisticsReadModel> GetStatisticsAsync();
 
         Task ReEvaluateAllExamsAsync();

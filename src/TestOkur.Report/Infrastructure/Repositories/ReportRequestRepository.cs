@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Report.Infrastructure.Repositories
+﻿using MongoDB.Bson.Serialization;
+
+namespace TestOkur.Report.Infrastructure.Repositories
 {
     using MongoDB.Driver;
     using System;
@@ -24,7 +26,16 @@
 
         public async Task<ReportStatisticsModel> GetStatisticsAsync()
         {
-            var all = await _context.ReportRequests.Find(Builders<ReportRequest>.Filter.Empty).ToListAsync();
+            var all = (await _context.ReportRequests
+                    .Find(Builders<ReportRequest>.Filter.Empty)
+                    .Project(Builders<ReportRequest>.Projection
+                        .Include("ExportType")
+                        .Include("RequestDateTimeUtc")
+                        .Include("ResponseDateTimeUtc")
+                        .Include("ReportType"))
+                    .ToListAsync())
+                .Select(bson => BsonSerializer.Deserialize<ReportRequest>(bson))
+                .ToList();
 
             var model = new ReportStatisticsModel()
             {

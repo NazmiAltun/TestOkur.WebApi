@@ -37,12 +37,6 @@
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task<AppSettingReadModel> GetAppSettingAsync(string name)
-        {
-            return (await GetAsync<IEnumerable<AppSettingReadModel>>(AppSettingsEndpoint))
-                .First(t => t.Name == name);
-        }
-
         public Task<IEnumerable<UserModel>> GetUsersAsync()
         {
             return GetAsync<IEnumerable<UserModel>>(UsersEndpoint);
