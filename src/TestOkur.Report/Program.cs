@@ -15,7 +15,7 @@
             {
                 Console.WriteLine(e.ToString());
             }).StartCollecting();
-
+            Serilog.Debugging.SelfLog.Enable(Console.Error);
             CreateHostBuilder(args).Build().Run();
         }
 

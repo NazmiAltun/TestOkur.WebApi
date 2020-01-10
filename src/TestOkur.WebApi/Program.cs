@@ -20,6 +20,8 @@
                 Console.WriteLine(e.ToString());
             }).StartCollecting();
 
+            Serilog.Debugging.SelfLog.Enable(Console.Error);
+
             var host = CreateHostBuilder(args).Build();
             await host.MigrateDbContextAsync<ApplicationDbContext>(async (context, services) =>
             {
