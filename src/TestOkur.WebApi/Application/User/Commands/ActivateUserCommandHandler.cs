@@ -45,32 +45,7 @@
                 new GetUserQuery(command.Email), cancellationToken);
             await _identityClient.ActivateUserAsync(command.Email, cancellationToken);
             await PublishUserActivatedEventAsync(user, cancellationToken);
-            await ApplyPromotionAsync(user, cancellationToken);
             return await base.HandleAsync(command, cancellationToken);
-        }
-
-        private async Task ApplyPromotionAsync(
-            UserReadModel user,
-            CancellationToken cancellationToken)
-        {
-            if (string.IsNullOrEmpty(user.Referrer))
-            {
-                return;
-            }
-
-            await using var dbContext = _applicationDbContextFactory.Create(user.Id);
-            var referee = await dbContext.Users.FirstAsync(u => u.Id == user.Id, cancellationToken);
-            var referrer = await dbContext.Users.FirstAsync(u => u.Email.Value == user.Referrer, cancellationToken);
-            referrer.AddSmsBalance(ReferrerGainedSmsCredits);
-            referee.AddSmsBalance(RefereeGainedSmsCredits);
-            await dbContext.SaveChangesAsync(cancellationToken);
-
-            await _publishEndpoint.Publish(
-                new ReferredUserActivated(
-                    referee,
-                    referrer,
-                    RefereeGainedSmsCredits,
-                    ReferrerGainedSmsCredits), cancellationToken);
         }
 
         private async Task PublishUserActivatedEventAsync(

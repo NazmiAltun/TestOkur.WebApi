@@ -23,7 +23,7 @@
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.0" />
     <PackageReference Include="SpanJson" Version="3.0.1" />
     <PackageReference Include="SpanJson.AspNetCore.Formatter" Version="3.0.1" />
-    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.7" />
+    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.8" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.75" />
   </ItemGroup>
   <ItemGroup>

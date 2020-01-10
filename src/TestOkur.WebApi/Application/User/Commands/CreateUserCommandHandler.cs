@@ -52,7 +52,6 @@
 
             await using (var dbContext = _dbContextFactory.Create(command.UserId))
             {
-                await ValidateReferrerAsync(dbContext, command);
                 await EnsureUserDoesNotExistAsync(command, cancellationToken);
                 await SaveToDatabaseAsync(dbContext, command, cancellationToken);
             }
@@ -118,24 +117,6 @@
                      command.CityName,
                      command.Password,
                      command.Referrer), cancellationToken);
-        }
-
-        private async Task ValidateReferrerAsync(ApplicationDbContext dbContext, CreateUserCommand command)
-        {
-            if (string.IsNullOrEmpty(command.Referrer))
-            {
-                return;
-            }
-
-            if (!await dbContext.Users.AnyAsync(u => u.Email.Value == command.Referrer))
-            {
-                throw new ValidationException(ErrorCodes.ReferrerDoesNotExist);
-            }
-
-            if (command.Email == command.Referrer)
-            {
-                throw new ValidationException(ErrorCodes.SelfReferrerNotAllowed);
-            }
         }
 
         private async Task ValidateCaptchaAsync(CreateUserCommand command)

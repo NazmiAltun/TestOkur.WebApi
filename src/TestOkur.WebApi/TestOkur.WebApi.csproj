@@ -44,7 +44,7 @@
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="SpanJson.AspNetCore.Formatter" Version="3.0.1" />
     <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.1.7" />
-    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.7" />
+    <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.8" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.75" />
   </ItemGroup>
   <ItemGroup>
