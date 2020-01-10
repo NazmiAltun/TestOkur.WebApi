@@ -27,7 +27,7 @@
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .Enrich.FromLogContext()
-                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("AppConfiguration:SeqUrl"))
+                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ReportConfiguration:SeqUrl"))
                             .WriteTo.Console())
                         .UseStartup<Startup>();
                 });

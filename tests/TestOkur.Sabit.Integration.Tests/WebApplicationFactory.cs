@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Sabit.Integration.Tests
+﻿using Microsoft.Extensions.Hosting;
+
+namespace TestOkur.Sabit.Integration.Tests
 {
     using MassTransit.RabbitMqTransport;
     using Microsoft.AspNetCore.Hosting;
