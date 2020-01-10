@@ -1,7 +1,6 @@
-﻿using MongoDB.Bson.Serialization;
-
-namespace TestOkur.Report.Infrastructure.Repositories
+﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
+    using MongoDB.Bson.Serialization;
     using MongoDB.Driver;
     using System;
     using System.Collections.Generic;

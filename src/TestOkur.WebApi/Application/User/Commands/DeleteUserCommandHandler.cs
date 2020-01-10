@@ -13,7 +13,7 @@
 
     public class DeleteUserCommandHandler : RequestHandlerAsync<DeleteUserCommand>
     {
-        private const string sql = @"DELETE FROM users WHERE id=@id";
+        private const string Sql = @"DELETE FROM users WHERE id=@id";
 
         private readonly IQueryProcessor _queryProcessor;
         private readonly IIdentityClient _identityClient;
@@ -45,7 +45,7 @@
         private async Task DeleteUserRecordAsync(DeleteUserCommand command)
         {
             await using var connection = new NpgsqlConnection(_connectionString);
-            await connection.ExecuteAsync(sql, new { id = command.DeleteUserId });
+            await connection.ExecuteAsync(Sql, new { id = command.DeleteUserId });
         }
 
         private async Task DeleteUserIdentityAsync(DeleteUserCommand command, CancellationToken cancellationToken)

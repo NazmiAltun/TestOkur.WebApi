@@ -1,9 +1,11 @@
 ﻿namespace TestOkur.Report
 {
+    using System;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Prometheus.DotNetRuntime;
-    using System;
+    using Serilog;
 
     public static class Program
     {
@@ -14,14 +16,20 @@
                 Console.WriteLine(e.ToString());
             }).StartCollecting();
 
-            BuildWebHost(args).Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHost BuildWebHost(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                }).Build();
+                    webBuilder
+                        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                            .ReadFrom.Configuration(hostingContext.Configuration)
+                            .Enrich.FromLogContext()
+                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("AppConfiguration:SeqUrl"))
+                            .WriteTo.Console())
+                        .UseStartup<Startup>();
+                });
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.WebApi
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Prometheus.DotNetRuntime;
     using Serilog;
@@ -35,8 +36,8 @@
                     webBuilder
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                             .ReadFrom.Configuration(hostingContext.Configuration)
-                            .MinimumLevel.Warning()
                             .Enrich.FromLogContext()
+                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("AppConfiguration:SeqUrl"))
                             .WriteTo.Console())
                         .UseStartup<Startup>();
                 });

@@ -1,8 +1,10 @@
 ﻿namespace TestOkur.Sabit
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Prometheus.DotNetRuntime;
+    using Serilog;
     using System;
 
     public static class Program
@@ -18,6 +20,15 @@
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                            .ReadFrom.Configuration(hostingContext.Configuration)
+                            .Enrich.FromLogContext()
+                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("AppConfiguration:SeqUrl"))
+                            .WriteTo.Console())
+                        .UseStartup<Startup>();
+                });
     }
 }
