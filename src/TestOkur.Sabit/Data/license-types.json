@@ -1,11 +1,11 @@
 [
-    {
-      "id": 1,
-      "name": "İLKOKUL-ORTAOKUL – (BİREYSEL)",
-      "maxAllowedDeviceCount": 1000,
-      "maxAllowedRecordCount": 500,
-      "canScan": true
-    },
+  {
+    "id": 1,
+    "name": "İLKOKUL-ORTAOKUL – (BİREYSEL)",
+    "maxAllowedDeviceCount": 1000,
+    "maxAllowedRecordCount": 250,
+    "canScan": true
+  },
     {
       "id": 2,
       "name": "İLKOKUL-ORTAOKUL – (KURUMSAL)",
@@ -13,13 +13,13 @@
       "maxAllowedRecordCount": 99999,
       "canScan": true
     },
-    {
-      "id": 3,
-      "name": "LİSE – (BİREYSEL)",
-      "maxAllowedDeviceCount": 1,
-      "maxAllowedRecordCount": 500,
-      "canScan": true
-    },
+  {
+    "id": 3,
+    "name": "LİSE – (BİREYSEL)",
+    "maxAllowedDeviceCount": 1,
+    "maxAllowedRecordCount": 250,
+    "canScan": true
+  },
     {
       "id": 4,
       "name": "LİSE – (KURUMSAL)",
