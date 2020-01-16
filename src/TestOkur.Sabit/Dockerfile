@@ -12,6 +12,7 @@ RUN dotnet tool install --global dotnet-trace
 RUN dotnet tool install --global dotnet-dump
 RUN dotnet tool install --global dotnet-counters
 RUN dotnet tool install --global dotnet-sos
+RUN dotnet tool install --global dotnet-gcdump
 ENV PATH="/root/.dotnet/tools:${PATH}"
 
 FROM build as integrationtest

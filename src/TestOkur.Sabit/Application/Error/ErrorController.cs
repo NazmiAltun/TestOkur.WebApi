@@ -1,13 +1,14 @@
 ﻿namespace TestOkur.Sabit.Application.Error
 {
-    using System.IO;
-    using System.Threading.Tasks;
     using MassTransit;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using System.IO;
+    using System.Threading.Tasks;
     using TestOkur.Common;
+    using TestOkur.Sabit.Extensions;
 
     [Route("api/v1/error")]
     [Authorize(AuthorizationPolicies.Public)]
@@ -34,19 +35,8 @@
         [HttpPost("upload")]
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
-            await SaveImageAsync(file);
+            await file.SaveAsync(Path.Combine(_hostingEnvironment.WebRootPath, "uploads"));
             return Ok($@"\uploads\{file.FileName}");
-        }
-
-        private async Task SaveImageAsync(IFormFile file)
-        {
-            var path = Path.Combine(
-                _hostingEnvironment.WebRootPath,
-                "uploads",
-                file.FileName);
-
-            await using var stream = new FileStream(path, FileMode.Create);
-            await file.CopyToAsync(stream);
         }
     }
 }
