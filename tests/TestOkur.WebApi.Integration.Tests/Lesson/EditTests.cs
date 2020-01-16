@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Contracts.Lesson;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Lesson.Commands;
     using TestOkur.WebApi.Integration.Tests.Common;

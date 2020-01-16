@@ -19,8 +19,8 @@
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="MassTransit.Extensions.Logging" Version="5.5.6" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.1" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.4.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.0" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
@@ -31,11 +31,11 @@
     <PackageReference Include="SpanJson" Version="3.0.1" />
     <PackageReference Include="SpanJson.AspNetCore.Formatter" Version="3.0.1" />
     <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.8" />
+    <PackageReference Include="TestOkur.Serialization" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
-    <ProjectReference Include="..\TestOkur.Serializer\TestOkur.Serializer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Templates\Admin_Daily_Report.html">

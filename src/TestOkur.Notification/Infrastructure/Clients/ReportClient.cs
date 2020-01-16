@@ -4,7 +4,7 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Notification.Models;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class ReportClient : IReportClient
     {

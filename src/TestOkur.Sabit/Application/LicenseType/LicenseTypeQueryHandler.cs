@@ -6,7 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class LicenseTypeQueryHandler : QueryHandlerAsync<LicenseTypeQuery, IEnumerable<LicenseType>>
     {

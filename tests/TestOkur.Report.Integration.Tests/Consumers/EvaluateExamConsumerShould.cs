@@ -9,7 +9,7 @@
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Domain;
     using TestOkur.Report.Infrastructure.Repositories;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper;
     using Xunit;
 

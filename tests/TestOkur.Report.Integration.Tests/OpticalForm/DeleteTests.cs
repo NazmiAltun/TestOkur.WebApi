@@ -7,7 +7,7 @@
     using TestOkur.Optic.Form;
     using TestOkur.Report.Events;
     using TestOkur.Report.Integration.Tests.Common;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper;
     using Xunit;
 

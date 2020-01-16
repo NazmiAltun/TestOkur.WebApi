@@ -6,7 +6,7 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Domain.Model;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Lesson;
     using TestOkur.WebApi.Application.Lesson.Commands;

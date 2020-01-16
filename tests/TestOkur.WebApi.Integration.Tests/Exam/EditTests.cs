@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Contracts.Exam;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Exam.Commands;
     using TestOkur.WebApi.Integration.Tests.Common;

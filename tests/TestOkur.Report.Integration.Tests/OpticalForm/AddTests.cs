@@ -10,7 +10,7 @@
     using TestOkur.Optic.Score;
     using TestOkur.TestHelper;
     using Xunit;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class AddTests : OpticalFormTest
     {

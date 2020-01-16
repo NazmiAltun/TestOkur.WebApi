@@ -5,7 +5,7 @@ namespace TestOkur.WebApi.Integration.Tests.Exam
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.WebApi.Application.Scan;
     using Xunit;
 

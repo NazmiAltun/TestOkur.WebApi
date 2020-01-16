@@ -26,11 +26,11 @@
     <PackageReference Include="SpanJson.AspNetCore.Formatter" Version="3.0.1" />
     <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.1.7" />
     <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.8" />
+    <PackageReference Include="TestOkur.Serialization" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestOkur.Common\TestOkur.Common.csproj" />
     <ProjectReference Include="..\TestOkur.Contracts\TestOkur.Contracts.csproj" />
-    <ProjectReference Include="..\TestOkur.Serializer\TestOkur.Serializer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Application\Diagnostic\" />

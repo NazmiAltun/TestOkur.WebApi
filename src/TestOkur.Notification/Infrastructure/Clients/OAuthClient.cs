@@ -6,7 +6,7 @@
     using IdentityModel.Client;
     using TestOkur.Common.Configuration;
     using TestOkur.Notification.Models;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class OAuthClient : IOAuthClient
     {

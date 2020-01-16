@@ -22,7 +22,7 @@
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Sabit.Configuration;
     using TestOkur.Sabit.Infrastructure;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     public class Startup

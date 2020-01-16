@@ -10,7 +10,7 @@
     using TestOkur.WebApi.Application.Classroom;
     using TestOkur.WebApi.Integration.Tests.Common;
     using Xunit;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class EditTests : ClassroomTest
     {

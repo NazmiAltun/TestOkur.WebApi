@@ -40,7 +40,7 @@
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Infrastructure.Mvc.Threading;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.WebApi.Application.Captcha;
     using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Configuration;

@@ -3,7 +3,7 @@
     using System;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class CaptchaService : ICaptchaService
     {

@@ -6,7 +6,7 @@
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.User.Commands;

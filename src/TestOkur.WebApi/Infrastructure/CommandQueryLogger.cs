@@ -8,7 +8,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common.Helpers;
     using TestOkur.Infrastructure.CommandsQueries;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class CommandQueryLogger : ICommandQueryLogger
     {

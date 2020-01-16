@@ -1,4 +1,4 @@
-﻿using TestOkur.Serializer;
+﻿using TestOkur.Serialization;
 
 namespace TestOkur.Report.Integration.Tests.OpticalForm
 {

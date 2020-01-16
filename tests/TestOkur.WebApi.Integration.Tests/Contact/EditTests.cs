@@ -7,7 +7,7 @@
     using TestOkur.TestHelper;
     using TestOkur.WebApi.Application.Contact;
     using Xunit;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class EditTests : ContactTest
     {

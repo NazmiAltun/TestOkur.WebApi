@@ -41,7 +41,7 @@
     using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
     using TestOkur.Notification.ScheduledTasks.ReEvaluateAllExams;
     using TestOkur.Notification.ScheduledTasks.SmsResender;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class Startup
     {

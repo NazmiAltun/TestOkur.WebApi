@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Contracts.Sms;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper.Extensions;
     using TestOkur.WebApi.Application.Sms;
     using TestOkur.WebApi.Application.Sms.Commands;

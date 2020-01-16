@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using TestOkur.Report.Integration.Tests.Common;
     using TestOkur.Report.Models;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper;
     using Xunit;
 

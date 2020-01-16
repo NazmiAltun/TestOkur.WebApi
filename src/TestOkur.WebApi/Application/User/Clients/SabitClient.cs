@@ -4,7 +4,7 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using IdentityModel.Client;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class SabitClient : ISabitClient
     {

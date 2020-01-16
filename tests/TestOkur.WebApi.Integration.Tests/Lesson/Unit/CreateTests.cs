@@ -3,7 +3,7 @@
     using FluentAssertions;
     using System.Threading.Tasks;
     using TestOkur.Common;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper.Extensions;
     using Xunit;
 

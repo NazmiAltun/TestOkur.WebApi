@@ -4,7 +4,7 @@
     using System;
     using System.Net;
     using System.Threading.Tasks;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.WebApi.Application.User.Commands;
     using Xunit;
 

@@ -7,6 +7,7 @@
     using TestOkur.Contracts.Alert;
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Sabit.Application.Error;
+    using TestOkur.Serialization;
     using TestOkur.TestHelper;
     using Xunit;
 
@@ -46,7 +47,7 @@
                 null,
                 null,
                 "Houston!We've a problem");
-            response = await client.PostAsync(ApiPath, Serializer.ObjectExtensions.ToJsonContent(model));
+            response = await client.PostAsync(ApiPath, model.ToJsonContent());
             response.EnsureSuccessStatusCode();
             Consumer.Instance.GetAll<IUserErrorReceived>()
                 .Should().Contain(x =>

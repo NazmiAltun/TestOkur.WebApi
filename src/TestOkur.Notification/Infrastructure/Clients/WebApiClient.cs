@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using IdentityModel.Client;
     using TestOkur.Notification.Models;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class WebApiClient : IWebApiClient
     {

@@ -43,7 +43,7 @@ namespace TestOkur.Report
     using TestOkur.Report.Infrastructure;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Models;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     [ExcludeFromCodeCoverage]

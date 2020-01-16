@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
     using TestOkur.WebApi.Application.Score;
     using Xunit;
 

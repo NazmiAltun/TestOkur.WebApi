@@ -8,7 +8,7 @@
     using System.Threading.Tasks;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
-    using TestOkur.Serializer;
+    using TestOkur.Serialization;
 
     public class IdentityClient : IIdentityClient
     {
