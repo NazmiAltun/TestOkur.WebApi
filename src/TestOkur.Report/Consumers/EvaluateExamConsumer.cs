@@ -57,14 +57,8 @@
 
         private async Task RunAsync(int examId)
         {
-            _logger.LogInformation($"Evaluation for exam {examId} started...");
-            var answerKeyForms = (await _answerKeyOpticalFormRepository.GetByExamIdAsync(examId))
-                .ToList();
-            _logger.LogInformation($"Answerkey forms count {answerKeyForms.Count}");
-            var studentForms = (await _studentOpticalFormRepository
-                    .GetStudentOpticalFormsByExamIdAsync(examId))
-                .ToList();
-            _logger.LogInformation($"Student forms count {studentForms.Count}");
+            var answerKeyForms = await _answerKeyOpticalFormRepository.GetByExamIdAsync(examId);
+            var studentForms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId);
             studentForms = _evaluator.Evaluate(answerKeyForms, studentForms).ToList();
 
             await _studentOpticalFormRepository.AddOrUpdateManyAsync(studentForms);

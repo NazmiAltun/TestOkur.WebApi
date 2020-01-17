@@ -8,7 +8,7 @@
     {
         Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
 
-        Task<IEnumerable<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId);
+        Task<IReadOnlyCollection<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId);
 
         Task DeleteByExamIdAsync(int examId);
 

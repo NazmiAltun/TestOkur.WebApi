@@ -21,7 +21,7 @@
             return _context.AnswerKeyOpticalForms.InsertManyAsync(forms);
         }
 
-        public async Task<IEnumerable<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId)
+        public async Task<IReadOnlyCollection<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId)
         {
             var list = await _context.AnswerKeyOpticalForms
                 .Find(Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.ExamId, examId))

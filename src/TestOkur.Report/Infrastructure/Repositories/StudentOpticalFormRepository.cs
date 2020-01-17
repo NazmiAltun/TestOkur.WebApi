@@ -150,7 +150,7 @@
             return list;
         }
 
-        public async Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId)
+        public async Task<IReadOnlyCollection<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId)
         {
             var sw = Stopwatch.StartNew();
 

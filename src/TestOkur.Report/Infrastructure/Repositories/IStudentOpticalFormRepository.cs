@@ -13,7 +13,7 @@
 
         Task AddManyAsync(IEnumerable<StudentOpticalForm> forms);
 
-        Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
+        Task<IReadOnlyCollection<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId);
 
         Task<IEnumerable<StudentOpticalForm>> GetStudentOpticalFormsByExamIdAsync(int examId, string userId);
 
