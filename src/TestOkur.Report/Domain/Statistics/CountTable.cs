@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TestOkur.Report.Domain.Statistics
+﻿namespace TestOkur.Report.Domain.Statistics
 {
+    using System.Collections.Generic;
+
     internal class CountTable
     {
         public CountTable()

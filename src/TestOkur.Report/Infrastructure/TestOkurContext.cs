@@ -5,6 +5,7 @@
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
     using TestOkur.Report.Domain;
+    using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Models;
 
     public class TestOkurContext
@@ -31,5 +32,8 @@
 
         public IMongoCollection<SchoolResult> SchoolResults =>
             _database.GetCollection<SchoolResult>("SchoolResults");
+
+        public IMongoCollection<ExamStatistics> ExamStatistics =>
+            _database.GetCollection<ExamStatistics>("ExamStatistics");
     }
 }

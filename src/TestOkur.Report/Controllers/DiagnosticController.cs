@@ -8,6 +8,7 @@
 
     [Route("api/diagnostic")]
     [AllowAnonymous]
+    [ApiController]
     public class DiagnosticController : ControllerBase
     {
         private readonly ReportConfiguration _applicationConfiguration;

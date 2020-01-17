@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using TestOkur.Report.Domain;
+    using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Events;
     using TestOkur.Report.Infrastructure.Repositories;
 
@@ -16,6 +17,7 @@
         private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
         private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
         private readonly ISchoolResultRepository _schoolResultRepository;
+        private readonly IExamStatisticsRepository _examStatisticsRepository;
         private readonly ILogger<EvaluateExamConsumer> _logger;
         private readonly IEvaluator _evaluator;
 
@@ -24,12 +26,14 @@
             ILogger<EvaluateExamConsumer> logger,
             IEvaluator evaluator,
             IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository,
-            ISchoolResultRepository schoolResultRepository)
+            ISchoolResultRepository schoolResultRepository,
+            IExamStatisticsRepository examStatisticsRepository)
         {
             _studentOpticalFormRepository = studentOpticalFormRepository;
             _logger = logger;
             _evaluator = evaluator;
             _schoolResultRepository = schoolResultRepository;
+            _examStatisticsRepository = examStatisticsRepository;
             _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
@@ -60,7 +64,8 @@
             var answerKeyForms = await _answerKeyOpticalFormRepository.GetByExamIdAsync(examId);
             var studentForms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId);
             studentForms = _evaluator.Evaluate(answerKeyForms, studentForms).ToList();
-
+            var examStatistics = StatisticsCalculator.Calculate(studentForms);
+            await _examStatisticsRepository.AddOrUpdateAsync(examStatistics);
             await _studentOpticalFormRepository.AddOrUpdateManyAsync(studentForms);
             _logger.LogInformation($"Evaluation for exam {examId} ended...");
 

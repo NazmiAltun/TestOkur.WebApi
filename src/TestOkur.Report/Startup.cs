@@ -214,6 +214,7 @@ namespace TestOkur.Report
             services.AddTransient<IAnswerKeyOpticalFormRepository, AnswerKeyOpticalFormRepository>();
             services.AddTransient<IReportRequestRepository, ReportRequestRepository>();
             services.AddTransient<ISchoolResultRepository, SchoolResultRepository>();
+            services.AddTransient<IExamStatisticsRepository, ExamStatisticsRepository>();
             services.AddSingleton<IRequestResponseLogger, RequestResponseMongodbLogger>();
             services.AddSingleton<IEvaluator, Evaluator>();
             services.AddHttpContextAccessor();

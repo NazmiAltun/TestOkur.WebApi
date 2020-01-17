@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace TestOkur.Report.Domain.Statistics
+﻿namespace TestOkur.Report.Domain.Statistics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     internal class SumTable<TItem, TKey>
     {
         private readonly Dictionary<TKey, List<float>> _dictionary;

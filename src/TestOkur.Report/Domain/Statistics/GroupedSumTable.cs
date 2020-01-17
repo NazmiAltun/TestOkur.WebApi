@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TestOkur.Optic.Form;
-
-namespace TestOkur.Report.Domain.Statistics
+﻿namespace TestOkur.Report.Domain.Statistics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestOkur.Optic.Form;
+
     internal class GroupedSumTable
     {
         private readonly Dictionary<string, Dictionary<int, List<float>>> _dictionary;
@@ -36,9 +36,8 @@ namespace TestOkur.Report.Domain.Statistics
 
         public Dictionary<int, float> GetAverage(string lessonName)
         {
-            var dict = _dictionary[lessonName];
-
-            return dict.ToDictionary(x => x.Key, x => x.Value.Average());
+            return _dictionary[lessonName]
+                .ToDictionary(x => x.Key, x => x.Value.Average());
         }
     }
 }

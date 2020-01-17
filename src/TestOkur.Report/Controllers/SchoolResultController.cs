@@ -10,6 +10,7 @@
     using TestOkur.Report.Infrastructure.Repositories;
 
     [Route("api/v1/school-results")]
+    [ApiController]
     [Authorize(AuthorizationPolicies.Admin)]
     public class SchoolResultController : ControllerBase
     {
@@ -22,7 +23,7 @@
 
         [HttpGet("{examId}")]
         [ProducesResponseType(typeof(IReadOnlyCollection<SchoolResult>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAnswerKeyFormsAsync(int examId)
+        public async Task<IActionResult> GetAsync(int examId)
         {
             return Ok(await _schoolResultRepository.GetByExamId(examId));
         }

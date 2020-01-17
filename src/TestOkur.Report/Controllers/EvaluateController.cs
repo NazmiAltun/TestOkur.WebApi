@@ -13,6 +13,7 @@
 
     [Route("api/v1/evaluate")]
     [Authorize(AuthorizationPolicies.Customer)]
+    [ApiController]
     public class EvaluateController : ControllerBase
     {
         private readonly IEvaluator _evaluator;
