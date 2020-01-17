@@ -216,8 +216,10 @@
             using var cursor = await _context.StudentOpticalForms.FindAsync(filter);
             await cursor.ForEachAsync(form =>
             {
-                foreach (var answer in form.Sections.SelectMany(s => s.Answers)
-                    .Where(a => a.SubjectId == subjectId))
+                var answers = form.Sections.SelectMany(s => s.Answers)
+                    .Where(a => a.SubjectId == subjectId);
+
+                foreach (var answer in answers)
                 {
                     answer.SubjectName = newSubjectName;
                 }
