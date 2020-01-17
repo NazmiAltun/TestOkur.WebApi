@@ -4,7 +4,7 @@
 
     public class ExamStatistics
     {
-        public static ExamStatistics Empty = new ExamStatistics();
+        public static readonly ExamStatistics Empty = new ExamStatistics();
 
         public int ExamId { get; set; }
 

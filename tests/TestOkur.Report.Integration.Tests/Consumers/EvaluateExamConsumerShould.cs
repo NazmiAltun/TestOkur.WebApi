@@ -24,8 +24,10 @@
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
             var examId = await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms);
-            var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
+            var studentOpticalFormRepository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
                 as IStudentOpticalFormRepository;
+            var examStatisticsRepository = testServer.Host.Services.GetService(typeof(IExamStatisticsRepository))
+                as IExamStatisticsRepository;
             var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
                 as IAnswerKeyOpticalFormRepository;
             var logger = testServer.Host.Services.GetService(typeof(ILogger<EvaluateExamConsumer>));
@@ -38,11 +40,12 @@
             response.EnsureSuccessStatusCode();
 
             var consumer = new EvaluateExamConsumer(
-                repository,
+                studentOpticalFormRepository,
                 logger as ILogger<EvaluateExamConsumer>,
                 new Evaluator(),
                 answerKeyOpticalFormRepository,
-                null);
+                null,
+                examStatisticsRepository);
             await consumer.ConsumeAsync(examId);
             var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
             studentOpticalForms.Should().HaveCount(forms.Count);

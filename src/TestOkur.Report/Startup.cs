@@ -24,10 +24,12 @@ namespace TestOkur.Report
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.IdGenerators;
+    using MongoDB.Bson.Serialization.Options;
     using MongoDB.Bson.Serialization.Serializers;
     using Prometheus;
     using SpanJson.AspNetCore.Formatter;
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
@@ -39,6 +41,7 @@ namespace TestOkur.Report
     using TestOkur.Optic.Form;
     using TestOkur.Report.Configuration;
     using TestOkur.Report.Domain;
+    using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Extensions;
     using TestOkur.Report.Infrastructure;
     using TestOkur.Report.Infrastructure.Repositories;
@@ -193,6 +196,15 @@ namespace TestOkur.Report
         {
             if (!BsonClassMap.IsClassMapRegistered(typeof(OpticalForm)))
             {
+                var intFloatDictSerializer = new DictionaryInterfaceImplementerSerializer<Dictionary<int, float>>(
+                    dictionaryRepresentation: DictionaryRepresentation.Document,
+                    keySerializer: new Int32Serializer(BsonType.String),
+                    valueSerializer: BsonSerializer.SerializerRegistry.GetSerializer<float>());
+                var intIntDictSerializer = new DictionaryInterfaceImplementerSerializer<Dictionary<int, int>>(
+                    dictionaryRepresentation: DictionaryRepresentation.Document,
+                    keySerializer: new Int32Serializer(BsonType.String),
+                    valueSerializer: BsonSerializer.SerializerRegistry.GetSerializer<int>());
+
                 BsonClassMap.RegisterClassMap<OpticalForm>(cm =>
                 {
                     cm.AutoMap();
@@ -205,6 +217,31 @@ namespace TestOkur.Report
                 BsonClassMap.RegisterClassMap<StudentOpticalForm>(cm => { cm.AutoMap(); });
                 BsonClassMap.RegisterClassMap<AnswerKeyOpticalForm>(cm => { cm.AutoMap(); });
                 BsonClassMap.RegisterClassMap<SchoolResult>(cm => { cm.AutoMap(); });
+                BsonClassMap.RegisterClassMap<ExamStatistics>(cm =>
+                {
+                    cm.AutoMap();
+                    cm.GetMemberMap(c => c.CityAttendanceCounts).SetSerializer(intIntDictSerializer);
+                    cm.GetMemberMap(c => c.DistrictAttendanceCounts).SetSerializer(intIntDictSerializer);
+                    cm.GetMemberMap(c => c.SchoolAttendanceCounts).SetSerializer(intIntDictSerializer);
+                    cm.GetMemberMap(c => c.ClassroomAttendanceCounts).SetSerializer(intIntDictSerializer);
+                    cm.GetMemberMap(c => c.CityAverageScores).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.DistrictAverageScores).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.SchoolAverageScores).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.ClassroomAverageScores).SetSerializer(intFloatDictSerializer);
+                });
+
+                BsonClassMap.RegisterClassMap<SectionAverage>(cm =>
+                {
+                    cm.AutoMap();
+                    cm.GetMemberMap(c => c.CityNets).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.CitySuccessPercents).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.DistrictNets).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.DistrictSuccessPercents).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.SchoolNets).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.SchoolSuccessPercents).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.ClassroomNets).SetSerializer(intFloatDictSerializer);
+                    cm.GetMemberMap(c => c.ClassroomSuccessPercents).SetSerializer(intFloatDictSerializer);
+                });
             }
         }
 
