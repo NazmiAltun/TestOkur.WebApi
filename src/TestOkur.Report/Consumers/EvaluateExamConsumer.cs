@@ -64,9 +64,9 @@
             var answerKeyForms = await _answerKeyOpticalFormRepository.GetByExamIdAsync(examId);
             var studentForms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(examId);
             studentForms = _evaluator.Evaluate(answerKeyForms, studentForms).ToList();
+            await _studentOpticalFormRepository.AddOrUpdateManyAsync(studentForms);
             var examStatistics = StatisticsCalculator.Calculate(studentForms);
             await _examStatisticsRepository.AddOrUpdateAsync(examStatistics);
-            await _studentOpticalFormRepository.AddOrUpdateManyAsync(studentForms);
             _logger.LogInformation($"Evaluation for exam {examId} ended...");
 
             if (answerKeyForms.First().SharedExam)
