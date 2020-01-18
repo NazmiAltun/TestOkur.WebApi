@@ -197,13 +197,13 @@ namespace TestOkur.Report
             if (!BsonClassMap.IsClassMapRegistered(typeof(OpticalForm)))
             {
                 var intFloatDictSerializer = new DictionaryInterfaceImplementerSerializer<Dictionary<int, float>>(
-                    dictionaryRepresentation: DictionaryRepresentation.Document,
-                    keySerializer: new Int32Serializer(BsonType.String),
-                    valueSerializer: BsonSerializer.SerializerRegistry.GetSerializer<float>());
+                    DictionaryRepresentation.Document,
+                    new Int32Serializer(BsonType.String),
+                    BsonSerializer.SerializerRegistry.GetSerializer<float>());
                 var intIntDictSerializer = new DictionaryInterfaceImplementerSerializer<Dictionary<int, int>>(
-                    dictionaryRepresentation: DictionaryRepresentation.Document,
-                    keySerializer: new Int32Serializer(BsonType.String),
-                    valueSerializer: BsonSerializer.SerializerRegistry.GetSerializer<int>());
+                    DictionaryRepresentation.Document,
+                    new Int32Serializer(BsonType.String),
+                    BsonSerializer.SerializerRegistry.GetSerializer<int>());
 
                 BsonClassMap.RegisterClassMap<OpticalForm>(cm =>
                 {

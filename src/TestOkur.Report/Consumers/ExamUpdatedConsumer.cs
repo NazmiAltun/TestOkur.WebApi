@@ -29,8 +29,7 @@
                 form.IncorrectEliminationRate = context.Message.IncorrectEliminationRate;
             }
 
-            await _answerKeyOpticalFormRepository.DeleteByExamIdAsync(context.Message.ExamId);
-            await _answerKeyOpticalFormRepository.AddManyAsync(forms);
+            await _answerKeyOpticalFormRepository.AddOrUpdateManyAsync(forms);
             if (_evaluateExamConsumer != null)
             {
                 await _evaluateExamConsumer.ConsumeAsync(context.Message.ExamId);

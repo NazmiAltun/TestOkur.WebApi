@@ -14,11 +14,16 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public async Task AddOrUpdateAsync(ExamStatistics examStatistics)
+        public Task AddOrUpdateAsync(ExamStatistics examStatistics)
         {
             var filter = Builders<ExamStatistics>.Filter.Eq(x => x.ExamId, examStatistics.ExamId);
-            await _context.ExamStatistics.DeleteOneAsync(filter);
-            await _context.ExamStatistics.InsertOneAsync(examStatistics);
+            return _context.ExamStatistics.ReplaceOneAsync(
+                filter,
+                examStatistics,
+                new ReplaceOptions
+                {
+                    IsUpsert = true,
+                });
         }
 
         public Task<ExamStatistics> GetAsync(int examId)
