@@ -32,6 +32,7 @@
             var schoolSuccessPercentSums = new GroupedSumTable(x => x.SchoolId, y => y.SuccessPercent);
             var classroomNetSums = new GroupedSumTable(x => x.ClassroomId, y => y.Net);
             var classroomSuccessPercentSums = new GroupedSumTable(x => x.ClassroomId, y => y.SuccessPercent);
+            var lessonNameIdMap = new Dictionary<string, int>();
 
             foreach (var form in forms)
             {
@@ -47,6 +48,7 @@
 
                 foreach (var section in form.Sections)
                 {
+                    lessonNameIdMap.TryAdd(section.LessonName, section.LessonId);
                     generalSuccessPercentSums.Add(section);
                     generalNetSums.Add(section);
                     cityNetSums.Add(form, section);
@@ -66,6 +68,8 @@
             {
                 var sectionAverage = new SectionAverage()
                 {
+                    LessonName = lessonName,
+                    LessonId = lessonNameIdMap[lessonName],
                     GeneralNet = generalNetSums.GetAverage(lessonName),
                     GeneralSuccessPercent = generalSuccessPercentSums.GetAverage(lessonName),
                     CityNets = cityNetSums.GetAverage(lessonName),
@@ -77,7 +81,7 @@
                     ClassroomNets = classroomNetSums.GetAverage(lessonName),
                     ClassroomSuccessPercents = classroomSuccessPercentSums.GetAverage(lessonName),
                 };
-                sectionAverages.Add(lessonName, sectionAverage);
+                sectionAverages.Add(sectionAverage.LessonId.ToString(), sectionAverage);
             }
 
             return new ExamStatistics

@@ -4,6 +4,10 @@
 
     public class SectionAverage
     {
+        public string LessonName { get; set; }
+
+        public int LessonId { get; set; }
+
         public float GeneralSuccessPercent { get; set; }
 
         public Dictionary<int, float> CitySuccessPercents { get; set; }
