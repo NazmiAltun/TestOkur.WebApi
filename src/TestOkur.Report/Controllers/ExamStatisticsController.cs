@@ -24,7 +24,8 @@
         [ProducesResponseType(typeof(ExamStatistics), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync(int examId)
         {
-            return Ok(await _examStatisticsRepository.GetAsync(examId));
+            var stats = await _examStatisticsRepository.GetAsync(examId);
+            return Ok(stats ?? ExamStatistics.Empty);
         }
     }
 }

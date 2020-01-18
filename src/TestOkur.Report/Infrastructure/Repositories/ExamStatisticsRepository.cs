@@ -35,7 +35,7 @@
         {
             return _context.ExamStatistics
                 .Find(_ => _.ExamId == examId)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
         }
     }
 }
