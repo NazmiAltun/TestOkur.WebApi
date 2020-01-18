@@ -16,6 +16,11 @@
 
         public Task AddOrUpdateAsync(ExamStatistics examStatistics)
         {
+            if (examStatistics.ExamId == default)
+            {
+                return Task.CompletedTask;
+            }
+
             var filter = Builders<ExamStatistics>.Filter.Eq(x => x.ExamId, examStatistics.ExamId);
             return _context.ExamStatistics.ReplaceOneAsync(
                 filter,
