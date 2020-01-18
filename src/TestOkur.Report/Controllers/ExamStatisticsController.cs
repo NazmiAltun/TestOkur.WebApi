@@ -8,7 +8,7 @@
     using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Infrastructure.Repositories;
 
-    [Route("api/v1/school-results")]
+    [Route("api/v1/exam-statistics")]
     [ApiController]
     [Authorize(AuthorizationPolicies.Customer)]
     public class ExamStatisticsController : ControllerBase

@@ -16,23 +16,9 @@
             _context = new TestOkurContext(configuration);
         }
 
-        public Task AddOrUpdateManyAsync(IEnumerable<AnswerKeyOpticalForm> forms)
+        public Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms)
         {
-            var writeModels = new List<WriteModel<AnswerKeyOpticalForm>>(forms.Count());
-
-            foreach (var form in forms)
-            {
-                var model = new ReplaceOneModel<AnswerKeyOpticalForm>(
-                    Builders<AnswerKeyOpticalForm>.Filter.Eq(x => x.Id, form.Id),
-                    form)
-                {
-                    IsUpsert = true,
-                };
-
-                writeModels.Add(model);
-            }
-
-            return _context.AnswerKeyOpticalForms.BulkWriteAsync(writeModels);
+            return _context.AnswerKeyOpticalForms.InsertManyAsync(forms);
         }
 
         public async Task<IReadOnlyCollection<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId)

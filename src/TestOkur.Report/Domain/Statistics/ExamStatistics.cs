@@ -1,10 +1,13 @@
 ﻿namespace TestOkur.Report.Domain.Statistics
 {
+    using System;
     using System.Collections.Generic;
 
     public class ExamStatistics
     {
         public static readonly ExamStatistics Empty = new ExamStatistics();
+
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public int ExamId { get; set; }
 

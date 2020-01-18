@@ -28,7 +28,7 @@
                 form.ExamTypeName = context.Message.ExamTypeName;
             }
 
-            return _answerKeyOpticalFormRepository.AddOrUpdateManyAsync(forms);
+            return _answerKeyOpticalFormRepository.AddManyAsync(forms);
         }
     }
 }

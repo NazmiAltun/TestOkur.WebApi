@@ -4,13 +4,16 @@
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Domain;
+    using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Serialization;
     using TestOkur.TestHelper;
+    using TestOkur.TestHelper.Extensions;
     using Xunit;
 
     public class EvaluateExamConsumerShould : ConsumerTest
@@ -50,10 +53,13 @@
             var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
             studentOpticalForms.Should().HaveCount(forms.Count);
             studentOpticalForms.Should().NotContain(s => !s.Orders.Any());
-            studentOpticalForms.First().GeneralAttendanceCount.Should().Be(forms.Count);
-            studentOpticalForms.First().CityAttendanceCount.Should().Be(forms.Count);
-            studentOpticalForms.First().ClassroomAttendanceCount.Should().Be(forms.Count);
-            studentOpticalForms.First().SchoolAttendanceCount.Should().Be(forms.Count);
+            response = await client.GetAsync($"api/v1/exam-statistics/{examId}");
+            var examStats = await response.ReadAsync<ExamStatistics>();
+            examStats.GeneralAttendanceCount.Should().Be(forms.Count);
+            examStats.CityAttendanceCounts.First().Value.Should().Be(forms.Count);
+            examStats.ClassroomAttendanceCounts.First().Value.Should().Be(forms.Count);
+            examStats.DistrictAttendanceCounts.First().Value.Should().Be(forms.Count);
+            examStats.SchoolAttendanceCounts.First().Value.Should().Be(forms.Count);
         }
     }
 }

@@ -6,7 +6,7 @@
 
     public interface IAnswerKeyOpticalFormRepository
     {
-        Task AddOrUpdateManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
+        Task AddManyAsync(IEnumerable<AnswerKeyOpticalForm> forms);
 
         Task<IReadOnlyCollection<AnswerKeyOpticalForm>> GetByExamIdAsync(int examId);
 
