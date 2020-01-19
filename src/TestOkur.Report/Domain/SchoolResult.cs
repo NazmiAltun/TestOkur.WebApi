@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using TestOkur.Optic.Form;
+    using TestOkur.Report.Domain.Statistics;
 
     public class SchoolResult
     {
         public SchoolResult(
+            ExamStatistics examStatistics,
             IEnumerable<StudentOpticalForm> forms,
             IEnumerable<StudentOpticalFormSection> sections)
         {
@@ -19,51 +21,38 @@
             CityName = form.CityName;
             DistrictId = form.DistrictId;
             DistrictName = form.DistrictName;
-            ScoreAverage = form.SchoolScoreAverage;
-            StudentCount = form.SchoolAttendanceCount;
+            ScoreAverage = examStatistics.SchoolAverageScores[form.SchoolId];
+            StudentCount = examStatistics.SchoolAttendanceCounts[form.SchoolId];
             CreatedOnUtc = DateTime.UtcNow;
             ClassroomCount = forms.Select(f => f.ClassroomId).Distinct().Count();
             SuccessPercent = forms.Average(f => f.SuccessPercent);
-
-            var groupedSections = forms.SelectMany(f => f.Sections)
-                .GroupBy(s => s.LessonName);
 
             Sections = sections
                 .Select(s => new SchoolResultSection()
                 {
                     LessonName = s.LessonName,
-                    CityAverageNet = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .First()
-                        .CityAverageNet,
-                    CorrectCount = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .Average(x => (float)x.CorrectCount),
-                    DistrictAverageNet = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .First()
-                        .DistrictAverageNet,
-                    EmptyCount = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .Average(x => (float)x.EmptyCount),
-                    GeneralAverageNet = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .First()
-                        .GeneralAverageNet,
-                    Net = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .First()
-                        .SchoolAverageNet,
-                    WrongCount = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .Average(x => (float)x.WrongCount),
-                    QuestionCount = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .First()
-                        .QuestionCount,
-                    SuccessPercent = groupedSections
-                        .First(g => g.Key == s.LessonName)
-                        .Average(x => x.SuccessPercent),
+                    CityAverageNet = examStatistics.SectionAverages[s.LessonName]
+                        .CityNets[form.CityId],
+                    CorrectCount = examStatistics.SectionAverages[s.LessonName]
+                        .SchoolCorrectCounts[form.SchoolId],
+                    DistrictAverageNet = examStatistics.SectionAverages[s.LessonName]
+                        .DistrictNets[form.DistrictId],
+                    EmptyCount = examStatistics.SectionAverages[s.LessonName]
+                        .SchoolEmptyCounts[form.SchoolId],
+                    GeneralAverageNet = examStatistics.SectionAverages[s.LessonName]
+                        .GeneralNet,
+                    Net = examStatistics.SectionAverages[s.LessonName]
+                        .SchoolNets[form.SchoolId],
+                    WrongCount = examStatistics.SectionAverages[s.LessonName]
+                        .SchoolWrongCounts[form.SchoolId],
+                    QuestionCount = (int)(examStatistics.SectionAverages[s.LessonName]
+                        .SchoolWrongCounts[form.SchoolId] +
+                        examStatistics.SectionAverages[s.LessonName]
+                            .SchoolCorrectCounts[form.SchoolId] +
+                        examStatistics.SectionAverages[s.LessonName]
+                            .SchoolEmptyCounts[form.SchoolId]),
+                    SuccessPercent = examStatistics.SectionAverages[s.LessonName]
+                        .SchoolSuccessPercents[form.SchoolId],
                 })
                 .ToList();
         }

@@ -193,14 +193,6 @@
                     x.SchoolOrder == 2 &&
                     x.DistrictOrder == 2 &&
                     x.CityOrder == 2);
-            studentForms.First().Sections
-                .First(s => s.LessonName == "Tr")
-                .Averages.First(a => a.Name == "NET")
-                .Should().Match<Average>(
-                    x => x.City == 35.25f &&
-                         x.School == 35.25f &&
-                         x.Classroom == 37.5f &&
-                         x.District == 35.25f);
         }
 
         private AnswerKeyOpticalForm GeneratedAnswerKeyFormB()

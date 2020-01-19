@@ -233,6 +233,9 @@ namespace TestOkur.Report
                 BsonClassMap.RegisterClassMap<SectionAverage>(cm =>
                 {
                     cm.AutoMap();
+                    cm.UnmapProperty(x => x.SchoolCorrectCounts);
+                    cm.UnmapProperty(x => x.SchoolWrongCounts);
+                    cm.UnmapProperty(x => x.SchoolEmptyCounts);
                     cm.GetMemberMap(c => c.CityNets).SetSerializer(intFloatDictSerializer);
                     cm.GetMemberMap(c => c.CitySuccessPercents).SetSerializer(intFloatDictSerializer);
                     cm.GetMemberMap(c => c.DistrictNets).SetSerializer(intFloatDictSerializer);

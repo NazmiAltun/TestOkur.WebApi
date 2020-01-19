@@ -7,6 +7,7 @@ namespace TestOkur.Report.Domain
     using System.Collections.Generic;
     using System.Linq;
     using TestOkur.Optic.Form;
+    using TestOkur.Report.Domain.Statistics;
 
     public class Evaluator : IEvaluator
     {
@@ -20,7 +21,9 @@ namespace TestOkur.Report.Domain
                 .ToList();
         }
 
-        public IEnumerable<SchoolResult> EvaluateSchoolResults(IEnumerable<StudentOpticalForm> forms)
+        public IEnumerable<SchoolResult> EvaluateSchoolResults(
+            ExamStatistics examStatistics,
+            IEnumerable<StudentOpticalForm> forms)
         {
             var sections = forms
                 .OrderByDescending(f => f.Sections.Count)
@@ -29,7 +32,7 @@ namespace TestOkur.Report.Domain
             var results = forms.GroupBy(
                 f => f.SchoolId,
                 f => f,
-                (schoolId, fs) => new SchoolResult(fs, sections)).ToList();
+                (schoolId, fs) => new SchoolResult(examStatistics, fs, sections)).ToList();
             var orderList = new SchoolOrderList(results, r => r.ScoreAverage);
             var sectionOrderList = new Dictionary<string, SchoolOrderList>();
 
@@ -70,9 +73,7 @@ namespace TestOkur.Report.Domain
 
             FillMissingSections(answerKeyOpticalForms, forms);
             EvaluateForms(answerKeyOpticalForms, forms);
-            SetOrdersAndAverages(forms);
-            SetAttendance(forms);
-
+            SetOrder(forms);
             return forms;
         }
 
@@ -101,20 +102,9 @@ namespace TestOkur.Report.Domain
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
-        private void SetAttendance(IReadOnlyCollection<StudentOpticalForm> forms)
-        {
-            foreach (var form in forms)
-            {
-                form.SetAttendance(forms);
-            }
-        }
-
-        private void SetOrdersAndAverages(IReadOnlyCollection<StudentOpticalForm> forms)
+        private void SetOrder(IReadOnlyCollection<StudentOpticalForm> forms)
         {
             var orderLists = CreateOrderLists(forms);
-            var netAverageList = new AverageList("NET", forms, s => s.Net);
-            var successPercentAverageList = new AverageList("SuccessPercent", forms, s => s.SuccessPercent);
 
             foreach (var form in forms)
             {
@@ -123,18 +113,6 @@ namespace TestOkur.Report.Domain
                 {
                     form.AddStudentOrder(orderList.GetStudentOrder(form));
                 }
-
-                foreach (var section in form.Sections)
-                {
-                    section.ClearLessonAverages();
-                    section.AddLessonAverage(netAverageList.Get(form, section.LessonName));
-                    section.AddLessonAverage(successPercentAverageList.Get(form, section.LessonName));
-                }
-            }
-
-            foreach (var form in forms)
-            {
-                form.SetAverages(forms);
             }
         }
 

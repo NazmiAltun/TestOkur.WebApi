@@ -1,5 +1,7 @@
 ﻿namespace TestOkur.Report.Controllers
 {
+    using System;
+    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,16 @@
         {
             var stats = await _examStatisticsRepository.GetAsync(examId);
             return Ok(stats ?? ExamStatistics.Empty);
+        }
+
+        [HttpGet("multiple/{examIds}")]
+        [ProducesResponseType(typeof(ExamStatistics), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAsync(string examIds)
+        {
+            return Ok(await _examStatisticsRepository.GetListAsync(
+                examIds
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)));
         }
     }
 }

@@ -13,7 +13,7 @@
             margin-top: 1.25rem;
         }
         .grid-container {
-            grid-template-columns: 1fr 3fr 1fr 3fr 
+            grid-template-columns: 1fr 3fr 1fr 3fr
         }
         .grid-item {
             border: 1px solid;
@@ -27,7 +27,7 @@
 </head>
 
 <body>
-	{{#if html}}
+    {{#if html}}
     <button class="print-button" onclick="window.print();">Yazdir</button>
     {{/if}}
     {{#each list}}
@@ -108,11 +108,11 @@
                         <td>{{emptyCount}}</td>
                         <td>{{formatTwoDecimalPlaces net}}</td>
                         <td>%{{formatOneDecimalPlace successPercent}}</td>
-                        <td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'classroomNets') ../classroomId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'schoolNets') ../schoolId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'districtNets') ../districtId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'cityNets') ../cityId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'generalNet') }}</td>
                     </tr>
                     {{/each}}
                     <tr>
@@ -125,11 +125,11 @@
                         <td>{{emptyCount}}</td>
                         <td>{{formatTwoDecimalPlaces net}}</td>
                         <td>%{{formatOneDecimalPlace successPercent}}</td>
-                        <td>{{formatTwoDecimalPlaces classroomAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces schoolAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces districtAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces cityAverageNet}}</td>
-                        <td>{{formatTwoDecimalPlaces generalAverageNet}}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup ../examStatistics.totalAverages.classroomNets classroomId)}}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup ../examStatistics.totalAverages.schoolNets schoolId)}}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup ../examStatistics.totalAverages.districtNets districtId)}}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup ../examStatistics.totalAverages.cityNets cityId)}}</td>
+                        <td>{{formatTwoDecimalPlaces ../examStatistics.totalAverages.generalNet}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -169,19 +169,19 @@
                             <strong>Puan Ort.</strong>
                         </td>
                         <td>
-                            {{formatTwoDecimalPlaces classScoreAverage}}
+                            {{formatTwoDecimalPlaces (lookup ../examStatistics.classroomAverageScores classroomId) }}
                         </td>
                         <td>
-                            {{formatTwoDecimalPlaces schoolScoreAverage}}
+                            {{formatTwoDecimalPlaces (lookup ../examStatistics.schoolAverageScores schoolId)}}
                         </td>
                         <td>
-                            {{formatTwoDecimalPlaces districtScoreAverage}}
+                            {{formatTwoDecimalPlaces (lookup ../examStatistics.districtAverageScores districtId)}}
                         </td>
                         <td>
-                            {{formatTwoDecimalPlaces cityScoreAverage}}
+                            {{formatTwoDecimalPlaces (lookup ../examStatistics.cityAverageScores cityId)}}
                         </td>
                         <td>
-                            {{formatTwoDecimalPlaces generalScoreAverage}}
+                            {{formatTwoDecimalPlaces ../examStatistics.averageScore}}
                         </td>
                     </tr>
                     <tr>
@@ -189,19 +189,19 @@
                             <strong>Katılım</strong>
                         </td>
                         <td>
-                            {{classroomAttendanceCount}}
+                            {{lookup ../examStatistics.classroomAttendanceCounts classroomId}}
                         </td>
                         <td>
-                            {{schoolAttendanceCount}}
+                            {{lookup ../examStatistics.schoolAttendanceCounts schoolId}}
                         </td>
                         <td>
-                            {{districtAttendanceCount}}
+                            {{lookup ../examStatistics.districtAttendanceCounts districtId}}
                         </td>
                         <td>
-                            {{cityAttendanceCount}}
+                            {{lookup ../examStatistics.cityAttendanceCounts cityId}}
                         </td>
                         <td>
-                            {{generalAttendanceCount}}
+                            {{../examStatistics.generalAttendanceCount}}
                         </td>
                     </tr>
                     <tr>
@@ -301,11 +301,11 @@
     				   	    backgroundColor:['#3d78f0','#f03d3d','#21a60c','#6200b3','#3ed4e5','#e27828'],
     				   	    data: [
     				   	        {{score}},
-    				   	        {{classScoreAverage}},
-    				   	        {{schoolScoreAverage}},
-    				   	        {{districtScoreAverage}},
-    				   	        {{cityScoreAverage}},
-    				   	        {{generalScoreAverage}},0]
+                                {{lookup ../examStatistics.classroomAverageScores classroomId}},
+    				   	        {{lookup ../examStatistics.schoolAverageScores schoolId}},
+    				   	        {{lookup ../examStatistics.districtAverageScores districtId}},
+    				   	        {{lookup ../examStatistics.cityAverageScores cityId}},
+    				   	        {{../examStatistics.averageScore}},0]
     				   	}]
     				},
     				options: {
@@ -322,9 +322,9 @@
     </div>
     <br />
     <div class='container'>
-        <table  class='subject-details-table'>
+        <table class='subject-details-table'>
             <thead>
-				<tr style="font-size:{{../fontSizePercent}}% !important;">
+                <tr style="font-size:{{../fontSizePercent}}% !important;">
                     <th>Sıra</th>
                     <th>Ders</th>
                     <th>Konu/Kazanım/Soru</th>

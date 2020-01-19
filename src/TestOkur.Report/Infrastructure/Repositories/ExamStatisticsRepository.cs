@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Report.Infrastructure.Repositories
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using MongoDB.Driver;
     using TestOkur.Report.Configuration;
@@ -31,6 +32,13 @@
             return _context.ExamStatistics
                 .Find(_ => _.ExamId == examId)
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<List<ExamStatistics>> GetListAsync(IEnumerable<int> examIds)
+        {
+            var filter = Builders<ExamStatistics>.Filter.In(x => x.ExamId, examIds);
+
+            return await _context.ExamStatistics.Find(filter).ToListAsync();
         }
     }
 }

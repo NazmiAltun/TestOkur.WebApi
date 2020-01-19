@@ -32,6 +32,9 @@
             var schoolSuccessPercentSums = new GroupedSumTable(x => x.SchoolId, y => y.SuccessPercent);
             var classroomNetSums = new GroupedSumTable(x => x.ClassroomId, y => y.Net);
             var classroomSuccessPercentSums = new GroupedSumTable(x => x.ClassroomId, y => y.SuccessPercent);
+            var schoolCorrectSums = new GroupedSumTable(x => x.SchoolId, y => y.CorrectCount);
+            var schoolEmptySums = new GroupedSumTable(x => x.SchoolId, y => y.EmptyCount);
+            var schoolWrongSums = new GroupedSumTable(x => x.SchoolId, y => y.WrongCount);
             var lessonNameIdMap = new Dictionary<string, int>();
 
             foreach (var form in forms)
@@ -56,6 +59,9 @@
                     districtNetSums.Add(form, section);
                     districtSuccessPercentSums.Add(form, section);
                     schoolNetSums.Add(form, section);
+                    schoolCorrectSums.Add(form, section);
+                    schoolEmptySums.Add(form, section);
+                    schoolWrongSums.Add(form, section);
                     schoolSuccessPercentSums.Add(form, section);
                     classroomNetSums.Add(form, section);
                     classroomSuccessPercentSums.Add(form, section);
@@ -68,8 +74,6 @@
             {
                 var sectionAverage = new SectionAverage()
                 {
-                    LessonName = lessonName,
-                    LessonId = lessonNameIdMap[lessonName],
                     GeneralNet = generalNetSums.GetAverage(lessonName),
                     GeneralSuccessPercent = generalSuccessPercentSums.GetAverage(lessonName),
                     CityNets = cityNetSums.GetAverage(lessonName),
@@ -77,11 +81,14 @@
                     DistrictNets = districtNetSums.GetAverage(lessonName),
                     DistrictSuccessPercents = districtSuccessPercentSums.GetAverage(lessonName),
                     SchoolNets = schoolNetSums.GetAverage(lessonName),
+                    SchoolCorrectCounts = schoolCorrectSums.GetAverage(lessonName),
+                    SchoolWrongCounts = schoolWrongSums.GetAverage(lessonName),
+                    SchoolEmptyCounts = schoolEmptySums.GetAverage(lessonName),
                     SchoolSuccessPercents = schoolSuccessPercentSums.GetAverage(lessonName),
                     ClassroomNets = classroomNetSums.GetAverage(lessonName),
                     ClassroomSuccessPercents = classroomSuccessPercentSums.GetAverage(lessonName),
                 };
-                sectionAverages.Add(sectionAverage.LessonId.ToString(), sectionAverage);
+                sectionAverages.Add(lessonNameIdMap[lessonName].ToString(), sectionAverage);
             }
 
             return new ExamStatistics

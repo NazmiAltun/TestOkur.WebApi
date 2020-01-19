@@ -42,3 +42,7 @@ function ifTooManySections(secondaryLessons, lessons, opts) {
         return opts.inverse(this);
     }
 }
+
+function lookup(context, key) {
+    return context[key];
+}
