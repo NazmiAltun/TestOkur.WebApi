@@ -90,11 +90,11 @@
             model.AverageReportRenderTimeByExportType =
                 reportRenderTimeByExportType.Select(pair =>
                         new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()))
-                    .OrderBy(x => x.Value);
+                    .OrderByDescending(x => x.Value);
             model.AverageReportRenderTimeByReportType =
                 reportRenderTimeByReportType.Select(pair =>
                     new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()))
-                    .OrderBy(x => x.Value);
+                    .OrderByDescending(x => x.Value);
 
             return model;
         }
