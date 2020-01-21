@@ -89,10 +89,12 @@
             model.CountByReportTypeToday = countByReportTypeToday.OrderByDescending(x => x.Value);
             model.AverageReportRenderTimeByExportType =
                 reportRenderTimeByExportType.Select(pair =>
-                    new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()));
+                        new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()))
+                    .OrderBy(x => x.Value);
             model.AverageReportRenderTimeByReportType =
                 reportRenderTimeByReportType.Select(pair =>
-                    new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()));
+                    new KeyValuePair<string, int>(pair.Key, (int)pair.Value.Average()))
+                    .OrderBy(x => x.Value);
 
             return model;
         }
