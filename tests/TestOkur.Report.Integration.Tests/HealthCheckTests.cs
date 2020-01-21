@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Report.Integration.Tests
+﻿using System.Net.Mime;
+
+namespace TestOkur.Report.Integration.Tests
 {
     using FluentAssertions;
     using System.Net;
@@ -22,7 +24,7 @@
             var response = await TestServerFactory.TestServer.CreateClient().GetAsync("hc");
             _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.Content.Headers.ContentType.MediaType.Should().Be(MediaTypeNames.Application.Json);
         }
     }
 }

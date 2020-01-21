@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Notification.Integration.Tests
+﻿using System.Net.Mime;
+
+namespace TestOkur.Notification.Integration.Tests
 {
     using System.Net;
     using System.Threading.Tasks;
@@ -24,7 +26,7 @@
             var response = await _factory.CreateClient().GetAsync("hc");
             _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.Content.Headers.ContentType.MediaType.Should().Be(MediaTypeNames.Application.Json);
         }
 
         [Fact]

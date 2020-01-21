@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi.Integration.Tests
+﻿using System.Net.Mime;
+
+namespace TestOkur.WebApi.Integration.Tests
 {
     using System.Net;
     using System.Threading.Tasks;
@@ -13,7 +15,7 @@
         {
             var response = await (await GetTestServer()).CreateClient().GetAsync("hc");
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.Content.Headers.ContentType.MediaType.Should().Be(MediaTypeNames.Application.Json);
         }
     }
 }

@@ -29,6 +29,7 @@
     using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Mime;
     using System.Reflection;
     using TestOkur.Common;
     using TestOkur.Common.Configuration;
@@ -82,7 +83,7 @@
             services.AddMemoryCache();
             services.AddControllers(options =>
                 {
-                    options.Filters.Add(new ProducesAttribute("application/json"));
+                    options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
                     options.Filters.Add(new ValidateInputFilter());
                 })
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())

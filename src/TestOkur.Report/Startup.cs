@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Net.Mime;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("TestOkur.Report.Integration.Tests")]
 
@@ -87,7 +88,7 @@ namespace TestOkur.Report
             AddOptions(services);
             services.AddControllers(options =>
                 {
-                    options.Filters.Add(new ProducesAttribute("application/json"));
+                    options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
                     options.Filters.Add(new ValidateInputFilter());
                 })
                 .AddSpanJsonCustom<ApiResolver<byte>>();
