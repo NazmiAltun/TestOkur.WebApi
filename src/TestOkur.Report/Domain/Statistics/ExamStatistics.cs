@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Report.Domain.Statistics
+﻿using TestOkur.Domain.Model.ExamModel;
+
+namespace TestOkur.Report.Domain.Statistics
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +8,8 @@
     public class ExamStatistics
     {
         public static readonly ExamStatistics Empty = new ExamStatistics();
+
+        public bool IsEmpty => ExamId == default;
 
         public Guid Id { get; set; } = Guid.NewGuid();
 

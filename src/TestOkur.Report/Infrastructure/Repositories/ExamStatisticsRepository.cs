@@ -17,7 +17,7 @@
 
         public async Task AddOrUpdateAsync(ExamStatistics examStatistics)
         {
-            if (examStatistics.ExamId == default)
+            if (examStatistics.IsEmpty)
             {
                 return;
             }

@@ -4,7 +4,13 @@
     {
         public int QuestionNo { get; set; }
 
-        public char Answer { get; set; }
+        public int QuestionNoBookletB { get; set; }
+
+        public int QuestionNoBookletC { get; set; }
+
+        public int QuestionNoBookletD { get; set; }
+
+        public byte Answer { get; set; }
 
         public int SubjectId { get; set; }
 

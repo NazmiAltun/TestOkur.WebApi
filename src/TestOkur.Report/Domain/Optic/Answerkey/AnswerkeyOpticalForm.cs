@@ -2,17 +2,10 @@
 {
     using System.Collections.Generic;
 
-    public class AnswerkeyOpticalForm
+    public class AnswerKeyOpticalForm : OpticalForm
     {
-        public List<AnswerKeyOpticalFormSection> Sections { get; set; }
-
-        public int Part { get; set; }
-    }
-
-    public class Answerkey
-    {
-        public List<AnswerkeyOpticalForm> Forms { get; set; }
-
-        public char Booklet { get; set; }
+        public byte Booklet { get; set; }
+        
+        public List<AnswerKeyOpticalFormPart> Parts { get; set; }
     }
 }
