@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using TestOkur.Optic.Form;
+    using TestOkur.Report.Domain.Optic;
 
     public static class StatisticsCalculator
     {
-        public static ExamStatistics Calculate(IReadOnlyCollection<StudentOpticalForm> forms)
+        public static ExamStatistics Calculate(IReadOnlyCollection<StudentExamResult> studentExamResults)
         {
-            if (forms == null || forms.Count == 0)
+            if (studentExamResults == null || studentExamResults.Count == 0)
             {
                 return ExamStatistics.Empty;
             }
@@ -17,13 +17,13 @@
             var districtAttendanceCounts = new CountTable();
             var schoolAttendanceCounts = new CountTable();
             var classroomAttendanceCounts = new CountTable();
-            var cityScoreSums = new SumTable<StudentOpticalForm, int>(x => x.CityId, x => x.Score);
-            var districtScoreSums = new SumTable<StudentOpticalForm, int>(x => x.DistrictId, x => x.Score);
-            var schoolScoreSums = new SumTable<StudentOpticalForm, int>(x => x.SchoolId, x => x.Score);
-            var classroomScoreSums = new SumTable<StudentOpticalForm, int>(x => x.ClassroomId, x => x.Score);
+            var cityScoreSums = new SumTable<StudentExamResult, int>(x => x.CityId, x => x.Score);
+            var districtScoreSums = new SumTable<StudentExamResult, int>(x => x.DistrictId, x => x.Score);
+            var schoolScoreSums = new SumTable<StudentExamResult, int>(x => x.SchoolId, x => x.Score);
+            var classroomScoreSums = new SumTable<StudentExamResult, int>(x => x.ClassroomId, x => x.Score);
             var scoreSum = 0f;
-            var generalSuccessPercentSums = new SumTable<StudentOpticalFormSection, string>(x => x.LessonName, x => x.SuccessPercent);
-            var generalNetSums = new SumTable<StudentOpticalFormSection, string>(x => x.LessonName, x => x.Net);
+            var generalSuccessPercentSums = new SumTable<StudentExamResult, string>(x => x.LessonName, x => x.SuccessPercent);
+            var generalNetSums = new SumTable<StudentExamResult, string>(x => x.LessonName, x => x.Net);
             var cityNetSums = new GroupedSumTable(x => x.CityId, y => y.Net);
             var citySuccessPercentSums = new GroupedSumTable(x => x.CityId, y => y.SuccessPercent);
             var districtNetSums = new GroupedSumTable(x => x.DistrictId, y => y.Net);
@@ -37,7 +37,7 @@
             var schoolWrongSums = new GroupedSumTable(x => x.SchoolId, y => y.WrongCount);
             var lessonNameIdMap = new Dictionary<string, int>();
 
-            foreach (var form in forms)
+            foreach (var form in studentExamResults)
             {
                 cityAttendanceCounts.Increment(form.CityId);
                 districtAttendanceCounts.Increment(form.DistrictId);

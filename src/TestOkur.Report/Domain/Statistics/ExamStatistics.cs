@@ -1,8 +1,6 @@
-﻿using TestOkur.Domain.Model.ExamModel;
-
-namespace TestOkur.Report.Domain.Statistics
+﻿namespace TestOkur.Report.Domain.Statistics
 {
-    using System;
+    using MongoDB.Bson;
     using System.Collections.Generic;
 
     public class ExamStatistics
@@ -11,7 +9,7 @@ namespace TestOkur.Report.Domain.Statistics
 
         public bool IsEmpty => ExamId == default;
 
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public ObjectId Id { get; set; }
 
         public int ExamId { get; set; }
 

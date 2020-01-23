@@ -1,9 +1,10 @@
-﻿using System.Linq;
-
-namespace TestOkur.Report.Domain.Optic
+﻿namespace TestOkur.Report.Domain.Optic
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using TestOkur.Report.Domain.Optic.Answerkey;
+    using TestOkur.Report.Domain.Statistics;
 
     public static class Evaluator
     {
@@ -18,6 +19,24 @@ namespace TestOkur.Report.Domain.Optic
                 return result;
             }
 
+            var incorrectEliminationRate = answerKeyOpticalForms.First().IncorrectEliminationRate;
+
+            foreach (var studentOpticalForm in studentOpticalForms)
+            {
+                var studentSectionAnswerResult = CalculateStudentSectionResults(answerKeyOpticalForms, studentOpticalForm);
+                result.StudentSectionAnswerResults.Add(studentSectionAnswerResult);
+                result.StudentExamResults.Add(new StudentExamResult(
+                    studentOpticalForm.ExamId,
+                    studentOpticalForm.StudentId,
+                    studentOpticalForm.ClassroomId,
+                    studentOpticalForm.SchoolId,
+                    studentOpticalForm.DistrictId,
+                    studentOpticalForm.CityId,
+                    studentSectionAnswerResult.ToSectionResults(incorrectEliminationRate)));
+            }
+
+            result.ExamStatistics = StatisticsCalculator.Calculate(result.StudentExamResults);
+
             return result;
         }
 
@@ -29,25 +48,50 @@ namespace TestOkur.Report.Domain.Optic
 
             foreach (var scanResult in studentOpticalForm.ScanResults)
             {
+                var sections = answerKeyOpticalForms.First(a => a.Booklet == scanResult.Booklet)
+                    .Parts.First(p => p.FormPart == scanResult.FormPart)
+                    .Sections;
 
+                var markIndex = 0;
+
+                foreach (var section in sections)
+                {
+                    var studentSectionAnswers = scanResult.Answers.AsSpan().Slice(markIndex, section.MaxQuestionCount);
+                    result.SectionAnswerResults.Add(GetQuestionAnswerResults(section, studentSectionAnswers));
+                    markIndex += section.MaxQuestionCount;
+                }
             }
 
             return result;
         }
 
-        public static List<AnswerKeyOpticalFormSection> FindSections(
-            List<AnswerKeyOpticalForm> answerKeyOpticalForms,
-            byte booklet,
-            int formPart)
+        public static SectionAnswerResult GetQuestionAnswerResults(AnswerKeyOpticalFormSection section, Span<byte> studentSectionAnswers)
         {
-            var form = answerKeyOpticalForms.FirstOrDefault(f => f.Booklet == booklet);
+            var questionAnswerResults = new QuestionAnswerResult[section.Answers.Count];
 
-            if (form != null)
+            for (var i = 0; i < section.Answers.Count; i++)
             {
-                return form
-                    .Parts.First(p => p.FormPart == formPart)
-                    .Sections;
+                if (section.Answers[i].QuestionAnswerCancelAction == QuestionAnswerCancelAction.EmptyForAll ||
+                    Answers.IsEmpty(studentSectionAnswers[i]))
+                {
+                    questionAnswerResults[i] = QuestionAnswerResult.Empty;
+                }
+                else if (section.Answers[i].QuestionAnswerCancelAction == QuestionAnswerCancelAction.CorrectForAll ||
+                         section.Answers[i].Answer == studentSectionAnswers[i])
+                {
+                    questionAnswerResults[i] = QuestionAnswerResult.Correct;
+                }
+                else if (!Answers.IsValid(studentSectionAnswers[i]))
+                {
+                    questionAnswerResults[i] = QuestionAnswerResult.Invalid;
+                }
+                else
+                {
+                    questionAnswerResults[i] = QuestionAnswerResult.Wrong;
+                }
             }
+
+            return new SectionAnswerResult(section.LessonId, questionAnswerResults);
         }
     }
 }

@@ -5,7 +5,11 @@
     public class AnswerKeyOpticalForm : OpticalForm
     {
         public byte Booklet { get; set; }
-        
+
+        public int IncorrectEliminationRate { get; set; }
+
         public List<AnswerKeyOpticalFormPart> Parts { get; set; }
+
+        public List<ScoreFormula> ScoreFormulas { get; set; }
     }
 }
