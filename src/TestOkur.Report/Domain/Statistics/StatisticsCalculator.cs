@@ -51,7 +51,7 @@
 
                 foreach (var section in form.Sections)
                 {
-                    lessonNameIdMap.TryAdd(section.LessonName, section.LessonId);
+                    lessonNameIdMap.TryAdd(section.LessonName, (section.LessonName.Length + section.ListOrder) * section.LessonId);
                     generalSuccessPercentSums.Add(section);
                     generalNetSums.Add(section);
                     cityNetSums.Add(form, section);
