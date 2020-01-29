@@ -33,7 +33,7 @@
                         .Include("ResponseDateTimeUtc")
                         .Include("ReportType"))
                     .ToListAsync())
-                .Select(bson => BsonSerializer.Deserialize<ReportRequest>(bson))
+                .Select(bson => BsonSerializer.Deserialize<ReportRequestItem>(bson))
                 .ToList();
 
             var model = new ReportStatisticsModel()
@@ -97,6 +97,19 @@
                     .OrderByDescending(x => x.Value);
 
             return model;
+        }
+
+        public class ReportRequestItem
+        {
+            public Guid Id { get; set; }
+
+            public DateTime RequestDateTimeUtc { get; set; }
+
+            public DateTime ResponseDateTimeUtc { get; set; }
+
+            public string ReportType { get; set; }
+
+            public string ExportType { get; set; }
         }
     }
 }
