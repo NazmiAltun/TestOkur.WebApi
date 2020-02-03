@@ -107,7 +107,6 @@
             app.UseRouting();
             app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
-            app.UseMetricServer("/metrics-core");
 
             if (env.IsDevelopment())
             {
@@ -120,6 +119,7 @@
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapMetrics("/metrics-core");
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions
                 {
                     Predicate = _ => true,
