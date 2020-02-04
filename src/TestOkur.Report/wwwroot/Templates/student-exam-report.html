@@ -108,11 +108,11 @@
                         <td>{{emptyCount}}</td>
                         <td>{{formatTwoDecimalPlaces net}}</td>
                         <td>%{{formatOneDecimalPlace successPercent}}</td>
-                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'classroomNets') ../classroomId) }}</td>
-                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'schoolNets') ../schoolId) }}</td>
-                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'districtNets') ../districtId) }}</td>
-                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'cityNets') ../cityId) }}</td>
-                        <td>{{formatTwoDecimalPlaces (lookup (lookup ../../examStatistics.sectionAverages lessonId) 'generalNet') }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonKey) 'classroomNets') ../classroomId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonKey) 'schoolNets') ../schoolId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonKey) 'districtNets') ../districtId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup (lookup ../../examStatistics.sectionAverages lessonKey) 'cityNets') ../cityId) }}</td>
+                        <td>{{formatTwoDecimalPlaces (lookup (lookup ../../examStatistics.sectionAverages lessonKey) 'generalNet') }}</td>
                     </tr>
                     {{/each}}
                     <tr>

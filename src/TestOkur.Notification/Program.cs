@@ -30,9 +30,9 @@ namespace TestOkur.Notification
                     webBuilder
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                             .ReadFrom.Configuration(hostingContext.Configuration)
+                            .MinimumLevel.Warning()
                             .Enrich.FromLogContext()
-                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"))
-                            .WriteTo.Console())
+                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))
                         .UseStartup<Startup>();
                 });
     }

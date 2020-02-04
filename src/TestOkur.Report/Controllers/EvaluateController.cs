@@ -9,7 +9,9 @@
     using TestOkur.Common;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Domain;
+    using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Infrastructure.Repositories;
+    using TestOkur.Report.Models;
 
     [Route("api/v1/evaluate")]
     [Authorize(AuthorizationPolicies.Customer)]
@@ -40,8 +42,14 @@
             var secondaryExamForms = await _studentOpticalFormRepository.GetStudentOpticalFormsByExamIdAsync(secondaryExamId);
             var combinedExamForms = _evaluator.JoinSets(primaryExamForms, secondaryExamForms);
             var answerKeyOpticalForms = await _answerKeyOpticalFormRepository.GetByExamIdAsync(primaryExamId);
+            var forms = _evaluator.Evaluate(answerKeyOpticalForms.ToList(), combinedExamForms.ToList())
+                .ToList();
 
-            return Ok(_evaluator.Evaluate(answerKeyOpticalForms.ToList(), combinedExamForms.ToList()));
+            return Ok(new JoinResult()
+            {
+                ExamStatistics = StatisticsCalculator.Calculate(forms),
+                Forms = forms,
+            });
         }
     }
 }

@@ -29,7 +29,7 @@
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .Enrich.FromLogContext()
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"))
-                            .WriteTo.Console())
+                            .MinimumLevel.Warning())
                         .UseStartup<Startup>();
                 });
     }

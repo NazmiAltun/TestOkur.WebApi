@@ -112,12 +112,12 @@
             app.UseResponseCompression();
             app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
-            app.UseMetricServer("/metrics-core");
             UseHangfire(app);
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapMetrics("/metrics-core");
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions
                 {
                     Predicate = _ => true,

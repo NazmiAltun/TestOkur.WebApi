@@ -106,7 +106,6 @@ namespace TestOkur.Report
             app.UseRouting();
             app.UseCors(CorsPolicyName);
             app.UseHttpMetrics();
-            app.UseMetricServer("/metrics-core");
 
             if (env.IsDevelopment())
             {
@@ -119,6 +118,7 @@ namespace TestOkur.Report
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapMetrics("/metrics-core");
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions
                 {
                     Predicate = _ => true,
