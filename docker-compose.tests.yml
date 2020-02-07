@@ -95,6 +95,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - RabbitMqConfiguration__Uri=rabbitmq
       - OAuthConfiguration__Authority=http://mockserver:8080/
+      - ApplicationConfiguration__SeqUrl=http://mockserver:8080/seq
   webapi-integration-test:
     image: testokur-webapi-integration-test
     container_name: webapi-integration-test
@@ -126,6 +127,7 @@ services:
       - CaptchaServiceUrl=http://mockserver:8080/
       - SabitApiUrl=http://mockserver:8080/
       - OAuthConfiguration__Authority=http://mockserver:8080/
+      - ApplicationConfiguration__SeqUrl=http://mockserver:8080/seq
   report-unit-test:
     image: testokur-report-unit-test
     container_name: report-unit-test
@@ -163,6 +165,7 @@ services:
       - RabbitMqConfiguration__Uri=rabbitmq
       - ReportConfiguration__ConnectionString=mongodb://root:root@mongo
       - OAuthConfiguration__Authority=http://mockserver:8080/
+      - ReportConfiguration__SeqUrl=http://mockserver:8080/seq
       - ConnectionStrings__Redis=redis,allowAdmin=true,defaultDatabase=3
   notification-integration-test:
     image: testokur-notification-integration-test
@@ -185,6 +188,7 @@ services:
       - RabbitMqConfiguration__Uri=rabbitmq
       - OAuthConfiguration__Authority=http://mockserver:8080/
       - WebApiUrl=http://mockserver:8080/
+      - ApplicationConfiguration__SeqUrl=http://mockserver:8080/seq
       - SmsConfiguration__ServiceUrl=http://mockserver:8080/
       - ApplicationConfiguration__ConnectionString=mongodb://root:root@mongo
   coverage-merger:
