@@ -218,6 +218,7 @@
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")), "Seq")
                 .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"), "CaptchaService")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq");

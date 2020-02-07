@@ -290,6 +290,7 @@ namespace TestOkur.Report
                 $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq")
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("ReportConfiguration:SeqUrl")), "Seq")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddMongoDb(
                     ReportConfiguration.ConnectionString,

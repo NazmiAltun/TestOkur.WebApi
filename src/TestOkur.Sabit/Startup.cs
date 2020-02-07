@@ -100,6 +100,7 @@
         {
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
+                .AddUrlGroup(new Uri(Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")), "Seq")
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority));
         }

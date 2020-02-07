@@ -221,6 +221,8 @@
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddUrlGroup(new Uri(_configuration.GetValue<string>("WebApiUrl") + "hc"), "WebApi")
+                //TODO:Use string type in all config related calls
+                .AddUrlGroup(new Uri(_configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")), "Seq")
                 .AddMongoDb(
                     ApplicationConfiguration.ConnectionString,
                     "config",
