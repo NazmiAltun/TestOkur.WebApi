@@ -7,5 +7,4 @@ docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
 	--restart=unless-stopped  \
 	--network=testokur \
 	--network-alias=notification \
-	-m=256M \
 	nazmialtun/testokur-notification:latest

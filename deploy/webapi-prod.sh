@@ -9,5 +9,4 @@ docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
 	--restart=always \
 	--network=testokur \
 	--network-alias=webapi \
-	-m=512M \
 	nazmialtun/testokur-webapi:latest
