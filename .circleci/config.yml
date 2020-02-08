@@ -318,7 +318,7 @@ jobs:
             deploy/retry.sh $WEBAPI_URL/api/cache?key=$APP_KEY
 workflows:
   version: 2  
-  deploy-qa:
+  build-and-test:
     jobs:
       - unit-tests
       - notification-report-integration-tests
