@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Notification.Consumers
+﻿using MongoDB.Driver;
+
+namespace TestOkur.Notification.Consumers
 {
     using MassTransit;
     using Microsoft.Extensions.Logging;
@@ -42,7 +44,7 @@
         public async Task Consume(ConsumeContext<ISendSmsRequestReceived> context)
         {
             await _smsLogRepository.LogAsync(SmsLog.CreateUsageLog(context.Message));
-            var smsList = ToSmsList(context);
+            var smsList = context.Message.SmsMessages.Select(s => new Sms(context.Message, s));
             await StoreAsync(smsList);
 
             foreach (var message in smsList)
@@ -72,13 +74,29 @@
             return _smsRepository.UpdateSmsAsync(message);
         }
 
-        private List<Sms> ToSmsList(ConsumeContext<ISendSmsRequestReceived> context)
+        private async Task StoreAsync(IEnumerable<Sms> list)
         {
-            return context.Message.SmsMessages
-                .Select(s => new Sms(context.Message, s)).ToList();
-        }
+            const int maxTryCount = 10;
+            var tryCount = 0;
 
-        private Task StoreAsync(IEnumerable<Sms> list) => _smsRepository.AddManyAsync(list);
+            do
+            {
+                try
+                {
+                    await _smsRepository.AddManyAsync(list);
+                    return;
+                }
+                catch (MongoBulkWriteException ex)
+                {
+                    _logger.LogError(ex, "Possible GUID duplication in SMS bulk insert");
+
+                    foreach (var sms in list)
+                    {
+                        sms.Id = Guid.NewGuid();
+                    }
+                }
+            } while (tryCount++ < maxTryCount);
+        }
 
         private Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
         {
