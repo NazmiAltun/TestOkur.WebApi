@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Report
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Reflection;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -28,8 +29,10 @@
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .Enrich.FromLogContext()
+                            .Filter.ByExcluding(x => x.Exception is ValidationException)
                             .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                             .MinimumLevel.Warning()
+                            .WriteTo.Console()
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ReportConfiguration:SeqUrl")))
                         .UseStartup<Startup>();
                 });

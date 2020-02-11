@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.Sabit
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Reflection;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -29,6 +30,8 @@
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .Enrich.FromLogContext()
+                            .WriteTo.Console()
+                            .Filter.ByExcluding(x => x.Exception is ValidationException)
                             .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"))
                             .MinimumLevel.Warning())

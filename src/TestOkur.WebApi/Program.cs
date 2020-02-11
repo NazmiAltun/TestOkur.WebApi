@@ -1,6 +1,7 @@
 ﻿namespace TestOkur.WebApi
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Reflection;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,8 @@
                             .Enrich.FromLogContext()
                             .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                             .MinimumLevel.Warning()
+                            .Filter.ByExcluding(x => x.Exception is ValidationException)
+                            .WriteTo.Console()
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))
                         .UseStartup<Startup>();
                 });

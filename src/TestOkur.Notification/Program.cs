@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("TestOkur.Notification.Unit.Tests")]
 
@@ -11,6 +10,8 @@ namespace TestOkur.Notification
     using Prometheus.DotNetRuntime;
     using Serilog;
     using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Reflection;
 
     public static class Program
     {
@@ -34,6 +35,8 @@ namespace TestOkur.Notification
                             .MinimumLevel.Warning()
                             .Enrich.FromLogContext()
                             .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
+                            .Filter.ByExcluding(x => x.Exception is ValidationException)
+                            .WriteTo.Console()
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))
                         .UseStartup<Startup>();
                 });
