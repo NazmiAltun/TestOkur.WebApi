@@ -116,6 +116,7 @@
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseResponseCompression();
+            //TODO:Refactor infrastructre lib
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseEndpoints(endpoints =>
             {
@@ -215,6 +216,7 @@
 
         private void AddHealthChecks(IServiceCollection services)
         {
+            //TODO:Use strong type config
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
