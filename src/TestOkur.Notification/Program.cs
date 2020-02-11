@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("TestOkur.Notification.Unit.Tests")]
 
@@ -32,6 +33,7 @@ namespace TestOkur.Notification
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .MinimumLevel.Warning()
                             .Enrich.FromLogContext()
+                            .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))
                         .UseStartup<Startup>();
                 });

@@ -1,12 +1,13 @@
 ﻿namespace TestOkur.WebApi
 {
+    using System;
+    using System.Reflection;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Prometheus.DotNetRuntime;
     using Serilog;
-    using System;
-    using System.Threading.Tasks;
     using TestOkur.Data;
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.WebApi.Data;
@@ -39,6 +40,7 @@
                         .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .Enrich.FromLogContext()
+                            .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                             .MinimumLevel.Warning()
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))
                         .UseStartup<Startup>();

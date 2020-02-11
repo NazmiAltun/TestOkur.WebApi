@@ -1,14 +1,13 @@
-﻿using MongoDB.Driver;
-
-namespace TestOkur.Notification.Consumers
+﻿namespace TestOkur.Notification.Consumers
 {
-    using MassTransit;
-    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using MongoDB.Driver;
     using TestOkur.Common;
     using TestOkur.Contracts.Sms;
     using TestOkur.Notification.Dtos;
