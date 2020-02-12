@@ -116,7 +116,6 @@
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseResponseCompression();
-            //TODO:Refactor infrastructre lib
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseEndpoints(endpoints =>
             {
