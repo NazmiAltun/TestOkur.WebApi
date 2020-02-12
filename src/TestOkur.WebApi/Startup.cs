@@ -8,7 +8,6 @@
     using IdentityModel;
     using MassTransit;
     using MassTransit.RabbitMqTransport;
-    using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.DataProtection;
@@ -39,7 +38,6 @@
     using TestOkur.Infrastructure.CommandsQueries.Extensions;
     using TestOkur.Infrastructure.Mvc;
     using TestOkur.Infrastructure.Mvc.Extensions;
-    using TestOkur.Infrastructure.Mvc.Monitoring;
     using TestOkur.Infrastructure.Mvc.Threading;
     using TestOkur.Serialization;
     using TestOkur.WebApi.Application.Captcha;
@@ -209,7 +207,6 @@
             services.AddSingleton<ISmsCreditCalculator, SmsCreditCalculator>();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.AddSingleton<ICommandQueryLogger, CommandQueryLogger>();
-            services.AddSingleton<ITelemetryInitializer, HeaderTelemetryInitializer>();
             services.AddHttpContextAccessor();
         }
 
