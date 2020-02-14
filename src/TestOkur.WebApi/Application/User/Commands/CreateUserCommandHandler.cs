@@ -1,7 +1,6 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
     using MassTransit;
-    using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
     using Paramore.Darker;
     using System;

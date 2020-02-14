@@ -4,7 +4,6 @@
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;

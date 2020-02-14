@@ -59,13 +59,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{F2A3E842-195F-4313-B417-A57353A05112}"
 	ProjectSection(SolutionItems) = preProject
 		deploy\notification-prod.sh = deploy\notification-prod.sh
-		deploy\notification-qa.sh = deploy\notification-qa.sh
 		deploy\report-prod.sh = deploy\report-prod.sh
-		deploy\report-qa.sh = deploy\report-qa.sh
 		deploy\retry.sh = deploy\retry.sh
 		deploy\sabit-prod.sh = deploy\sabit-prod.sh
 		deploy\webapi-prod.sh = deploy\webapi-prod.sh
-		deploy\webapi-qa.sh = deploy\webapi-qa.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit", "src\TestOkur.Sabit\TestOkur.Sabit.csproj", "{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}"

@@ -4,7 +4,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using MassTransit;
-    using Microsoft.EntityFrameworkCore;
     using Paramore.Brighter;
     using Paramore.Darker;
     using TestOkur.Data;
