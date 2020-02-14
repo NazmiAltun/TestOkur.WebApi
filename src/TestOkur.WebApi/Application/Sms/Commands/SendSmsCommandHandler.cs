@@ -91,7 +91,7 @@
             await using var dbContext = _dbContextFactory.Create(default);
             var user = await dbContext.Users.FirstAsync(l => l.Id == userId, cancellationToken);
 
-            if (totalCredit > user.SmsBalance)
+            if (totalCredit > user.SmsBalance || user.SmsBalance <= 0)
             {
                 throw new ValidationException(ErrorCodes.InsufficientFunds);
             }
