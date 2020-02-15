@@ -1,8 +1,11 @@
 ﻿namespace TestOkur.Report.Domain.Statistics
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
     using TestOkur.Optic.Form;
+    using TestOkur.Report.Extensions;
 
     public static class StatisticsCalculator
     {
@@ -51,7 +54,7 @@
 
                 foreach (var section in form.Sections)
                 {
-                    lessonNameIdMap.TryAdd(section.LessonName, (section.LessonName.Length + section.ListOrder) * section.LessonId);
+                    lessonNameIdMap.TryAdd(section.LessonName, section.LessonName.GetDeterministicHashCode());
                     generalSuccessPercentSums.Add(section);
                     generalNetSums.Add(section);
                     cityNetSums.Add(form, section);
