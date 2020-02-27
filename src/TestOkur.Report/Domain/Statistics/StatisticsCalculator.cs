@@ -108,6 +108,7 @@
                 SchoolAverageScores = schoolScoreSums.ToAverageDictionary(),
                 ClassroomAverageScores = classroomScoreSums.ToAverageDictionary(),
                 SectionAverages = sectionAverages,
+                CreatedOnUtc = DateTime.UtcNow,
             };
         }
     }

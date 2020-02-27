@@ -34,5 +34,7 @@
         public Dictionary<int, float> ClassroomAverageScores { get; set; }
 
         public Dictionary<string, SectionAverage> SectionAverages { get; set; }
+
+        public DateTime CreatedOnUtc { get; set; }
     }
 }
