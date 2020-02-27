@@ -5,6 +5,7 @@
     using System.Linq;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Domain.Statistics;
+    using TestOkur.Report.Extensions;
 
     public class SchoolResult
     {
@@ -31,27 +32,27 @@
                 .Select(s => new SchoolResultSection()
                 {
                     LessonName = s.LessonName,
-                    CityAverageNet = examStatistics.SectionAverages[s.LessonName]
+                    CityAverageNet = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .CityNets[form.CityId],
-                    CorrectCount = examStatistics.SectionAverages[s.LessonName]
+                    CorrectCount = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .SchoolCorrectCounts[form.SchoolId],
-                    DistrictAverageNet = examStatistics.SectionAverages[s.LessonName]
+                    DistrictAverageNet = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .DistrictNets[form.DistrictId],
-                    EmptyCount = examStatistics.SectionAverages[s.LessonName]
+                    EmptyCount = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .SchoolEmptyCounts[form.SchoolId],
-                    GeneralAverageNet = examStatistics.SectionAverages[s.LessonName]
+                    GeneralAverageNet = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .GeneralNet,
-                    Net = examStatistics.SectionAverages[s.LessonName]
+                    Net = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .SchoolNets[form.SchoolId],
-                    WrongCount = examStatistics.SectionAverages[s.LessonName]
+                    WrongCount = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .SchoolWrongCounts[form.SchoolId],
-                    QuestionCount = (int)(examStatistics.SectionAverages[s.LessonName]
+                    QuestionCount = (int)(examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .SchoolWrongCounts[form.SchoolId] +
-                        examStatistics.SectionAverages[s.LessonName]
+                        examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                             .SchoolCorrectCounts[form.SchoolId] +
-                        examStatistics.SectionAverages[s.LessonName]
+                        examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                             .SchoolEmptyCounts[form.SchoolId]),
-                    SuccessPercent = examStatistics.SectionAverages[s.LessonName]
+                    SuccessPercent = examStatistics.SectionAverages[s.LessonName.GetDeterministicHashCode().ToString()]
                         .SchoolSuccessPercents[form.SchoolId],
                 })
                 .ToList();
