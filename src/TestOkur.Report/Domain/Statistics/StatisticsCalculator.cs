@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Report.Domain.Statistics
+﻿using System;
+
+namespace TestOkur.Report.Domain.Statistics
 {
     using System.Collections.Generic;
     using System.Linq;
