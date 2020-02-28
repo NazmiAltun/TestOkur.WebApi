@@ -1,9 +1,7 @@
 ﻿namespace TestOkur.Report.Domain.Statistics
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Extensions;
 

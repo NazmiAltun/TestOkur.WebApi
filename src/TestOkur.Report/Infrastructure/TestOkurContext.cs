@@ -35,5 +35,8 @@
 
         public IMongoCollection<ExamStatistics> ExamStatistics =>
             _database.GetCollection<ExamStatistics>("ExamStatistics");
+
+        public IMongoCollection<StudentOpticalForm> StudentOpticalFormsBackup =>
+            _database.GetCollection<StudentOpticalForm>("StudentOpticalForms_Backup");
     }
 }
