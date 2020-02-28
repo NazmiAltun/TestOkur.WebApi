@@ -176,24 +176,24 @@
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.StudentId, studentId);
             var forms = await _context.StudentOpticalForms.Find(filter).ToListAsync();
-            await _context.StudentOpticalFormsBackup.InsertManyAsync(forms);
             await _context.StudentOpticalForms.DeleteManyAsync(filter);
+            await BackupFormsAsync(forms);
         }
 
         public async Task DeleteByClassroomIdAsync(int classroomId)
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ClassroomId, classroomId);
             var forms = await _context.StudentOpticalForms.Find(filter).ToListAsync();
-            await _context.StudentOpticalFormsBackup.InsertManyAsync(forms);
             await _context.StudentOpticalForms.DeleteManyAsync(filter);
+            await BackupFormsAsync(forms);
         }
 
         public async Task DeleteByExamIdAsync(int examId)
         {
             var sFilter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, examId);
             var forms = await _context.StudentOpticalForms.Find(sFilter).ToListAsync();
-            await _context.StudentOpticalFormsBackup.InsertManyAsync(forms);
             await _context.StudentOpticalForms.DeleteManyAsync(sFilter);
+            await BackupFormsAsync(forms);
         }
 
         public async Task DeleteManyAsync(IEnumerable<StudentOpticalForm> forms)
@@ -205,14 +205,29 @@
 
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.ExamId, forms.First().ExamId);
             filter &= Builders<StudentOpticalForm>.Filter.In(x => x.StudentId, forms.Select(x => x.StudentId));
-            await _context.StudentOpticalFormsBackup.InsertManyAsync(forms);
             await _context.StudentOpticalForms.DeleteManyAsync(filter);
+            await BackupFormsAsync(forms);
         }
 
         public Task<StudentOpticalForm> DeleteOneAsync(string id)
         {
             var filter = Builders<StudentOpticalForm>.Filter.Eq(x => x.Id, id);
             return _context.StudentOpticalForms.FindOneAndDeleteAsync(filter);
+        }
+
+        private Task BackupFormsAsync(IEnumerable<StudentOpticalForm> forms)
+        {
+            if (forms == null || !forms.Any())
+            {
+                return Task.CompletedTask;
+            }
+
+            foreach (var form in forms)
+            {
+                form.Id = null;
+            }
+
+            return _context.StudentOpticalFormsBackup.InsertManyAsync(forms);
         }
 
         private async Task UpdateStudentOpticalFormsSubject(int subjectId, string newSubjectName)
