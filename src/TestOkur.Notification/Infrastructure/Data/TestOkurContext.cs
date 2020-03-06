@@ -19,8 +19,6 @@
 
         public IMongoCollection<EMail> Emails => _database.GetCollection<EMail>("Emails");
 
-        public IMongoCollection<CommandQueryLog> CommandQueryLogs => _database.GetCollection<CommandQueryLog>("CommandQueryLogs");
-
         public IMongoCollection<SmsLog> SmsLogs => _database.GetCollection<SmsLog>("SmsLogs");
     }
 }
