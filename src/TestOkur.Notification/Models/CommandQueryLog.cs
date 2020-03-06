@@ -13,6 +13,10 @@
             CreatedOnUTC = contextMessage.CreatedOnUTC;
         }
 
+        public CommandQueryLog()
+        {
+        }
+
         public string Message { get; set; }
 
         public string Type { get; set; }
