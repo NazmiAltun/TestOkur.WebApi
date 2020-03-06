@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace TestOkur.Report.Domain.Statistics
+﻿namespace TestOkur.Report.Domain.Statistics
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using TestOkur.Optic.Form;

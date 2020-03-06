@@ -1,38 +1,40 @@
 ﻿namespace TestOkur.WebApi.Infrastructure
 {
-    using MassTransit;
     using Microsoft.Extensions.Logging;
     using Paramore.Brighter;
     using Paramore.Darker;
     using System;
     using System.Threading.Tasks;
-    using TestOkur.Common.Helpers;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.Serialization;
+    using ILogger = Serilog.ILogger;
 
     public class CommandQueryLogger : ICommandQueryLogger
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ILogger _commandQueryLogger;
         private readonly ILogger<CommandQueryLogger> _logger;
 
-        public CommandQueryLogger(IPublishEndpoint publishEndpoint, ILogger<CommandQueryLogger> logger)
+        public CommandQueryLogger(ILogger<CommandQueryLogger> logger, ILogger commandQueryLogger)
         {
-            _publishEndpoint = publishEndpoint;
+            _commandQueryLogger = commandQueryLogger;
             _logger = logger;
         }
 
-        public async Task LogQueryAsync<TQuery>(TQuery query)
+        public Task LogQueryAsync<TQuery>(TQuery query)
             where TQuery : IQuery
         {
             try
             {
-                await _publishEndpoint.Publish(new CommandQueryLogEvent(
-                    JsonUtils.Serialize(query), query.GetType().ToString()));
+                var type = query.GetType().ToString();
+                var queryContent = JsonUtils.Serialize(query);
+                _commandQueryLogger.Information("Query. Type : {Type} - {QueryContent}", type, queryContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occured while logging query");
             }
+
+            return Task.CompletedTask;
         }
 
         public void LogQuery<TQuery>(TQuery query)
@@ -40,9 +42,9 @@
         {
             try
             {
-                AsyncHelper.RunSync(() =>
-                    _publishEndpoint.Publish(new CommandQueryLogEvent(
-                    JsonUtils.Serialize(query), query.GetType().ToString())));
+                var type = query.GetType().ToString();
+                var queryContent = JsonUtils.Serialize(query);
+                _commandQueryLogger.Information("Query. Type : {Type} - {QueryContent}", type, queryContent);
             }
             catch (Exception ex)
             {
@@ -50,18 +52,22 @@
             }
         }
 
-        public async Task LogCommandAsync<TCommand>(TCommand command)
+        public Task LogCommandAsync<TCommand>(TCommand command)
             where TCommand : IRequest
         {
             try
             {
-                await _publishEndpoint.Publish(new CommandQueryLogEvent(
-                    JsonUtils.Serialize(command), command.GetType().ToString()));
+                var type = command.GetType().ToString();
+                var commandContent = JsonUtils.Serialize(command);
+                _commandQueryLogger.Information(
+                    "Command. Type : {Type} - {CommandContent}", type, commandContent);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occured while logging query");
             }
+
+            return Task.CompletedTask;
         }
 
         public void LogCommand<TCommand>(TCommand command)
@@ -69,9 +75,10 @@
         {
             try
             {
-                AsyncHelper.RunSync(() =>
-                    _publishEndpoint.Publish(new CommandQueryLogEvent(
-                        JsonUtils.Serialize(command), command.GetType().ToString())));
+                var type = command.GetType().ToString();
+                var commandContent = JsonUtils.Serialize(command);
+                _commandQueryLogger.Information(
+                    "Command. Type : {Type} - {CommandContent}", type, commandContent);
             }
             catch (Exception ex)
             {

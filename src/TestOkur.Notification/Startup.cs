@@ -50,7 +50,7 @@
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment, IWebHostEnvironment webHostEnvironment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _configuration = configuration;
             _environment = environment;
@@ -284,7 +284,6 @@
                         e.Consumer<SmsCreditAddedConsumer>(provider);
                         e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
                         e.Consumer<UserErrorReceivedConsumer>(provider);
-                        e.Consumer<CommandQueryLogEventConsumer>(provider);
                         e.Consumer<ReferredUserActivatedConsumer>(provider);
                     });
                     cfg.SetLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
