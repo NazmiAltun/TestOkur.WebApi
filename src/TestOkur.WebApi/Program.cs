@@ -42,7 +42,7 @@
                             .ReadFrom.Configuration(hostingContext.Configuration)
                             .Enrich.FromLogContext()
                             .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
-                            .MinimumLevel.Information()
+                            .MinimumLevel.Warning()
                             .Filter.ByExcluding(x => x.Exception is ValidationException)
                             .WriteTo.Console()
                             .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))

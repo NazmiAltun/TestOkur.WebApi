@@ -24,7 +24,7 @@
             {
                 var type = query.GetType().ToString();
                 var queryContent = JsonUtils.Serialize(query);
-                _logger.LogInformation("Query. Type : {Type} - {QueryContent}", type, queryContent);
+                _logger.LogWarning("Query. Type : {Type} - {QueryContent}", type, queryContent);
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@
             {
                 var type = query.GetType().ToString();
                 var queryContent = JsonUtils.Serialize(query);
-                _logger.LogInformation("Query. Type : {Type} - {QueryContent}", type, queryContent);
+                _logger.LogWarning("Query. Type : {Type} - {QueryContent}", type, queryContent);
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@
             {
                 var type = command.GetType().ToString();
                 var commandContent = JsonUtils.Serialize(command);
-                _logger.LogInformation(
+                _logger.LogWarning(
                     "Command. Type : {Type} - {CommandContent}", type, commandContent);
             }
             catch (Exception ex)
@@ -74,7 +74,7 @@
             {
                 var type = command.GetType().ToString();
                 var commandContent = JsonUtils.Serialize(command);
-                _logger.LogInformation(
+                _logger.LogWarning(
                     "Command. Type : {Type} - {CommandContent}", type, commandContent);
             }
             catch (Exception ex)
