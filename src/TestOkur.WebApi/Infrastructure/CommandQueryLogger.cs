@@ -11,12 +11,10 @@
 
     public class CommandQueryLogger : ICommandQueryLogger
     {
-        private readonly ILogger _commandQueryLogger;
         private readonly ILogger<CommandQueryLogger> _logger;
 
-        public CommandQueryLogger(ILogger<CommandQueryLogger> logger, ILogger commandQueryLogger)
+        public CommandQueryLogger(ILogger<CommandQueryLogger> logger)
         {
-            _commandQueryLogger = commandQueryLogger;
             _logger = logger;
         }
 
@@ -27,7 +25,7 @@
             {
                 var type = query.GetType().ToString();
                 var queryContent = JsonUtils.Serialize(query);
-                _commandQueryLogger.Information("Query. Type : {Type} - {QueryContent}", type, queryContent);
+                _logger.LogInformation("Query. Type : {Type} - {QueryContent}", type, queryContent);
             }
             catch (Exception ex)
             {
@@ -44,7 +42,7 @@
             {
                 var type = query.GetType().ToString();
                 var queryContent = JsonUtils.Serialize(query);
-                _commandQueryLogger.Information("Query. Type : {Type} - {QueryContent}", type, queryContent);
+                _logger.LogInformation("Query. Type : {Type} - {QueryContent}", type, queryContent);
             }
             catch (Exception ex)
             {
@@ -59,7 +57,7 @@
             {
                 var type = command.GetType().ToString();
                 var commandContent = JsonUtils.Serialize(command);
-                _commandQueryLogger.Information(
+                _logger.LogInformation(
                     "Command. Type : {Type} - {CommandContent}", type, commandContent);
             }
             catch (Exception ex)
@@ -77,7 +75,7 @@
             {
                 var type = command.GetType().ToString();
                 var commandContent = JsonUtils.Serialize(command);
-                _commandQueryLogger.Information(
+                _logger.LogInformation(
                     "Command. Type : {Type} - {CommandContent}", type, commandContent);
             }
             catch (Exception ex)
