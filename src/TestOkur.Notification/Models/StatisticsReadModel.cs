@@ -1,5 +1,7 @@
 ﻿namespace TestOkur.Notification.Models
 {
+    using System.Collections.Generic;
+
     public class StatisticsReadModel
     {
         public int TotalStudentCount => TotalESchoolStudentCount + TotalBulkStudentCount + TotalSingleEntryStudentCount;
@@ -33,5 +35,7 @@
         public int TodayScannedStudentFormCountByFile { get; set; }
 
         public int TodayExamCount { get; set; }
+
+        public IEnumerable<ExamReadModel> SharedExams { get; set; }
     }
 }

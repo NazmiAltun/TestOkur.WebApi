@@ -320,6 +320,16 @@
                 @Model.Statistics.TodaySingleEntryStudentCount / @Model.Statistics.TotalSingleEntryStudentCount
             </td>
         </tr>
+        <tr>
+            <td align="center" colspan="2">
+                <h2>ORTAK SINAVLAR KATILIM</h2></td>
+        </tr>
+        @foreach (var item in Model.SharedExamAttendance) {
+        <tr>
+            <td>@item.Key</td>
+            <td>@item.Value</td>
+        </tr>
+        }
     </table>
 </body>
 

@@ -9,7 +9,6 @@
 
     public class WebApiClient : IWebApiClient
     {
-        private const string AppSettingsEndpoint = "/api/v1/settings/appsettings";
         private const string UsersEndpoint = "api/v1/users";
         private const string StatisticsEndpoint = "api/v1/statistics";
 

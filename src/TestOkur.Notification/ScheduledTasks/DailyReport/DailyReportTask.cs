@@ -1,9 +1,10 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks.DailyReport
 {
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Logging;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
     using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
@@ -61,6 +62,8 @@
             var identityStatisticsTask = _oAuthClient.GetDailyStatsAsync();
 
             await Task.WhenAll(getUsersTask, webApiStatisticsTask, reportStatisticsTask, notificationStatisticsTask, identityStatisticsTask);
+            var sharedExams = (await webApiStatisticsTask).SharedExams.ToDictionary(x => x.Id, x => x.Name);
+            var examStatistics = await _reportClient.GetExamStatisticsAsync(sharedExams.Keys);
 
             var model = new DailyReportModel()
             {
@@ -72,6 +75,8 @@
             model.NotificationStatistics.TopSmsSenderEmailInDay =
                 getUsersTask.Result.FirstOrDefault(u => u.Id == model.NotificationStatistics.TopSmsSenderIdInDay)
                 ?.Email;
+            model.SharedExamAttendance = examStatistics.Select(e =>
+                new KeyValuePair<string, int>(sharedExams[e.ExamId], e.GeneralAttendanceCount));
 
             return model;
         }

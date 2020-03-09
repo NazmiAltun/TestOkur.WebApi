@@ -22,33 +22,13 @@
         public Task LogQueryAsync<TQuery>(TQuery query)
             where TQuery : IQuery
         {
-            //try
-            //{
-            //    var type = query.GetType().ToString();
-            //    var queryContent = JsonUtils.Serialize(query);
-            //    _logger.LogWarning("Query. Type : {Type} - {QueryContent}", type, queryContent);
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "Error occured while logging query");
-            //}
-
             return Task.CompletedTask;
         }
 
         public void LogQuery<TQuery>(TQuery query)
             where TQuery : IQuery
         {
-            //try
-            //{
-            //    var type = query.GetType().ToString();
-            //    var queryContent = JsonUtils.Serialize(query);
-            //    _logger.LogWarning("Query. Type : {Type} - {QueryContent}", type, queryContent);
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "Error occured while logging query");
-            //}
+            // Won't log queries
         }
 
         public async Task LogCommandAsync<TCommand>(TCommand command)

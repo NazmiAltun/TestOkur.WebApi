@@ -93,7 +93,8 @@
                         sms.Id = Guid.NewGuid();
                     }
                 }
-            } while (tryCount++ < maxTryCount);
+            }
+            while (tryCount++ < maxTryCount);
         }
 
         private Task PublishSmsRequestFailedEventAsync(ConsumeContext<ISendSmsRequestReceived> context, Sms sms, Exception ex)
