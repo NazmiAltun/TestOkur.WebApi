@@ -1,5 +1,8 @@
 ﻿namespace TestOkur.WebApi.Application.Statistics
 {
+    using System.Collections.Generic;
+    using TestOkur.WebApi.Application.Exam.Queries;
+
     public class StatisticsReadModel
     {
         public int TotalESchoolStudentCount { get; set; }
@@ -25,5 +28,7 @@
         public int TodayScannedStudentFormCountByFile { get; set; }
 
         public int TodayExamCount { get; set; }
+
+        public IEnumerable<ExamReadModel> SharedExams { get; set; }
     }
 }
