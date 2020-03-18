@@ -53,5 +53,12 @@
                 .Find(filter)
                 .ToListAsync();
         }
+
+        public Task<List<SmsLog>> GetUserSmsLogsAsync(int userId)
+        {
+            var filter = Builders<SmsLog>.Filter.Eq(x => x.UserId, userId);
+
+            return _context.SmsLogs.Find(filter).ToListAsync();
+        }
     }
 }

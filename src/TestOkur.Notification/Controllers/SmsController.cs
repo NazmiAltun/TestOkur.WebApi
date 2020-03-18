@@ -40,5 +40,13 @@
         {
             return Ok(await _smsRepository.GetTodaysSmsesAsync());
         }
+
+        [HttpGet("{userId}/logs")]
+        [Authorize(AuthorizationPolicies.Admin)]
+        [ProducesResponseType(typeof(IEnumerable<SmsLog>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUserSmsLogsAsync(int userId)
+        {
+            return Ok(await _smsRepository.GetUserSmsLogsAsync(userId));
+        }
     }
 }
