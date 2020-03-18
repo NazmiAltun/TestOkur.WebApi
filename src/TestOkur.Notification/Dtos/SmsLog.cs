@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Notification.Dtos
 {
+    using MongoDB.Bson;
     using System;
     using System.Collections.Generic;
     using TestOkur.Contracts.Sms;
@@ -15,6 +16,8 @@
             LogType = logType;
             DateTimeUtc = dateTimeUtc;
         }
+
+        public ObjectId Id { get; set; }
 
         public int UserId { get; private set; }
 
