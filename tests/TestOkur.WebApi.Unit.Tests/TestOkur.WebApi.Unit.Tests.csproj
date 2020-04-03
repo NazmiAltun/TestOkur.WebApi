@@ -8,7 +8,7 @@
     <ProjectReference Include="..\..\src\TestOkur.WebApi\TestOkur.WebApi.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="coverlet.msbuild" Version="2.8.0">
+    <PackageReference Update="coverlet.msbuild" Version="2.8.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
