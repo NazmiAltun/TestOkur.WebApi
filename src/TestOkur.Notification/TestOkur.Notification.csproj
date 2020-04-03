@@ -14,7 +14,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.9" />
     <PackageReference Include="Hangfire.Core" Version="1.7.9" />
     <PackageReference Include="Hangfire.Mongo" Version="0.6.7" />
-    <PackageReference Include="IdentityModel" Version="4.1.1" />
+    <PackageReference Include="IdentityModel" Version="4.2.0" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.2.0" />
     <PackageReference Include="MassTransit.Extensions.Logging" Version="5.5.6" />
