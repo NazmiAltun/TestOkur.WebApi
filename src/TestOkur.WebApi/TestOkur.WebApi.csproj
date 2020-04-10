@@ -10,7 +10,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.1.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.0.2" />
-    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.1.0" />
     <PackageReference Include="CacheManager.Core" Version="1.2.0" />
     <PackageReference Include="CacheManager.Microsoft.Extensions.Caching.Memory" Version="1.2.0" />
     <PackageReference Include="CacheManager.Microsoft.Extensions.Configuration" Version="1.2.0" />
