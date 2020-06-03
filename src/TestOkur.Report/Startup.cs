@@ -161,7 +161,7 @@ namespace TestOkur.Report
             services.AddMassTransit(m =>
             {
                 m.AddConsumers(GetConsumerTypes());
-                m.AddBus(provider =>
+                m.AddBus(context =>
                     Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
                         var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
@@ -179,9 +179,9 @@ namespace TestOkur.Report
                         {
                             e.PrefetchCount = 16;
                             e.UseMessageRetry(x => x.Interval(2000, 1000));
-                            e.RegisterConsumers(provider, Environment.IsDevelopment());
+                            e.RegisterConsumers(context.Container, Environment.IsDevelopment());
                         });
-                        cfg.SetLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
+                        cfg.SetLoggerFactory(context.Container.GetRequiredService<ILoggerFactory>());
                     }));
             });
 

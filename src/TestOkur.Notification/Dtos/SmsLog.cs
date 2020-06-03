@@ -16,6 +16,7 @@
             LogType = logType;
             DateTimeUtc = dateTimeUtc;
         }
+
 		public SmsLog()
 		{
 		}

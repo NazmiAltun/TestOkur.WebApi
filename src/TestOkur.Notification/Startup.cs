@@ -257,7 +257,7 @@
             services.AddMassTransit(x =>
             {
                 x.AddConsumers(GetConsumerTypes());
-                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                x.AddBus(context => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
                     cfg.Host(new Uri(uriStr), hc =>
@@ -273,20 +273,20 @@
 
                         if (!_environment.IsDevelopment())
                         {
-                            e.Consumer<DefaultFaultConsumer>(provider);
+                            e.Consumer<DefaultFaultConsumer>(context.Container);
                         }
 
-                        e.Consumer<NewUserRegisteredConsumer>(provider);
-                        e.Consumer<SendSmsRequestReceivedConsumer>(provider);
-                        e.Consumer<SendSmsRequestFailedConsumer>(provider);
-                        e.Consumer<UserActivatedConsumer>(provider);
-                        e.Consumer<UserSubscriptionExtendedConsumer>(provider);
-                        e.Consumer<SmsCreditAddedConsumer>(provider);
-                        e.Consumer<ResetPasswordTokenGeneratedConsumer>(provider);
-                        e.Consumer<UserErrorReceivedConsumer>(provider);
-                        e.Consumer<ReferredUserActivatedConsumer>(provider);
+                        e.Consumer<NewUserRegisteredConsumer>(context.Container);
+                        e.Consumer<SendSmsRequestReceivedConsumer>(context.Container);
+                        e.Consumer<SendSmsRequestFailedConsumer>(context.Container);
+                        e.Consumer<UserActivatedConsumer>(context.Container);
+                        e.Consumer<UserSubscriptionExtendedConsumer>(context.Container);
+                        e.Consumer<SmsCreditAddedConsumer>(context.Container);
+                        e.Consumer<ResetPasswordTokenGeneratedConsumer>(context.Container);
+                        e.Consumer<UserErrorReceivedConsumer>(context.Container);
+                        e.Consumer<ReferredUserActivatedConsumer>(context.Container);
                     });
-                    cfg.SetLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
+                    cfg.SetLoggerFactory(context.Container.GetRequiredService<ILoggerFactory>());
                 }));
             });
         }
