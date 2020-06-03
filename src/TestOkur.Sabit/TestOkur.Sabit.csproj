@@ -5,7 +5,7 @@
     <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="3.1.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.1.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.1.1" />
@@ -13,10 +13,10 @@
     <PackageReference Include="CacheManager.Microsoft.Extensions.Caching.Memory" Version="1.2.0" />
     <PackageReference Include="CacheManager.Microsoft.Extensions.Configuration" Version="1.2.0" />
     <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
-    <PackageReference Include="IdentityModel" Version="4.2.0" />
+    <PackageReference Include="IdentityModel" Version="4.3.0" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
-    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.2.0" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="6.2.0" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.3.2" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="6.3.2" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.5.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.3.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
