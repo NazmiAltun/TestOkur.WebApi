@@ -35,8 +35,8 @@
         public async Task PublishSmsRequestFailedEvent_When_SmsCannotBeSent()
         {
             var eventList = new List<ISendSmsRequestFailed>();
-            var publishEndPoint = Substitute.For<IPublishEndpoint>();
-            publishEndPoint.Publish(Arg.Any<ISendSmsRequestFailed>())
+            var bus = Substitute.For<IBus>();
+            bus.Publish(Arg.Any<ISendSmsRequestFailed>())
                 .Returns(Task.FromResult((object)null))
                 .AndDoes(x => eventList.Add(x.Arg<ISendSmsRequestFailed>()));
             var smsRepository = Substitute.For<ISmsRepository>();
@@ -51,7 +51,7 @@
             consumerContext.Message.SmsMessages.Returns(smsMessages);
 
             var consumer = new SendSmsRequestReceivedConsumer(
-                publishEndPoint,
+                bus,
                 CreateSmsClient("text/plain", "HATA|310|Uzun mesaj metni"),
                 smsRepository,
                 logger,

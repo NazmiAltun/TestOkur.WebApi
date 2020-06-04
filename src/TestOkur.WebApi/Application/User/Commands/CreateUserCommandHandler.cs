@@ -19,7 +19,7 @@
     public sealed class CreateUserCommandHandler : RequestHandlerAsync<CreateUserCommand>
     {
         private readonly ICaptchaService _captchaService;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
         private readonly IApplicationDbContextFactory _dbContextFactory;
@@ -27,14 +27,14 @@
 
         public CreateUserCommandHandler(
             ICaptchaService captchaService,
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IIdentityClient identityClient,
             IQueryProcessor queryProcessor,
             IApplicationDbContextFactory dbContextFactory,
             ISabitClient sabitClient)
         {
             _captchaService = captchaService ?? throw new ArgumentNullException(nameof(captchaService));
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor;
             _dbContextFactory = dbContextFactory;
@@ -102,7 +102,7 @@
             CreateUserCommand command,
             CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                  new NewUserRegistered(
                      command.Email,
                      command.RegistrarFullName,

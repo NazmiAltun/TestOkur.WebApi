@@ -11,11 +11,11 @@
     public class AddSmsCreditsCommandHandler : RequestHandlerAsync<AddSmsCreditsCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public AddSmsCreditsCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
+        public AddSmsCreditsCommandHandler(IBus bus, IApplicationDbContextFactory dbContextFactory)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _dbContextFactory = dbContextFactory;
         }
 
@@ -33,7 +33,7 @@
                         cancellationToken);
                 user.AddSmsBalance(command.Amount);
                 await dbContext.SaveChangesAsync(cancellationToken);
-                await _publishEndpoint.Publish(
+                await _bus.Publish(
                     new SmsCreditAdded(
                         command.Amount,
                         user.SmsBalance,

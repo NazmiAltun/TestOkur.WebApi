@@ -18,17 +18,17 @@
     public sealed class EditLessonCommandHandler : RequestHandlerAsync<EditLessonCommand>
     {
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IApplicationDbContextFactory _dbContextFactory;
 
         public EditLessonCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IQueryProcessor queryProcessor,
             IApplicationDbContextFactory dbContextFactory)
         {
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _dbContextFactory = dbContextFactory;
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
         }
 
         [Idempotent(1)]
@@ -57,7 +57,7 @@
             EditLessonCommand command,
             CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new LessonNameChanged(command.LessonId, command.NewName),
                 cancellationToken);
         }

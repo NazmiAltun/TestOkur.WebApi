@@ -13,11 +13,11 @@
     public sealed class DeleteClassroomCommandHandler : RequestHandlerAsync<DeleteClassroomCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public DeleteClassroomCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
+        public DeleteClassroomCommandHandler(IBus bus, IApplicationDbContextFactory dbContextFactory)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _dbContextFactory = dbContextFactory;
         }
 
@@ -44,7 +44,7 @@
 
         private Task PublishEventAsync(int id, CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new ClassroomDeleted(id),
                 cancellationToken);
         }

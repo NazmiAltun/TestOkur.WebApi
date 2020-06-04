@@ -18,14 +18,14 @@
     public class ExamController : ControllerBase
     {
         private readonly IAmACommandProcessor _commandProcessor;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IQueryProcessor _queryProcessor;
 
-        public ExamController(IPublishEndpoint publishEndpoint, IAmACommandProcessor commandProcessor, IQueryProcessor queryProcessor)
+        public ExamController(IBus bus, IAmACommandProcessor commandProcessor, IQueryProcessor queryProcessor)
         {
             _commandProcessor = commandProcessor ?? throw new ArgumentNullException(nameof(commandProcessor));
             _queryProcessor = queryProcessor;
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@
         public async Task<IActionResult> ReEvaluateAsync()
         {
             var examIds = await _queryProcessor.ExecuteAsync(GetAllExamIdsQuery.Default);
-            await _publishEndpoint.Publish(new ReEvaluateMultipleExams(examIds));
+            await _bus.Publish(new ReEvaluateMultipleExams(examIds));
             return Accepted();
         }
 

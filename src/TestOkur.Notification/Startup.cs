@@ -265,7 +265,6 @@
                         hc.Username(RabbitMqConfiguration.Username);
                         hc.Password(RabbitMqConfiguration.Password);
                     });
-
                     cfg.ReceiveEndpoint("notification-queue", e =>
                     {
                         e.PrefetchCount = 16;

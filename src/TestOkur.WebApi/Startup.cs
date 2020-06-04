@@ -143,7 +143,6 @@
                             hc.Username(RabbitMqConfiguration.Username);
                             hc.Password(RabbitMqConfiguration.Password);
                         });
-
                         if (configure != null)
                         {
                             cfg.ReceiveEndpoint(configure);

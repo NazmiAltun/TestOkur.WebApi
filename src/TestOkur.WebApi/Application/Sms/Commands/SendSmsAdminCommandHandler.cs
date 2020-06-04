@@ -12,12 +12,11 @@
     {
         private const string Subject = "TESTOKUR";
 
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public SendSmsAdminCommandHandler(IPublishEndpoint publishEndpoint)
+        public SendSmsAdminCommandHandler(IBus bus)
         {
-            _publishEndpoint = publishEndpoint ??
-                               throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
         }
 
         [Idempotent(1)]
@@ -30,7 +29,7 @@
                 default,
                 new[] { new SmsMessage(command.Receiver, Subject, command.Body, 0), },
                 "nazmialtun@windowslive.com");
-            await _publishEndpoint.Publish<ISendSmsRequestReceived>(
+            await _bus.Publish<ISendSmsRequestReceived>(
                 @event,
                 cancellationToken);
             return await base.HandleAsync(command, cancellationToken);

@@ -18,14 +18,14 @@
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
         public EditClassroomCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IApplicationDbContextFactory dbContextFactory,
             IQueryProcessor queryProcessor)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _dbContextFactory = dbContextFactory;
             _queryProcessor = queryProcessor;
         }
@@ -54,7 +54,7 @@
 
         private Task PublishEventAsync(EditClassroomCommand command, CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new ClassroomUpdated(command.ClassroomId, command.NewGrade, command.NewName),
                 cancellationToken);
         }

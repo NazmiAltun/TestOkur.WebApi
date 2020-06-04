@@ -22,15 +22,15 @@
         : RequestHandlerAsync<EditExamCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IQueryProcessor _queryProcessor;
 
         public EditExamCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IApplicationDbContextFactory dbContextFactory,
             IQueryProcessor queryProcessor)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _dbContextFactory = dbContextFactory;
             _queryProcessor = queryProcessor;
         }
@@ -78,7 +78,7 @@
             EditExamCommand command,
             CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new ExamUpdated(exam, command.AnswerKeyOpticalForms),
                 cancellationToken);
         }

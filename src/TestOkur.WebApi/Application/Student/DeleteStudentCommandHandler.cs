@@ -12,11 +12,11 @@
     public class DeleteStudentCommandHandler : RequestHandlerAsync<DeleteStudentCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public DeleteStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
+        public DeleteStudentCommandHandler(IBus bus, IApplicationDbContextFactory dbContextFactory)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _dbContextFactory = dbContextFactory;
         }
 
@@ -42,7 +42,7 @@
 
         private async Task PublishEventAsync(int id, CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            await _bus.Publish(
                 new StudentDeleted(id),
                 cancellationToken);
         }

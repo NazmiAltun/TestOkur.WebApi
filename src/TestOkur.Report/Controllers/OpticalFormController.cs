@@ -19,7 +19,7 @@
     [Authorize(AuthorizationPolicies.Customer)]
     public class OpticalFormController : ControllerBase
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStudentOpticalFormRepository _studentOpticalFormRepository;
         private readonly IAnswerKeyOpticalFormRepository _answerKeyOpticalFormRepository;
@@ -27,12 +27,12 @@
         public OpticalFormController(
             IStudentOpticalFormRepository studentOpticalFormRepository,
             IHttpContextAccessor httpContextAccessor,
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository)
         {
             _studentOpticalFormRepository = studentOpticalFormRepository;
             _httpContextAccessor = httpContextAccessor;
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _answerKeyOpticalFormRepository = answerKeyOpticalFormRepository;
         }
 
@@ -70,7 +70,7 @@
         {
             await _studentOpticalFormRepository.DeleteManyAsync(forms);
             await _studentOpticalFormRepository.AddManyAsync(forms);
-            await _publishEndpoint.Publish(new EvaluateExam(forms.First().ExamId));
+            await _bus.Publish(new EvaluateExam(forms.First().ExamId));
             return Ok();
         }
 
@@ -81,7 +81,7 @@
 
             if (deletedForm != null)
             {
-                await _publishEndpoint.Publish(new EvaluateExam(deletedForm.ExamId));
+                await _bus.Publish(new EvaluateExam(deletedForm.ExamId));
             }
 
             return Ok();

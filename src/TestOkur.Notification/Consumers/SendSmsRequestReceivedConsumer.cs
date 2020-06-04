@@ -21,18 +21,18 @@
 
         private readonly ILogger<SendSmsRequestReceivedConsumer> _logger;
         private readonly ISmsClient _smsClient;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly ISmsRepository _smsRepository;
         private readonly ISmsLogRepository _smsLogRepository;
 
         public SendSmsRequestReceivedConsumer(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             ISmsClient smsClient,
             ISmsRepository smsRepository,
             ILogger<SendSmsRequestReceivedConsumer> logger,
             ISmsLogRepository smsLogRepository)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _smsClient = smsClient;
             _smsRepository = smsRepository;
             _logger = logger;
@@ -114,7 +114,7 @@
                 userFriendlyMessage,
                 context.Message.UserEmail);
 
-            return _publishEndpoint.Publish(@event);
+            return _bus.Publish(@event);
         }
     }
 }

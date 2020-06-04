@@ -16,11 +16,11 @@
     public class ErrorController : ControllerBase
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public ErrorController(IPublishEndpoint publishEndpoint, IWebHostEnvironment hostingEnvironment)
+        public ErrorController(IBus bus, IWebHostEnvironment hostingEnvironment)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -28,7 +28,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> PostAsync(ErrorModel model)
         {
-            await _publishEndpoint.Publish(model);
+            await _bus.Publish(model);
             return Accepted();
         }
 

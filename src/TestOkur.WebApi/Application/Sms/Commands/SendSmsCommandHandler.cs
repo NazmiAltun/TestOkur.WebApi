@@ -23,21 +23,21 @@
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly ISmsCreditCalculator _smsCreditCalculator;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IApplicationDbContextFactory _dbContextFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SendSmsCommandHandler(
             ISmsCreditCalculator smsCreditCalculator,
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IHttpContextAccessor httpContextAccessor,
             IQueryProcessor queryProcessor,
             IApplicationDbContextFactory dbContextFactory)
         {
             _smsCreditCalculator = smsCreditCalculator ??
                 throw new ArgumentNullException(nameof(smsCreditCalculator));
-            _publishEndpoint = publishEndpoint ??
-                throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ??
+                throw new ArgumentNullException(nameof(bus));
             _httpContextAccessor = httpContextAccessor ??
                 throw new ArgumentNullException(nameof(httpContextAccessor));
             _queryProcessor = queryProcessor ??
@@ -70,7 +70,7 @@
                 messages,
                 user.Email);
 
-            await _publishEndpoint.Publish<ISendSmsRequestReceived>(
+            await _bus.Publish<ISendSmsRequestReceived>(
                 @event,
                 cancellationToken);
         }

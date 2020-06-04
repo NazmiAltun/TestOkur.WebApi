@@ -17,13 +17,13 @@
         : RequestHandlerAsync<EditSubjectCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
         public EditSubjectCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IApplicationDbContextFactory dbContextFactory)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _dbContextFactory = dbContextFactory;
         }
 
@@ -49,7 +49,7 @@
             EditSubjectCommand command,
             CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new SubjectChanged(command.SubjectId, command.NewName),
                 cancellationToken);
         }

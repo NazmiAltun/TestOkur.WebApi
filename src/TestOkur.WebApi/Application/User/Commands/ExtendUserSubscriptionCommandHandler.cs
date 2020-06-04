@@ -13,16 +13,16 @@
 
     public sealed class ExtendUserSubscriptionCommandHandler : RequestHandlerAsync<ExtendUserSubscriptionCommand>
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
 
         public ExtendUserSubscriptionCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IIdentityClient identityClient,
             IQueryProcessor queryProcessor)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
         }
@@ -48,7 +48,7 @@
             DateTime expiryDateTimeUtc,
             CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new UserSubscriptionExtended(
                     model.FirstName,
                     model.LastName,

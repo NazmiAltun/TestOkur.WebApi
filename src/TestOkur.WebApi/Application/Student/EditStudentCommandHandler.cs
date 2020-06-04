@@ -18,11 +18,11 @@
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public EditStudentCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
+        public EditStudentCommandHandler(IBus bus, IApplicationDbContextFactory dbContextFactory, IQueryProcessor queryProcessor)
         {
-            _publishEndpoint = publishEndpoint;
+            _bus = bus;
             _dbContextFactory = dbContextFactory;
             _queryProcessor = queryProcessor;
         }
@@ -60,7 +60,7 @@
 
         private async Task PublishEventAsync(EditStudentCommand command, CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            await _bus.Publish(
                 new StudentUpdated(
                     command.NewClassroomId,
                     command.NewStudentNumber,

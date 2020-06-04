@@ -23,15 +23,15 @@
     public sealed class CreateExamCommandHandler : RequestHandlerAsync<CreateExamCommand>
     {
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IApplicationDbContextFactory _dbContextFactory;
 
         public CreateExamCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IApplicationDbContextFactory dbContextFactory,
             IQueryProcessor queryProcessor)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _dbContextFactory = dbContextFactory;
             _queryProcessor = queryProcessor;
         }
@@ -74,7 +74,7 @@
             IEnumerable<AnswerKeyOpticalForm> answerKeyOpticalForms,
             CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new ExamCreated(exam, answerKeyOpticalForms),
                 cancellationToken);
         }

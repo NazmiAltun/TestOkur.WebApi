@@ -17,18 +17,18 @@
         private const int ReferrerGainedSmsCredits = 1000;
         private const int RefereeGainedSmsCredits = 500;
 
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
         private readonly IApplicationDbContextFactory _applicationDbContextFactory;
 
         public ActivateUserCommandHandler(
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IIdentityClient identityClient,
             IQueryProcessor queryProcessor,
             IApplicationDbContextFactory applicationDbContextFactory)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _applicationDbContextFactory = applicationDbContextFactory;
@@ -51,7 +51,7 @@
             UserReadModel user,
             CancellationToken cancellationToken)
         {
-            await _publishEndpoint.Publish(
+            await _bus.Publish(
                 new UserActivated(
                     user.Phone,
                     user.Email,

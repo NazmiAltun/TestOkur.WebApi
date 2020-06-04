@@ -12,11 +12,11 @@
     public sealed class DeleteExamCommandHandler : RequestHandlerAsync<DeleteExamCommand>
     {
         private readonly IApplicationDbContextFactory _dbContextFactory;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
 
-        public DeleteExamCommandHandler(IPublishEndpoint publishEndpoint, IApplicationDbContextFactory dbContextFactory)
+        public DeleteExamCommandHandler(IBus bus, IApplicationDbContextFactory dbContextFactory)
         {
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _dbContextFactory = dbContextFactory;
         }
 
@@ -42,7 +42,7 @@
 
         private Task PublishEventAsync(int id, CancellationToken cancellationToken)
         {
-            return _publishEndpoint.Publish(
+            return _bus.Publish(
                 new ExamDeleted(id),
                 cancellationToken);
         }

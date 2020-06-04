@@ -19,19 +19,19 @@
     {
         private readonly IQueryProcessor _queryProcessor;
         private readonly ICaptchaService _captchaService;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IBus _bus;
         private readonly IIdentityClient _identityClient;
         private readonly OAuthConfiguration _oAuthConfiguration;
 
         public SendResetPasswordLinkCommandHandler(
             ICaptchaService captchaService,
-            IPublishEndpoint publishEndpoint,
+            IBus bus,
             IIdentityClient identityClient,
             IQueryProcessor queryProcessor,
             OAuthConfiguration oAuthConfiguration)
         {
             _captchaService = captchaService ?? throw new ArgumentNullException(nameof(captchaService));
-            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
             _oAuthConfiguration = oAuthConfiguration;
@@ -59,7 +59,7 @@
                 cancellationToken);
             var url = $"{_oAuthConfiguration.Authority}account/reset-password?token={token}&email={email}";
 
-            await _publishEndpoint.Publish(
+            await _bus.Publish(
                 new ResetPasswordTokenGenerated(url, email, user.FirstName, user.LastName),
                 cancellationToken);
         }
