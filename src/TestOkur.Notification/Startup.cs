@@ -3,6 +3,8 @@
     using GreenPipes;
     using Hangfire;
     using Hangfire.Mongo;
+    using Hangfire.Mongo.Migration.Strategies;
+    using Hangfire.Mongo.Migration.Strategies.Backup;
     using HealthChecks.UI.Client;
     using IdentityModel;
     using MassTransit;
@@ -176,14 +178,13 @@
                 {
                     MigrationOptions = new MongoMigrationOptions
                     {
-                        Strategy = MongoMigrationStrategy.Migrate,
-                        BackupStrategy = MongoBackupStrategy.None,
+                        MigrationStrategy = new MigrateMongoMigrationStrategy(),
+                        BackupStrategy = new NoneMongoBackupStrategy(),
                     },
                     CheckConnection = false,
                 };
                 config.UseMongoStorage(
-                    $"{ApplicationConfiguration.ConnectionString}",
-                    $"{ApplicationConfiguration.Database}_Hangfire",
+                    $"{ApplicationConfiguration.ConnectionString}/{ApplicationConfiguration.Database}_Hangfire",
                     storageOptions);
             });
         }

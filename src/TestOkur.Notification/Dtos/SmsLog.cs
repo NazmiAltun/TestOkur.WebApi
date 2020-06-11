@@ -17,9 +17,9 @@
             DateTimeUtc = dateTimeUtc;
         }
 
-		public SmsLog()
-		{
-		}
+        public SmsLog()
+        {
+        }
 
         public ObjectId Id { get; set; }
 
