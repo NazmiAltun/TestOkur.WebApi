@@ -23,7 +23,7 @@ jobs:
       - name: Start mongo
         run: docker run -d -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=password -p 27017:27017 mongo
       - name: Start mock server
-        run: docker run -d -v /mockserver/mocks:/opt/app/mocks  -p 8095:8080 nazmialtun/mockizen:latest
+        run: docker run -d -v $PWD/mockserver/mocks:/opt/app/mocks  -p 8095:8080 nazmialtun/mockizen:latest
       - name: Install sonar-scanner
         run: dotnet tool install --global dotnet-sonarscanner
       - name: Begin sonar scanning
