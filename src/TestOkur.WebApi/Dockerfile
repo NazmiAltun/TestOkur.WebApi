@@ -15,26 +15,6 @@ RUN dotnet tool install --global dotnet-sos
 RUN dotnet tool install --global dotnet-gcdump
 ENV PATH="/root/.dotnet/tools:${PATH}"
 
-FROM build as domaintest
-WORKDIR /src/tests/TestOkur.Domain.Unit.Tests
-
-FROM build as unittest
-WORKDIR /src/tests/TestOkur.WebApi.Unit.Tests
-
-FROM build as integrationtest
-ARG install_drawing_packages
-RUN if [ "$install_drawing_packages" = "True" ]; then \
-    apt-get update && \
-	apt-get install fonts-dejavu-core && \
-	apt-get install -y libgdiplus && \
-	rm -rf /var/lib/apt/lists/* && \
-	ln -s /lib/x86_64-linux-gnu/libdl.so.2 /lib/x86_64-linux-gnu/libdl.so && \
-	ln -s /usr/lib/libgdiplus.so /lib/x86_64-linux-gnu/libgdiplus.so; \
-  else \
-    echo "Drawing packages won't be installed"; \
-  fi
-WORKDIR /src/tests/TestOkur.WebApi.Integration.Tests
-
 FROM build AS publish
 WORKDIR /src
 RUN dotnet publish "./src/TestOkur.WebApi/TestOkur.WebApi.csproj" --no-restore -c Release -o /app

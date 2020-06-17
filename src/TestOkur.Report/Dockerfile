@@ -15,14 +15,6 @@ RUN dotnet tool install --global dotnet-sos
 RUN dotnet tool install --global dotnet-gcdump
 ENV PATH="/root/.dotnet/tools:${PATH}"
 
-FROM build as unittest
-WORKDIR /src/tests/TestOkur.Report.Unit.Tests
-
-FROM build as integrationtest
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait /wait
-RUN chmod +x /wait
-WORKDIR /src/tests/TestOkur.Report.Integration.Tests
-
 FROM build AS publish
 WORKDIR /src
 RUN dotnet publish "./src/TestOkur.Report/TestOkur.Report.csproj" --no-restore -c Release -o /app
