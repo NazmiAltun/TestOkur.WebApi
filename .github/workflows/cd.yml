@@ -1,0 +1,102 @@
+name: CD
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  deploy-webapi:
+    name: Deploy Web API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying WebApi
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_SERVER }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker pull nazmialtun/testokur-webapi:latest
+            docker stop testokur-webapi && docker rm testokur-webapi --force
+            docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
+              --env-file /home/env/webapi-prod1.env \
+              -v /home/uploads:/app/wwwroot/uploads \
+              -v /home/DataProtection-Keys:/app/DataProtection-Keys \
+              --name testokur-webapi \
+              --restart=always \
+              --network=testokur \
+              --network-alias=webapi \
+              nazmialtun/testokur-webapi:latest   
+  deploy-notification:
+    name: Deploy Notification API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying Notification Api
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_SERVER }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker pull nazmialtun/testokur-notification:latest
+            docker stop testokur-notification && docker rm testokur-notification --force
+            docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
+              --env-file /home/env/notification-prod.env \
+              --name testokur-notification \
+              --restart=unless-stopped  \
+              --network=testokur \
+              --network-alias=notification \
+              nazmialtun/testokur-notification:latest
+  deploy-report:
+    name: Deploy Report API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying Report Api
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_SERVER }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker pull nazmialtun/testokur-report:latest
+            docker stop testokur-report && docker rm testokur-report --force
+            docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
+              --env-file  /home/env/report-prod.env \
+              --name testokur-report \
+              --restart=unless-stopped  \
+              --network=testokur \
+              --network-alias=report \
+              nazmialtun/testokur-report:latest
+  deploy-sabit:
+    name: Deploy Sabit API
+    runs-on: ubuntu-latest
+    steps:              
+      - name: Deploying Sabit Api
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_SERVER }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            docker pull nazmialtun/testokur-sabit:latest
+            docker stop testokur-sabit && docker rm testokur-sabit --force
+            docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -d \
+              --env-file /home/env/sabit-prod.env \
+              -v /home/uploads:/app/wwwroot/uploads \
+              -v /home/forms:/app/wwwroot/forms \
+              --name testokur-sabit \
+              --restart=always \
+              --network=testokur \
+              --network-alias=sabit \
+              nazmialtun/testokur-sabit:latest
+  cleanup:
+    name: Clean-up images
+    needs: [deploy-webapi,deploy-notification,deploy-report,deploy-sabit]
+    runs-on: ubuntu-latest
+    steps:                   
+      - name: Cleanup
+        uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.PROD_SERVER }}
+            username: ${{ secrets.SSH_USERNAME }}
+            password: ${{ secrets.SSH_PASSWORD }}
+            script: echo Y | docker system prune
