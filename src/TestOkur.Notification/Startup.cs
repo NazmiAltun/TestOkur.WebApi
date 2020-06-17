@@ -18,6 +18,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using MongoDB.Bson.Serialization;
+    using MongoDB.Driver;
     using Polly;
     using Polly.Extensions.Http;
     using Prometheus;
@@ -148,16 +149,16 @@
 
         private void UseHangfire(IApplicationBuilder app)
         {
+            app.UseHangfireServer(new BackgroundJobServerOptions
+            {
+                WorkerCount = 1,
+            });
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 Authorization = new[]
                 {
                     new BasicDashboardAuthorizationFilter(HangfireConfiguration),
                 },
-            });
-            app.UseHangfireServer(new BackgroundJobServerOptions
-            {
-                WorkerCount = 1,
             });
             RecurringJob.AddOrUpdate<ILicenseExpirationNoticeTask>(
                 notice => notice.NotifyUsersAsync(), Cron.Daily(17, 00));
@@ -173,7 +174,8 @@
         {
             services.AddHangfire(config =>
             {
-                config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Debug);
+                var mongoUrlBuilder = new MongoUrlBuilder($"{ApplicationConfiguration.ConnectionString}/{ApplicationConfiguration.Database}_Hangfire?authSource=admin");
+                var mongoClient = new MongoClient(mongoUrlBuilder.ToMongoUrl());
                 var storageOptions = new MongoStorageOptions
                 {
                     MigrationOptions = new MongoMigrationOptions
@@ -183,9 +185,8 @@
                     },
                     CheckConnection = false,
                 };
-                config.UseMongoStorage(
-                    $"{ApplicationConfiguration.ConnectionString}/{ApplicationConfiguration.Database}_Hangfire",
-                    storageOptions);
+                config.UseColouredConsoleLogProvider(Hangfire.Logging.LogLevel.Debug);
+                config.UseMongoStorage(mongoClient, mongoUrlBuilder.DatabaseName, storageOptions);
             });
         }
 
