@@ -1,4 +1,5 @@
-[![CircleCI](https://circleci.com/gh/testokur/TestOkur.WebApi.svg?style=svg)](https://circleci.com/gh/testokur/TestOkur.WebApi)
+![CI](https://github.com/testokur/TestOkur.WebApi/workflows/CI/badge.svg)
+![CD](https://github.com/testokur/TestOkur.WebApi/workflows/CD/badge.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/testokur/testokur.webapi/badge)](https://www.codefactor.io/repository/github/testokur/testokur.webapi)
 [![codecov](https://codecov.io/gh/testokur/TestOkur.WebApi/branch/master/graph/badge.svg)](https://codecov.io/gh/testokur/TestOkur.WebApi)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=testokur_TestOkur.WebApi&metric=bugs)](https://sonarcloud.io/dashboard?id=testokur_TestOkur.WebApi)
