@@ -44,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build -t nazmialtun/testokur-webapi:${{ github.run_number }} -t nazmialtun/testokur-webapi:latest -f src/TestOkur.WebApi/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-webapi:${{ github.run_number }} -t nazmialtun/testokur-webapi:latest -f src/TestOkur.WebApi/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
@@ -59,7 +59,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build -t nazmialtun/testokur-sabit:${{ github.run_number }} -t nazmialtun/testokur-sabit:latest -f src/TestOkur.Sabit/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-sabit:${{ github.run_number }} -t nazmialtun/testokur-sabit:latest -f src/TestOkur.Sabit/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
@@ -74,7 +74,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build -t nazmialtun/testokur-report:${{ github.run_number }} -t nazmialtun/testokur-report:latest -f src/TestOkur.Report/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-report:${{ github.run_number }} -t nazmialtun/testokur-report:latest -f src/TestOkur.Report/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
@@ -89,7 +89,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build -t nazmialtun/testokur-notification:${{ github.run_number }} -t nazmialtun/testokur-notification:latest -f src/TestOkur.Notification/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-notification:${{ github.run_number }} -t nazmialtun/testokur-notification:latest -f src/TestOkur.Notification/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry

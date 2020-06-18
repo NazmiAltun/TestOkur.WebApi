@@ -1,10 +1,9 @@
-﻿using System.Net.Mime;
-
-namespace TestOkur.WebApi.Integration.Tests
+﻿namespace TestOkur.WebApi.Integration.Tests
 {
-    using System.Net;
-    using System.Threading.Tasks;
     using FluentAssertions;
+    using System.Net;
+    using System.Net.Mime;
+    using System.Threading.Tasks;
     using TestOkur.WebApi.Integration.Tests.Common;
     using Xunit;
 
