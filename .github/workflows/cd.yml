@@ -95,8 +95,8 @@ jobs:
     steps:                   
       - name: Cleanup
         uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.PROD_SERVER }}
-            username: ${{ secrets.SSH_USERNAME }}
-            password: ${{ secrets.SSH_PASSWORD }}
-            script: echo Y | docker system prune
+        with:
+          host: ${{ secrets.PROD_SERVER }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: echo Y | docker system prune
