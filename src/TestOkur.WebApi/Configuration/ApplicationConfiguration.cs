@@ -12,5 +12,11 @@
 
         [Required]
         public string SeqUrl { get; set; }
+
+        [Required]
+        public string CaptchaServiceUrl { get; set; }
+
+        [Required]
+        public string SabitApiUrl { get; set; }
     }
 }

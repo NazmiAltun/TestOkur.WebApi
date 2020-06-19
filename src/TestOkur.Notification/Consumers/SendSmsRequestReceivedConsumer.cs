@@ -17,8 +17,6 @@
 
     public class SendSmsRequestReceivedConsumer : IConsumer<ISendSmsRequestReceived>
     {
-        private const int MaxThreadCount = 50;
-
         private readonly ILogger<SendSmsRequestReceivedConsumer> _logger;
         private readonly ISmsClient _smsClient;
         private readonly IBus _bus;

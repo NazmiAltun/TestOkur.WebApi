@@ -1,12 +1,11 @@
 ﻿namespace TestOkur.WebApi.Application.User.Commands
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
     using MassTransit;
     using Paramore.Brighter;
     using Paramore.Darker;
-    using TestOkur.Data;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestOkur.Infrastructure.CommandsQueries;
     using TestOkur.WebApi.Application.User.Clients;
     using TestOkur.WebApi.Application.User.Events;
@@ -14,24 +13,18 @@
 
     public sealed class ActivateUserCommandHandler : RequestHandlerAsync<ActivateUserCommand>
     {
-        private const int ReferrerGainedSmsCredits = 1000;
-        private const int RefereeGainedSmsCredits = 500;
-
         private readonly IBus _bus;
         private readonly IIdentityClient _identityClient;
         private readonly IQueryProcessor _queryProcessor;
-        private readonly IApplicationDbContextFactory _applicationDbContextFactory;
 
         public ActivateUserCommandHandler(
             IBus bus,
             IIdentityClient identityClient,
-            IQueryProcessor queryProcessor,
-            IApplicationDbContextFactory applicationDbContextFactory)
+            IQueryProcessor queryProcessor)
         {
             _bus = bus ?? throw new ArgumentNullException(nameof(bus));
             _identityClient = identityClient ?? throw new ArgumentNullException(nameof(identityClient));
             _queryProcessor = queryProcessor ?? throw new ArgumentNullException(nameof(queryProcessor));
-            _applicationDbContextFactory = applicationDbContextFactory;
         }
 
         [Idempotent(1)]

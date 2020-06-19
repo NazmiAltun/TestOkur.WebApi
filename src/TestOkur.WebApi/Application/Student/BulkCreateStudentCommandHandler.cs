@@ -20,7 +20,6 @@
             _dbContextFactory = dbContextFactory;
         }
 
-        //TODO:Refactor this
         [Idempotent(1)]
         [ClearCache(3)]
         public override async Task<BulkCreateStudentCommand> HandleAsync(
@@ -32,21 +31,11 @@
             {
                 foreach (var subCommand in command.Commands)
                 {
+                    await RemoveStudentIfExistsAsync(dbContext, subCommand.StudentNumber, command.UserId, cancellationToken);
                     var classroom = await GetClassroomAsync(dbContext, subCommand.ClassroomId, cancellationToken);
-                    var existingStudent = await dbContext.Students
-                        .FirstOrDefaultAsync(
-                            s => s.StudentNumber.Value == subCommand.StudentNumber &&
-                                 EF.Property<int>(s, "CreatedBy") == command.UserId,
-                            cancellationToken);
-                    if (existingStudent != null)
-                    {
-                        dbContext.Remove(existingStudent);
-                    }
-
-                    dbContext.Students.Add(subCommand.ToDomainModel(classroom));
-                    contactTypes.AddRange(subCommand
-                        .ToDomainModel(classroom)
-                        .Contacts.Select(c => c.ContactType));
+                    var student = subCommand.ToDomainModel(classroom);
+                    dbContext.Students.Add(student);
+                    contactTypes.AddRange(student.Contacts.Select(c => c.ContactType));
                 }
 
                 dbContext.AttachRange(contactTypes.Distinct());
@@ -55,6 +44,24 @@
 
             return await base.HandleAsync(command, cancellationToken);
         }
+
+        private async Task RemoveStudentIfExistsAsync(
+            ApplicationDbContext dbContext,
+            int studentNumber,
+            int userId,
+            CancellationToken cancellationToken)
+        {
+            var existingStudent = await dbContext.Students
+                .FirstOrDefaultAsync(
+                    s => s.StudentNumber.Value == studentNumber &&
+                         EF.Property<int>(s, "CreatedBy") == userId,
+                    cancellationToken);
+            if (existingStudent != null)
+            {
+                dbContext.Remove(existingStudent);
+            }
+        }
+
 
         private Task<Classroom> GetClassroomAsync(
             ApplicationDbContext dbContext,

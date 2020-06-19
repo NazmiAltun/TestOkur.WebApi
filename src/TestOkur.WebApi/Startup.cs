@@ -58,6 +58,7 @@
             Environment = environment;
             Configuration.GetSection("RabbitMqConfiguration").Bind(RabbitMqConfiguration);
             Configuration.GetSection("OAuthConfiguration").Bind(OAuthConfiguration);
+            Configuration.GetSection("ApplicationConfiguration").Bind(ApplicationConfiguration);
         }
 
         public IWebHostEnvironment Environment { get; }
@@ -67,6 +68,8 @@
         private RabbitMqConfiguration RabbitMqConfiguration { get; } = new RabbitMqConfiguration();
 
         private OAuthConfiguration OAuthConfiguration { get; } = new OAuthConfiguration();
+
+        private ApplicationConfiguration ApplicationConfiguration { get; } = new ApplicationConfiguration();
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -211,12 +214,11 @@
 
         private void AddHealthChecks(IServiceCollection services)
         {
-            //TODO:Use strong type config
             var rabbitMqUri = $@"amqp://{RabbitMqConfiguration.Username}:{RabbitMqConfiguration.Password}@{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
             services.AddHealthChecks()
                 .AddNpgSql(Configuration.GetConnectionString("Postgres"))
-                .AddUrlGroup(new Uri(Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")), "Seq")
-                .AddUrlGroup(new Uri(Configuration.GetValue<string>("CaptchaServiceUrl") + "hc"), "CaptchaService")
+                .AddUrlGroup(new Uri(ApplicationConfiguration.SeqUrl), "Seq")
+                .AddUrlGroup(new Uri(ApplicationConfiguration.CaptchaServiceUrl + "hc"), "CaptchaService")
                 .AddIdentityServer(new Uri(OAuthConfiguration.Authority))
                 .AddRabbitMQ(rabbitMqUri, null, "rabbitmq");
         }
@@ -286,7 +288,7 @@
         {
             services.AddHttpClient<ICaptchaService, CaptchaService>(client =>
                 {
-                    client.BaseAddress = new Uri(Configuration.GetValue<string>("CaptchaServiceUrl"));
+                    client.BaseAddress = new Uri(ApplicationConfiguration.CaptchaServiceUrl);
                 })
                 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
                 {
@@ -295,7 +297,7 @@
 
             services.AddHttpClient<ISabitClient, SabitClient>(client =>
             {
-                client.BaseAddress = new Uri(Configuration.GetValue<string>("SabitApiUrl"));
+                client.BaseAddress = new Uri(ApplicationConfiguration.SabitApiUrl);
             })
             .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
             {

@@ -19,13 +19,13 @@
             throw new System.NotImplementedException();
         }
 
-        public Task LogCommandAsync<TCommand>(TCommand query)
+        public Task LogCommandAsync<TCommand>(TCommand command)
             where TCommand : IRequest
         {
             throw new System.NotImplementedException();
         }
 
-        public void LogCommand<TCommand>(TCommand query)
+        public void LogCommand<TCommand>(TCommand command)
             where TCommand : IRequest
         {
             throw new System.NotImplementedException();
