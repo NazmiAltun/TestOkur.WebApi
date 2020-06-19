@@ -29,7 +29,7 @@ jobs:
       - name: Begin sonar scanning
         run: dotnet-sonarscanner begin /k:testokur_TestOkur.WebApi /n:testokur-webapi /o:testokur 
           /d:sonar.host.url=https://sonarcloud.io /version:${{ github.run_number }} /d:sonar.login=${{secrets.SONAR_TOKEN}}
-          /d:sonar.cs.opencover.reportsPaths=coverage/*.xml /d:sonar.exclusions=**/*.html
+          /d:sonar.cs.opencover.reportsPaths=coverage/*.xml /d:sonar.exclusions=**/*.html /d:sonar.coverage.exclusions=src/TestOkur.WebApi/Migrations/**/*
       - name: Run Tests
         run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput=../../coverage/integration.xml
       - name: End sonar scanning
