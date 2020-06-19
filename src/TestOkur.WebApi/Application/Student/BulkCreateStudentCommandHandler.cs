@@ -62,7 +62,6 @@
             }
         }
 
-
         private Task<Classroom> GetClassroomAsync(
             ApplicationDbContext dbContext,
             int classroomId,
