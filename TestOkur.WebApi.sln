@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{F96F0EBF-817C-458F-AE0B-45944932041B}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
-		coverageMerger.Dockerfile = coverageMerger.Dockerfile
-		docker-compose.tests.yml = docker-compose.tests.yml
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
@@ -20,11 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Domain", "src\TestOkur.Domain\TestOkur.Domain.csproj", "{DEED5DFE-FFCF-4455-838E-50259BA3B4DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Data", "src\TestOkur.Data\TestOkur.Data.csproj", "{51A6E506-C25C-42A9-A943-D4225621E0E9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4DC8C14D-84F4-42CC-913F-D45CB12CA317}"
-	ProjectSection(SolutionItems) = preProject
-		.circleci\config.yml = .circleci\config.yml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Common", "src\TestOkur.Common\TestOkur.Common.csproj", "{15EFE3E3-E4CE-4B12-B889-F4A209853AB2}"
 EndProject
@@ -55,15 +48,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Notification.Integration.Tests", "tests\TestOkur.Notification.Integration.Tests\TestOkur.Notification.Integration.Tests.csproj", "{7EBAF429-0759-4831-99C4-70AB9E3B4F48}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Report.Unit.Tests", "tests\TestOkur.Report.Unit.Tests\TestOkur.Report.Unit.Tests.csproj", "{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{F2A3E842-195F-4313-B417-A57353A05112}"
-	ProjectSection(SolutionItems) = preProject
-		deploy\notification-prod.sh = deploy\notification-prod.sh
-		deploy\report-prod.sh = deploy\report-prod.sh
-		deploy\retry.sh = deploy\retry.sh
-		deploy\sabit-prod.sh = deploy\sabit-prod.sh
-		deploy\webapi-prod.sh = deploy\webapi-prod.sh
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit", "src\TestOkur.Sabit\TestOkur.Sabit.csproj", "{F3E3A8EC-D895-49B4-955B-BA1E729EE54A}"
 EndProject
@@ -159,7 +143,6 @@ Global
 		{8F2D74B1-7D58-43FB-8A43-3E2EFFA91EA4} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 		{7EBAF429-0759-4831-99C4-70AB9E3B4F48} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 		{F2A51F47-0F9E-42BA-9D35-D8D1827D21C1} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
-		{F2A3E842-195F-4313-B417-A57353A05112} = {4DC8C14D-84F4-42CC-913F-D45CB12CA317}
 		{F3E3A8EC-D895-49B4-955B-BA1E729EE54A} = {BF44ED5D-0258-46C1-BA87-F6833CA75720}
 		{1BE47627-8339-44B7-9EFA-3497AB215170} = {5B6C9BA4-4B63-4499-AEEF-1E3CE0E3F125}
 	EndGlobalSection
