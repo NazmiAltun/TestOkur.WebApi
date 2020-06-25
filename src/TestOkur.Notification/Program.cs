@@ -30,14 +30,22 @@ namespace TestOkur.Notification
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                            .ReadFrom.Configuration(hostingContext.Configuration)
-                            .MinimumLevel.Warning()
-                            .Enrich.FromLogContext()
-                            .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
-                            .Filter.ByExcluding(x => x.Exception is ValidationException)
-                            .WriteTo.Console()
-                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl")))
+                        .UseSerilog((hostingContext, loggerConfiguration) =>
+                        {
+                            var loggerConfig = loggerConfiguration
+                                .ReadFrom.Configuration(hostingContext.Configuration)
+                                .MinimumLevel.Warning()
+                                .Enrich.FromLogContext()
+                                .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
+                                .Filter.ByExcluding(x => x.Exception is ValidationException)
+                                .WriteTo.Seq(
+                                    hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"));
+
+                            if (!hostingContext.HostingEnvironment.IsProduction())
+                            {
+                                loggerConfig.WriteTo.Console();
+                            }
+                        })
                         .UseStartup<Startup>();
                 });
     }

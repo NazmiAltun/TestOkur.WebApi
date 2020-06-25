@@ -27,14 +27,22 @@
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                            .ReadFrom.Configuration(hostingContext.Configuration)
-                            .Enrich.FromLogContext()
-                            .WriteTo.Console()
-                            .Filter.ByExcluding(x => x.Exception is ValidationException)
-                            .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
-                            .WriteTo.Seq(hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"))
-                            .MinimumLevel.Warning())
+                        .UseSerilog((hostingContext, loggerConfiguration) =>
+                        {
+                            var loggerConfig = loggerConfiguration
+                                .ReadFrom.Configuration(hostingContext.Configuration)
+                                .Enrich.FromLogContext()
+                                .Filter.ByExcluding(x => x.Exception is ValidationException)
+                                .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
+                                .WriteTo.Seq(
+                                    hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"))
+                                .MinimumLevel.Warning();
+
+                            if (!hostingContext.HostingEnvironment.IsProduction())
+                            {
+                                loggerConfig.WriteTo.Console();
+                            }
+                        })
                         .UseStartup<Startup>();
                 });
     }
