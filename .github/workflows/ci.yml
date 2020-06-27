@@ -68,7 +68,7 @@ jobs:
           docker push nazmialtun/testokur-sabit:${{ github.run_number }}
   docker-report:
     needs: [tests]
-    name: Build sabit docker image
+    name: Build report docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -83,7 +83,7 @@ jobs:
           docker push nazmialtun/testokur-report:${{ github.run_number }}
   docker-notification:
     needs: [tests]
-    name: Build sabit docker image
+    name: Build notification docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
