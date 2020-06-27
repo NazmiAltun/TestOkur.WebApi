@@ -62,6 +62,12 @@
                 .FormLessonSections
                 .Should().NotContain(f => f.FormPart == default);
 
+            list.First(f => f.Code == OpticalFormTypes.Codes.FrmTyt)
+                .OpticalFormDefinitions
+                .First(o => o.Name == OpticalFormDefinitions.Tyt)
+                .SinglePagePerStudent.Should().BeTrue();
+
+
             var path = random.OpticalFormDefinitions.Random().Path;
             var newPath = await client.DownloadAsync(path);
             Image.FromFile(newPath).Should().BeOfType<Bitmap>();

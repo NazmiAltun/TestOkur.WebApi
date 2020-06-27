@@ -30,6 +30,8 @@
 
         public int OpticalFormTypeId { get; set; }
 
+        public bool SinglePagePerStudent { get; set; }
+
         public List<OpticalFormTextLocationReadModel> TextLocations { get; set; } = new List<OpticalFormTextLocationReadModel>();
     }
 }
