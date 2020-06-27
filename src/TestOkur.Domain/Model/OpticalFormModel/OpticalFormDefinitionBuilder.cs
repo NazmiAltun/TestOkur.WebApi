@@ -12,6 +12,7 @@
         private int _studentNoXInterval;
         private int _studentNoYInterval;
         private bool _hasBoxForStudentNumber;
+        private bool _singlePagePerStudent;
         private string _description;
         private string _fileName;
         private Direction _textDirection;
@@ -42,7 +43,8 @@
                 _textDirection,
                 _studentNumberFillDirection,
                 _schoolType,
-                new ReadOnlyCollection<OpticalFormTextLocation>(_textLocations));
+                new ReadOnlyCollection<OpticalFormTextLocation>(_textLocations),
+                _singlePagePerStudent);
         }
 
         public OpticalFormDefinitionBuilder AddTextLocation(OpticalFormTextLocation location)
@@ -109,6 +111,13 @@
         public OpticalFormDefinitionBuilder SetFilename(string value)
         {
             _fileName = value;
+            return this;
+        }
+
+        public OpticalFormDefinitionBuilder SinglePagePerStudent()
+        {
+            _singlePagePerStudent = true;
+
             return this;
         }
     }

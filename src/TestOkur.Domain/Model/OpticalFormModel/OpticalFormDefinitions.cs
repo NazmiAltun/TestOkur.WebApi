@@ -17,6 +17,7 @@
         public const string High30 = "High30";
         public const string High60 = "High60";
         public const string High100 = "High100";
+        public const string Tyt = "TYT";
         public const string Tyt1 = "TYT-1";
         public const string Tyt2 = "TYT-2";
         public const string Ayt1 = "AYT-1";

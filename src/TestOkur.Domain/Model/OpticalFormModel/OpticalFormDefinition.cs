@@ -16,7 +16,8 @@
             Direction textDirection,
             Direction studentNumberFillDirection,
             SchoolType schoolType,
-            IReadOnlyCollection<OpticalFormTextLocation> textLocations)
+            IReadOnlyCollection<OpticalFormTextLocation> textLocations,
+            bool singlePagePerStudent)
         {
             Name = name;
             StudentNoFillWidth = studentNoFillWidth;
@@ -29,6 +30,7 @@
             StudentNumberFillDirection = studentNumberFillDirection;
             SchoolType = schoolType;
             TextLocations = textLocations;
+            SinglePagePerStudent = singlePagePerStudent;
         }
 
         protected OpticalFormDefinition()
@@ -56,5 +58,7 @@
         public SchoolType SchoolType { get; private set; }
 
         public IReadOnlyCollection<OpticalFormTextLocation> TextLocations { get; private set; }
+
+        public bool SinglePagePerStudent { get; private set; }
     }
 }

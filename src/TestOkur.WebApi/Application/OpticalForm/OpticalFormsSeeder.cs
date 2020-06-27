@@ -175,6 +175,34 @@
                     .Build())
                 .Build();
 
+        private OpticalFormDefinition Tyt =>
+            new OpticalFormDefinitionBuilder(OpticalFormDefinitions.Tyt)
+                .HasBoxForStudentNumber()
+                .SetStudentNoXInterval(62)
+                .SetStudentNoYInterval(53)
+                .SetStudentNoFillWidth(45)
+                .SetDescription("TYT(Tum Dersler) Optik Formu")
+                .HighSchool()
+                .SinglePagePerStudent()
+                .SetFilename("TYT.jpg")
+                .SetStudentNumberFillDirection(Direction.ToBottom)
+                .SetTextDirection(Direction.ToTop)
+                .AddTextLocation(new OpticalFormTextLocationBuilder()
+                    .SetNameLocation(1760, 1200)
+                    .SetSurnameLocation(1825, 1200)
+                    .SetClassLocation(1890, 1200)
+                    .SetExamNameLocation(1925, 1200)
+                    .SetStudentNoFillingPartLocation(400, 359)
+                    .Build())
+                .AddTextLocation(new OpticalFormTextLocationBuilder()
+                    .SetNameLocation(1760, 2930)
+                    .SetSurnameLocation(1825, 2930)
+                    .SetClassLocation(1890, 2930)
+                    .SetExamNameLocation(1925, 2930)
+                    .SetStudentNoFillingPartLocation(400, 2046)
+                    .Build())
+                .Build();
+
         private OpticalFormDefinition High100 =>
             new OpticalFormDefinitionBuilder(OpticalFormDefinitions.High100)
                 .HasBoxForStudentNumber()
@@ -760,6 +788,7 @@
                 High30,
                 High60,
                 High100,
+                Tyt,
                 Tyt1,
                 Tyt2,
                 Ayt1,
@@ -1044,6 +1073,8 @@
                     new FormLessonSection(scienceLesson, 20, 2),
                 },
                 120));
+            formTypes.Last().AddOpticalFormDefinition(
+                formDefinitions.First(f => f.Name == OpticalFormDefinitions.Tyt));
             formTypes.Last().AddOpticalFormDefinition(
                 formDefinitions.First(f => f.Name == OpticalFormDefinitions.Tyt1));
             formTypes.Last().AddOpticalFormDefinition(
