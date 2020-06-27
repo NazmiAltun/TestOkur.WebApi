@@ -9,6 +9,7 @@
     using TestOkur.Domain.Model;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Domain.Model.OpticalFormModel;
+    using TestOkur.Domain.SeedWork;
     using TestOkur.WebApi.Data;
 
     internal class OpticalFormsSeeder : ISeeder
@@ -805,10 +806,10 @@
                 }
 
                 dbContext.OpticalFormDefinitions.Add(formDef);
+                dbContext.AttachRange(formDef.TextDirection, formDef.StudentNumberFillDirection);
+                dbContext.Attach(formDef.SchoolType);
             }
 
-            await dbContext.Set<SchoolType>().ToListAsync();
-            await dbContext.Set<Direction>().ToListAsync();
             await dbContext.SaveChangesAsync();
 
             return formDefinitions;
