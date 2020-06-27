@@ -9,7 +9,6 @@
     using TestOkur.Domain.Model;
     using TestOkur.Domain.Model.LessonModel;
     using TestOkur.Domain.Model.OpticalFormModel;
-    using TestOkur.Domain.SeedWork;
     using TestOkur.WebApi.Data;
 
     internal class OpticalFormsSeeder : ISeeder
@@ -797,6 +796,8 @@
                 Aytlang,
                 ScholarshipHigh,
             };
+            var schoolTypes = await dbContext.Set<SchoolType>().AsNoTracking().ToListAsync();
+            var directions = await dbContext.Set<Direction>().AsNoTracking().ToListAsync();
 
             foreach (var formDef in formDefinitions)
             {
@@ -806,8 +807,18 @@
                 }
 
                 dbContext.OpticalFormDefinitions.Add(formDef);
-                dbContext.AttachRange(formDef.TextDirection, formDef.StudentNumberFillDirection);
-                dbContext.Attach(formDef.SchoolType);
+
+                if (directions.Any())
+                {
+                    dbContext.Attach(formDef.TextDirection).State = EntityState.Unchanged;
+                    dbContext.Attach(formDef.StudentNumberFillDirection).State = EntityState.Unchanged;
+                }
+
+                if (schoolTypes.Any())
+                {
+
+                    dbContext.Attach(formDef.SchoolType).State = EntityState.Unchanged;
+                }
             }
 
             await dbContext.SaveChangesAsync();
