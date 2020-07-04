@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
+    using AutoFixture;
     using FluentAssertions;
     using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
@@ -11,21 +12,21 @@
     using TestOkur.Report.Domain.Statistics;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Serialization;
-    using TestOkur.TestHelper;
-    using TestOkur.TestHelper.Extensions;
+    using TestOkur.Test.Common;
+    using TestOkur.Test.Common.Extensions;
     using Xunit;
 
     public class EvaluateExamConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task ShouldEvaluateAndSaveResults()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task ShouldEvaluateAndSaveResults(IFixture fixture, int userId, int examId)
         {
-            var userId = RandomGen.Next(10000);
-            var answerKeyForms = GenerateAnswerKeyOpticalForms(1).ToList();
+            var answerKeyForms = GenerateAnswerKeyOpticalForms(fixture, 1).ToList();
 
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
-            var examId = await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms);
+            await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms, examId);
             var studentOpticalFormRepository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
                 as IStudentOpticalFormRepository;
             var examStatisticsRepository = testServer.Host.Services.GetService(typeof(IExamStatisticsRepository))
@@ -35,8 +36,8 @@
             var logger = testServer.Host.Services.GetService(typeof(ILogger<EvaluateExamConsumer>));
             var forms = new List<StudentOpticalForm>
             {
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
             };
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();

@@ -1,33 +1,29 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using FluentAssertions;
     using MassTransit;
     using NSubstitute;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AutoFixture;
     using TestOkur.Contracts.Classroom;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
-    using TestOkur.TestHelper;
-    using Xunit;
     using TestOkur.Serialization;
+    using TestOkur.Test.Common;
+    using Xunit;
 
     public class ClassroomUpdatedConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task UpdateClassroomName()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task UpdateClassroomName(int userId, int examId, int classroomId,
+            string classroom, int newGrade, string newClassName, IFixture fixture)
         {
-            var classroomId = RandomGen.Next();
-            var classroom = RandomGen.String(4);
-            var newGrade = RandomGen.Next(11);
-            var newClassName = RandomGen.String(3);
-            var examId = RandomGen.Next();
-            var userId = RandomGen.Next();
-
             using var testServer = Create(userId);
-            var forms = GenerateStudentForms(examId, userId, classroomId, classroom);
+            var forms = GenerateStudentForms(fixture, examId, userId, classroomId, classroom);
             var client = testServer.CreateClient();
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
@@ -53,6 +49,7 @@
         }
 
         private List<StudentOpticalForm> GenerateStudentForms(
+            IFixture fixture,
             int examId,
             int userId,
             int classroomId,
@@ -60,8 +57,8 @@
         {
             var forms = new List<StudentOpticalForm>
             {
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(fixture, examId, userId),
+                GenerateStudentForm(fixture, examId, userId),
             };
 
             foreach (var form in forms)

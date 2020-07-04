@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\src\TestOkur.Data\TestOkur.Data.csproj" />
     <ProjectReference Include="..\..\src\TestOkur.Domain\TestOkur.Domain.csproj" />
     <ProjectReference Include="..\..\src\TestOkur.WebApi\TestOkur.WebApi.csproj" />
+    <ProjectReference Include="..\TestOkur.Test.Common\TestOkur.Test.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="coverlet.msbuild" Version="2.9.0">

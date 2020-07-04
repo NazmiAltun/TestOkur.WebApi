@@ -1,21 +1,21 @@
 ﻿namespace TestOkur.Report.Integration.Tests.ReportRequest
 {
+    using AutoFixture;
     using FluentAssertions;
     using System.Net;
     using System.Threading.Tasks;
-    using TestOkur.TestHelper;
+    using TestOkur.Test.Common;
     using Xunit;
 
     public class AddTests : ReportRequestTest
     {
-        [Fact]
-        public async Task ShouldAddRequests()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task ShouldAddRequests(IFixture fixture, int userId)
         {
-            var userId = RandomGen.Next(10000);
-
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
-            var response = await AddRandomAsync(client, userId);
+            var response = await AddRandomAsync(client, fixture, userId);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }

@@ -1,25 +1,25 @@
 ﻿namespace TestOkur.Report.Integration.Tests.ReportRequest
 {
+    using AutoFixture;
     using FluentAssertions;
     using System.Threading.Tasks;
     using TestOkur.Report.Models;
-    using TestOkur.TestHelper;
-    using TestOkur.TestHelper.Extensions;
+    using TestOkur.Test.Common;
+    using TestOkur.Test.Common.Extensions;
     using Xunit;
 
     public class GetTests : ReportRequestTest
     {
-        [Fact]
-        public async Task ShouldGetRequests()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task ShouldGetRequests(IFixture fixture, int userId)
         {
-            var userId = RandomGen.Next(10000);
-
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
 
             for (var i = 0; i < 100; i++)
             {
-                await AddRandomAsync(client, userId);
+                await AddRandomAsync(client, fixture, userId);
             }
 
             var response = await GetAsync(client);

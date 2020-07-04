@@ -1,35 +1,33 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using AutoFixture;
     using FluentAssertions;
     using MassTransit;
     using NSubstitute;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using TestOkur.Contracts.Lesson;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
-    using TestOkur.TestHelper;
+    using TestOkur.Test.Common;
     using Xunit;
 
     public class SubjectChangedConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task ChangeSubjectsOfQuestions()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task ChangeSubjectsOfQuestions(IFixture fixture, int subjectId, string subject, int userId, string newSubject, int examId)
         {
-            var userId = RandomGen.Next(10000);
-            var subjectId = RandomGen.Next();
-            var subject = RandomGen.String(40);
-            var newSubject = RandomGen.String(40);
             var answerKeyForms = SetSubject(
-                GenerateAnswerKeyOpticalForms(1).ToList(),
+                GenerateAnswerKeyOpticalForms(fixture, 1).ToList(),
                 subjectId,
                 subject);
 
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
-            var examId = await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms);
+            await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms, examId);
             var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
                 as IStudentOpticalFormRepository;
             var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))

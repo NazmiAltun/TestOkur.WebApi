@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Hosting;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure;

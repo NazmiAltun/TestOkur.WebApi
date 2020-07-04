@@ -1,20 +1,22 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
+    using AutoFixture;
+    using FluentAssertions;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentAssertions;
     using TestOkur.Optic.Answer;
     using TestOkur.Optic.Form;
     using TestOkur.Optic.Score;
-    using TestOkur.TestHelper;
-    using Xunit;
     using TestOkur.Serialization;
+    using TestOkur.Test.Common;
+    using Xunit;
 
     public class AddTests : OpticalFormTest
     {
-        [Fact]
-        public async Task FormWithScoreShouldBeAdded()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task FormWithScoreShouldBeAdded(int examId, int userId)
         {
             var scoreFormula = new ScoreFormula(100, "5. Grade", 5);
             scoreFormula.Coefficients.Add(new LessonCoefficient("Turkish", 3.333f));
@@ -45,9 +47,8 @@
             studentForm.SetFromScanOutput(new ScanOutput("CB                                      A     CE  D         ", 2, 0, 'A'), answerKeyForm);
             studentForm.Evaluate(4, answerKeyForm.ScoreFormulas);
 
-            var userId = RandomGen.Next(10000);
             studentForm.UserId = userId.ToString();
-            studentForm.ExamId = RandomGen.Next();
+            studentForm.ExamId = examId;
 
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
@@ -60,55 +61,45 @@
             response.IsSuccessStatusCode.Should().BeTrue();
         }
 
-        [Fact]
-        public async Task When_FormsExists_Then_ShouldReplaceStudentOpticalForms()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task When_FormsExists_Then_ShouldReplaceStudentOpticalForms(IFixture fixture, int userId, StudentOpticalFormSection section, int examId)
         {
-            var userId = RandomGen.Next(10000);
             using var testServer = Create(userId);
-            var examId = RandomGen.Next();
             var client = testServer.CreateClient();
             var forms = new List<StudentOpticalForm>
                 {
-                    GenerateStudentForm(examId, userId),
-                    GenerateStudentForm(examId, userId),
+                    GenerateStudentForm(fixture,examId, userId),
+                    GenerateStudentForm(fixture,examId, userId),
                 };
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
             forms.First().Sections.Clear();
-            forms.First().Sections.Add(new StudentOpticalFormSection(
-             new AnswerKeyOpticalFormSection(2065, "TestLesson"))
-            {
-                Answers = GenerateAnswers(10).ToList(),
-            });
+            forms.First().Sections.Add(section);
             forms.Last().Sections.Clear();
-            forms.Last().Sections.Add(new StudentOpticalFormSection(
-                new AnswerKeyOpticalFormSection(2065, "TestLesson"))
-            {
-                Answers = GenerateAnswers(10).ToList(),
-            });
+            forms.Last().Sections.Add(section);
             response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
             var examForms = await GetListAsync<StudentOpticalForm>(client, examId);
             examForms.Should().HaveCount(2);
             examForms.Should().Contain(
-                f => f.Sections.First().LessonName == "TestLesson");
+                f => f.Sections.First().LessonName == forms.First().Sections.First().LessonName);
         }
 
-        [Fact]
-        public async Task ShouldAddStudentOpticalForms()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task ShouldAddStudentOpticalForms(IFixture fixture, int userId, int examId)
         {
-            var userId = RandomGen.Next(10000);
             using var testServer = Create(userId);
-            var examId = RandomGen.Next();
             var client = testServer.CreateClient();
             var forms = new List<StudentOpticalForm>
             {
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
-                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
             };
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();

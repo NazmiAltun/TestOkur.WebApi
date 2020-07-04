@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoFixture;
     using MassTransit;
     using Microsoft.AspNetCore.TestHost;
     using NSubstitute;
@@ -11,20 +12,19 @@
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Report.Integration.Tests.OpticalForm;
-    using TestOkur.TestHelper;
 
     public abstract class ConsumerTest : OpticalFormTest
     {
-        protected Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer)
+        protected Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, IFixture fixture)
         {
             return ExecuteExamCreatedConsumerAsync(
                 testServer,
-                GenerateAnswerKeyOpticalForms(4).ToList());
+                GenerateAnswerKeyOpticalForms(fixture, 4).ToList(),
+                fixture.Create<int>());
         }
 
-        protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, List<AnswerKeyOpticalForm> answerKeyOpticalForms)
+        protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, List<AnswerKeyOpticalForm> answerKeyOpticalForms, int examId)
         {
-            var examId = RandomGen.Next();
             var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
                 as IAnswerKeyOpticalFormRepository;
             var consumer = new ExamCreatedConsumer(answerKeyOpticalFormRepository);

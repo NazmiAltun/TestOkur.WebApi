@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoFixture;
     using FluentAssertions;
     using MassTransit;
     using NSubstitute;
@@ -10,39 +11,33 @@
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
-    using TestOkur.TestHelper;
     using Xunit;
     using TestOkur.Serialization;
+    using TestOkur.Test.Common;
 
     public class LessonNameChangedConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task UpdateLessonNamesOfOpticalForms()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task UpdateLessonNamesOfOpticalForms(IFixture fixture, int userId, int lessonId, string lessonName, string newLessonName, int examId)
         {
-            var lessonId = RandomGen.Next();
-            var lessonName = RandomGen.String(20);
-            var answerKeyForms = GenerateAnswerKeyOpticalForms(3, lessonId, lessonName).ToList();
-            var userId = RandomGen.Next(10000);
-
+            var answerKeyForms = GenerateAnswerKeyOpticalForms(fixture, 3, lessonId, lessonName).ToList();
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
-            var examId = await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms);
+            await ExecuteExamCreatedConsumerAsync(testServer, answerKeyForms, examId);
             var forms = new List<StudentOpticalForm>
             {
-                GenerateStudentForm(examId, userId, lessonId, lessonName),
-                GenerateStudentForm(examId, userId, lessonId, lessonName),
-                GenerateStudentForm(examId, userId, lessonId, lessonName),
-                GenerateStudentForm(examId, userId, lessonId, lessonName),
-                GenerateStudentForm(examId, userId, lessonId, lessonName),
-                GenerateStudentForm(examId, userId, lessonId, lessonName),
+                GenerateStudentForm(fixture,examId, userId, lessonId, lessonName),
+                GenerateStudentForm(fixture,examId, userId, lessonId, lessonName),
+                GenerateStudentForm(fixture,examId, userId, lessonId, lessonName),
+                GenerateStudentForm(fixture,examId, userId, lessonId, lessonName),
+                GenerateStudentForm(fixture,examId, userId, lessonId, lessonName),
+                GenerateStudentForm(fixture,examId, userId, lessonId, lessonName),
             };
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
             var studentOpticalForms = await GetListAsync<StudentOpticalForm>(client, examId);
-            studentOpticalForms.SelectMany(f => f.Sections)
-                .Should().NotContain(s => s.LessonName != lessonName);
 
-            var newLessonName = RandomGen.String(20);
             var repository = testServer.Host.Services.GetService(typeof(IStudentOpticalFormRepository))
                 as IStudentOpticalFormRepository;
             var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
@@ -57,16 +52,12 @@
                 .Select(s => s.LessonName)
                 .Distinct()
                 .Should()
-                .HaveCount(1)
-                .And
                 .Contain(newLessonName);
             var answerKeyOpticalForms = await GetListAsync<AnswerKeyOpticalForm>(client, examId);
             answerKeyOpticalForms.SelectMany(f => f.Sections)
                 .Select(s => s.LessonName)
                 .Distinct()
                 .Should()
-                .HaveCount(1)
-                .And
                 .Contain(newLessonName);
         }
     }

@@ -8,32 +8,20 @@
     using TestOkur.Report.Events;
     using TestOkur.Report.Integration.Tests.Common;
     using TestOkur.Serialization;
-    using TestOkur.TestHelper;
+    using TestOkur.Test.Common;
     using Xunit;
 
     public class DeleteTests : OpticalFormTest
     {
-        [Fact]
-        public async Task ShouldDeleteTheForm_And_ReevaluateTheExam()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task ShouldDeleteTheForm_And_ReevaluateTheExam(int userId, StudentOpticalForm sform)
         {
-            var userId = RandomGen.Next(10000);
-
             using var testServer = Create(userId);
             var client = testServer.CreateClient();
 
-            var forms = new List<StudentOpticalForm>
-            {
-                new StudentOpticalForm('A')
-                {
-                    ExamId = RandomGen.Next(),
-                    StudentId = RandomGen.Next(),
-                    UserId = userId.ToString(),
-                    Sections = new List<StudentOpticalFormSection>
-                    {
-                        new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(1, "TEST")),
-                    },
-                },
-            };
+            sform.UserId = userId.ToString();
+            var forms = new List<StudentOpticalForm> { sform };
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
             var form = (await GetListAsync<StudentOpticalForm>(

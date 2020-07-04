@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Report.Integration.Tests.OpticalForm
 {
+    using AutoFixture;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
@@ -7,14 +8,12 @@
     using TestOkur.Optic.Answer;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Integration.Tests.Common;
-    using TestOkur.TestHelper;
     using TestOkur.TestHelper.Extensions;
 
     public abstract class OpticalFormTest : Test
     {
         protected const string ApiPath = "api/v1/forms";
         private const string Booklets = "ABCD";
-        private const string Answers = "ABCDE";
 
         protected async Task<IEnumerable<TOpticalForm>> GetListAsync<TOpticalForm>(HttpClient client, int examId)
             where TOpticalForm : OpticalForm
@@ -32,9 +31,15 @@
             return await response.ReadAsync<IEnumerable<StudentOpticalForm>>();
         }
 
-        protected IEnumerable<AnswerKeyOpticalForm> GenerateAnswerKeyOpticalForms(int count, int lessonId = 1, string lessonName = "Test")
+        protected IEnumerable<AnswerKeyOpticalForm> GenerateAnswerKeyOpticalForms(IFixture fixture, int count, int lessonId = 1, string lessonName = "Test")
         {
             var booklets = new List<char>(Booklets);
+            var answers = new List<AnswerKeyQuestionAnswer>();
+
+            for (var i = 0; i < 100; i++)
+            {
+                answers.Add(fixture.Create<AnswerKeyQuestionAnswer>());
+            }
 
             for (var i = 0; i < count && booklets.Count > 0; i++)
             {
@@ -45,7 +50,7 @@
                     {
                         new AnswerKeyOpticalFormSection(lessonId, lessonName)
                         {
-                            Answers = GenerateAnswerKeyQuestionAnswers(100).ToList(),
+                            Answers = answers,
                         },
                     },
                 };
@@ -53,71 +58,21 @@
             }
         }
 
-        protected StudentOpticalForm GenerateStudentForm(int examId, int userId, int lessonId = 1, string lessonName = "Test")
+        protected StudentOpticalForm GenerateStudentForm(IFixture fixture, int examId, int userId, int lessonId = 1, string lessonName = "Test")
         {
-            return new StudentOpticalForm()
-            {
-                UserId = userId.ToString(),
-                SchoolId = userId,
-                Booklet = Booklets.Random(),
-                ExamId = examId,
-                ClassroomId = userId,
-                StudentId = RandomGen.Next(),
-                StudentNumber = RandomGen.Next(),
-                Sections = new List<StudentOpticalFormSection>()
-                {
-                    new StudentOpticalFormSection(new AnswerKeyOpticalFormSection(lessonId, lessonName))
-                    {
-                        Answers = GenerateAnswers(160).ToList(),
-                    },
-                },
-            };
-        }
+            var form = fixture.Create<StudentOpticalForm>();
+            form.UserId = userId.ToString();
+            form.SchoolId = userId;
+            form.ExamId = examId;
+            form.Sections.First().LessonName = lessonName;
+            form.Sections.First().LessonId = lessonId;
 
-        protected IEnumerable<QuestionAnswer> GenerateAnswers(int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                yield return GenerateAnswer();
-            }
+            return form;
         }
 
         private string GetSubPath<TOpticalForm>()
             where TOpticalForm : OpticalForm =>
             typeof(TOpticalForm) == typeof(StudentOpticalForm) ? "student" : "answer";
 
-        private QuestionAnswer GenerateAnswer()
-        {
-            return new QuestionAnswer()
-            {
-                Answer = Answers.Random(),
-                QuestionNo = RandomGen.Next(100),
-                SubjectName = RandomGen.String(250),
-                SubjectId = RandomGen.Next(),
-            };
-        }
-
-        private IEnumerable<AnswerKeyQuestionAnswer> GenerateAnswerKeyQuestionAnswers(int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                yield return GenerateAnswerKeyQuestionAnswer();
-            }
-        }
-
-        private AnswerKeyQuestionAnswer GenerateAnswerKeyQuestionAnswer()
-        {
-            return new AnswerKeyQuestionAnswer()
-            {
-                Answer = "ABCDE".Random(),
-                QuestionNo = RandomGen.Next(100),
-                SubjectName = RandomGen.String(250),
-                SubjectId = RandomGen.Next(),
-                QuestionNoBookletB = RandomGen.Next(100),
-                QuestionNoBookletC = RandomGen.Next(100),
-                QuestionNoBookletD = RandomGen.Next(100),
-                QuestionAnswerCancelAction = QuestionAnswerCancelAction.None,
-            };
-        }
     }
 }

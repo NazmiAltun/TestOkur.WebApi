@@ -6,29 +6,24 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoFixture;
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Serialization;
-    using TestOkur.TestHelper;
+    using TestOkur.Test.Common;
     using Xunit;
 
     public class StudentUpdatedConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task UpdateStudentInfoInStudentForms()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task UpdateStudentInfoInStudentForms(IFixture fixture, int userId, int examId,
+            int studentId, int classroomId, string firstName, string lastName, int studentNumber)
         {
-            var examId = RandomGen.Next();
-            var userId = RandomGen.Next();
-            var studentId = RandomGen.Next();
-            var firstName = RandomGen.String(20);
-            var lastName = RandomGen.String(20);
-            var classroomId = RandomGen.Next();
-            var studentNumber = RandomGen.Next(1000);
-
             using var testServer = Create(userId);
-            var forms = GenerateStudentForms(examId, userId, studentId);
+            var forms = GenerateStudentForms(fixture, examId, userId, studentId);
             var client = testServer.CreateClient();
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
@@ -55,13 +50,14 @@
         }
 
         private List<StudentOpticalForm> GenerateStudentForms(
+            IFixture fixture,
             int examId,
             int userId,
             int studentId)
         {
             var forms = new List<StudentOpticalForm>
             {
-                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(fixture,examId, userId),
             };
 
             foreach (var form in forms)

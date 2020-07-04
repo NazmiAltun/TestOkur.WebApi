@@ -7,10 +7,11 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.5" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.76" />
-    <PackageReference Include="TestOkur.TestHelper" Version="1.0.32" />  
+    <PackageReference Include="TestOkur.TestHelper" Version="1.0.32" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.Report\TestOkur.Report.csproj" />
+    <ProjectReference Include="..\TestOkur.Test.Common\TestOkur.Test.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="coverlet.msbuild" Version="2.9.0">

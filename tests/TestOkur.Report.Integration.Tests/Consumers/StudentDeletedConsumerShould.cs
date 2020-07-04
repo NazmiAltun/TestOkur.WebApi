@@ -5,25 +5,23 @@
     using NSubstitute;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using AutoFixture;
     using TestOkur.Contracts.Student;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
-    using TestOkur.TestHelper;
-    using Xunit;
     using TestOkur.Serialization;
+    using TestOkur.Test.Common;
+    using Xunit;
 
     public class StudentDeletedConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task DeleteStudentForms()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task DeleteStudentForms(IFixture fixture, int userId, int examId, int studentId)
         {
-            var examId = RandomGen.Next();
-            var userId = RandomGen.Next();
-            var studentId = RandomGen.Next();
-
             using var testServer = Create(userId);
-            var forms = GenerateStudentForms(examId, userId, studentId);
+            var forms = GenerateStudentForms(fixture, examId, userId, studentId);
             var client = testServer.CreateClient();
             var response = await client.PostAsync(ApiPath, forms.ToJsonContent());
             response.EnsureSuccessStatusCode();
@@ -41,11 +39,11 @@
             studentOpticalForms.Should().BeEmpty();
         }
 
-        private List<StudentOpticalForm> GenerateStudentForms(int examId, int userId, int studentId)
+        private List<StudentOpticalForm> GenerateStudentForms(IFixture fixture, int examId, int userId, int studentId)
         {
             var forms = new List<StudentOpticalForm>
             {
-                GenerateStudentForm(examId, userId),
+                GenerateStudentForm(fixture, examId, userId),
             };
 
             foreach (var form in forms)

@@ -1,5 +1,6 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
+    using AutoFixture;
     using FluentAssertions;
     using MassTransit;
     using NSubstitute;
@@ -11,17 +12,17 @@
     using TestOkur.Report.Consumers;
     using TestOkur.Report.Infrastructure.Repositories;
     using TestOkur.Serialization;
-    using TestOkur.TestHelper;
+    using TestOkur.Test.Common;
     using Xunit;
 
     public class ExamUpdatedConsumerShould : ConsumerTest
     {
-        [Fact]
-        public async Task UpdateAnswerKeyForms()
+        [Theory]
+        [TestOkurAutoData]
+        public async Task UpdateAnswerKeyForms(IFixture fixture, int userId)
         {
-            var userId = RandomGen.Next(10000);
             using var testServer = Create(userId);
-            var examId = await ExecuteExamCreatedConsumerAsync(testServer);
+            var examId = await ExecuteExamCreatedConsumerAsync(testServer, fixture);
             var client = testServer.CreateClient();
             var list = await GetListAsync<AnswerKeyOpticalForm>(client, examId);
             list.Should().NotBeEmpty();
@@ -40,10 +41,10 @@
                     ExamId = examId,
                 },
             };
-            studentForms.First().SetFromScanOutput(new ScanOutput("BABABABACADADADADACA", 0,0,'A'), list.First());
+            studentForms.First().SetFromScanOutput(new ScanOutput("BABABABACADADADADACA", 0, 0, 'A'), list.First());
             studentForms.Last().SetFromScanOutput(new ScanOutput("ABCABDABCABDAC", 0, 0, 'A'), list.Last());
             await client.PostAsync(ApiPath, studentForms.ToJsonContent());
-            var newAnswerKeyForms = GenerateAnswerKeyOpticalForms(4).ToList();
+            var newAnswerKeyForms = GenerateAnswerKeyOpticalForms(fixture, 4).ToList();
             var repository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository));
             var consumer = new ExamUpdatedConsumer(repository as IAnswerKeyOpticalFormRepository, null);
             var context = Substitute.For<ConsumeContext<IExamUpdated>>();
