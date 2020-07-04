@@ -41,7 +41,7 @@
         {
             foreach (var user in await GetUsersAsync())
             {
-                if (_hostingEnvironment.IsProd())
+                if (_hostingEnvironment.IsProduction())
                 {
                     await _notificationFacade.SendEmailAsync(
                         user,

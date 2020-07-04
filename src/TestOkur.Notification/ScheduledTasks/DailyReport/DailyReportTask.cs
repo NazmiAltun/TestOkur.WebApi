@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure;
@@ -41,7 +42,7 @@
 
         public async Task SendAsync()
         {
-            if (_hostingEnvironment.IsProd())
+            if (_hostingEnvironment.IsProduction())
             {
                 await _notificationFacade.SendEmailToSystemAdminsAsync(
                     await GetDailyReportAsync(),
