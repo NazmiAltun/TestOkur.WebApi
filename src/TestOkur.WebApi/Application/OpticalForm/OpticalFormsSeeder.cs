@@ -816,7 +816,6 @@
 
                 if (schoolTypes.Any())
                 {
-
                     dbContext.Attach(formDef.SchoolType).State = EntityState.Unchanged;
                 }
             }
