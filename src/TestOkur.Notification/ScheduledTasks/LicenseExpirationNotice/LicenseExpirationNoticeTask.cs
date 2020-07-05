@@ -1,14 +1,13 @@
 ﻿namespace TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Extensions.Hosting;
     using TestOkur.Notification.Configuration;
-    using TestOkur.Notification.Extensions;
     using TestOkur.Notification.Infrastructure;
     using TestOkur.Notification.Infrastructure.Clients;
     using TestOkur.Notification.Models;

@@ -85,7 +85,7 @@
             oauthClient.GetUsersAsync().Returns(identityUsers);
             webApiClient.GetUsersAsync().Returns(webapiUsers);
             var hostingEnvironment = Substitute.For<IWebHostEnvironment>();
-            hostingEnvironment.EnvironmentName.Returns("prod");
+            hostingEnvironment.EnvironmentName.Returns("Production");
             var task = new LicenseExpirationNoticeTask(
                 notificationFacade,
                 oauthClient,
