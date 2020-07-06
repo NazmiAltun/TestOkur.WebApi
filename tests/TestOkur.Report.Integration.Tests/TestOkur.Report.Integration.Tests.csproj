@@ -7,7 +7,7 @@
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.5" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.76" />
-    <PackageReference Include="TestOkur.TestHelper" Version="1.0.32" />
+    <PackageReference Include="TestOkur.TestHelper" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.Report\TestOkur.Report.csproj" />
