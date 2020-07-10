@@ -6,7 +6,7 @@
     using TestOkur.WebApi.Validators;
     using Xunit;
 
-    public class GivenIdValidator
+    public class GivenIdValidator : ValidatorTestBase
     {
         private readonly IdValidator _validator;
         private readonly PropertyRule _propertyRule;
@@ -20,7 +20,7 @@
         [Fact]
         public void WhenValueIsValid_ThenResultShouldBeEmpty()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, 5);
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, 5);
             var result = _validator.Validate(context);
             result.Should().BeEmpty();
         }
@@ -28,7 +28,7 @@
         [Fact]
         public void WhenValueIsInvalid_ThenErrorShouldBeReturned()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, 0);
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, 0);
             var result = _validator.Validate(context);
             result.Should().Contain(r => r.ErrorMessage == "InvalidId");
         }

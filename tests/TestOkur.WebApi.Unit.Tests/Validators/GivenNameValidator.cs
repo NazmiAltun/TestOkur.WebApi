@@ -7,7 +7,7 @@
     using TestOkur.WebApi.Validators;
     using Xunit;
 
-    public class GivenNameValidator
+    public class GivenNameValidator : ValidatorTestBase
     {
         private readonly NameValidator _validator;
         private readonly PropertyRule _propertyRule;
@@ -21,7 +21,7 @@
         [Fact]
         public void WhenValueIsValid_ThenResultShouldBeEmpty()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, "John");
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, "John");
             var result = _validator.Validate(context);
             result.Should().BeEmpty();
         }
@@ -32,7 +32,7 @@
         [InlineData("VeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongNameVeryLongName")]
         public void WhenValueIsInvalid_ThenErrorShouldBeReturned(string name)
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, name);
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, name);
             var result = _validator.Validate(context);
             result.Should().Contain(r => r.ErrorMessage == ErrorCodes.NameCannotBeEmpty);
         }

@@ -6,7 +6,7 @@
     using TestOkur.WebApi.Validators;
     using Xunit;
 
-    public class GivenGradeValidator
+    public class GivenGradeValidator : ValidatorTestBase
     {
         private readonly GradeValidator _validator;
         private readonly PropertyRule _propertyRule;
@@ -20,7 +20,7 @@
         [Fact]
         public void WhenValueIsValid_ThenResultShouldBeEmpty()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, 2);
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, 2);
             var result = _validator.Validate(context);
             result.Should().BeEmpty();
         }
@@ -28,7 +28,7 @@
         [Fact]
         public void WhenValueIsInvalid_ThenErrorShouldBeReturned()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, 13);
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, 13);
             var result = _validator.Validate(context);
             result.Should().Contain(r => r.ErrorMessage == "InvalidGrade");
         }

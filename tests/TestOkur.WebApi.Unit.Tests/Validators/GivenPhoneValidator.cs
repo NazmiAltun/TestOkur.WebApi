@@ -7,7 +7,7 @@
     using TestOkur.WebApi.Validators;
     using Xunit;
 
-    public class GivenPhoneValidator
+    public class GivenPhoneValidator : ValidatorTestBase
     {
         private readonly PhoneValidator _validator;
         private readonly PropertyRule _propertyRule;
@@ -21,7 +21,7 @@
         [Fact]
         public void WhenValueIsValid_ThenResultShouldBeEmpty()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, "5544205163");
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, "5544205163");
             var result = _validator.Validate(context);
             result.Should().BeEmpty();
         }
@@ -29,7 +29,7 @@
         [Fact]
         public void WhenValueIsInvalid_ThenErrorShouldBeReturned()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, "05324589966");
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, "05324589966");
             var result = _validator.Validate(context);
             result.Should().Contain(r => r.ErrorMessage == ErrorCodes.InvalidPhoneNumber);
         }

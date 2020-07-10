@@ -1,4 +1,6 @@
-﻿namespace TestOkur.WebApi.Unit.Tests.Validators
+﻿using FluentValidation;
+
+namespace TestOkur.WebApi.Unit.Tests.Validators
 {
     using FluentAssertions;
     using FluentValidation.Internal;
@@ -7,7 +9,7 @@
     using TestOkur.WebApi.Validators;
     using Xunit;
 
-    public class GivenEnumerationValidator
+    public class GivenEnumerationValidator : ValidatorTestBase
     {
         private readonly EnumerationValidator<Foo> _validator;
         private readonly PropertyRule _propertyRule;
@@ -21,7 +23,7 @@
         [Fact]
         public void WhenValueIsValid_ThenResultShouldBeEmpty()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, 1);
+            var context = new PropertyValidatorContext(DefaultValidationContext, _propertyRule, DefaultPropertyName, 1);
             var result = _validator.Validate(context);
             result.Should().BeEmpty();
         }
@@ -29,7 +31,8 @@
         [Fact]
         public void WhenValueIsInvalid_ThenErrorShouldBeReturned()
         {
-            var context = new PropertyValidatorContext(null, _propertyRule, null, 3);
+            var context = new PropertyValidatorContext(
+                DefaultValidationContext, _propertyRule, DefaultPropertyName, 3);
             var result = _validator.Validate(context);
             result.Should().Contain(r => r.ErrorMessage == "InvalidEnum");
         }
