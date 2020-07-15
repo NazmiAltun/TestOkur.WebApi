@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit", "src\TestO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Sabit.Integration.Tests", "tests\TestOkur.Sabit.Integration.Tests\TestOkur.Sabit.Integration.Tests.csproj", "{1BE47627-8339-44B7-9EFA-3497AB215170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOkur.Test.Common", "tests\TestOkur.Test.Common\TestOkur.Test.Common.csproj", "{5164F294-8B9D-4C3A-8943-C9B47C73753E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOkur.Test.Common", "tests\TestOkur.Test.Common\TestOkur.Test.Common.csproj", "{5164F294-8B9D-4C3A-8943-C9B47C73753E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

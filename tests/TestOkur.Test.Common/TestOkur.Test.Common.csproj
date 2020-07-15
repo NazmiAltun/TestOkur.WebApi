@@ -6,11 +6,22 @@
 
   <ItemGroup>
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.12.0" />
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.12.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.13.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.WebApi\TestOkur.WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="coverlet.msbuild" Version="2.9.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
