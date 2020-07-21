@@ -179,9 +179,8 @@ namespace TestOkur.Report
                         {
                             e.PrefetchCount = 16;
                             e.UseMessageRetry(x => x.Interval(2000, 1000));
-                            e.RegisterConsumers(context.Container, Environment.IsDevelopment());
+                            e.RegisterConsumers(context, Environment.IsDevelopment());
                         });
-                        cfg.SetLoggerFactory(context.Container.GetRequiredService<ILoggerFactory>());
                     }));
             });
 

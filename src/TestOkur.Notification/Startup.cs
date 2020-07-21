@@ -274,20 +274,19 @@
 
                         if (!_environment.IsDevelopment())
                         {
-                            e.Consumer<DefaultFaultConsumer>(context.Container);
+                            e.Consumer<DefaultFaultConsumer>(context);
                         }
 
-                        e.Consumer<NewUserRegisteredConsumer>(context.Container);
-                        e.Consumer<SendSmsRequestReceivedConsumer>(context.Container);
-                        e.Consumer<SendSmsRequestFailedConsumer>(context.Container);
-                        e.Consumer<UserActivatedConsumer>(context.Container);
-                        e.Consumer<UserSubscriptionExtendedConsumer>(context.Container);
-                        e.Consumer<SmsCreditAddedConsumer>(context.Container);
-                        e.Consumer<ResetPasswordTokenGeneratedConsumer>(context.Container);
-                        e.Consumer<UserErrorReceivedConsumer>(context.Container);
-                        e.Consumer<ReferredUserActivatedConsumer>(context.Container);
+                        e.Consumer<NewUserRegisteredConsumer>(context);
+                        e.Consumer<SendSmsRequestReceivedConsumer>(context);
+                        e.Consumer<SendSmsRequestFailedConsumer>(context);
+                        e.Consumer<UserActivatedConsumer>(context);
+                        e.Consumer<UserSubscriptionExtendedConsumer>(context);
+                        e.Consumer<SmsCreditAddedConsumer>(context);
+                        e.Consumer<ResetPasswordTokenGeneratedConsumer>(context);
+                        e.Consumer<UserErrorReceivedConsumer>(context);
+                        e.Consumer<ReferredUserActivatedConsumer>(context);
                     });
-                    cfg.SetLoggerFactory(context.Container.GetRequiredService<ILoggerFactory>());
                 }));
             });
         }

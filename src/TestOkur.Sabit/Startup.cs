@@ -149,12 +149,11 @@
                     cfg =>
                     {
                         var uriStr = $"rabbitmq://{RabbitMqConfiguration.Uri}/{RabbitMqConfiguration.Vhost}";
-                        var host = cfg.Host(new Uri(uriStr), hc =>
+                        cfg.Host(new Uri(uriStr), hc =>
                         {
                             hc.Username(RabbitMqConfiguration.Username);
                             hc.Password(RabbitMqConfiguration.Password);
                         });
-                        services.AddSingleton(host);
                     }));
             });
 
