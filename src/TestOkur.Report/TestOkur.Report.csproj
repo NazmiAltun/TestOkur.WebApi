@@ -18,7 +18,7 @@
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.0.4" />
     <PackageReference Include="MassTransit.Extensions.Logging" Version="5.5.6" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.6.0" />
     <PackageReference Include="prometheus-net.DotNetRuntime" Version="3.4.0" />
