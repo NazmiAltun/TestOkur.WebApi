@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>    
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.4" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="TestOkur.Optic" Version="1.0.76" />
     <PackageReference Include="TestOkur.TestHelper" Version="1.1.2" />
