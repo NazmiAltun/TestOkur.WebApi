@@ -23,7 +23,6 @@
     using Polly.Extensions.Http;
     using Prometheus;
     using RazorLight;
-    using SpanJson.AspNetCore.Formatter;
     using System;
     using System.Linq;
     using System.Net;
@@ -44,7 +43,6 @@
     using TestOkur.Notification.ScheduledTasks.LicenseExpirationNotice;
     using TestOkur.Notification.ScheduledTasks.ReEvaluateAllExams;
     using TestOkur.Notification.ScheduledTasks.SmsResender;
-    using TestOkur.Serialization;
 
     public class Startup
     {
@@ -104,8 +102,7 @@
             services.AddTransient<ISmsLogRepository, SmsLogRepository>();
             services.AddTransient<IEMailRepository, EMailRepository>();
             services.AddTransient<IStatsRepository, StatsRepository>();
-            services.AddControllersWithViews()
-                .AddSpanJsonCustom<ApiResolver<byte>>();
+            services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddResponseCompression();
         }
