@@ -34,17 +34,14 @@ namespace TestOkur.Notification
                         {
                             var loggerConfig = loggerConfiguration
                                 .ReadFrom.Configuration(hostingContext.Configuration)
-                                .MinimumLevel.Warning()
+                                .MinimumLevel.Debug()
                                 .Enrich.FromLogContext()
                                 .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                                 .Filter.ByExcluding(x => x.Exception is ValidationException)
                                 .WriteTo.Seq(
                                     hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"));
 
-                            if (!hostingContext.HostingEnvironment.IsProduction())
-                            {
-                                loggerConfig.WriteTo.Console();
-                            }
+                            loggerConfig.WriteTo.Console();
                         })
                         .UseStartup<Startup>();
                 });
