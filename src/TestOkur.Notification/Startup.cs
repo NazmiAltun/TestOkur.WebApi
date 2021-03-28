@@ -48,8 +48,6 @@
 
     public class Startup
     {
-        private const string CorsPolicyName = "EnableCorsToAll";
-
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _environment;
 
@@ -73,12 +71,15 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://*.testokur.com")
+                            .SetIsOriginAllowedToAllowWildcardSubdomains();
+                    });
+            });
             RegisterMappings();
             AddOptions(services);
             AddHealthCheck(services);
@@ -113,7 +114,7 @@
             app.UseStaticFiles();
             app.UseRouting();
             app.UseResponseCompression();
-            app.UseCors(CorsPolicyName);
+            app.UseCors();
             app.UseHttpMetrics();
             UseHangfire(app);
             app.UseAuthentication();
