@@ -105,7 +105,6 @@
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseResponseCompression();
             app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
@@ -116,6 +115,7 @@
             UseHangfire(app);
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseResponseCompression();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapMetrics("/metrics-core");
