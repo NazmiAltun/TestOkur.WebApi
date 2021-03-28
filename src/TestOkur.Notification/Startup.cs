@@ -73,7 +73,13 @@
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyCorsPolicy", policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    });
             });
             RegisterMappings();
             AddOptions(services);
@@ -108,7 +114,7 @@
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors("AllowAnyCorsPolicy");
+            app.UseCors();
 
             app.UseHttpMetrics();
             UseHangfire(app);
