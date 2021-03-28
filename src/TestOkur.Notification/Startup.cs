@@ -71,15 +71,7 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins("https://*.testokur.com")
-                            .SetIsOriginAllowedToAllowWildcardSubdomains();
-                    });
-            });
+            services.AddCors();
             RegisterMappings();
             AddOptions(services);
             AddHealthCheck(services);
@@ -114,7 +106,12 @@
             app.UseStaticFiles();
             app.UseRouting();
             app.UseResponseCompression();
-            app.UseCors();
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
             app.UseHttpMetrics();
             UseHangfire(app);
             app.UseAuthentication();
