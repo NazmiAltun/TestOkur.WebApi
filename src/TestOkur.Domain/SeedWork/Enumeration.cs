@@ -37,8 +37,11 @@
 
         public override string ToString() => Name;
 
-        public override int GetHashCode() => Id.GetHashCode();
-
         public int CompareTo(object obj) => Id.CompareTo(((Enumeration)obj).Id);
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            return new List<object>() { Id };
+        }
     }
 }
