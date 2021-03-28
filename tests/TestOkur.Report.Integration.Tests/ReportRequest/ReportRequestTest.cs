@@ -1,14 +1,15 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using TestOkur.Report.Integration.Tests.Common;
 using TestOkur.Serialization;
+using Xunit;
 
 namespace TestOkur.Report.Integration.Tests.ReportRequest
 {
     using AutoFixture;
     using TestOkur.Report.Models;
-    using Test = TestOkur.Report.Integration.Tests.Common.Test;
 
-    public abstract class ReportRequestTest : Test
+    public abstract class ReportRequestTest
     {
         private const string ApiPath = "api/v1/report-requests";
 

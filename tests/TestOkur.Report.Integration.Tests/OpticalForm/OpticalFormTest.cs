@@ -7,13 +7,12 @@
     using System.Threading.Tasks;
     using TestOkur.Optic.Answer;
     using TestOkur.Optic.Form;
-    using TestOkur.Report.Integration.Tests.Common;
-    using TestOkur.TestHelper.Extensions;
 
-    public abstract class OpticalFormTest : Test
+    public abstract class OpticalFormTest
     {
         protected const string ApiPath = "api/v1/forms";
         private const string Booklets = "ABCD";
+
 
         protected async Task<IEnumerable<TOpticalForm>> GetListAsync<TOpticalForm>(HttpClient client, int examId)
             where TOpticalForm : OpticalForm
@@ -21,14 +20,14 @@
             var path = $"{ApiPath}/exam/{GetSubPath<TOpticalForm>()}/{examId}";
 
             var response = await client.GetAsync(path);
-            return await response.ReadAsync<IEnumerable<TOpticalForm>>();
+            return await response.Content.ReadAsAsync<IEnumerable<TOpticalForm>>();
         }
 
         protected async Task<IEnumerable<StudentOpticalForm>> GetStudentFormsByStudentIdAsync(
             HttpClient client, int studentId)
         {
             var response = await client.GetAsync($"{ApiPath}/student/{studentId}");
-            return await response.ReadAsync<IEnumerable<StudentOpticalForm>>();
+            return await response.Content.ReadAsAsync<IEnumerable<StudentOpticalForm>>();
         }
 
         protected IEnumerable<AnswerKeyOpticalForm> GenerateAnswerKeyOpticalForms(IFixture fixture, int count, int lessonId = 1, string lessonName = "Test")

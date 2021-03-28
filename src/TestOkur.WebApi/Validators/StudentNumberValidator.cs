@@ -6,9 +6,16 @@
 
     public class StudentNumberValidator : PropertyValidator
     {
+        private readonly string _errorMessage;
+
         public StudentNumberValidator(string errorMessage)
-            : base(errorMessage)
         {
+            _errorMessage = errorMessage;
+        }
+
+        protected override string GetDefaultMessageTemplate()
+        {
+            return _errorMessage;
         }
 
         protected override bool IsValid(PropertyValidatorContext context)

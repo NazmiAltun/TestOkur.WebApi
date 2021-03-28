@@ -142,6 +142,7 @@ namespace TestOkur.Report
         {
             if (Environment.IsDevelopment())
             {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
                 return;
             }
 

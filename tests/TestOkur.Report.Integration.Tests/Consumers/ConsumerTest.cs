@@ -1,12 +1,11 @@
 ﻿namespace TestOkur.Report.Integration.Tests.Consumers
 {
+    using AutoFixture;
+    using MassTransit;
+    using NSubstitute;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoFixture;
-    using MassTransit;
-    using Microsoft.AspNetCore.TestHost;
-    using NSubstitute;
     using TestOkur.Contracts.Exam;
     using TestOkur.Optic.Form;
     using TestOkur.Report.Consumers;
@@ -15,18 +14,19 @@
 
     public abstract class ConsumerTest : OpticalFormTest
     {
-        protected Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, IFixture fixture)
+        protected Task<int> ExecuteExamCreatedConsumerAsync(IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository, IFixture fixture)
         {
             return ExecuteExamCreatedConsumerAsync(
-                testServer,
+                answerKeyOpticalFormRepository,
                 GenerateAnswerKeyOpticalForms(fixture, 4).ToList(),
                 fixture.Create<int>());
         }
 
-        protected async Task<int> ExecuteExamCreatedConsumerAsync(TestServer testServer, List<AnswerKeyOpticalForm> answerKeyOpticalForms, int examId)
+        protected async Task<int> ExecuteExamCreatedConsumerAsync(
+            IAnswerKeyOpticalFormRepository answerKeyOpticalFormRepository,
+            List<AnswerKeyOpticalForm> answerKeyOpticalForms,
+            int examId)
         {
-            var answerKeyOpticalFormRepository = testServer.Host.Services.GetService(typeof(IAnswerKeyOpticalFormRepository))
-                as IAnswerKeyOpticalFormRepository;
             var consumer = new ExamCreatedConsumer(answerKeyOpticalFormRepository);
             var context = Substitute.For<ConsumeContext<IExamCreated>>();
             context.Message.ExamId.Returns(examId);

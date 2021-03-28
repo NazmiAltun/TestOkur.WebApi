@@ -9,19 +9,24 @@ namespace TestOkur.Report.Integration.Tests
     using Xunit;
     using Xunit.Abstractions;
 
-    public class HealthCheckTests
+    public class HealthCheckTests : IClassFixture<WebApplicationFactory>
     {
         private readonly ITestOutputHelper _testOutputHelper;
+        private readonly WebApplicationFactory _webApplicationFactory;
 
-        public HealthCheckTests(ITestOutputHelper testOutputHelper)
+        public HealthCheckTests(
+            ITestOutputHelper testOutputHelper,
+            WebApplicationFactory webApplicationFactory)
         {
             _testOutputHelper = testOutputHelper;
+            _webApplicationFactory = webApplicationFactory;
         }
 
         [Fact]
         public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()
         {
-            var response = await TestServerFactory.TestServer.CreateClient().GetAsync("hc");
+            var client = _webApplicationFactory.CreateClient();
+            var response = await client.GetAsync("hc");
             _testOutputHelper.WriteLine(await response.Content.ReadAsStringAsync());
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.MediaType.Should().Be(MediaTypeNames.Application.Json);
