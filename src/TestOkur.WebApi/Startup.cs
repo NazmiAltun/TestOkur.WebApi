@@ -22,7 +22,6 @@
     using Polly;
     using Polly.Extensions.Http;
     using Prometheus;
-    using SpanJson.AspNetCore.Formatter;
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
@@ -50,8 +49,6 @@
     [ExcludeFromCodeCoverage]
     public class Startup
     {
-        private const string CorsPolicyName = "EnableCorsToAll";
-
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -74,21 +71,23 @@
         public void ConfigureServices(IServiceCollection services)
         {
             AddOptions(services);
-
-            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    });
+            });
             services.AddMemoryCache();
             services.AddControllers(options =>
                 {
                     options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
                     options.Filters.Add(new ValidateInputFilter());
                 })
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-                .AddSpanJsonCustom<ApiResolver<byte>>();
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddCommandsAndQueries(Assembly.GetExecutingAssembly());
             AddHealthChecks(services);
@@ -106,7 +105,7 @@
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(CorsPolicyName);
+            app.UseCors();
             app.UseHttpMetrics();
 
             if (env.IsDevelopment())

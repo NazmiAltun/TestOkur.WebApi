@@ -12,7 +12,6 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
     using Prometheus;
-    using SpanJson.AspNetCore.Formatter;
     using System;
     using System.Reflection;
     using TestOkur.Common;
@@ -22,13 +21,10 @@
     using TestOkur.Infrastructure.Mvc.Extensions;
     using TestOkur.Sabit.Configuration;
     using TestOkur.Sabit.Infrastructure;
-    using TestOkur.Serialization;
     using ConfigurationBuilder = CacheManager.Core.ConfigurationBuilder;
 
     public class Startup
     {
-        private const string CorsPolicyName = "EnableCorsToAll";
-
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -47,12 +43,16 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    });
+            });
             AddHealthChecks(services);
             AddOptions(services);
             AddAuthentication(services);
@@ -61,8 +61,7 @@
             AddMessageBus(services);
             services.AddSingleton<IUserIdProvider, StubUserIdProvider>();
             services.AddSingleton<ICommandQueryLogger, StubCommandQueryLogger>();
-            services.AddControllers()
-                .AddSpanJsonCustom<ApiResolver<byte>>();
+            services.AddControllers();
             services.AddQueries(Assembly.GetExecutingAssembly());
             services.AddResponseCompression();
         }
@@ -72,7 +71,7 @@
             app.UseStaticFiles();
             app.UseRouting();
             app.UseResponseCompression();
-            app.UseCors(CorsPolicyName);
+            app.UseCors();
             app.UseHttpMetrics();
             app.UseAuthentication();
             app.UseAuthorization();

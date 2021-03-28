@@ -28,7 +28,6 @@ namespace TestOkur.Report
     using MongoDB.Bson.Serialization.Options;
     using MongoDB.Bson.Serialization.Serializers;
     using Prometheus;
-    using SpanJson.AspNetCore.Formatter;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -53,8 +52,6 @@ namespace TestOkur.Report
     [ExcludeFromCodeCoverage]
     public class Startup
     {
-        private const string CorsPolicyName = "EnableCorsToAll";
-
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
@@ -76,22 +73,25 @@ namespace TestOkur.Report
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy(CorsPolicyName, builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    });
+            });
             RegisterMappings();
             AddHealthCheck(services);
             AddCache(services);
             AddOptions(services);
             services.AddControllers(options =>
-                {
-                    options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
-                    options.Filters.Add(new ValidateInputFilter());
-                })
-                .AddSpanJsonCustom<ApiResolver<byte>>();
+            {
+                options.Filters.Add(new ProducesAttribute(MediaTypeNames.Application.Json));
+                options.Filters.Add(new ValidateInputFilter());
+            });
             AddAuthentication(services);
             AddPolicies(services);
             AddMessageBus(services);
@@ -104,7 +104,7 @@ namespace TestOkur.Report
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(CorsPolicyName);
+            app.UseCors();
             app.UseHttpMetrics();
 
             if (env.IsDevelopment())
