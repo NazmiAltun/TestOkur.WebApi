@@ -71,7 +71,10 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyCorsPolicy", policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            });
             RegisterMappings();
             AddOptions(services);
             AddHealthCheck(services);
@@ -105,11 +108,7 @@
         {
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true) // allow any origin
-                .AllowCredentials()); // allow credentials
+            app.UseCors("AllowAnyCorsPolicy");
 
             app.UseHttpMetrics();
             UseHangfire(app);
