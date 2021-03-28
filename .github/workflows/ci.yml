@@ -44,12 +44,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-webapi:${{ github.run_number }} -t nazmialtun/testokur-webapi:latest -f src/TestOkur.WebApi/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-webapi:${{ github.run_number }} -t nazmialtun/testokur-webapi:${{ github.sha }}  -t nazmialtun/testokur-webapi:latest -f src/TestOkur.WebApi/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
         run: |
           docker push nazmialtun/testokur-webapi:latest
+          docker push nazmialtun/testokur-webapi:${{ github.sha }}
           docker push nazmialtun/testokur-webapi:${{ github.run_number }}
   docker-sabit:
     needs: [tests]
@@ -59,12 +60,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-sabit:${{ github.run_number }} -t nazmialtun/testokur-sabit:latest -f src/TestOkur.Sabit/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-sabit:${{ github.run_number }} -t nazmialtun/testokur-sabit:${{ github.sha }}  -t nazmialtun/testokur-sabit:latest -f src/TestOkur.Sabit/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
         run: |
           docker push nazmialtun/testokur-sabit:latest
+          docker push nazmialtun/testokur-sabit:${{ github.sha }}
           docker push nazmialtun/testokur-sabit:${{ github.run_number }}
   docker-report:
     needs: [tests]
@@ -74,12 +76,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-report:${{ github.run_number }} -t nazmialtun/testokur-report:latest -f src/TestOkur.Report/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-report:${{ github.run_number }}  -t nazmialtun/testokur-report:${{ github.sha }} -t nazmialtun/testokur-report:latest -f src/TestOkur.Report/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
         run: |
           docker push nazmialtun/testokur-report:latest
+          docker push nazmialtun/testokur-report:${{ github.sha }}
           docker push nazmialtun/testokur-report:${{ github.run_number }}
   docker-notification:
     needs: [tests]
@@ -89,10 +92,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Build
-        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-notification:${{ github.run_number }} -t nazmialtun/testokur-notification:latest -f src/TestOkur.Notification/Dockerfile .
+        run: docker build --build-arg COMMIT=${{ github.sha }} -t nazmialtun/testokur-notification:${{ github.run_number }} -t nazmialtun/testokur-notification:${{ github.sha }}  -t nazmialtun/testokur-notification:latest -f src/TestOkur.Notification/Dockerfile .
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push Docker Images to Registry
         run: |
           docker push nazmialtun/testokur-notification:latest
+          docker push nazmialtun/testokur-notification:${{ github.sha }}
           docker push nazmialtun/testokur-notification:${{ github.run_number }}
