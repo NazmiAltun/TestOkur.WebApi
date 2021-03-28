@@ -46,7 +46,7 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.0" />
     <PackageReference Include="TestOkur.Infrastructure.CommandsQueries" Version="1.1.7" />
     <PackageReference Include="TestOkur.Infrastructure.Mvc" Version="1.0.9" />
-    <PackageReference Include="TestOkur.Optic" Version="1.0.76" />
+    <PackageReference Include="TestOkur.Optic" Version="1.0.77" />
     <PackageReference Include="TestOkur.Serialization" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>

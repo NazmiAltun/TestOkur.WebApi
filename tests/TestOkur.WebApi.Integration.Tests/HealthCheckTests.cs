@@ -7,12 +7,21 @@
     using TestOkur.WebApi.Integration.Tests.Common;
     using Xunit;
 
-    public class HealthCheckTests : Test
+    public class HealthCheckTests : IClassFixture<WebApplicationFactory>
     {
-        [Fact(Skip = "Fix later")]
+        private readonly WebApplicationFactory _webApplicationFactory;
+
+        public HealthCheckTests(WebApplicationFactory webApplicationFactory)
+        {
+            _webApplicationFactory = webApplicationFactory;
+        }
+
+
+        [Fact]
         public async Task HealthCheckEndpointShouldWork_WhenServerIsRunning()
         {
-            var response = await (await GetTestServer()).CreateClient().GetAsync("hc");
+            var client = _webApplicationFactory.CreateClient();
+            var response = await client.GetAsync("hc");
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             response.Content.Headers.ContentType.MediaType.Should().Be(MediaTypeNames.Application.Json);
         }
