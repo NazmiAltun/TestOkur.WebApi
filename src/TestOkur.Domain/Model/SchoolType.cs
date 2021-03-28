@@ -1,6 +1,5 @@
 ﻿namespace TestOkur.Domain.Model
 {
-    using System.Collections.Generic;
     using TestOkur.Domain.SeedWork;
 
     public class SchoolType : Enumeration
@@ -16,9 +15,5 @@
         protected SchoolType()
         {
         }
-
-        public IEnumerable<Grade> Grades =>
-            this == High ? new Grade[] { 9, 10, 11, 12 } :
-            new Grade[] { 1, 2, 3, 4, 5, 6, 7, 8 };
     }
 }
