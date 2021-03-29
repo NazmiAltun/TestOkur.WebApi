@@ -5,7 +5,7 @@
   <Import Project="..\testing.targets" />
   <ItemGroup>   
     <PackageReference Include="TestOkur.Optic" Version="1.0.77" />
-    <PackageReference Include="TestOkur.TestHelper" Version="1.0.32" /> 
+    <PackageReference Include="TestOkur.TestHelper" Version="1.1.2" /> 
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TestOkur.Report\TestOkur.Report.csproj" />
