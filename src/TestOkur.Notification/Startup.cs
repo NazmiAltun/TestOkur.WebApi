@@ -330,7 +330,7 @@
 
             services.AddHttpClient<ISmsClient, SmsClient>(client =>
             {
-                client.BaseAddress = new Uri(_configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
+                // client.BaseAddress = new Uri(_configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
             })
             .AddPolicyHandler(GetRetryPolicy())
             // .AddHttpMessageHandler<SmsServiceLoggingHandler>()
