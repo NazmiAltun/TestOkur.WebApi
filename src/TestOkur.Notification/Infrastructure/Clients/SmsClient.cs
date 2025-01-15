@@ -1,4 +1,6 @@
-﻿namespace TestOkur.Notification.Infrastructure.Clients
+﻿using System;
+
+namespace TestOkur.Notification.Infrastructure.Clients
 {
     using System.Collections.Generic;
     using System.Net.Http;
