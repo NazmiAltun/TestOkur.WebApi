@@ -38,8 +38,7 @@ namespace TestOkur.Notification
                                 .Enrich.FromLogContext()
                                 .Enrich.WithProperty("ApplicationName", Assembly.GetEntryAssembly().GetName().Name)
                                 .Filter.ByExcluding(x => x.Exception is ValidationException)
-                                .WriteTo.Seq(
-                                    hostingContext.Configuration.GetValue<string>("ApplicationConfiguration:SeqUrl"));
+                                .WriteTo.Console();
 
                             if (!hostingContext.HostingEnvironment.IsProduction())
                             {
