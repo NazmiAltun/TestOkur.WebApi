@@ -25,7 +25,7 @@
                 $"&gonderen={subject}&mesaj={sms.Body}&numaralar={sms.Phone}&tur=Normal";
 
             var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode().EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsStringAsync();
         }
