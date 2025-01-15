@@ -14,7 +14,7 @@ WORKDIR /src
 RUN dotnet publish "./src/TestOkur.Report/TestOkur.Report.csproj" --no-restore -c Release -o /app
 
 FROM golang:latest as minifier
-RUN go install -u github.com/tdewolff/minify/v2
+RUN go install github.com/tdewolff/minify/v2@latest
 WORKDIR /minify
 COPY /src/TestOkur.Report/wwwroot/Templates .
 RUN minify -o out/ .
