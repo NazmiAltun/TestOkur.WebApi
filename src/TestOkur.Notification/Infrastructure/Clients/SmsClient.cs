@@ -19,41 +19,25 @@
 
         public async Task<string> SendAsync(Sms sms)
         {
-            var request = CreateRequest(sms, sms.Body);
-            var response = await _httpClient.SendAsync(request);
-            await EnsureSuccessAsync(response);
+            var subject = MapSubject(sms.Subject);
+            var url =
+                $"{_smsConfiguration.ServiceUrl}?kno={_smsConfiguration.UserId}&kul_ad={_smsConfiguration.User}&sifre={_smsConfiguration.Password}" +
+                $"&gonderen={subject}&mesaj={sms.Body}&numaralar={sms.Phone}&tur=Normal";
 
-            return sms.Body;
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode().EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
         }
 
-        private HttpRequestMessage CreateRequest(Sms sms, string smsFriendlyBody)
+        private static string MapSubject(string subject)
         {
-            var values = new Dictionary<string, string>
+            if (subject == "VELI BILGI" || subject == "OKUL BILGI" || subject == "OKUL DUYURU")
             {
-                { "kullanici", _smsConfiguration.User },
-                { "sifre", _smsConfiguration.Password },
-                { "gonderenadi", sms.Subject },
-                { "mesaj", smsFriendlyBody },
-                { "numaralar", sms.Phone },
-            };
-
-            var request = new HttpRequestMessage(HttpMethod.Post, _smsConfiguration.ServiceUrl)
-            {
-                Content = new FormUrlEncodedContent(values),
-            };
-            request.Properties.Add("sms", sms);
-            return request;
-        }
-
-        private async Task EnsureSuccessAsync(HttpResponseMessage response)
-        {
-            response.EnsureSuccessStatusCode();
-            var message = await response.Content.ReadAsStringAsync();
-
-            if (message.Contains("|"))
-            {
-                throw new SmsException(message.Substring(message.LastIndexOf('|') + 1));
+                return "VELIBILG.NF";
             }
+
+            return "SINAVBIL.NF";
         }
     }
 }
