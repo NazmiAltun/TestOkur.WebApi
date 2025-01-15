@@ -22,7 +22,9 @@
         {
             var sms = (Sms)request.Properties["sms"];
             var requestDateTimeUtc = DateTime.UtcNow;
-            var serviceRequest = await request.Content.ReadAsStringAsync();
+            var serviceRequest = request.Content != null 
+                ? await request.Content.ReadAsStringAsync(cancellationToken) 
+                : request.RequestUri.ToString();
             var response = await base.SendAsync(request, cancellationToken);
             sms.ServiceRequest = serviceRequest;
             sms.ServiceResponse = await response.Content.ReadAsStringAsync();

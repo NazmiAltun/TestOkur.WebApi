@@ -29,14 +29,14 @@
                 $"{_smsConfiguration.ServiceUrl}?kno={_smsConfiguration.UserId}&kul_ad={_smsConfiguration.User}&sifre={_smsConfiguration.Password}" +
                 $"&gonderen={subject}&mesaj={sms.Body}&numaralar={sms.Phone}&tur=Normal";
 
-            _logger.LogInformation("Sending SMS: {url}", url);
+            _logger.LogWarning("Sending SMS: {url}", url);
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Properties.Add("sms", sms);
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadAsStringAsync();
 
-            _logger.LogInformation("SMS sent: {result}", result);
+            _logger.LogWarning("SMS sent: {result}", result);
 
             return result;
         }
