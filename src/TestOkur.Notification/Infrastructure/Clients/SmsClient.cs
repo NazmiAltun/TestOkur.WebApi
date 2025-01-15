@@ -24,7 +24,9 @@
                 $"{_smsConfiguration.ServiceUrl}?kno={_smsConfiguration.UserId}&kul_ad={_smsConfiguration.User}&sifre={_smsConfiguration.Password}" +
                 $"&gonderen={subject}&mesaj={sms.Body}&numaralar={sms.Phone}&tur=Normal";
 
-            var response = await _httpClient.GetAsync(url);
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Properties["sms"] = sms;
+            var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsStringAsync();
