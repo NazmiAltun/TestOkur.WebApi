@@ -24,18 +24,8 @@ jobs:
         run: docker run -d -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=password -p 27017:27017 mongo
       - name: Start mock server
         run: docker run -d -v $PWD/mockserver/mocks:/opt/app/mocks  -p 8095:8080 nazmialtun/mockizen:latest
-      - name: Install sonar-scanner
-        run: dotnet tool install --global dotnet-sonarscanner
-      - name: Begin sonar scanning
-        run: dotnet-sonarscanner begin /k:testokur_TestOkur.WebApi /n:testokur-webapi /o:testokur 
-          /d:sonar.host.url=https://sonarcloud.io /version:${{ github.run_number }} /d:sonar.login=${{secrets.SONAR_TOKEN}}
-          /d:sonar.cs.opencover.reportsPaths=coverage/*.xml /d:sonar.exclusions=**/*.html /d:sonar.coverage.exclusions=src/TestOkur.WebApi/Migrations/**/*
       - name: Run Tests
         run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput=../../coverage/integration.xml
-      - name: End sonar scanning
-        run: dotnet-sonarscanner end /d:sonar.login=${{secrets.SONAR_TOKEN}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   docker-webapi:
     needs: [tests]
     name: Build webapi docker image
