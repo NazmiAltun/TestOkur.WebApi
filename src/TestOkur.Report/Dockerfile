@@ -13,8 +13,7 @@ FROM build AS publish
 WORKDIR /src
 RUN dotnet publish "./src/TestOkur.Report/TestOkur.Report.csproj" --no-restore -c Release -o /app
 
-FROM golang:latest as minifier
-RUN go install github.com/tdewolff/minify/v2@latest
+FROM tdewolff/minify as minifier
 WORKDIR /minify
 COPY /src/TestOkur.Report/wwwroot/Templates .
 RUN minify -o out/ .
