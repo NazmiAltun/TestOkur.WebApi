@@ -37,7 +37,6 @@ jobs:
           docker push nazmialtun/testokur-sabit:${{ github.sha }}
           docker push nazmialtun/testokur-sabit:${{ github.run_number }}
   docker-report:
-    needs: [tests]
     name: Build report docker image
     runs-on: ubuntu-latest
     steps:
