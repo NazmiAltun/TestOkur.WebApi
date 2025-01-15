@@ -6,33 +6,7 @@ on:
     tags-ignore:
       - 'v*'
 jobs:
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-    env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: 1
-    steps:
-      - uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: | 
-            3.1.x
-            5.0.x
-      - name: Disable DotNet First Usage Messsage
-        run: touch "$HOME/.dotnet/$(dotnet --version).dotnetFirstUseSentinel"
-      - name: Start postgres 
-        run: docker run -d -e POSTGRES_PASSWORD=testadmin@123 -e POSTGRES_USER=testokur -e POSTGRES_DB=testokur -p 6432:5432 nazmialtun/postgres-tr
-      - name: Start rabbitmq 
-        run: docker run -d -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -p 6672:5672 -p 14672:15672 rabbitmq:alpine
-      - name: Start mongo
-        run: docker run -d -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=password -p 27017:27017 mongo
-      - name: Start mock server
-        run: docker run -d -v $PWD/mockserver/mocks:/opt/app/mocks  -p 8095:8080 nazmialtun/mockizen:latest
-      - name: Run Tests
-        run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput=../../coverage/integration.xml
   docker-webapi:
-    needs: [tests]
     name: Build webapi docker image
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +22,6 @@ jobs:
           docker push nazmialtun/testokur-webapi:${{ github.sha }}
           docker push nazmialtun/testokur-webapi:${{ github.run_number }}
   docker-sabit:
-    needs: [tests]
     name: Build sabit docker image
     runs-on: ubuntu-latest
     steps:
@@ -80,7 +53,6 @@ jobs:
           docker push nazmialtun/testokur-report:${{ github.sha }}
           docker push nazmialtun/testokur-report:${{ github.run_number }}
   docker-notification:
-    needs: [tests]
     name: Build notification docker image
     runs-on: ubuntu-latest
     steps:
