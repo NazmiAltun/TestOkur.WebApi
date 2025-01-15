@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Logging;
     using TestOkur.Notification.Configuration;
     using TestOkur.Notification.Dtos;
+    using TestOkur.Notification.Infrastructure.Data;
 
     public class SmsClient : ISmsClient
     {
