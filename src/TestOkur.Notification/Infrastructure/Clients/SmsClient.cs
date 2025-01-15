@@ -54,12 +54,12 @@ namespace TestOkur.Notification.Infrastructure.Clients
 
         private static string MapSubject(string subject)
         {
-            if (subject == "VELI BILGI" || subject == "OKUL BILGI" || subject == "OKUL DUYURU")
+            if (subject == "SINAV BILGI" || subject == "SINAV SONUC")
             {
-                return "VELIBILG.NF";
+                return "SINAVBIL.NF";
             }
 
-            return "SINAVBIL.NF";
+            return "VELIBILG.NF";
         }
     }
 }
