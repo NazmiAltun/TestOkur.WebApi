@@ -333,7 +333,7 @@
                 client.BaseAddress = new Uri(_configuration.GetValue<string>("SmsConfiguration:ServiceUrl"));
             })
             .AddPolicyHandler(GetRetryPolicy())
-            .AddHttpMessageHandler<SmsServiceLoggingHandler>()
+            // .AddHttpMessageHandler<SmsServiceLoggingHandler>()
             .AddPolicyHandler(GetCircuitBreakerPolicy());
         }
 

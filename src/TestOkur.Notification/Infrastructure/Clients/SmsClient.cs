@@ -13,12 +13,14 @@
         private readonly HttpClient _httpClient;
         private readonly SmsConfiguration _smsConfiguration;
         private readonly ILogger<SmsClient> _logger;
+        private readonly ISmsRepository _smsRepository;
 
-        public SmsClient(HttpClient httpClient, SmsConfiguration smsConfiguration, ILogger<SmsClient> logger)
+        public SmsClient(HttpClient httpClient, SmsConfiguration smsConfiguration, ILogger<SmsClient> logger, ISmsRepository smsRepository)
         {
             _httpClient = httpClient;
             _smsConfiguration = smsConfiguration;
             _logger = logger;
+            _smsRepository = smsRepository;
         }
 
         public async Task<string> SendAsync(Sms sms)
@@ -30,13 +32,19 @@
                 $"&gonderen={subject}&mesaj={sms.Body}&numaralar={sms.Phone}&tur=Normal";
 
             _logger.LogWarning("Sending SMS: {url}", url);
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Properties.Add("sms", sms);
-            var response = await _httpClient.SendAsync(request);
+            var requestDateTimeUtc = DateTime.UtcNow;
+            var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadAsStringAsync();
 
             _logger.LogWarning("SMS sent: {result}", result);
+            sms.ServiceRequest = url;
+            sms.ServiceResponse = result;
+            sms.RequestDateTimeUtc = requestDateTimeUtc;
+            sms.ResponseDateTimeUtc = DateTime.UtcNow;
+            sms.Status = SmsStatus.Successful;
+
+            await _smsRepository.UpdateSmsAsync(sms);
 
             return result;
         }
