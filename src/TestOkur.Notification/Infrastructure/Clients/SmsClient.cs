@@ -59,6 +59,11 @@ namespace TestOkur.Notification.Infrastructure.Clients
                 return "SINAVBIL.NF";
             }
 
+            if (subject.ToUpperInvariant() == "TESTOKUR")
+            {
+                return "NF.BILGI.";
+            }
+
             return "VELIBILG.NF";
         }
     }
