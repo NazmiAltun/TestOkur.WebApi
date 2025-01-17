@@ -3,7 +3,8 @@ ARG COMMIT=""
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 as base
 LABEL "Maintainer"="Nazmi Altun <nazmialtun@windowslive.com>"
 LABEL Commit=${COMMIT}
-RUN apt-get update && apt-get upgrade -y && apt-get install -y curl
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl vim
+RUN sed -i 's/SECLEVEL=2/SECLEVEL=1/g' /etc/ssl/openssl.cnf
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 as build
 WORKDIR /src
